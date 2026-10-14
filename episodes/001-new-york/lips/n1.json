@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "soundFile": "/tmp/claude-0/-home-user-Pixel-Verse/08acecbd-94f8-500b-aba2-b492cfd6353c/scratchpad/hf/tom/lips/n1.wav",
+    "duration": 5.58
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.77, "value": "B" },
+    { "start": 0.77, "end": 0.85, "value": "A" },
+    { "start": 0.85, "end": 1.09, "value": "E" },
+    { "start": 1.09, "end": 1.30, "value": "B" },
+    { "start": 1.30, "end": 1.37, "value": "C" },
+    { "start": 1.37, "end": 1.44, "value": "B" },
+    { "start": 1.44, "end": 1.52, "value": "A" },
+    { "start": 1.52, "end": 1.62, "value": "E" },
+    { "start": 1.62, "end": 1.69, "value": "F" },
+    { "start": 1.69, "end": 1.87, "value": "A" },
+    { "start": 1.87, "end": 2.09, "value": "C" },
+    { "start": 2.09, "end": 2.16, "value": "E" },
+    { "start": 2.16, "end": 2.23, "value": "C" },
+    { "start": 2.23, "end": 2.31, "value": "A" },
+    { "start": 2.31, "end": 2.61, "value": "B" },
+    { "start": 2.61, "end": 2.68, "value": "F" },
+    { "start": 2.68, "end": 3.02, "value": "B" },
+    { "start": 3.02, "end": 3.10, "value": "A" },
+    { "start": 3.10, "end": 3.42, "value": "B" },
+    { "start": 3.42, "end": 3.49, "value": "C" },
+    { "start": 3.49, "end": 3.85, "value": "B" },
+    { "start": 3.85, "end": 3.93, "value": "A" },
+    { "start": 3.93, "end": 4.03, "value": "C" },
+    { "start": 4.03, "end": 4.10, "value": "E" },
+    { "start": 4.10, "end": 4.31, "value": "C" },
+    { "start": 4.31, "end": 5.01, "value": "B" },
+    { "start": 5.01, "end": 5.08, "value": "C" },
+    { "start": 5.08, "end": 5.29, "value": "B" },
+    { "start": 5.29, "end": 5.43, "value": "E" },
+    { "start": 5.43, "end": 5.57, "value": "B" },
+    { "start": 5.57, "end": 5.58, "value": "X" }
+  ]
+}

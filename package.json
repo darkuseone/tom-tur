@@ -1,0 +1,9 @@
+{
+  "name": "tom-tour",
+  "private": true,
+  "description": "ТОМ-ТУР — кот Том отматывает время города. Рисованные Shorts на HTML-canvas + HyperFrames.",
+  "dependencies": {
+    "hyperframes": "0.8.154",
+    "puppeteer-core": "25.13.0"
+  }
+}

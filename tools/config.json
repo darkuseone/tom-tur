@@ -1,0 +1,13 @@
+{
+  "voice": {
+    "name": "Dmitry - Energetic and Confident",
+    "voice_id": "hU3rD0Yk7DoiYULTX1pD",
+    "model_id": "eleven_v4",
+    "voice_settings": {"stability": 0.4, "similarity_boost": 0.8, "style": 0.25, "speed": 1.08},
+    "tempo": 1.1016,
+    "silence": {"threshold_db": -42, "inner_pause": 0.16, "keep": 0.1}
+  },
+  "timeline": {"scene_gap": 0.08, "line_gap": 0.1, "tunnel": 0.55, "tail": 0.74},
+  "mix": {"voice_db": -17, "sfx_db": -25, "bed_db": -33, "music_db": -29},
+  "render": {"fps": 24, "chat_limit_mib": 29}
+}
