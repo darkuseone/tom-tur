@@ -58,7 +58,7 @@ def main(ep):
     fl.append(''.join(bl) + f'amix=inputs={len(bl)}:normalize=0[bed]')
     fl.append('[bed][vsc]sidechaincompress=threshold=0.04:ratio=5:attack=25:release=350[bedd]')
     fl.append('[vo][bedd]' + ''.join(sl) + f'amix=inputs={2 + len(sl)}:normalize=0,apad=whole_dur={DUR},atrim=0:{DUR},'
-              'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume=2dB,alimiter=limit=0.89[out]')
+              'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume=2dB,alimiter=limit=0.84:attack=2:release=40:level=0[out]')
     (b / 'mix.txt').write_text(';\n'.join(fl))
     out = b / 'audio.m4a'
     subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex_script', str(b / 'mix.txt'), '-map', '[out]', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(out)], check=True)
