@@ -128,6 +128,7 @@
         for (let i = 0; i < 46; i++) { const r = rng(i * 7 + 1), x = -900 + i * 62 + r() * 30, b = 1004 + (i % 3) * 22, h = (40 + r() * 120) * f * (0.6 + 0.4 * sm((t - EV.fire_burst - r() * 0.4) / 0.4));
           flame(x, b, h, 24 + r() * 26, t, i * 13); }
       }
+      pop();
     });
     haze(f > 0 ? '#ff7a40' : '#e8a088', 0.08 + 0.1 * f);
   }
@@ -163,7 +164,7 @@
   }
   function adjutant(x, y, s, t, shrug, f) {                         // адъютант лицом к Наполеону (вправо): синий мундир, пустая подушечка
     const sh = shrug ? Math.sin(clamp(shrug) * Math.PI) : 0;
-    push(x, y, s, 0, -1);
+    push(x, y, s);
     for (const lx of [-24, 22]) { rect(lx - 16, -160, 32, 160, { wash: '#14100e', washA: 1, w: 2, col: '#0a0605' }); rect(lx - 18, -280, 36, 124, { wash: '#efe8da', washA: 1, w: 2, col: '#2a1a14' }); }
     blob([[-58, -470], [58, -470], [70, -380], [64, -260], [40, -250], [-40, -250], [-64, -260], [-70, -380]], { wash: '#2a3a6a', washA: 1, w: 2.6, col: '#0e0a14', shade: { gap: 7, a: 0.3, col: '#0a0a20', ang: 1.2 } });
     pencil([[-50, -460], [44, -270]], { w: 9, col: '#efe8da', pass2: false, gap: false });
@@ -258,7 +259,8 @@
     rect(-11, 0, 22, 230, { wash: g, washA: 1, w: 3, col: gD }); rect(-16, 10, 32, 16, { wash: '#f0c860', washA: 1, w: 2, col: gD }); rect(-16, 70, 32, 12, { wash: '#f0c860', washA: 1, w: 2, col: gD });
     poly([[11, 170], [62, 170], [62, 196], [44, 196], [44, 212], [62, 212], [62, 232], [11, 232]], { wash: g, washA: 1, w: 3, col: gD });
     pencil([[-4, 6], [-4, 224]], { w: 3, col: '#fff2c0', a: 0.7, pass2: false, gap: false });
-    if (shine > 0) { const ph = (t * 1.6) % 1; glow(0, lerp(-80, 230, ph), 60, 'rgba(255,245,200,1)', 0.8 * shine); glow(30, -70, 50, 'rgba(255,250,220,1)', shine * (0.6 + 0.4 * Math.sin(t * 14))); }
+    if (shine > 0) { const ph = (t * 1.6) % 1; glow(0, lerp(-80, 230, ph), 60, 'rgba(255,245,200,1)', 0.8 * shine); glow(30, -70, 50, 'rgba(255,250,220,1)', shine * (0.6 + 0.4 * Math.sin(t * 14)));
+      for (const [sx, sy, ph] of [[-40, -90, 0], [50, 40, 2], [-30, 150, 4]]) { const k = shine * Math.max(0, Math.sin(t * 9 + ph)); if (k < 0.05) continue; push(sx, sy, k, t * 2); ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = '#fff6d0'; ctx.beginPath(); ctx.moveTo(0, -34); ctx.lineTo(6, -6); ctx.lineTo(34, 0); ctx.lineTo(6, 6); ctx.lineTo(0, 34); ctx.lineTo(-6, 6); ctx.lineTo(-34, 0); ctx.lineTo(-6, -6); ctx.closePath(); ctx.fill(); ctx.restore(); pop(); } }
     pop();
   }
 
@@ -296,11 +298,12 @@
       const scope = t < EV.fire_tap - 0.05, tap = t >= EV.fire_tap && t < EV.fire_burst, drop = clamp((t - EV.fire_burst - 0.1) / 0.45);
       napoleon(720, 1452, 0.95, t, { scope, tap, fire: f, drop: t > EV.fire_burst + 0.1 ? Math.pow(drop, 1.6) : 0 });
       // ключ за спиной Тома (рисуется до Тома — за телом)
-      const P = catPose('fire', t, u), show = keyShow(t), fx = P.flip ? -1 : 1, hf = P.handF || [-82, -140];
-      const kx = P.x + hf[0] * P.s * fx, ky = P.y + hf[1] * P.s;
-      bigKey(kx, ky, 0.9 * P.s, lerp(0.35, 2.55, show), t, show);
+      const P = catPose('fire', t, u), show = keyShow(t), sc = 1.35 * P.s, th = lerp(-Math.PI / 2, -0.45, sm(show)) + Math.sin(t * 2.4) * 0.03;
+      const dir = [-Math.sin(th), Math.cos(th)], pv = [P.x - 10, P.y - 178 * P.s - show * 30];
+      const hx = pv[0] - dir[0] * 80 * sc, hy = pv[1] - dir[1] * 80 * sc, ss = sm(show);
+      bigKey(lerp(hx, P.x - 165 * P.s, ss), lerp(hy, P.y - 360 * P.s, ss), sc, th, t, show);
       cat();
-      note('ключи: 0 шт.', 900, 930, t, Tm.key + 0.15, EV.fire_burst, '#fff0d0', 46, -0.05, [[920, 960], [930, 1010], [935, 1060]]);
+      note('ключи: 0 шт.', 800, 1400, t, Tm.key + 0.15, EV.fire_burst, '#fff0d0', 46, -0.05, [[830, 1365], [850, 1260], [860, 1150]]);
       note('ни души', 330, 820, t, EV.fire_empty, EV.fire_burst + 0.2, '#fff0d0', 50, 0.04, [[360, 850], [420, 900], [480, 960]]);
     });
     // передний план: трава, пепел и искры летят в камеру
@@ -325,14 +328,14 @@
       return Object.assign(b, {
         x: 300, y: 1458, s: 1.1,
         look: t >= EV.fire_burst ? [-0.2, -0.35] : show > 0.5 ? [0.05, 0.05] : pt ? [-0.4, -0.3] : [0.75, -0.05],
-        handF: [lerp(-70, -130, show), lerp(-128, -230, show)],
-        hand: pt ? [-150, -300] : t >= EV.fire_burst ? [40, -300] : [70, -150],
+        handF: [lerp(-46, -96, show), lerp(-170, -250, show)],
+        hand: pt ? [-150, -300] : t >= EV.fire_burst ? [40, -300] : [48, -168],
         point: pt, tilt: show * -0.08 + (t >= EV.fire_burst ? 0.04 : 0),
         squash: b.squash + (t > EV.fire_burst && t < EV.fire_burst + 0.25 ? 0.25 * (1 - (t - EV.fire_burst) / 0.25) : 0),
         sweat: t > EV.fire_burst + 0.15, tailUp: t > EV.fire_burst
       });
     },
-    cam: () => { const Tm = tm(); return [[S0.fire, 600, 980, -1.25], [S0.fire + 0.55, 560, 1000, 0.06, 'x'], [Tm.key + 0.1, 470, 1050, 0.13], [Tm.msk + 0.1, 640, 1000, 0.1], [EV.fire_burst - 0.05, 560, 980, 0.12], [EV.fire_burst + 0.55, 540, 930, -0.32, 'x'], [S1.fire + 0.6, 540, 920, -0.38]]; }
+    cam: () => { const Tm = tm(); return [[S0.fire, 600, 980, -1.25], [S0.fire + 0.55, 560, 1000, 0.06, 'x'], [Tm.key + 0.1, 430, 1030, 0.1], [Tm.msk + 0.1, 640, 1000, 0.1], [EV.fire_burst - 0.05, 560, 980, 0.12], [EV.fire_burst + 0.55, 540, 930, -0.32, 'x'], [S1.fire + 0.6, 540, 920, -0.38]]; }
   };
 
   // ---------------------------------------------------------------- переход В сцену: кадр прогорает, как бумага

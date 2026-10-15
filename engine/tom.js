@@ -143,6 +143,7 @@ function tom(o = {}) {
   // ---------------------------------------------------------------- ближняя рука + реквизит
   const shN = [64, -232 + bob], hn = o.hand || [82 + sw * 16, -138 + bob];
   arm5(shN, hn, OF, 'near', t);
+  if (OF.detail === 'diver' && !o.noHat) { ctx.save(); const cr = new Path2D(), cl = new Path2D(); cr.rect(20, -300 + bob, 140, 140); ctx.clip(cr); cl.rect(-400, -800, 800, 900); cl.moveTo(hx + 178, hy - 2); cl.arc(hx, hy - 2, 178, 0, 6.2832); ctx.clip(cl, 'evenodd'); diverPlate(bob, L); ctx.restore(); }
   if (o.watchInHand) { line([[30, -176 + bob], [hn[0] - 10, hn[1] + 8], [hn[0] + 4, hn[1] - 20]], { w: 2.4, col: TM.brass, pass2: false }); watch5(hn[0] + 6, hn[1] - 34, 28, t, o.spin || 0, o.glow || 0); }
   if (o.prop === 'coin') { push(hn[0] + 4, hn[1] - 30, 1, 0, Math.cos(t * 9)); ell(0, 0, 20, 20, { wash: TM.brassL, washA: 1, w: 2.4, col: TM.brassD }); txt('60', 0, 1, 17, { col: TM.brassD, font: 'Osw' }); pop(); }
   if (o.prop === 'binoc') { push(hn[0] - 10, hn[1] - 30, 1, -0.2); for (const bx of [-14, 14]) rect(bx - 11, -30, 22, 50, { wash: '#2a2a2a', washA: 1, w: 2 }); pop(); }
@@ -353,11 +354,14 @@ function furBand(P, w, col, colD, colL, key, o = {}) {              // мягк�
   fstr(sp.path, sp.bb, o.n ?? 40, o.ang ?? 1.4, o.len ?? 8, colL, 0.65, key + 2, 2);
   return sp;
 }
-function mailTex(path, bb, key, r0 = 3.4) {                          // кольчуга: ряды колец со светом сверху
-  ctx.save(); ctx.clip(path); const dk = new Path2D(), lt = new Path2D(), st = r0 * 2.05, rs = r0 * 1.62; let row = 0;
-  for (let y = bb[1]; y < bb[3] + rs; y += rs, row++) for (let x = bb[0] - st + (row % 2) * st / 2; x < bb[2] + st; x += st) {
-    dk.moveTo(x + r0, y); dk.ellipse(x, y, r0, r0 * 0.78, 0, 0, 6.283); lt.moveTo(x + Math.cos(3.5) * r0, y + Math.sin(3.5) * r0 * 0.78); lt.ellipse(x, y, r0, r0 * 0.78, 0, 3.5, 5.5); }
-  ctx.lineWidth = 1.6 / S; ctx.strokeStyle = 'rgba(26,28,32,0.72)'; ctx.stroke(dk); ctx.lineWidth = 1.1 / S; ctx.strokeStyle = 'rgba(244,248,252,0.75)'; ctx.stroke(lt); ctx.restore();
+const MAILPAT = {};
+function mailTex(path, bb, key, r0 = 3.4) {                          // кольчуга: ряды колец со светом сверху (плитка-паттерн, кэш)
+  const k = r0.toFixed(1); let pt = MAILPAT[k];
+  if (!pt) { const Q = 4, st = r0 * 2.05, rs = r0 * 1.62, c = document.createElement('canvas'); c.width = Math.round(st * Q); c.height = Math.round(rs * 2 * Q); const g = c.getContext('2d'); g.scale(c.width / st, c.height / (rs * 2));
+    for (const [x0, y0] of [[0, 0], [st, 0], [st / 2, rs], [0, rs * 2], [st, rs * 2]]) for (const dx of [-st, 0, st]) { const x = x0 + dx, y = y0; g.beginPath(); g.ellipse(x, y, r0, r0 * 0.78, 0, 0, 6.283); g.lineWidth = 1.25; g.strokeStyle = 'rgba(26,28,32,0.75)'; g.stroke(); g.beginPath(); g.ellipse(x, y, r0, r0 * 0.78, 0, 3.5, 5.5); g.lineWidth = 0.9; g.strokeStyle = 'rgba(244,248,252,0.78)'; g.stroke(); }
+    pt = MAILPAT[k] = { c, sx: st / c.width, sy: rs * 2 / c.height }; }
+  const pat = ctx.createPattern(pt.c, 'repeat'); pat.setTransform(new DOMMatrix([pt.sx, 0, 0, pt.sy, bb[0], bb[1]]));
+  ctx.save(); ctx.fillStyle = pat; ctx.fill(path); ctx.restore();
 }
 function brocade(path, bb, col, step = 30) {                          // парча: золотые «цветки» в шахматку
   ctx.save(); ctx.clip(path); ctx.fillStyle = col; let row = 0;
@@ -404,6 +408,16 @@ function skirt6(OF, b, L, y0, y1, w0, w1, key, col) {               // подо�
 }
 function nb(x, y, r = 4.5, col = CU.gold) { ell(x, y, r, r, { wash: col, washA: 1, w: 1.2, col: CU.goldD, a: 0.8 }); ctx.fillStyle = 'rgba(255,250,220,0.8)'; ctx.beginPath(); ctx.arc(x - r * 0.3, y - r * 0.35, r * 0.3, 0, 6.283); ctx.fill(); }   // пуговица/заклёпка
 
+function diverPlate(b, L) {                                      // медный корселет водолаза (рисуется и поверх ближнего рукава)
+    const CP = [[-108, -246 + b], [-64, -268 + b], [64, -268 + b], [108, -246 + b], [104, -214 + b], [64, -192 + b], [0, -182 + b], [-64, -192 + b], [-104, -214 + b]];
+    pencil(spline([[-108, -214 + b], [-64, -188 + b], [0, -176 + b], [64, -188 + b], [108, -214 + b]], false, 8), { w: 8, col: '#24201c', a: 0.85, pass2: false });   // резиновый фланец
+    const cs = blob(CP, { wash: CU.copper, washA: 1, w: 3, col: TM.line, key: 304 });
+    metalG(cs.path, L.side * 50, -236 + b, 150, CU.copperL, CU.copper, CU.copperD); hatch(cs.path, cs.bb, { gap: 5, a: 0.16, col: CU.copperD, ang: -1.1, key: 305 });
+    pencil(spline([[-96, -222 + b], [-60, -202 + b], [0, -194 + b], [60, -202 + b], [96, -222 + b]], false, 8), { w: 1.6, col: CU.copperD, a: 0.6, pass2: false });
+    for (const [x, y] of [[-92, -218], [-56, -200], [-18, -192], [18, -192], [56, -200], [92, -218]]) { ell(x, y + b, 6, 5, { wash: CU.goldL, washA: 1, w: 1.4, col: CU.goldD }); line([[x - 7, y - 3 + b], [x + 7, y + 3 + b]], { w: 3, col: CU.gold, pass2: false, smooth: false }); }
+    rimL(spline(CP, true, 8), L.side, L.rim, 0.8, 3);
+  
+}
 /* ---- детали туловища новых костюмов (вызываются из costume5 по OF.detail) */
 const COST6 = {
   diver(OF, b, t, bp, L) {                                             // водолаз: брезент, пояс с ножом, груз, медная манишка (корселет)
@@ -414,13 +428,7 @@ const COST6 = {
     for (const sx of [-24, 24]) line([[sx, -190 + b], [sx * 1.1, -168 + b]], { w: 3, col: '#2a2a2a', pass2: false });
     const wt = blob([[-36, -172 + b], [36, -172 + b], [40, -150 + b], [24, -130 + b], [0, -124 + b], [-24, -130 + b], [-40, -150 + b]], { wash: CU.lead, washA: 1, w: 2.6, col: TM.line, key: 306 });
     metalG(wt.path, L.side * 14, -160 + b, 46, '#a8acb2', CU.lead, '#2a2c30', 0.9); pencil(spline([[-28, -166 + b], [28, -166 + b], [30, -150 + b], [0, -132 + b], [-30, -150 + b]], true, 6), { w: 1.4, col: '#2a2c30', a: 0.6, pass2: false });
-    const CP = [[-108, -246 + b], [-64, -268 + b], [64, -268 + b], [108, -246 + b], [104, -214 + b], [64, -192 + b], [0, -182 + b], [-64, -192 + b], [-104, -214 + b]];
-    pencil(spline([[-108, -214 + b], [-64, -188 + b], [0, -176 + b], [64, -188 + b], [108, -214 + b]], false, 8), { w: 8, col: '#24201c', a: 0.85, pass2: false });   // резиновый фланец
-    const cs = blob(CP, { wash: CU.copper, washA: 1, w: 3, col: TM.line, key: 304 });
-    metalG(cs.path, L.side * 50, -236 + b, 150, CU.copperL, CU.copper, CU.copperD); hatch(cs.path, cs.bb, { gap: 5, a: 0.16, col: CU.copperD, ang: -1.1, key: 305 });
-    pencil(spline([[-96, -222 + b], [-60, -202 + b], [0, -194 + b], [60, -202 + b], [96, -222 + b]], false, 8), { w: 1.6, col: CU.copperD, a: 0.6, pass2: false });
-    for (const [x, y] of [[-92, -218], [-56, -200], [-18, -192], [18, -192], [56, -200], [92, -218]]) { ell(x, y + b, 6, 5, { wash: CU.goldL, washA: 1, w: 1.4, col: CU.goldD }); line([[x - 7, y - 3 + b], [x + 7, y + 3 + b]], { w: 3, col: CU.gold, pass2: false, smooth: false }); }
-    rimL(spline(CP, true, 8), L.side, L.rim, 0.8, 3);
+    diverPlate(b, L);
   },
   tulup(OF, b, t, bp, L) {                                            // овчинный тулуп: мех наружу по краям, отворот, кушак
     const sk = skirt6(OF, b, L, -118, -34, 90, 106, 330);
@@ -484,7 +492,7 @@ const COST6 = {
     poly([[-48, -250 + b], [48, -250 + b], [44, -236 + b], [-44, -236 + b]], { wash: CU.red, washA: 1, w: 2, col: TM.line }); for (let x = -40; x <= 40; x += 8) ell(x, -243 + b, 2, 2, { wash: '#f0e0b0', washA: 1, line: false });
     const pk = poly([[18, -238 + b], [32, -238 + b], [34, -190 + b], [20, -190 + b]], { wash: CU.red, washA: 1, w: 1.8, col: TM.line }); for (let k = 0; k < 3; k++) nb(26, -228 + k * 14 + b, 3, '#f0e6d0');
     const AP = [[-60, -198 + b], [60, -198 + b], [64, -130 + b], [74, -46 + b], [0, -42 + b], [-74, -46 + b], [-64, -130 + b]];
-    const ap = blob(AP, { wash: '#c4b894', washA: 1, w: 2.8, col: TM.line, key: 382 }); shadeG(ap.path, -L.side * 80, 0, L.side * 60, 0, '#6a5e44', 0.55); hatch(ap.path, ap.bb, { gap: 4, a: 0.16, col: '#5a5038', ang: 0.05, key: 383, w: 1.2 });
+    const ap = blob(AP, { wash: '#a8926a', washA: 1, w: 2.8, col: TM.line, key: 382 }); shadeG(ap.path, -L.side * 80, 0, L.side * 60, 0, '#4a3c24', 0.6); hatch(ap.path, ap.bb, { gap: 4, a: 0.16, col: '#5a5038', ang: 0.05, key: 383, w: 1.2 });
     for (const sd of [-1, 1]) pencil([[sd * 56, -196 + b], [sd * 40, -252 + b]], { w: 3, col: '#a89c7c', pass2: false });
     pencil([[-64, -130 + b], [-90, -126 + b]], { w: 2.4, col: '#a89c7c', pass2: false }); pencil([[64, -130 + b], [90, -126 + b]], { w: 2.4, col: '#a89c7c', pass2: false });
     limeSplash(ap.path, ap.bb, 9, 384); limeSplash(bp.path, [-90, -230 + b, 90, -100 + b], 3, 385);
@@ -497,7 +505,8 @@ const COST6 = {
     const ap = blob(AP, { wash: '#5c3a20', washA: 1, w: 3, col: TM.line, key: 390 });
     shadeG(ap.path, -L.side * 100, 0, L.side * 70, 0, '#24140a', 0.7); hatch(ap.path, ap.bb, { gap: 6, a: 0.14, col: '#1e1008', ang: -1.2, key: 392 });
     for (const [x0, y0, x1, y1] of [[L.side * 30, -200, L.side * 40, -120], [L.side * 44, -110, L.side * 56, -50]]) pencil([[x0, y0 + b], [x1, y1 + b]], { w: 6, col: '#a87a52', a: 0.35, pass2: false });
-    const R = rng(393); for (let k = 0; k < 7; k++) { const x = (R() - 0.5) * 120, y = -196 + R() * 150, rr = 4 + R() * 7; ell(x, y + b, rr * 1.6, rr * 1.3, { wash: '#7a4a28', washA: 0.7, line: false }); ell(x, y + b, rr, rr * 0.85, { wash: '#140a04', washA: 0.95, w: 1.2, col: '#140a04', a: 0.6 }); if (k % 3 === 0) ell(x + 1, y + b, rr * 0.4, rr * 0.4, { wash: '#000', washA: 1, line: false }); }
+    const R = rng(393); for (let k = 0; k < 5; k++) { const x = (R() - 0.5) * 120, y = -196 + R() * 150, rr = 4 + R() * 7; const g = ctx.createRadialGradient(x, y + b, rr * 0.3, x, y + b, rr * 2.4); g.addColorStop(0, 'rgba(14,8,4,0.95)'); g.addColorStop(0.35, 'rgba(40,20,8,0.7)'); g.addColorStop(0.7, 'rgba(140,90,50,0.35)'); g.addColorStop(1, 'rgba(140,90,50,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(x, y + b, rr * 2.4, rr * 1.8, R() * 3, 0, 6.283); ctx.fill();
+      if (k % 3 === 0) { ctx.fillStyle = '#000'; ctx.beginPath(); for (let q = 0; q <= 7; q++) { const a = q / 7 * 6.283, r2 = rr * (0.3 + 0.25 * Math.abs(Math.sin(q * 2.1 + k))); q ? ctx.lineTo(x + Math.cos(a) * r2, y + b + Math.sin(a) * r2) : ctx.moveTo(x + r2, y + b); } ctx.fill(); } }
     dashL(edgeOff(spline(AP.slice(1, 5), false, 6), -8), '#c8a070', 0.55); dashL(edgeOff(spline([AP[0], AP[8], AP[7], AP[6]], false, 6), 8), '#c8a070', 0.55);
     for (const sd of [-1, 1]) pencil([[sd * 54, -212 + b], [sd * 34, -254 + b]], { w: 5, col: '#4a2c16', pass2: false });
     rect(14, -160 + b, 40, 32, { wash: '#4a2c16', washA: 1, w: 2, col: TM.line }); dashL([[18, -156 + b], [50, -156 + b]], '#c8a070', 0.6);
@@ -513,7 +522,7 @@ const COST6 = {
     for (let x = -84; x <= 84; x += 14) rect(x - 4, -111 + b, 8, 18, { wash: C, washA: 1, w: 1, col: CU.goldD, a: 0.7 });
     for (const x0 of [66, 74]) { line([[x0, -96 + b], [x0 + 2, -66 + b]], { w: 2.4, col: C, pass2: false }); blob([[x0 - 4, -68 + b], [x0 + 6, -68 + b], [x0 + 8, -50 + b], [x0 - 6, -50 + b]], { wash: C, washA: 1, w: 1.4, col: CU.goldD }); }
     for (const sd of [-1, 1]) line([[sd * 20 - 70, -96 + b], [sd * 10 - 72, -54 + b]], { w: 2.4, col: '#e8e0d0', pass2: false });
-    const tk = rect(-96, -58 + b, 42, 46, { wash: '#b02030', washA: 1, w: 2.2, col: TM.line, key: 401 }); pencil([[-92, -54 + b], [-58, -54 + b], [-58, -16 + b], [-92, -16 + b], [-92, -54 + b]], { w: 2.6, col: C, pass2: false, gap: false }); txt('А', -75, -36 + b, 22, { col: C, font: 'Osw' });
+    const tk = rect(-96, -58 + b, 42, 46, { wash: '#b02030', washA: 1, w: 2.2, col: TM.line, key: 401 }); pencil([[-92, -54 + b], [-58, -54 + b], [-58, -16 + b], [-92, -16 + b], [-92, -54 + b]], { w: 2.6, col: C, pass2: false, gap: false }); line([[-84, -28 + b], [-75, -44 + b], [-66, -28 + b]], { w: 2.2, col: C, pass2: false }); nb(-75, -48 + b, 3, C);
     const MP = [[-102, -256 + b], [-34, -264 + b], [-30, -232 + b], [-46, -166 + b], [-72, -112 + b], [-104, -106 + b], [-110, -180 + b]];
     const mt = blob(MP, { wash: '#1e2a5e', washA: 1, w: 2.6, col: TM.line, key: 402 }); shadeG(mt.path, -110, 0, -40, 0, '#0a1030', 0.6);
     for (let i = 0; i < 5; i++) pencil([[-98 + i * 2, -222 + i * 20 + b], [-48 - i * 5, -222 + i * 20 + b]], { w: 2.4, col: C, a: 0.9, pass2: false, gap: false });
@@ -533,7 +542,7 @@ const COST6 = {
 /* ---- голова: брызги извести / сажа на шерсти */
 function face6(OF, t, fx) {
   if (OF.splash) limeSplash(null, [0, 0, 0, 0], 0, 1) || [[-96, 26, 5], [-86, 40, 3], [104, -40, 6], [64, -74, 4], [-52, -78, 3.5], [116, 34, 4], [-112, -20, 3]].forEach(([x, y, r], i) => { ctx.fillStyle = CU.lime; ctx.globalAlpha = 0.95; ctx.beginPath(); for (let k = 0; k <= 9; k++) { const a = k / 9 * 6.283, rr = r * (0.7 + 0.45 * Math.abs(Math.sin(k * 2.3 + i))); k ? ctx.lineTo(x + fx * 0.3 + Math.cos(a) * rr, y + Math.sin(a) * rr) : ctx.moveTo(x + fx * 0.3 + rr, y); } ctx.fill(); ctx.beginPath(); ctx.arc(x + fx * 0.3 + r * 1.8, y - r, 1.4, 0, 6.283); ctx.fill(); ctx.globalAlpha = 1; });
-  if (OF.soot) for (const [x, y, r, a] of [[-84, 34, 30, 0.45], [88, 30, 26, 0.4], [40, -70, 16, 0.3], [-20, 64, 12, 0.25]]) { const g = ctx.createRadialGradient(x + fx * 0.3, y, 2, x + fx * 0.3, y, r); g.addColorStop(0, `rgba(30,24,20,${a})`); g.addColorStop(1, 'rgba(30,24,20,0)'); ctx.fillStyle = g; ctx.fillRect(x + fx * 0.3 - r, y - r, r * 2, r * 2); pencil([[x - r * 0.5 + fx * 0.3, y - 4], [x + r * 0.4 + fx * 0.3, y + 3]], { w: 2.4, col: '#2a221c', a: a * 0.9, pass2: false, gap: false }); }
+  if (OF.soot) for (const [x, y, r, a] of [[-84, 34, 34, 0.62], [90, 28, 30, 0.55], [40, -68, 18, 0.42], [-22, 66, 14, 0.35]]) { const g = ctx.createRadialGradient(x + fx * 0.3, y, 2, x + fx * 0.3, y, r); g.addColorStop(0, `rgba(30,24,20,${a})`); g.addColorStop(1, 'rgba(30,24,20,0)'); ctx.fillStyle = g; ctx.fillRect(x + fx * 0.3 - r, y - r, r * 2, r * 2); pencil([[x - r * 0.5 + fx * 0.3, y - 4], [x + r * 0.4 + fx * 0.3, y + 3]], { w: 2.4, col: '#2a221c', a: a * 0.9, pass2: false, gap: false }); }
 }
 /* ---- задний слой головного убора (до головы) */
 const HATBACK = {
@@ -603,20 +612,20 @@ const HAT6 = {
   },
   berretto(t, o, fx, L) {                                              // мягкий берет мастера: складки, тулья, наклон
     const C = '#5a1a26', CD = '#26060c';
-    rect(-100, -96, 200, 32, { wash: '#3a0e16', washA: 1, w: 2.6, col: TM.line, key: 372, shade: { gap: 5, a: 0.2, col: '#000' } });
-    const P = [[-156, -100], [-146, -144], [-80, -184], [10, -190], [100, -168], [134, -128], [120, -94], [40, -88], [-60, -86], [-136, -86]];
+    push(0, 22, 1, -0.06); rect(-114, -96, 228, 30, { wash: '#3a0e16', washA: 1, w: 2.6, col: TM.line, key: 372, shade: { gap: 5, a: 0.2, col: '#000' } });
+    const P = [[-168, -96], [-156, -146], [-84, -186], [10, -192], [104, -170], [142, -128], [128, -92], [40, -86], [-60, -84], [-146, -82]];
     const bp = softShape(P, { wash: C, washA: 1, w: 3, col: TM.line, key: 373 }, 1.2, 2); metalG(bp.path, L.side * 30, -170, 190, '#a84a5a', C, CD);
     for (const [x0, x1] of [[-120, -60], [-60, -20], [10, 30], [70, 70]]) pencil(spline([[x0, -98], [(x0 + x1) / 2 - 6, -130], [x1, -178]], false, 6), { w: 1.8, col: CD, a: 0.6, pass2: false });
     pencil(spline([[-140, -94], [-40, -86], [60, -88], [124, -96]], false, 8), { w: 2.2, col: CD, a: 0.7, pass2: false });
     pencil(spline([[-120, -150], [-40, -178], [40, -180]], false, 6), { w: 4, col: 'rgba(255,200,200,0.35)', pass2: false });
-    rimL(spline(P, true, 8), L.side, L.rim, 0.7, 3);
+    rimL(spline(P, true, 8), L.side, L.rim, 0.7, 3); pop();
   },
-  paintcap(t, o, fx, L) {                                              // холщовая шапка-«кораблик» маляра в брызгах
-    const CV = '#e6dcc2', CVD = '#9a8e72';
-    const P = [[-118, -70], [-104, -110], [-30, -172], [6, -182], [34, -170], [104, -110], [118, -70]];
-    const cp = blob(P, { wash: CV, washA: 1, w: 2.8, col: TM.line, key: 382 }); shadeG(cp.path, -L.side * 120, 0, L.side * 50, 0, CVD, 0.6); hatch(cp.path, cp.bb, { gap: 4, a: 0.14, col: CVD, ang: 0.1, key: 383, w: 1.2 });
-    const bd = poly([[-126, -62], [126, -62], [118, -98], [-118, -98]], { wash: '#d8ccb0', washA: 1, w: 2.6, col: TM.line, key: 384 }); shadeG(bd.path, 0, -62, 0, -98, CVD, 0.45);
-    pencil([[-30, -168], [-2, -108], [30, -168]], { w: 1.6, col: CVD, a: 0.7, pass2: false });
+  paintcap(t, o, fx, L) {                                              // холщовый колпак маляра: мягкий, макушка завалилась набок, в извести
+    const CV = '#e2d6ba', CVD = '#8e8266';
+    const P = [[-106, -84], [-96, -146], [-36, -182], [34, -188], [92, -170], [130, -142], [154, -108], [146, -88], [120, -96], [106, -84]];
+    const cp = softShape(P, { wash: CV, washA: 1, w: 2.8, col: TM.line, key: 382 }, 1.2, 4); shadeG(cp.path, -L.side * 120, 0, L.side * 50, 0, CVD, 0.6); hatch(cp.path, cp.bb, { gap: 4, a: 0.14, col: CVD, ang: 0.1, key: 383, w: 1.2 });
+    for (const P2 of [[[-40, -96], [-20, -150], [20, -182]], [[30, -100], [70, -140], [110, -150]], [[96, -110], [126, -128], [146, -100]]]) pencil(spline(P2, false, 6), { w: 1.8, col: CVD, a: 0.65, pass2: false });
+    const bd = softShape([[-122, -54], [-118, -96], [0, -106], [118, -96], [122, -54], [0, -46]], { wash: '#d4c6a6', washA: 1, w: 2.6, col: TM.line, key: 384 }, 1, 6); shadeG(bd.path, 0, -46, 0, -106, CVD, 0.5); dashL([[-112, -62], [0, -54], [112, -62]], CVD, 0.6);
     limeSplash(cp.path, cp.bb, 4, 385); limeSplash(bd.path, bd.bb, 2, 386);
     rimL(spline(P, false, 6), L.side, L.rim, 0.7, 3);
   },
@@ -631,16 +640,16 @@ const HAT6 = {
   },
   kiver(t, o, fx, L) {                                                 // кивер 1812: козырёк, шнуры-этишкет, кокарда, белый султан
     const B = '#18161a', C = '#ecc554', sw = Math.sin(t * 2.6) * 6;
-    const pl = spline([[-6, -226], [-20, -280], [-16 + sw * 0.5, -340], [0 + sw, -372], [16 + sw * 0.5, -340], [20, -280], [6, -226]], true, 6);
+    const pl = spline([[-6, -200], [-20, -256], [-16 + sw * 0.5, -316], [0 + sw, -348], [16 + sw * 0.5, -316], [20, -256], [6, -200]], true, 6);
     const pp = shape(wobP(pl, 1.6, 4), { wash: '#f4f0e6', washA: 1, w: 2.4, col: '#6a645a', a: 0.7, key: 410 }); fstr(pp.path, pp.bb, 60, -1.5, 14, '#c8c2b4', 0.6, 411, 2); shadeG(pp.path, -L.side * 24, 0, L.side * 16, 0, '#9a948a', 0.5);
-    ell(0, -66, 108, 18, { wash: B, washA: 1, w: 3, col: TM.line, key: 412 }); pencil(spline([[30, -60], [70, -58], [96, -64]], false, 6), { w: 3, col: 'rgba(255,255,255,0.4)', pass2: false });
-    const BP = [[-72, -72], [-84, -230], [84, -230], [72, -72]]; const bd = poly(BP, { wash: B, washA: 1, w: 3.2, col: TM.line, key: 413 });
+    blob([[-76, -78], [76, -78], [70, -60], [0, -50], [-70, -60]], { wash: B, washA: 1, w: 3, col: TM.line, key: 412 }); pencil(spline([[10, -56], [40, -58], [64, -64]], false, 6), { w: 3, col: 'rgba(255,255,255,0.4)', pass2: false });
+    const BP = [[-74, -76], [-86, -208], [86, -208], [74, -76]]; const bd = poly(BP, { wash: B, washA: 1, w: 3.2, col: TM.line, key: 413 });
     metalG(bd.path, L.side * 40, -150, 150, '#4a4650', B, '#000'); hatch(bd.path, bd.bb, { gap: 5, a: 0.25, col: '#000', ang: -1.3, key: 414 });
-    ell(0, -230, 84, 12, { wash: '#2a282e', washA: 1, w: 2.4, col: TM.line }); pencil(spline([[-84, -228], [0, -218], [84, -228]], false, 6), { w: 5, col: C, pass2: false });
+    ell(0, -208, 86, 12, { wash: '#2a282e', washA: 1, w: 2.4, col: TM.line }); pencil(spline([[-85, -204], [0, -194], [85, -204]], false, 6), { w: 5, col: C, pass2: false });
     pencil(spline([[-73, -86], [0, -80], [73, -86]], false, 6), { w: 4, col: C, pass2: false });
-    for (const [y0, sag] of [[-196, 54], [-178, 70]]) { const P = spline([[-80, y0], [-40, y0 + sag * 0.75], [0, y0 + sag], [40, y0 + sag * 0.75], [78, y0 - 4]], false, 8); pencil(P, { w: 5, col: '#5a4010', a: 0.5, pass2: false, gap: false }); pencil(P, { w: 3.2, col: C, pass2: false, gap: false }); resample(P, 7).forEach(([x, y], i) => i % 2 || (ctx.fillStyle = '#8a6818', ctx.fillRect(x - 1, y - 1, 2 / S, 2 / S))); }
-    line([[78, -200], [92, -150], [96, -104]], { w: 3, col: C, pass2: false }); blob([[90, -108], [104, -108], [108, -78], [86, -78]], { wash: C, washA: 1, w: 1.6, col: CU.goldD }); for (let k = -2; k <= 2; k++) line([[97 + k * 4, -80], [97 + k * 5, -64]], { w: 1.6, col: C, pass2: false, smooth: false });
-    ell(0, -206, 14, 16, { wash: '#e07a1a', washA: 1, w: 2, col: TM.line }); ell(0, -206, 8, 10, { wash: '#141414', washA: 1, w: 1.2 }); ell(0, -206, 3, 4, { wash: '#e07a1a', washA: 1, line: false });
+    for (const [y0, sag] of [[-178, 46], [-162, 60]]) { const P = spline([[-80, y0], [-40, y0 + sag * 0.75], [0, y0 + sag], [40, y0 + sag * 0.75], [78, y0 - 4]], false, 8); pencil(P, { w: 5, col: '#5a4010', a: 0.5, pass2: false, gap: false }); pencil(P, { w: 3.2, col: C, pass2: false, gap: false }); resample(P, 7).forEach(([x, y], i) => i % 2 || (ctx.fillStyle = '#8a6818', ctx.fillRect(x - 1, y - 1, 2 / S, 2 / S))); }
+    line([[78, -182], [92, -140], [96, -104]], { w: 3, col: C, pass2: false }); blob([[90, -108], [104, -108], [108, -78], [86, -78]], { wash: C, washA: 1, w: 1.6, col: CU.goldD }); for (let k = -2; k <= 2; k++) line([[97 + k * 4, -80], [97 + k * 5, -64]], { w: 1.6, col: C, pass2: false, smooth: false });
+    ell(0, -186, 14, 16, { wash: '#e07a1a', washA: 1, w: 2, col: TM.line }); ell(0, -186, 8, 10, { wash: '#141414', washA: 1, w: 1.2 }); ell(0, -186, 3, 4, { wash: '#e07a1a', washA: 1, line: false });
     rimL(BP, L.side, L.rim, 0.75, 3);
   },
   metro(t, o, fx, L) {                                                 // каска метростроевца: поля, гребень, «М», фонарь
@@ -699,14 +708,14 @@ function mitt5(OF, far) {
 }
 /* ---- реквизит в ближней лапе: рисуется до лапы (лапа «держит»), локальные координаты от центра лапы */
 const PROPS = {
-  trowel() { const bl = poly([[-24, -36], [34, -44], [8, -136]], { wash: '#a8b0b6', washA: 1, w: 2.6, col: TM.line, key: 480 }); metalG(bl.path, 10, -100, 90, '#f4f8fa', '#a8b0b6', '#4a5258'); pencil([[4, -42], [8, -130]], { w: 1.4, col: '#5a6268', a: 0.7, pass2: false });
+  trowel() { const bl = blob([[-26, -38], [8, -46], [36, -44], [20, -96], [8, -138], [-6, -90]], { wash: '#7e888e', washA: 1, w: 2.6, col: TM.line, key: 480 }); metalG(bl.path, 14, -96, 80, '#dfe6ea', '#7e888e', '#30363a'); pencil([[4, -42], [8, -130]], { w: 1.4, col: '#5a6268', a: 0.7, pass2: false });
     blob([[-12, -50], [16, -56], [20, -70], [4, -80], [-10, -70]], { wash: '#d8d2c4', washA: 1, w: 1.8, col: '#6a6458', a: 0.7 });
     line([[0, -12], [2, -26], [6, -40]], { w: 5, col: '#5a6268', pass2: false }); rect(-7, -18, 14, 8, { wash: CU.gold, washA: 1, w: 1.6, col: CU.goldD });
     const h = blob([[-9, -10], [9, -10], [10, 34], [0, 40], [-10, 34]], { wash: CU.wood, washA: 1, w: 2.4, col: TM.line }); fstr(h.path, h.bb, 10, 1.57, 14, CU.woodD, 0.5, 481); },
   brush(t) { const h = rect(-6, -76, 12, 120, { wash: CU.wood, washA: 1, w: 2.4, col: TM.line, key: 482 }); fstr(h.path, h.bb, 10, 1.57, 20, CU.woodD, 0.5, 483);
     const tu = softShape([[-15, -80], [15, -80], [30, -118], [26, -152], [0, -166], [-26, -152], [-30, -118]], { wash: '#d8c08a', washA: 1, w: 2.4, col: '#5a4420', a: 0.75, key: 484 }, 1.6, 2);
     fstr(tu.path, tu.bb, 50, -1.57, 22, '#8a6a34', 0.6, 485, 2); fstr(tu.path, tu.bb, 30, -1.57, 18, '#f4e8c0', 0.6, 486, 2);
-    ctx.save(); ctx.clip(tu.path); ctx.fillStyle = CU.lime; ctx.globalAlpha = 0.92; ctx.beginPath(); ctx.moveTo(-34, -126); for (let x = -34; x <= 34; x += 8) ctx.lineTo(x, -126 + Math.sin(x * 0.5) * 6 + (x % 16 ? 14 : 0)); ctx.lineTo(34, -170); ctx.lineTo(-34, -170); ctx.fill(); ctx.restore(); ctx.globalAlpha = 1;
+    ctx.save(); ctx.clip(tu.path); ctx.fillStyle = CU.lime; ctx.globalAlpha = 0.92; ctx.beginPath(); ctx.moveTo(-34, -140); for (let x = -34; x <= 34; x += 8) ctx.lineTo(x, -140 + Math.sin(x * 0.5) * 5 + (x % 16 ? 12 : 0)); ctx.lineTo(34, -170); ctx.lineTo(-34, -170); ctx.fill(); ctx.restore(); ctx.globalAlpha = 1;
     pencil([[-16, -82], [16, -82]], { w: 4, col: '#6a4a24', pass2: false }); pencil([[-15, -90], [15, -90]], { w: 3, col: '#6a4a24', pass2: false });
     for (let k = 0; k < 3; k++) { const u = (t * 1.3 + k * 0.33) % 1, y = -110 + u * 190, x = -14 + k * 14; ctx.globalAlpha = 1 - u * 0.6; ell(x, y, 3, 4.5 + u * 2, { wash: CU.lime, washA: 1, w: 1, col: '#9a948a', a: 0.6 }); } ctx.globalAlpha = 1; },
   spyglass() { push(0, 0, 1, -0.6); const sec = [[-66, -56, 9, CU.gold], [-56, 50, 16, '#5a3a20'], [50, 96, 12.5, CU.gold], [96, 134, 10, CU.gold]];

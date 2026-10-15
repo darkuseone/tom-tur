@@ -30,7 +30,7 @@
   const ln = (P, w, col, a = 1) => { ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = col; ctx.lineWidth = w / S; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]); for (let i = 1; i < P.length; i++) ctx.lineTo(P[i][0], P[i][1]); ctx.stroke(); ctx.restore(); };
   const dot = (x, y, r, col, a = 1) => { ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, Math.max(0.2, r), 0, 6.3); ctx.fill(); ctx.restore(); };
   const BX = 660, BX1 = 1020, BTOP = 1176;                // белый блок известняка (фронт)
-  const TX = 420;                                        // Том на дне
+  const TX = 450;                                        // Том на дне
 
   // ---------------------------------------------------------------- фауна и флора карбона
   function crinoid(x, y, h, t, seed, o = {}) {           // морская лилия: стебель-«чётки», чашечка, перистые руки
@@ -300,7 +300,7 @@
       const fallK = clamp(u / 0.62), y = t < EV.sea_land ? lerp(GY - 900, GY, 1 - Math.pow(1 - fallK, 2.2)) : GY;
       const land = t > EV.sea_land && t < EV.sea_land + 0.3 ? 0.35 * (1 - (t - EV.sea_land) / 0.3) : 0;
       const walking = t > EV.sea_land + 0.35 && t < EV.sea_warm - 0.1, wx = lerp(TX - 70, TX, clamp((t - EV.sea_land - 0.35) / (EV.sea_warm - 0.1 - EV.sea_land - 0.35)));
-      const o = { x: t < EV.sea_land + 0.35 ? TX - 70 : wx, y: y + Math.sin(t * 2) * 4, s: 1.18, squash: b.squash + land, rot: t < EV.sea_land ? Math.sin(u * 7) * 0.12 : 0,
+      const o = { x: t < EV.sea_land + 0.35 ? TX - 70 : wx, y: y + Math.sin(t * 2) * 4, s: 1.08, squash: b.squash + land, rot: t < EV.sea_land ? Math.sin(u * 7) * 0.12 : 0,
         walk: walking ? t * 5 : undefined, look: [0.35, -0.1] };
       if (t < EV.sea_land) Object.assign(o, { hand: [120, -330], handF: [-120, -330], look: [0, -0.6] });
       const e = b.A.expr2;
@@ -321,7 +321,7 @@
       if (shellUp(t)) { const [hx2, hy2] = P.hand; push(P.x + hx2 * P.s, P.y + (hy2 - 40) * P.s, 0.9, -0.2); brachio(0, 0, 1, 0, '#e2d0a6'); pop(); glow(P.x + hx2 * P.s, P.y + (hy2 - 40) * P.s, 70, 'rgba(255,250,210,1)', 0.35); }
     },
     cam: () => [[S0.sea, 540, 540, -1.35], [S0.sea + 0.62, 540, 930, 0.04, 'x'], [EV.sea_warm - 0.2, 520, 950, 0.1], [EV.sea_sharkTop, 510, 900, 0.0], [EV.sea_shell, 560, 990, 0.12],
-      [EV.sea_white, 650, 1030, 0.12], [EV.sea_stamp - 0.05, 670, 1040, 0.15], [EV.sea_stamp + 0.14, 690, 1060, 0.24, 'x'], [S1.sea, 692, 1060, 0.26]],
+      [EV.sea_white, 625, 1030, 0.12], [EV.sea_stamp - 0.05, 630, 1040, 0.15], [EV.sea_stamp + 0.14, 640, 1050, 0.22, 'x'], [S1.sea, 642, 1050, 0.24]],
     hud: t => {                                            // перемотка таймлапса: +8 млн лет
       if (t < EV.sea_lapse || t > EV.sea_white + 0.6) return; const k = clamp((t - EV.sea_lapse) / (EV.sea_white - EV.sea_lapse)), a = clamp((EV.sea_white + 0.6 - t) / 0.3);
       push(540, 470, 1, -0.02); ctx.save(); ctx.globalAlpha = 0.75 * a; ctx.fillStyle = 'rgba(8,20,24,0.8)'; ctx.fillRect(-250, -44, 500, 88); ctx.restore();

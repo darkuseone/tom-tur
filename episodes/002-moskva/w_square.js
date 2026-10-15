@@ -19,9 +19,9 @@
   SHAKES.push([EV.sq_touch, 0.25, 7], [EV.sq_glow, 0.3, 6]);
   for (const w of ['площадью', 'тринадцать', 'миллионов', 'древнего', 'моря!', 'дальше?']) if (!KEYW.includes(w)) KEYW.push(w);
 
-  const ceilBase = t => lerp(548, 606, sm((t - EV.sq_more + 0.1) / 0.9)) + Math.sin(t * 1.3) * 5;   // вода «давит» сверху
+  const ceilBase = t => lerp(608, 692, sm((t - EV.sq_more + 0.1) / 1.1)) + 22 * sm((t - EV.sq_touch) / 2.6) + Math.sin(t * 1.3) * 5;   // вода «давит» сверху
   const sagK = t => sm((t - EV.sq_point) / 0.6) * (1 - 0.6 * sm((t - EV.sq_touch - 0.4) / 1.2));
-  const ceilY = (x, t) => ceilBase(t) + Math.sin(x * 0.011 + t * 1.7) * 13 + Math.sin(x * 0.029 - t * 2.4) * 6 + 34 * sagK(t) * Math.exp(-Math.pow((x - 778) / 70, 2));
+  const ceilY = (x, t) => ceilBase(t) + Math.sin(x * 0.011 + t * 1.7) * 13 + Math.sin(x * 0.029 - t * 2.4) * 6 - 26 * sagK(t) * Math.exp(-Math.pow((x - 778) / 60, 2));
 
   // ---------------------------------------------------------------- морские существа карбона
   function stetha(x, y, s, t, fl = 1) {                               // стетакант: акула с «гладильной доской» на спине
@@ -47,8 +47,8 @@
   }
   function jelly(x, y, s, t, seed) {                                 // медуза: полупрозрачный купол, бьющийся ритм
     const p = 1 + Math.sin(t * 3 + seed) * 0.1; push(x, y, s);
-    glow(0, 0, 90, 'rgba(160,220,255,0.8)', 0.25);
-    blob([[-50 * p, 10], [-46 * p, -22], [0, -46 / p], [46 * p, -22], [50 * p, 10], [0, 2]], { wash: '#bfe8ff', washA: 0.35, w: 2, col: '#d8f4ff', a: 0.7 });
+    glow(0, 0, 110, 'rgba(255,170,230,0.9)', 0.35);
+    blob([[-50 * p, 10], [-46 * p, -22], [0, -46 / p], [46 * p, -22], [50 * p, 10], [0, 2]], { wash: '#f0c0f0', washA: 0.45, w: 2.4, col: '#ffe0ff', a: 0.8 });
     for (let i = -3; i <= 3; i++) line([[i * 14, 6], [i * 14 + Math.sin(t * 2 + i + seed) * 12, 60], [i * 12 + Math.sin(t * 2.4 + i) * 16, 120 + Math.abs(i) * -8]], { w: 1.4, col: '#d8f4ff', a: 0.6, pass2: false });
     pop();
   }
@@ -62,10 +62,10 @@
     pop();
   }
   function caust(map, nu, nv, t, col, a, w) {                        // сетка каустик в произвольной проекции map(u,v) → [x,y]
-    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.strokeStyle = col; ctx.globalAlpha = a; ctx.lineWidth = w / S; ctx.lineJoin = 'round'; ctx.beginPath();
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.strokeStyle = col; ctx.lineJoin = 'round'; ctx.beginPath();
     for (let j = 0; j <= nv; j++) for (let i = 0; i <= nu * 3; i++) { const u = i / (nu * 3), v = (j + 0.32 * Math.sin(u * 19 + t * 1.7 + j) + 0.18 * Math.sin(u * 7 - t * 1.1 + j * 2)) / nv, p = map(u, v); i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }
     for (let i = 0; i <= nu; i++) for (let j = 0; j <= nv * 3; j++) { const v = j / (nv * 3), u = (i + 0.32 * Math.sin(v * 17 + t * 1.5 + i) + 0.18 * Math.sin(v * 6 + t * 0.9 + i * 3)) / nu, p = map(u, v); j ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }
-    ctx.stroke(); ctx.restore();
+    ctx.globalAlpha = a * 0.35; ctx.lineWidth = w * 3.2 / S; ctx.stroke(); ctx.globalAlpha = a * 0.6; ctx.lineWidth = w * 0.8 / S; ctx.stroke(); ctx.restore();
   }
 
   // ---------------------------------------------------------------- архитектура
@@ -206,14 +206,14 @@
       ctx.globalAlpha = 1;
       jelly(150 + Math.sin(t * 0.5) * 30, 300 - u * 12, 0.9, t, 1); jelly(930, 230 - u * 8, 0.7, t, 2); jelly(420, 80 - u * 10, 0.55, t, 3);
       gonia(-80 + u * 70, cb - 150 + Math.sin(t * 1.2) * 10, 0.85, t, 1); gonia(1150 - u * 60, cb - 230, 0.6, t, 2);
-      stetha(-420 + u * 290, cb - 92 + Math.sin(u * 1.4) * 14, 0.95, t, -1);                 // акула идёт слева направо над стеной
-      oldFish(1180 - u * 150, cb - 60, 0.7, t, 1); oldFish(1320 - u * 170, cb - 110, 0.55, t + 1, 1, '#6a7a8a');
+      stetha(-520 + u * 300, cb - 170 + Math.sin(u * 1.4) * 18, 1.55, t, -1);                 // акула идёт слева направо над стеной
+      stetha(820 - u * 210, cb - 330 + Math.sin(u * 2) * 10, 0.8, t + 2, 1); oldFish(1180 - u * 150, cb - 60, 0.7, t, 1); oldFish(1320 - u * 170, cb - 110, 0.55, t + 1, 1, '#6a7a8a');
       for (let i = 0; i < 40; i++) { const rr = rng(i * 13 + 5), x = rr() * W, ph = (t * (0.15 + rr() * 0.2) + rr()) % 1, y = cb - 10 - ph * 900; ctx.strokeStyle = 'rgba(220,250,255,0.7)'; ctx.lineWidth = 1.6 / S; ctx.beginPath(); ctx.arc(x + Math.sin(t * 3 + i) * 6, y, 2 + rr() * 6, 0, 6.3); ctx.stroke(); }   // пузыри
-      caust((uu, vv) => [lerp(-500, W + 500, uu), cb - 160 + vv * 190], 22, 4, t, '#bff6ff', 0.5, 2.4);
+      caust((uu, vv) => [lerp(-500, W + 500, uu), cb - 260 + vv * 290], 14, 3, t, '#9fefff', 0.2, 3);
       { const g2 = ctx.createLinearGradient(0, cb - 60, 0, cb + 30); g2.addColorStop(0, 'rgba(120,230,255,0)'); g2.addColorStop(1, 'rgba(170,250,255,0.55)'); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = g2; ctx.fillRect(-1400, cb - 60, W + 2800, 120); }
       { const tx = 778, gr = ctx.createRadialGradient(tx, cb + 20, 10, tx, cb + 20, 260); gr.addColorStop(0, 'rgba(255,60,60,0.55)'); gr.addColorStop(1, 'rgba(255,60,60,0)'); ctx.fillStyle = gr; ctx.fillRect(tx - 260, cb - 240, 520, 300); }   // звезда подсвечивает воду
       ctx.restore();
-      pencil(edge, { w: 5, col: '#e8fcff', a: 0.95, pass2: false, gap: false }); pencil(edge.map(([x, y]) => [x, y - 8]), { w: 2, col: '#7fd8ef', a: 0.7, pass2: false, gap: false });
+      pencil(edge, { w: 4, col: '#c8f6ff', a: 0.8, pass2: false, gap: false }); pencil(edge.map(([x, y]) => [x, y - 10]), { w: 2, col: '#5fc8e0', a: 0.6, pass2: false, gap: false }); glow(560, cb, 700, 'rgba(120,220,255,1)', 0.12);
       for (let i = 0; i < 18; i++) { const x = -200 + i * 90 + (i * 37 % 40), ph = (t * 0.9 + i * 0.29) % 1, y0 = ceilY(x, t);    // капли отрываются от «потолка»
         ell(x, y0 + 6, 6, 9 + ph * 6, { wash: '#bff0ff', washA: 0.9, w: 1.4, col: '#e8fcff' }); if (ph > 0.3) { const yy = y0 + (ph - 0.3) * 900; ctx.save(); ctx.globalAlpha = 0.8; ctx.fillStyle = '#d8f8ff'; ctx.beginPath(); ctx.ellipse(x, yy, 3, 9, 0, 0, 6.3); ctx.fill(); ctx.restore(); } }
       const rip = clamp((t - EV.sq_touch) / 1.4); if (rip > 0 && rip < 1) for (let k = 0; k < 3; k++) { const q = clamp(rip - k * 0.15); if (q > 0) pencil(ellPts(778, ceilY(778, t) + 4, 30 + q * 380, 6 + q * 40, 0, 0, 60), { w: 3, col: '#e8fcff', a: 0.8 * (1 - q), pass2: false, gap: false }); }
@@ -231,6 +231,8 @@
       basil(470, 1272, 0.86, t);
       kwall(t);
       spass(778, 1281, 1, t, t > EV.sq_glow - 0.6 ? -Math.pow(t - EV.sq_glow + 0.6, 2) * 14 : 0);
+      { const edge = []; for (let x = 560; x <= 1000; x += 20) edge.push([x, ceilY(x, t) + 4]); const sub = pathOf([[560, 300], [1000, 300]].concat(edge.slice().reverse()));   // верх Спасской уходит под воду
+        ctx.save(); ctx.clip(sub); ctx.fillStyle = 'rgba(16,80,110,0.55)'; ctx.fillRect(560, 300, 440, 500); caust((uu, vv) => [lerp(600, 960, uu), lerp(520, 760, vv)], 5, 3, t, '#bff6ff', 0.35, 2); glow(778, 641, 120, 'rgba(255,60,60,1)', 0.5); ctx.restore(); }
       gum(t);
       lamp(gumP(0.25, 1)[0] + 120, gumP(0.25, 1)[1] + 60, 0.9 / 1.65, t); lamp(gumP(0.6, 1)[0] + 90, gumP(0.6, 1)[1] + 30, 0.9 / 2.56, t);
       caust((uu, vv) => wallP(uu, vv), 14, 3, t + 3, '#7fe8ff', 0.22, 2);
@@ -245,21 +247,21 @@
     lay(1, () => {
       { const g = ctx.createRadialGradient(330, 1480, 30, 330, 1480, 420); g.addColorStop(0, 'rgba(120,230,255,0.22)'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = g; ctx.fillRect(-100, 1100, 900, 800); ctx.restore(); }
       cat();
-      const fb = clamp((t - EV.sq_fish + 0.9) / 1.6);                // пузырь-капля моря с рыбой проплывает у головы Тома
-      if (fb > 0 && fb < 1) { const x = lerp(980, -260, fb), y = 1020 + Math.sin(fb * 7) * 26 - Math.sin(fb * Math.PI) * 40, R = 92;
+      const fb = clamp((t - EV.sq_fish + 0.8) / 1.5);                // пузырь-капля моря с рыбой проплывает у головы Тома
+      if (fb > 0 && fb < 1) { const x = lerp(980, -260, fb), y = 1020 + Math.sin(fb * 7) * 26 - Math.sin(fb * Math.PI) * 40, R = 115;
         push(x, y, 1, Math.sin(t * 2) * 0.1); ctx.save(); ctx.beginPath(); ctx.ellipse(0, 0, R * (1 + Math.sin(t * 9) * 0.04), R * (1 - Math.sin(t * 9) * 0.04), 0, 0, 6.3); ctx.fillStyle = 'rgba(60,170,200,0.35)'; ctx.fill(); ctx.clip();
         caust((uu, vv) => [lerp(-R, R, uu), lerp(-R, R, vv)], 4, 4, t, '#c8f8ff', 0.5, 2); ctx.restore();
-        oldFish(0, 6, 0.95, t, 1, '#c8a050'); pencil(ellPts(0, 0, R, R, 0, 0.05, 50), { w: 3.4, col: '#e8fcff', a: 0.9, pass2: false, gap: false });
+        oldFish(0, 6, 1.3, t, 1, '#c8a050'); pencil(ellPts(0, 0, R, R, 0, 0.05, 50), { w: 3.4, col: '#e8fcff', a: 0.9, pass2: false, gap: false });
         ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,0.85)'; ctx.lineWidth = 5 / S; ctx.beginPath(); ctx.arc(-R * 0.1, -R * 0.1, R * 0.72, -2.6, -1.8); ctx.stroke(); ctx.restore();
         for (let i = 0; i < 6; i++) { const ph = (t * 1.5 + i / 6) % 1; ctx.strokeStyle = 'rgba(220,250,255,0.8)'; ctx.lineWidth = 1.6 / S; ctx.beginPath(); ctx.arc(R + 20 + ph * 140, Math.sin(i * 2) * 30 - ph * 40, 3 + i, 0, 6.3); ctx.stroke(); }
         pop(); }
     });
     lay(0.85, () => {                                                // передний план: ограждение с табличкой, фонарь, капли
-      push(1010, 1640, 1, -0.03);
+      push(1240, 1600, 1, -0.03);
       for (const x of [-240, 0, 240]) rect(x - 8, -250, 16, 270, { wash: '#8a8e96', washA: 1, w: 2.2, col: '#1a1c22' });
       for (const y of [-240, -40]) rect(-260, y, 520, 14, { wash: '#9a9ea6', washA: 1, w: 2, col: '#1a1c22' });
       for (let x = -240; x < 240; x += 28) line([[x, -226], [x, -40]], { w: 3, col: '#5a5e66', pass2: false, smooth: false });
-      push(-110, -170, 1, 0.05 + Math.sin(t * 2) * 0.03); rect(-150, -60, 300, 120, { wash: '#f4f0e6', washA: 1, w: 3, col: '#1a1c22' }); rect(-140, -50, 280, 100, { wash: '#f4f0e6', washA: 1, w: 2, col: '#c8302a' });
+      push(-150, -300, 1, 0.05 + Math.sin(t * 2) * 0.03); rect(-150, -60, 300, 120, { wash: '#f4f0e6', washA: 1, w: 3, col: '#1a1c22' }); rect(-140, -50, 280, 100, { wash: '#f4f0e6', washA: 1, w: 2, col: '#c8302a' });
       txt('КУПАНИЕ', 0, -16, 44, { col: '#c8302a', font: 'Osw' }); txt('ЗАПРЕЩЕНО', 0, 28, 40, { col: '#c8302a', font: 'Osw' }); pop();
       pop();
       motes(30, [0, 500, W, 1800], '#d8f8ff', t, 3, { sp: 260, sz: 2.2, a: 0.55, stretch: 4 });
@@ -280,7 +282,7 @@
         handF: t < EV.sq_more ? [-90, -230 - jump * 0.6] : rec > 0.1 ? [-70, -280] : undefined,
         watchInHand: w, glow: clamp((t - EV.sq_watch - 0.3) / 0.9), spin: t > EV.sq_glow - 0.3 ? (t - EV.sq_glow + 0.3) * 2.2 : 0, tilt: t > LS('h2') && !w ? 0.08 : 0, tailUp: rec > 0.1 || u < 0.6 });
     },
-    cam: () => [[0, 300, 1040, 0.58], [0.45, 300, 1050, 0.46, 'x'], [EV.sq_more, 330, 1020, 0.36], [EV.sq_more + 0.45, 560, 830, -0.3, 'x'], [EV.sq_point + 0.5, 640, 860, -0.2], [EV.sq_touch + 0.4, 700, 840, -0.1],
+    cam: () => [[0, 310, 985, 0.54], [0.45, 305, 1000, 0.44, 'x'], [EV.sq_more, 330, 1000, 0.36], [EV.sq_more + 0.45, 560, 830, -0.3, 'x'], [EV.sq_point + 0.5, 640, 860, -0.2], [EV.sq_touch + 0.4, 700, 840, -0.1],
       [LS('h2') - 0.05, 660, 870, -0.14], [LS('h2') + 0.4, 330, 1060, 0.3, 'x'], [EV.sq_watch, 340, 1080, 0.33], [EV.sq_glow, 360, 1100, 0.4], [S1.square, 375, 1110, 0.48]],
     afterCat: (t, u, P) => { if (P.watchInHand && P.glow > 0.05) { const wx = P.x + (P.hand[0] + 6) * P.s, wy = P.y + (P.hand[1] - 34) * P.s; rays(wx, wy, -Math.PI / 2, 6.28, 420 + P.glow * 300, 'rgba(255,214,140,0.7)', 0.35 * P.glow, 12, t * 3); glow(wx, wy, 160, 'rgba(255,220,150,1)', 0.6 * P.glow); } }
   };

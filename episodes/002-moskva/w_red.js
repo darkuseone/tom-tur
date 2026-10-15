@@ -61,34 +61,39 @@
       const len = (40 + dr() * 90) * sm(fade(t, EV.red_stroke + SD * (x + 180) / 1480, EV.red_stroke + SD * (x + 180) / 1480 + 0.5));
       ctx.save(); ctx.globalAlpha = 0.92; ctx.fillStyle = '#efe8d8'; ctx.beginPath(); ctx.moveTo(x - 7, bot); ctx.lineTo(x + 7, bot); ctx.lineTo(x + 4, bot + len); ctx.arc(x, bot + len, 5, 0, Math.PI); ctx.closePath(); ctx.fill(); ctx.restore(); }
   }
-  function giantBrush(t) {                       // гигантская кисть-квач: мочало на колодке, ручка уходит к камере
+  function giantBrush(t) {                       // гигантская кисть-квач: мочало в извести на колодке, ручка уходит вверх-назад
     const u = fade(t, EV.red_stroke - 0.06, EV.red_stroke + SD + 0.08); if (u <= 0 || u >= 1) return;
-    const F = strokeX(t) + 30, cy = 990;
-    push(F, cy, 1, 0.04);
-    poly([[-40, -60], [-760, -1500], [-560, -1500], [30, 40]], { wash: '#8a5a30', washA: 1, w: 3.2, col: '#2a160a', shade: { gap: 7, a: 0.35, col: '#3a200c', ang: 1.0 } });
-    const br = blob([[-80, -400], [40, -420], [120, -300], [130, 0], [120, 300], [40, 420], [-80, 400], [-60, 0]], { wash: '#dcc28a', washA: 1, w: 3, col: '#5a4018' });
+    const F = strokeX(t) + 20, cy = 990;
+    push(F, cy, 1, 0.05);
+    poly([[-60, -40], [-520, -1300], [-380, -1330], [10, -20]], { wash: '#9a6a38', washA: 1, w: 3.4, col: '#2a160a', shade: { gap: 7, a: 0.35, col: '#3a200c', ang: 1.0 } });
+    const fr = []; for (let i = 0; i <= 30; i++) { const y = -380 + i * 760 / 30; fr.push([110 + (i % 2) * 28 + Math.sin(i * 1.7) * 8, y]); }
+    const head = [[-70, -390], [40, -400], ...fr, [40, 400], [-70, 390]];
+    const br = poly(head, { wash: '#d4b878', washA: 1, w: 2.6, col: '#5a4018' });
     ctx.save(); ctx.clip(br.path); const r = rng(hsh(FRAME, 5)); ctx.lineCap = 'round';
-    for (let k = 0; k < 70; k++) { const y = -420 + k * 12 + r() * 6; ctx.globalAlpha = 0.6; ctx.strokeStyle = k % 3 ? '#8a6a30' : '#f4e2b0'; ctx.lineWidth = 2 + r() * 2; ctx.beginPath(); ctx.moveTo(-80, y); ctx.quadraticCurveTo(20, y + (r() - 0.5) * 20, 140, y + (r() - 0.5) * 30); ctx.stroke(); }
-    ctx.fillStyle = 'rgba(245,240,228,0.85)'; ctx.fillRect(50, -430, 90, 860); ctx.restore();
-    rect(-70, -330, 46, 660, { wash: '#6a3e1c', washA: 1, w: 3, col: '#2a160a', shade: { gap: 6, a: 0.4, col: '#2a1408', ang: 1.4 } });
-    for (const y of [-250, 0, 250]) line([[-78, y], [-16, y + 4]], { w: 5, col: '#3a2a14', smooth: false });
+    for (let k = 0; k < 64; k++) { const y = -400 + k * 12.6 + r() * 6; ctx.globalAlpha = 0.65; ctx.strokeStyle = k % 3 ? '#8a6a30' : '#f4e2b0'; ctx.lineWidth = 2 + r() * 2; ctx.beginPath(); ctx.moveTo(-60, y); ctx.quadraticCurveTo(30, y + (r() - 0.5) * 16, 150, y + (r() - 0.5) * 24); ctx.stroke(); }
+    const lg = ctx.createLinearGradient(20, 0, 140, 0); lg.addColorStop(0, 'rgba(246,242,232,0)'); lg.addColorStop(0.5, 'rgba(246,242,232,0.95)'); lg.addColorStop(1, 'rgba(246,242,232,1)'); ctx.globalAlpha = 1; ctx.fillStyle = lg; ctx.fillRect(20, -410, 140, 820); ctx.restore();
+    rect(-84, -350, 54, 700, { wash: '#5a3416', washA: 1, w: 3, col: '#1e0e04', shade: { gap: 6, a: 0.4, col: '#1a0a04', ang: 1.4 } });
+    for (const y of [-270, -90, 90, 270]) line([[-92, y], [-22, y + 4]], { w: 6, col: '#c8a868', smooth: false });
+    const dr = rng(hsh(FRAME, 8)); for (let k = 0; k < 8; k++) { const y = -360 + dr() * 720, l = 20 + dr() * 60; ctx.fillStyle = '#f6f2e8'; ctx.beginPath(); ctx.ellipse(130 + dr() * 30, y + l, 6, 9, 0, 0, 6.3); ctx.fill(); }
     pop();
   }
   // ---------------------------------------------------------------- дальние планы
-  function cathedral(t) {                        // Успенский собор (Фиораванти, 1479): белый камень, закомары, пять золотых шлемов
-    const x0 = 360, x1 = 760, y0 = 560;
-    const body = pathOf([[x0, 900], [x0, y0 + 30], [x1, y0 + 30], [x1, 900]]); wash(body, '#e6dcc6', 1); hatch(body, [x0, y0, x1, 900], { gap: 9, a: 0.18, col: '#6a5a44', ang: 1.2, key: 21 });
-    for (let i = 0; i < 4; i++) { const ax = x0 + 50 + i * 100; const p = []; for (let a = 0; a <= 12; a++) p.push([ax + Math.cos(Math.PI + a / 12 * Math.PI) * 50, y0 + 32 + Math.sin(Math.PI + a / 12 * Math.PI) * 40]); wash(pathOf([[ax - 50, y0 + 34], ...p, [ax + 50, y0 + 34]]), '#e6dcc6', 1); pencil(p, { w: 2, col: '#5a4a34', a: 0.7, pass2: false }); }
-    pencil([[x0, 900], [x0, y0 + 30]], { w: 2, col: '#5a4a34', a: 0.6 }); pencil([[x1, y0 + 30], [x1, 900]], { w: 2, col: '#5a4a34', a: 0.6 });
-    for (const [dx, dy, s] of [[440, 520, 0.75], [680, 520, 0.75], [480, 505, 0.7], [640, 505, 0.7], [560, 470, 1]]) {
-      const dw = 30 * s; const dr = pathOf([[dx - dw, dy + 30], [dx - dw, dy - 50 * s], [dx + dw, dy - 50 * s], [dx + dw, dy + 30]]); wash(dr, '#ddd2bc', 1); pencil([[dx - dw, dy + 30], [dx - dw, dy - 50 * s]], { w: 1.6, col: '#5a4a34', a: 0.6, pass2: false });
-      const hp = []; for (let a = 0; a <= 16; a++) { const q = a / 16, ang = Math.PI * (1 + q); hp.push([dx + Math.cos(ang) * dw * 1.15, dy - 50 * s + Math.sin(ang) * 46 * s - Math.pow(Math.sin(q * Math.PI), 8) * 18 * s]); }
-      const h = pathOf([[dx - dw * 1.15, dy - 50 * s], ...hp, [dx + dw * 1.15, dy - 50 * s]]); wash(h, '#d9a640', 1); ctx.save(); ctx.clip(h); glow(dx - dw * 0.4, dy - 80 * s, 30 * s, 'rgba(255,240,180,1)', 0.8); ctx.restore(); pencil(hp, { w: 2, col: '#5a3a10', a: 0.8, pass2: false });
-      pencil([[dx, dy - 96 * s - 18 * s], [dx, dy - 140 * s]], { w: 2.4, col: '#6a4a14', pass2: false }); pencil([[dx - 9 * s, dy - 128 * s], [dx + 9 * s, dy - 128 * s]], { w: 2, col: '#6a4a14', pass2: false });
+  function cathedral(t) {                        // Успенский собор (Фиораванти, 1479): белый камень, закомары, пять золотых шлемов на барабанах
+    const x0 = 380, x1 = 740, y0 = 600;
+    const body = pathOf([[x0, 900], [x0, y0], [x1, y0], [x1, 900]]); wash(body, '#e9dfca', 1); hatch(body, [x0, y0 - 40, x1, 900], { gap: 9, a: 0.16, col: '#6a5a44', ang: 1.2, key: 21 });
+    for (let i = 0; i < 4; i++) { const ax = x0 + 45 + i * 90; const p = []; for (let a = 0; a <= 12; a++) p.push([ax + Math.cos(Math.PI + a / 12 * Math.PI) * 45, y0 + Math.sin(Math.PI + a / 12 * Math.PI) * 34]); wash(pathOf([[ax - 45, y0 + 2], ...p, [ax + 45, y0 + 2]]), '#e9dfca', 1); pencil(p, { w: 2, col: '#5a4a34', a: 0.7, pass2: false }); pencil([[ax + 45, y0], [ax + 45, 900]], { w: 1.4, col: '#5a4a34', a: 0.35, pass2: false }); }
+    pencil([[x0, 900], [x0, y0]], { w: 2, col: '#5a4a34', a: 0.6 }); pencil([[x1, y0], [x1, 900]], { w: 2, col: '#5a4a34', a: 0.6 });
+    for (const [dx, base, s] of [[470, 596, 0.78], [650, 596, 0.78], [500, 580, 0.72], [620, 580, 0.72], [560, 566, 1]].sort((a, b) => a[2] - b[2])) {
+      const dw = 26 * s, dt = base - 70 * s; const dr = pathOf([[dx - dw, base], [dx - dw, dt], [dx + dw, dt], [dx + dw, base]]); wash(dr, '#e2d7c0', 1);
+      ctx.save(); ctx.clip(dr); ctx.fillStyle = 'rgba(90,70,50,0.25)'; ctx.fillRect(dx + dw * 0.3, dt, dw, 80 * s); for (let k = -1; k <= 1; k++) { ctx.fillStyle = '#4a3a2a'; ctx.fillRect(dx + k * dw * 0.6 - 2, dt + 18 * s, 4, 28 * s); } ctx.restore();
+      pencil([[dx - dw, base], [dx - dw, dt], [dx + dw, dt], [dx + dw, base]], { w: 1.6, col: '#5a4a34', a: 0.7, pass2: false });
+      const hp = []; for (let a = 0; a <= 16; a++) { const q = a / 16, ang = Math.PI * (1 + q); hp.push([dx + Math.cos(ang) * dw * 1.12, dt + Math.sin(ang) * 40 * s - Math.pow(Math.sin(q * Math.PI), 10) * 20 * s]); }
+      const h = pathOf([[dx - dw * 1.12, dt], ...hp, [dx + dw * 1.12, dt]]); wash(h, '#d9a640', 1); ctx.save(); ctx.clip(h); glow(dx - dw * 0.45, dt - 26 * s, 26 * s, 'rgba(255,244,190,1)', 0.9); ctx.fillStyle = 'rgba(120,70,10,0.3)'; ctx.fillRect(dx + dw * 0.3, dt - 70 * s, dw, 70 * s); ctx.restore(); pencil(hp, { w: 2, col: '#5a3a10', a: 0.8, pass2: false });
+      const tip = dt - 60 * s; pencil([[dx, tip], [dx, tip - 34 * s]], { w: 2.4, col: '#6a4a14', pass2: false }); pencil([[dx - 9 * s, tip - 22 * s], [dx + 9 * s, tip - 22 * s]], { w: 2, col: '#6a4a14', pass2: false });
     }
   }
   function midTower(t, tent, whiteK) {           // угловая башня: глухая четырёхгранная (1495, в лесах) → с шатром (1680)
-    const x0 = 40, x1 = 270, top = 470;
+    const x0 = 40, x1 = 270, top = 590;
     const b = pathOf([[x0, 1000], [x0, top], [x1, top], [x1, 1000]]); wash(b, '#94452f', 1);
     ctx.save(); ctx.clip(b); bricks(x0, top, x1, 1000, 16, 38, 5, BC, 0.5); ctx.fillStyle = 'rgba(30,10,6,0.35)'; ctx.fillRect(x1 - 60, top, 60, 600); ctx.restore();
     pencil([[x0, 1000], [x0, top], [x1, top], [x1, 1000]], { w: 2.6, col: '#2a120a', key: 41 });
@@ -97,7 +102,7 @@
     for (let i = 0; i < 4; i++) { const mx = x0 - 10 + i * 64; poly([[mx, top - 40], [mx, top - 74], [mx - 3, top - 86], [mx + 20, top - 66], [mx + 43, top - 86], [mx + 40, top - 74], [mx + 40, top - 40]], { wash: '#a04e36', washA: 1, w: 2, col: '#2a120a' }); }
     for (const y of [560, 680]) for (const x of [90, 200]) rect(x, y, 14, 40, { wash: '#1c0c08', washA: 0.95, w: 1.4 });
     if (tent > 0) {                              // шатёр с зелёной черепицей и смотровой вышкой
-      const k = popK(tent, 0, 0.4); push((x0 + x1) / 2, top - 86, 1, 0); ctx.scale(1, k);
+      const k = popK(tent, 0, 0.4); push((x0 + x1) / 2, top - 86, 0.8, 0); ctx.scale(1, k);
       const tp = [[-130, 0], [-26, -250], [26, -250], [130, 0]]; poly(tp, { wash: '#3f7a55', washA: 1, w: 2.6, col: '#12261a' });
       ctx.save(); ctx.clip(pathOf(tp)); ctx.strokeStyle = 'rgba(10,30,20,0.5)'; ctx.lineWidth = 1.5; ctx.beginPath(); for (let y = -240; y < 0; y += 18) { ctx.moveTo(-140, y); ctx.lineTo(140, y); } for (let x = -120; x <= 120; x += 24) { ctx.moveTo(x, 0); ctx.lineTo(x * 0.2, -250); } ctx.stroke(); ctx.fillStyle = 'rgba(255,255,220,0.18)'; ctx.fillRect(-130, -250, 70, 250); ctx.restore();
       rect(-24, -300, 48, 50, { wash: '#e8dcc2', washA: 1, w: 2, col: '#2a1a10' }); poly([[-30, -300], [0, -360], [30, -300]], { wash: '#3f7a55', washA: 1, w: 2, col: '#12261a' });
@@ -187,7 +192,7 @@
       const r = rng(23); for (let k = 0; k < 14; k++) { const x = -100 + r() * 1300, y = 1380 + r() * 260; rect(x, y, 30 + r() * 14, 13, { wash: BC[k % BC.length], washA: 1, w: 1.6, col: '#2a120a' }); }
       for (let j = 0; j < 4; j++) for (let i = 0; i < 4 - j % 2; i++) rect(60 + i * 56 + (j % 2) * 28, 1336 - j * 22, 54, 20, { wash: BC[(i + j) % BC.length], washA: 1, w: 1.8, col: '#2a120a' });
       push(310, 1380, 1); poly([[-70, -30], [70, -30], [56, 10], [-56, 10]], { wash: '#6a4a2a', washA: 1, w: 2.4, col: '#2a160a' }); ell(0, -30, 66, 10, { wash: '#cfc4ae', washA: 1, w: 1.6 }); pop();
-      if (t > EV.red_brick - 0.05) { const k = popK(t, EV.red_brick, 0.25); push(800, 1146, k); rect(-34, -12, 68, 24, { wash: '#b3604a', washA: 1, w: 2.4, col: '#2a120a' }); ell(0, 14, 40 * k, 5, { wash: '#d8ccb2', washA: 1, w: 1.2 }); pop(); }
+      if (t > EV.red_brick - 0.05) { const k = popK(t, EV.red_brick, 0.25); push(800, 1146, k); rect(-38, -13, 76, 26, { wash: '#c06a4e', washA: 1, w: 2.6, col: '#2a120a' }); glow(0, 0, 60, 'rgba(255,220,170,1)', 0.35 * (1 - clamp((t - EV.red_brick) / 0.8))); for (const sx of [-1, 1]) for (let q = 0; q < 3; q++) ell(sx * (44 + q * 9), 6 - q * 7, 6, 4, { wash: '#ddd2bc', washA: 1, w: 1 }); line([[-40, 16], [40, 17]], { w: 4, col: '#ddd2bc', smooth: false }); pop(); }
       if (t > EV.red_slap - 0.02 && t < EV.red_slap + 0.35) { const q = (t - EV.red_slap) / 0.35; for (let k = 0; k < 7; k++) { const a = k / 7 * 6.283; pencil([[790 + Math.cos(a) * (40 + q * 50), 1066 + Math.sin(a) * (40 + q * 50)], [790 + Math.cos(a) * (60 + q * 80), 1066 + Math.sin(a) * (60 + q * 80)]], { w: 3, col: '#3a1a0a', a: 1 - q, pass2: false }); } puff(790, 1066, 0.5, t, EV.red_slap, 0.4, 3, '#c89a78'); }
       cat();
     });
@@ -214,7 +219,7 @@
         const tap = Math.max(0, Math.sin((t - EV.red_brick) * 22)) * 14 * (t > EV.red_brick ? 1 : 0);
         o.hand = [150, -262 - tap]; o.handF = [110, -250]; o.look = [0.8, -0.1];
       } else if (t < WT('r1', 'потом')) {         // «итальянцы»: щепотка у морды, трясёт
-        const k = sm(fade(t, EV.red_ital - 0.1, EV.red_ital + 0.1)); o.hand = [lerp(150, 60, k), lerp(-262, -330, k) + Math.sin(t * 19) * 14 * k]; o.look = [0.05, 0]; o.tilt = -0.08;
+        const k = sm(fade(t, EV.red_ital - 0.1, EV.red_ital + 0.1)); o.hand = [lerp(150, 120, k), lerp(-262, -300, k) + Math.sin(t * 19) * 16 * k]; o.look = [0.05, 0]; o.tilt = -0.08;
       } else if (t < EV.red_shock) {              // подозрительно смотрит вверх на указ
         o.look = [0.5, -0.8]; o.hand = [40, -200]; o.handF = [-60, -170]; o.tilt = 0.06;
       } else if (t < EV.red_stroke - 0.05) {      // шок, лапы вверх; «пуф»
@@ -226,12 +231,12 @@
       }
       return Object.assign(b, o);
     },
-    afterCat: (t, u, P) => { if (t > EV.red_stroke) splats(P, t); puff(P.x, P.y - 260 * P.s, 1.5 * P.s, t, EV.red_poof - 0.04, 0.5, 21); },
+    afterCat: (t, u, P) => { if (t > EV.red_stroke) splats(P, t); puff(P.x, P.y - 280 * P.s, 1.0 * P.s, t, EV.red_poof - 0.04, 0.3, 21); },
     cam: () => [[S0.red, 540, 960, 0], [S0.red + 0.7, 560, 980, 0.06], [EV.red_ital - 0.1, 600, 970, 0.08], [EV.red_ital + 0.3, 760, 900, 0.15],
       [EV.red_tsar + 0.1, 520, 860, 0.1], [EV.red_poof, 600, 1000, 0.22], [EV.red_stroke + 0.25, 540, 960, -0.03], [S1.red, 540, 960, -0.01]],
     hud: t => {
       if (t < S0.red || t > S1.red + 0.4) return;
-      if (t > EV.red_ital + 0.05 && t < EV.red_tsar) note('«ласточкин хвост» — made in Italy', 560, 470, t, EV.red_ital + 0.05, EV.red_tsar - 0.05, '#3a1a0c', 50, -0.05, [[640, 500], [690, 560], [700, 640]]);
+      if (t > EV.red_ital + 0.05 && t < EV.red_tsar) { note('зубцы «ласточкин хвост»', 330, 450, t, EV.red_ital + 0.05, EV.red_tsar - 0.05, '#3a1a0c', 44, -0.05); note('— made in Italy', 380, 505, t, EV.red_ital + 0.25, EV.red_tsar - 0.05, '#8a1a10', 48, -0.05, [[300, 535], [270, 590], [262, 640]]); }
       if (t > EV.red_tsar) { const k = popK(t, EV.red_tsar, 0.22), s = lerp(2.4, 1, clamp((t - EV.red_tsar) / 0.12));
         push(790, 520, s * (0.95 + 0.05 * k), -0.16); ctx.save(); ctx.globalAlpha = clamp((t - EV.red_tsar) / 0.06);
         const red = '#b8322a'; pencil([[-210, -66], [210, -66], [210, 66], [-210, 66], [-210, -66]], { w: 5, col: red, pass2: false, gap: false }); pencil([[-196, -54], [196, -54], [196, 54], [-196, 54], [-196, -54]], { w: 2, col: red, pass2: false, gap: false });
