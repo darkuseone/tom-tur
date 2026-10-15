@@ -6,7 +6,8 @@
  "worlds": [
   "worlds_a.js",
   "worlds_b.js",
-  "details.js"
+  "details.js",
+  "w_cover.js"
  ],
  "scenes": [
   [

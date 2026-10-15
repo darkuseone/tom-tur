@@ -110,6 +110,7 @@ const TRANS = typeof TRANS_LIST !== 'undefined' ? TRANS_LIST : [];
 let CAMV = 0;
 function frame(t) {
   CAMV = 0;
+  if (typeof COVER_ON !== 'undefined' && COVER_ON) return drawCover();
   const tr = TRANS.find(q => t >= q.t - q.a && t < q.t + q.b);
   if (tr) {
     const iB = sceneAt(tr.t + 0.001), iA = iB - 1;
@@ -125,6 +126,7 @@ function frame(t) {
     ctx.restore(); }
 }
 function hudFrame(t) {
+  if (typeof COVER_ON !== 'undefined' && COVER_ON) return coverHud();
   const name = SC[sceneAt(t)][0];
   if (name === 'times' && t < EV.hookEnd) hook(t); else titleCard(t);
   if (name === 'times' && t > EV.hookEnd + 0.05 && t < EV.h2 + 0.3) { const rv = clamp((t - EV.hookEnd - 0.05) / 0.35), f = clamp((EV.h2 + 0.3 - t) / 0.3); pencil([[1030, 400], [1030, 40]], { w: 4, col: K.amber, a: rv * f, pass2: false, gap: false }); for (const yy of [40, 400]) pencil([[1006, yy], [1054, yy]], { w: 4, col: K.amber, a: rv * f, pass2: false });
