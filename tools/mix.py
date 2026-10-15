@@ -28,6 +28,17 @@ def main(ep):
     T = json.load(open(d / 'times.json')); VO, VD, DUR = T['start'], T['dur'], T['DUR']
     tl = SimpleNamespace(LS=lambda k: VO[k], LE=lambda k: VO[k] + VD[k], LF=lambda k, f: VO[k] + VD[k] * f, DUR=DUR,
                          S0={n: a for n, a, _ in T['SCN']}, S1={n: min(e, DUR) for n, _, e in T['SCN']})
+    import re
+    caps = json.loads(re.search(r'const CAPS=(.*);', (d / 'data.js').read_text()).group(1))
+    norm = lambda x: re.sub(r'[^а-яёa-z0-9-]', '', x.lower())
+    def WT(k, w):                                                  # начало субтитра-фрагмента со словом (как WT в scenes.js)
+        for c in caps:
+            if c['key'] == k and any(norm(x) == norm(w) for x in c['words']): return c['t0']
+        for c in caps:
+            if c['key'] == k and any(norm(x).startswith(norm(w)) for x in c['words']): return c['t0']
+        return VO[k]
+    tl.WT = WT
+    evp = d / 'ev.json'; tl.EV = json.load(open(evp))['EV'] if evp.exists() else {}   # события картинки (tools/evdump.cjs)
     spec = importlib.util.spec_from_file_location('sound', d / 'sound.py'); mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     S = mod.sound(tl)
     inp, fl, vl, bl, sl = [], [], [], [], []
