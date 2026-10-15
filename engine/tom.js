@@ -279,7 +279,7 @@ function costume5(OF, bob, t, bp, L, o) {                            // дета
   // манишка (белая грудка) видна в вырезе
   const showBib = ['puffer', 'quilt', 'overalls', 'pockets', 'waistcoat', 'hoodie', 'doublet'].includes(D) || D === 'quilt';
   if (D === 'quilt') { ctx.save(); ctx.clip(bp.path); for (let y = -230; y < -80; y += 26) pencil([[-100, y + b], [100, y + 4 + b]], { w: 2, col: OF.topL, a: 0.7, pass2: false }); ctx.restore(); poly([[-6, -244 + b], [6, -244 + b], [4, -86 + b], [-4, -86 + b]], { wash: '#9a9a9a', washA: 1, w: 1.4 });
-    if (OF.pin === 'M') metroM(-46, -200 + b, 17); else { ell(-46, -200 + b, 14, 14, { wash: '#f4f0e6', washA: 1, w: 1.8 }); txt('NY', -46, -199 + b, 15, { col: '#c8302a', font: 'Osw' }); }
+    if (OF.pin === 'M') metroM(-46, -200 + b, 17); else if (OF.pin !== null) { ell(-46, -200 + b, 14, 14, { wash: '#f4f0e6', washA: 1, w: 1.8 }); txt('NY', -46, -199 + b, 15, { col: '#c8302a', font: 'Osw' }); }
     blob([[-70, -250 + b], [-30, -270 + b], [30, -270 + b], [70, -250 + b], [64, -226 + b], [0, -236 + b], [-64, -226 + b]], { wash: '#5a4a38', washA: 0.97, w: 2.6, col: TM.line }); fstr(pathOf([[-70, -250 + b], [70, -250 + b], [64, -226 + b], [-64, -226 + b]]), [-70, -270 + b, 70, -226 + b], 40, 1.5, 9, '#d8c8a8', 0.6, 5); }
   if (D === 'overalls') { const sh = poly([[-58, -236 + b], [58, -236 + b], [62, -200 + b], [-62, -200 + b]], { wash: OF.shirt, washA: 0.98, w: 2.4, col: TM.line });
     poly([[-50, -170 + b], [50, -170 + b], [56, -86 + b], [-56, -86 + b]], { wash: OF.top, washA: 0.99, w: 2.6, col: TM.line, shade: { gap: 6, a: 0.25, col: '#000' } });
