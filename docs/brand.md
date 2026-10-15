@@ -15,3 +15,9 @@ Circular YouTube channel avatar, a charismatic adult Scottish Fold tabby cat (gr
 Wide YouTube channel banner 2560x1440, hand-drawn colored pencil and watercolor on warm textured paper; in the center a charismatic adult Scottish Fold tabby cat with big amber-green eyes winks at the viewer and spins a glowing brass pocket watch that opens a golden time-portal ring; from the portal a panoramic timeline of famous cities flows left to right: an ancient warm sea with sea lilies and a prehistoric shark, a glacier, a medieval wooden hall, the white-stone and red-brick Moscow Kremlin, Times Square under a towering ice wall, the Statue of Liberty, the Eiffel Tower, the Roman Colosseum, modern skyscrapers at dusk; years float in the air (−310 000 000, 1147, 1812, 2026); warm amber and cream palette, graphite hatching, cinematic rim light, 2.5D layered depth, all key elements kept inside the central safe area, empty calm margins at the top and bottom, space for the title on the left
 ```
 Надпись наложить отдельно (генераторы плохо пишут кириллицу): **ТОМ-ТУР** (Oswald, кремовый с тёмной обводкой) + рукописно (Caveat, янтарь): «История городов за минуту · новый город каждую неделю». Если генератор умеет текст — добавить: `big title text "ТОМ-ТУР" in bold condensed font, subtitle "История городов за минуту"`.
+
+## Готовые файлы (собраны кодом в стиле роликов)
+
+- `assets/brand/avatar.png` — 800×800, морда Тома с часами на ярком градиенте и кольце-портале.
+- `assets/brand/banner.jpg` — 2560×1440 (< 6 МБ), панорама сквозь время слева направо: карбоновое море со стетакантом → вулкан и зауропод → ледник и мамонт → пирамиды и Колизей → Кремль и Василий Блаженный → Эйфелева башня → Статуя Свободы и Бруклинский мост → небоскрёбы; заголовок и шкала лет в безопасной зоне 1546×423.
+- Пересобрать: `node tools/brand.cjs [avatar|banner]`, исходник — `assets/brand/brand.js`.
