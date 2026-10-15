@@ -13,7 +13,7 @@ description: Новый выпуск ТОМ-ТУР от города до гот
 4. **Таймлайн:** `episode.json` → `python3 tools/build_data.py <эп>`.
 5. **Миры и режиссура** (каркас 002+, `docs/pipeline.md`): скопировать `scenes.js`, `direct.js`, `props.js`, `transitions.js` из 002; каждая сцена — `w_<сцена>.js` в IIFE (WORLD/DIR/TRANS_IN, EV, SHAKES, KEYW, WT). Сцены и костюмы — с нуля под город; новые костюмы — в `engine/tom.js` (OUTFIT, costume5, hat5, prop).
 6. **Контроль:** `tools/check.sh <эп> [времена]` → `build/<эп>/shots/sheet.jpg` (2 круга правок на сцену), переходы S0±0.3.
-6а. **Обложка:** `w_cover.js` (Том в ключевой локации, крупный текст, плашка города) → `node tools/cover.cjs <эп>` → смотреть `build/<эп>/cover_small.jpg`; render.sh ставит её первыми 2 кадрами.
+6а. **Обложка:** `w_cover.js` (Том в ключевой локации, крупный текст, плашка города) → `node tools/cover.cjs <эп>` → смотреть `build/<эп>/cover_small.jpg` (плашка города под заголовком, всё в полосе y 240–1680); в ролик не вставлять.
 7. **Звук:** `node tools/evdump.cjs <эп>` → `sound.py` по `T.EV`/`T.WT`; новые SFX → `tools/tts.py sfx` → `tools/sfxcheck.py` → `assets/sfx/`.
 8. **Рендер** фоном: `tools/render.sh <эп>`.
 9. **Финал:** кадры из `final.mp4`, громкость (mean ≈ −20, пик ≤ −1 дБ), длина 50–60 с.
