@@ -6,13 +6,15 @@ description: Новый выпуск ТОМ-ТУР от города до гот
 
 Правила — `CLAUDE.md`, формула — `docs/episode-formula.md`, техника — `docs/pipeline.md`. Сначала `STATUS.md`.
 
-1. **Факты:** поиск 9–11 эпох города (геология → сегодня) + хук-факт для первого кадра. Каждый факт с источником → `docs/sources/<NNN-город>.md`. Сомнительное не берём.
+0. **Один агент, по очереди** — без параллельных субагентов (экономия токенов; см. CLAUDE.md §7а).
+1. **Факты — глубоко:** 20–30 кандидатов из 2+ источников, отобрать 9–11 эпох (геология → сегодня) с самыми сильными «вау» + хук-факт для первого кадра. Каждый факт с источником → `docs/sources/<NNN-город>.md`. Сомнительное не берём. **Без воды:** в каждой реплике цифра/имя/деталь.
 2. **Сценарий** `episodes/<NNN-город>/script.md`: хук, реплики (≤ 14 слов, панчлайн в конце, шутка каждые 3–4 факта), эпохи, костюмы Тома под эпоху, переход на каждую стыковку (не повторять), эмоции по ключевым словам, SFX. Отправить владельцу (SendUserFile) + 3 строки. Ждать «ок», если не сказано «делай сам».
 3. **Реплики** `lines.json`: теги эмоций, без шёпота, U+0301 во всех словах из 2+ слогов, «ё». Вычитать. `python3 tools/tts.py lines <эп>` → `python3 tools/prep_voice.py <эп>`.
 4. **Таймлайн:** `episode.json` → `python3 tools/build_data.py <эп>`.
-5. **Миры и режиссура:** `scenes.js` (YR, SUBTITLE, EV, SHAKES, YEARS, KEYW), `worlds_*.js`, `details.js`, `transitions.js`, `direct.js` (OUTF, actKeys, LIGHT, camKeysFor), новые костюмы — в `engine/tom.js`.
-6. **Контроль:** `tools/render.sh <эп> snap <середины эпох>` → смотреть `contact-sheet.jpg`, проблемное — в полном размере; `node tools/dbg.cjs build/<эп>/film`.
-7. **Звук:** `sound.py`; новые SFX → `tools/tts.py sfx` → `tools/sfxcheck.py` → `assets/sfx/`.
+5. **Миры и режиссура** (каркас 002+, `docs/pipeline.md`): скопировать `scenes.js`, `direct.js`, `props.js`, `transitions.js` из 002; каждая сцена — `w_<сцена>.js` в IIFE (WORLD/DIR/TRANS_IN, EV, SHAKES, KEYW, WT). Сцены и костюмы — с нуля под город; новые костюмы — в `engine/tom.js` (OUTFIT, costume5, hat5, prop).
+6. **Контроль:** `python3 tools/mkpage.py <эп>` → `node tools/shot.cjs build/<эп>/film build/<эп>/shots <времена>` → `sheet.jpg` (2 круга правок на сцену), переходы S0±0.3; `node tools/dbg.cjs build/<эп>/film`.
+7. **Звук:** `node tools/evdump.cjs <эп>` → `sound.py` по `T.EV`/`T.WT`; новые SFX → `tools/tts.py sfx` → `tools/sfxcheck.py` → `assets/sfx/`.
 8. **Рендер** фоном: `tools/render.sh <эп>`.
 9. **Финал:** кадры из `final.mp4`, громкость (mean ≈ −20, пик ≤ −1 дБ), длина 50–60 с.
 10. **Сдача:** SendUserFile `build/<эп>/chat.mp4` + 2–3 строки (кредиты, что нового). Коммит + пуш. Обновить `docs/cities.md`, `docs/passport.md` (Сделано), `STATUS.md`.
+11. **Тексты выкладки** → `episodes/<эп>/publish.md` и в чат: YouTube Shorts и TikTok — название (1 предложение, город в начале, эмодзи к месту), описание ≤ 3 предложений с поисковыми словами, 3–5 хэштегов.
