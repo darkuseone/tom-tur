@@ -11,10 +11,11 @@ if [ "${2:-}" = snap ]; then
   npx hyperframes snapshot "$B/film" --at "$3" --no-end -o "$B/snaps" --describe false --timeout 60000; exit 0
 fi
 node tools/dbg.cjs "$B/film"
-[ -f "$E/w_cover.js" ] && node tools/cover.cjs "$EP"                     # обложка → $E/cover.png (отдельным файлом)
+[ -f "$E/w_cover.js" ] && node tools/cover.cjs "$EP"                     # обложка → $E/cover.png (первый кадр + отдельным файлом в чат)
 npx hyperframes render "$B/film" -f 24 -q high -w 4 -o "$B/video.mp4"
 python3 tools/mix.py "$EP"
-VIN=(-i "$B/video.mp4" -i "$B/audio.m4a"); VMAP=(-map 0:v)                # обложка в ролик НЕ вставляется (владелец, 15.10.2026) — отдельный cover.png
+VIN=(-i "$B/video.mp4" -i "$B/audio.m4a"); VMAP=(-map 0:v)                # обложка (если есть) = первый кадр ролика (владелец, 15.10.2026)
+if [ -f "$E/cover.png" ]; then VIN+=(-i "$E/cover.png"); VMAP=(-filter_complex "[0:v][2:v]overlay=enable='lt(n,1)'[v]" -map "[v]"); fi
 X264=(-c:v libx264 -preset slow -b:v 5000k -pix_fmt yuv420p -passlogfile "$B/pf")   # зерно бумаги раздувает -q high до ~500 МБ → 2-pass 5 Мбит/с ≈ 38 МБ
 ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" "${X264[@]}" -pass 1 -an -f mp4 /dev/null
 ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" -map 1:a "${X264[@]}" -pass 2 -c:a copy -shortest -movflags +faststart "$E/final.mp4"
