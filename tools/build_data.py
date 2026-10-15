@@ -5,12 +5,13 @@ import json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-T = json.load(open(ROOT / 'tools/config.json'))['timeline']
+T0 = json.load(open(ROOT / 'tools/config.json'))['timeline']   # выпуск может переопределить в episode.json → "timeline"
 
 
 def main(ep):
+    global T
     d = ROOT / 'episodes' / ep
-    E = json.load(open(d / 'episode.json')); L = json.load(open(d / 'lines.json')); D = json.load(open(d / 'durs.json'))
+    E = json.load(open(d / 'episode.json')); T = {**T0, **E.get('timeline', {})}; L = json.load(open(d / 'lines.json')); D = json.load(open(d / 'durs.json'))
     VO, SCN, t, prev_end = {}, [], 0.05, None
     for name, keys in E['scenes']:
         t0 = 0 if prev_end is None else prev_end + T['scene_gap']

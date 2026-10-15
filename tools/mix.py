@@ -28,6 +28,17 @@ def main(ep):
     T = json.load(open(d / 'times.json')); VO, VD, DUR = T['start'], T['dur'], T['DUR']
     tl = SimpleNamespace(LS=lambda k: VO[k], LE=lambda k: VO[k] + VD[k], LF=lambda k, f: VO[k] + VD[k] * f, DUR=DUR,
                          S0={n: a for n, a, _ in T['SCN']}, S1={n: min(e, DUR) for n, _, e in T['SCN']})
+    import re
+    caps = json.loads(re.search(r'const CAPS=(.*);', (d / 'data.js').read_text()).group(1))
+    norm = lambda x: re.sub(r'[^а-яёa-z0-9-]', '', x.lower())
+    def WT(k, w):                                                  # начало субтитра-фрагмента со словом (как WT в scenes.js)
+        for c in caps:
+            if c['key'] == k and any(norm(x) == norm(w) for x in c['words']): return c['t0']
+        for c in caps:
+            if c['key'] == k and any(norm(x).startswith(norm(w)) for x in c['words']): return c['t0']
+        return VO[k]
+    tl.WT = WT
+    evp = d / 'ev.json'; tl.EV = json.load(open(evp))['EV'] if evp.exists() else {}   # события картинки (tools/evdump.cjs)
     spec = importlib.util.spec_from_file_location('sound', d / 'sound.py'); mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     S = mod.sound(tl)
     inp, fl, vl, bl, sl = [], [], [], [], []
@@ -47,7 +58,7 @@ def main(ep):
     fl.append(''.join(bl) + f'amix=inputs={len(bl)}:normalize=0[bed]')
     fl.append('[bed][vsc]sidechaincompress=threshold=0.04:ratio=5:attack=25:release=350[bedd]')
     fl.append('[vo][bedd]' + ''.join(sl) + f'amix=inputs={2 + len(sl)}:normalize=0,apad=whole_dur={DUR},atrim=0:{DUR},'
-              'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume=2dB,alimiter=limit=0.89[out]')
+              'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume=2dB,alimiter=limit=0.84:attack=2:release=40:level=0[out]')
     (b / 'mix.txt').write_text(';\n'.join(fl))
     out = b / 'audio.m4a'
     subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex_script', str(b / 'mix.txt'), '-map', '[out]', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(out)], check=True)

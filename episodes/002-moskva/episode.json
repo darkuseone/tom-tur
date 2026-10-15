@@ -1,0 +1,97 @@
+{
+ "num": "002",
+ "city": "Москва",
+ "title": "Море над Кремлём?! История Москвы за минуту",
+ "hook": "МОРЕ НАД / КРЕМЛЁМ?!",
+ "worlds": [
+  "props.js",
+  "w_square.js",
+  "w_sea.js",
+  "w_ice.js",
+  "w_feast.js",
+  "w_white.js",
+  "w_red.js",
+  "w_bell.js",
+  "w_1812.js",
+  "w_metro.js",
+  "w_today.js"
+ ],
+ "scenes": [
+  [
+   "square",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "sea",
+   [
+    "c1",
+    "c2"
+   ]
+  ],
+  [
+   "ice",
+   [
+    "i1"
+   ]
+  ],
+  [
+   "feast",
+   [
+    "p1"
+   ]
+  ],
+  [
+   "white",
+   [
+    "w1"
+   ]
+  ],
+  [
+   "red",
+   [
+    "r1"
+   ]
+  ],
+  [
+   "bell",
+   [
+    "k1"
+   ]
+  ],
+  [
+   "fire",
+   [
+    "n1"
+   ]
+  ],
+  [
+   "metro",
+   [
+    "m1"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ }
+}
