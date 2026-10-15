@@ -11,10 +11,14 @@ if [ "${2:-}" = snap ]; then
   npx hyperframes snapshot "$B/film" --at "$3" --no-end -o "$B/snaps" --describe false --timeout 60000; exit 0
 fi
 node tools/dbg.cjs "$B/film"
+[ -f "$E/w_cover.js" ] && node tools/cover.cjs "$EP"                     # обложка → $E/cover.png
 npx hyperframes render "$B/film" -f 24 -q high -w 4 -o "$B/video.mp4"
 python3 tools/mix.py "$EP"
-ffmpeg -y -v error -i "$B/video.mp4" -c:v libx264 -preset slow -b:v 5000k -pass 1 -passlogfile "$B/pf" -an -f mp4 /dev/null   # зерно бумаги раздувает -q high до ~500 МБ → 2-pass 5 Мбит/с ≈ 37 МБ
-ffmpeg -y -v error -i "$B/video.mp4" -i "$B/audio.m4a" -map 0:v -map 1:a -c:v libx264 -preset slow -b:v 5000k -pass 2 -passlogfile "$B/pf" -pix_fmt yuv420p -c:a copy -shortest -movflags +faststart "$E/final.mp4"
+VIN=(-i "$B/video.mp4" -i "$B/audio.m4a"); VMAP=(-map 0:v)                # обложка (если есть) = первые 2 кадра ролика
+if [ -f "$E/cover.png" ]; then VIN+=(-i "$E/cover.png"); VMAP=(-filter_complex "[0:v][2:v]overlay=enable='lt(n,2)'[v]" -map "[v]"); fi
+X264=(-c:v libx264 -preset slow -b:v 5000k -pix_fmt yuv420p -passlogfile "$B/pf")   # зерно бумаги раздувает -q high до ~500 МБ → 2-pass 5 Мбит/с ≈ 38 МБ
+ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" "${X264[@]}" -pass 1 -an -f mp4 /dev/null
+ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" -map 1:a "${X264[@]}" -pass 2 -c:a copy -shortest -movflags +faststart "$E/final.mp4"
 DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$E/final.mp4")
 VB=$(python3 -c "print(int(29*1024*1024*8/$DUR/1000 - 140))")
 ffmpeg -y -v error -i "$E/final.mp4" -c:v libx264 -preset slow -b:v ${VB}k -pass 1 -passlogfile "$B/p" -an -f mp4 /dev/null

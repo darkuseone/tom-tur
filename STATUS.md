@@ -4,6 +4,8 @@
 - **001 — Нью-Йорк** (v6, 60 с): `episodes/001-new-york/final.mp4`. Владелец: «ок».
 - **002 — Москва** (v1, 59,7 с): `episodes/002-moskva/final.mp4` (38 МБ), в чат — `build/002-moskva/chat.mp4`. Владелец: «классный, нравится»; замечание — немного воды (учтено в правилах). Тексты выкладки — `episodes/002-moskva/publish.md`.
   10 эпох с нуля, 11 новых костюмов Тома + 9 реквизитов (`engine/tom.js`), 11 новых переходов, 37 новых SFX + музыка `music_moscow` (ElevenLabs), микс −20,3 / −1,6 дБ.
+- Обложка 002: `episodes/002-moskva/cover.png` (первые 2 кадра ролика).
+- Экономия токенов: `docs/api.md` (шпаргалка вместо движка), `docs/library.md` (137 деталей), `tools/new_episode.py`, `tools/check.sh`, `tools/cover.cjs`.
 - Каркас 002+: сцена = файл `w_*.js` (DIR/WORLD/TRANS_IN), `tools/shot.cjs` (быстрые кадры), `tools/evdump.cjs` (звук по событиям картинки), параллельная работа субагентами по брифу.
 
 ## Дальше

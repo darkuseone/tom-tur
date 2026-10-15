@@ -39,6 +39,7 @@ initDir();
 const TRANS = SC.filter(s => TRANS_IN[s[0]]).map(s => Object.assign({ t: s[1] }, TRANS_IN[s[0]]));
 function frame(t) {
   CAMV = 0;
+  if (typeof COVER_ON !== 'undefined' && COVER_ON) return drawCover();
   const tr = TRANS.find(q => t >= q.t - q.a && t < q.t + q.b);
   if (tr) {
     const iB = sceneAt(tr.t + 0.001), iA = iB - 1;
@@ -53,15 +54,16 @@ function frame(t) {
     ctx.restore(); }
 }
 function hudFrame(t) {
+  if (typeof COVER_ON !== 'undefined' && COVER_ON) return coverHud();
   const name = SC[sceneAt(t)][0];
-  if (name === 'square' && t < EV.hookEnd) hook(t); else titleCard(t);
+  if (name === SC[0][0] && t < EV.hookEnd) hook(t); else titleCard(t);
   if (D_(name).hud) D_(name).hud(t);
   plate(); captions(t); endcard(t);
 }
 function hook(t) {
   const k = popK(t, 0.0, 0.35); push(540, 430, 0.85 + 0.15 * k, -0.02);
   ctx.save(); ctx.font = '600 150px Osw'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
-  for (const [s, y, c] of [['МОРЕ НАД', -86, '#f6ecd6'], ['КРЕМЛЁМ?!', 80, K.amber]]) { ctx.lineWidth = 22; ctx.strokeStyle = 'rgba(12,8,6,0.94)'; ctx.strokeText(s, 0, y); ctx.fillStyle = c; ctx.fillText(s, 0, y); }
+  for (const [s, y, c] of [[HOOK_LINES[0], -86, '#f6ecd6'], [HOOK_LINES[1], 80, K.amber]]) { ctx.lineWidth = 22; ctx.strokeStyle = 'rgba(12,8,6,0.94)'; ctx.strokeText(s, 0, y); ctx.fillStyle = c; ctx.fillText(s, 0, y); }
   ctx.restore(); pop();
 }
 function grade(name, o2) {                                         // цветокор на итоговом кадре: тон + виньетка
@@ -69,4 +71,26 @@ function grade(name, o2) {                                         // цвето
   o2.save(); o2.globalCompositeOperation = 'soft-light'; o2.globalAlpha = a; o2.fillStyle = c; o2.fillRect(0, 0, W, H);
   o2.globalCompositeOperation = 'multiply'; o2.globalAlpha = 1; const v = o2.createRadialGradient(540, 900, 380, 540, 960, 1250); v.addColorStop(0, 'rgba(255,255,255,1)'); v.addColorStop(1, 'rgba(120,100,90,1)'); o2.fillStyle = v; o2.fillRect(0, 0, W, H);
   o2.restore();
+}
+
+/* ------------------------------------------------------------------ ОБЛОЖКА (cover.png и первые кадры ролика)
+   Выпуск задаёт COVER = { scene, t, cam: {x,y,z}, pose: {...}, title: [[строка, цвет], ...], size, ty, badge, sub } (файл w_cover.js).
+   tools/cover.cjs <эп> → episodes/<эп>/cover.png; render.sh кладёт её на первые 2 кадра ролика. */
+let COVER_ON = false;
+function drawCover() {
+  const C = COVER, n = C.scene, t = C.t, u = t - S0[n]; CAM = Object.assign({ r: 0 }, C.cam);
+  (WORLD[n] || placeholderWorld(n))(t, u, () => { const P = Object.assign(catPose(n, t, u), C.pose || {}); tom(P); if (D_(n).afterCat) D_(n).afterCat(t, u, P); });
+}
+function coverHud() {
+  const C = COVER, size = C.size || 180;
+  ctx.save(); const g = ctx.createLinearGradient(0, 0, 0, 900); g.addColorStop(0, 'rgba(8,6,12,0.55)'); g.addColorStop(1, 'rgba(8,6,12,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, 900); ctx.restore();
+  push(540, C.ty || 330, 1, -0.03);
+  ctx.save(); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
+  C.title.forEach(([s, c], i) => { const fs = s.length > 9 ? size * 9.5 / s.length : size; ctx.font = `600 ${fs}px Osw`; const y = (i - (C.title.length - 1) / 2) * size * 1.08;
+    ctx.lineWidth = 30; ctx.strokeStyle = 'rgba(10,6,4,0.96)'; ctx.strokeText(s, 0, y); ctx.fillStyle = c; ctx.fillText(s, 0, y); });
+  ctx.restore(); pop();
+  push(540, 1700, 1, 0.02); ctx.save(); ctx.fillStyle = 'rgba(16,10,8,0.88)'; ctx.fillRect(-360, -62, 720, 124); ctx.restore();
+  pencil([[-360, -62], [360, -62], [360, 62], [-360, 62], [-360, -62]], { w: 4, col: K.amber, pass2: false });
+  txt(C.badge || '', 0, -10, 76, { col: '#f6e7c8', font: 'Osw' }); txt(C.sub || 'история за минуту', 0, 40, 40, { col: K.amber }); pop();
+  push(60, 70, 1); txt('ТОМ-ТУР', 0, 0, 56, { align: 'left', font: 'Osw', col: '#f6e7c8', a: 0.95 }); pop();
 }
