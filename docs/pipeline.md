@@ -77,4 +77,4 @@ python3 tools/mix.py 002-rim                     # только пересвес
 
 ## Экономичный цикл (с 15.10.2026)
 
-`python3 tools/new_episode.py <эп> "<Город>"` → факты/сценарий → `tts.py` / `prep_voice.py` / `build_data.py` → миры по одному файлу (API — `docs/api.md`, готовые детали — `docs/library.md`) → `tools/check.sh <эп>` → `w_cover.js` + `node tools/cover.cjs <эп>` → `node tools/evdump.cjs <эп>` + `sound.py` → `tools/render.sh <эп>` (фоном; обложка = первые 2 кадра, final 2-pass 5 Мбит/с) → `publish.md` → `python3 tools/libindex.py`.
+`python3 tools/new_episode.py <эп> "<Город>"` → факты/сценарий → `tts.py` / `prep_voice.py` / `build_data.py` → миры по одному файлу (API — `docs/api.md`, готовые детали — `docs/library.md`) → `tools/check.sh <эп>` → `w_cover.js` + `node tools/cover.cjs <эп>` → `node tools/evdump.cjs <эп>` + `sound.py` → `tools/render.sh <эп>` (фоном; final 2-pass 5 Мбит/с; обложка — отдельный файл) → `publish.md` → `python3 tools/libindex.py`.
