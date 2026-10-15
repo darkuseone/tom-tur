@@ -16,3 +16,5 @@ const SHAKES = [];
 const YEARS = { square: 2026, sea: -3.1e8, ice: -1.5e5, feast: 1147, white: 1367, red: 1495, bell: 1735, fire: 1812, metro: 1938, today: 2026 };
 const KEYW = ['море!', 'Кремлём!', 'время!', 'город', 'отмотаем!'];
 const DIR = {}, WORLD = {}, TRANS_IN = {};
+/* WT('c2', 'московский') — время начала субтитра-фрагмента со словом (без ударений, без учёта регистра и знаков); для синхронизации действий со словами */
+const WT = (k, w) => { const n = s => s.toLowerCase().replace(/[^а-яёa-z0-9-]/g, ''); const c = CAPS.find(c => c.key === k && c.words.some(x => n(x) === n(w))) || CAPS.find(c => c.key === k && c.words.some(x => n(x).startsWith(n(w)))); return c ? c.t0 : LS(k); };
