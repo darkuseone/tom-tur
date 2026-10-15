@@ -76,7 +76,7 @@ const OUTFIT = {
 };
 
 function tom(o = {}) {
-  const t = o.t || 0, E = o.E || mixE(o.expr || 'neutral', o.expr2 || o.expr || 'neutral', o.ek ?? 0), V = o.vis || vzAt(t), OF = OUTFIT[o.outfit || 'puffer'];
+  const t = o.t || 0, E = o.E || mixE(o.expr || 'neutral', o.expr2 || o.expr || 'neutral', o.ek ?? 0), V = o.vis || vzAt(t), OF = OUTFIT[o.outfit] || OUTFIT.puffer;
   const L = o.light || { side: 1, rim: '#ffe3a8' };
   const wk = o.walk, sw = wk !== undefined ? Math.sin(wk) : 0, step = wk !== undefined ? Math.abs(Math.sin(wk)) : 0;
   const breathe = Math.sin(t * 2.4) * 2.4, bob = -step * 10 + breathe * 0.4, sway = Math.sin(t * 0.9) * 3 * (wk === undefined ? 1 : 0);
@@ -143,7 +143,7 @@ function lock(x, y, ang, len, wid, col, lc) {                    // прядь �
 }
 function hoodBack(t) { const hp = blob([[-170, 120], [-176, -40], [-120, -150], [0, -178], [120, -150], [176, -40], [170, 120], [90, 150], [-90, 150]], { wash: '#6a4a30', washA: 0.99, w: 3, col: TM.line, key: 62 }); fstr(hp.path, hp.bb, 80, 1.3, 14, '#3a2818', 0.4, 63); }
 function head5(o, E, V, L, t, lx, ly) {
-  const fx = lx * 14, fy = ly * 6, ear = E.ears || 0, OF = OUTFIT[o.outfit || 'puffer'];
+  const fx = lx * 14, fy = ly * 6, ear = E.ears || 0, OF = OUTFIT[o.outfit] || OUTFIT.puffer;
   // ---- уши: маленькие, сложенные вперёд, с кисточками (прижимаются/поднимаются)
   if (!['bubble', 'furhood'].includes(OF.hat) || o.noHat) for (const s of [-1, 1]) {
     const up = ear * 10, bx = s * 62 - fx * 0.3, by = -86 - up;
