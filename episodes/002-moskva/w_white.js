@@ -171,17 +171,17 @@
     // откол: кусок улетает, под ним — морская лилия
     const cp = [[20, -h], [140, -h], [146, -60], [60, -40], [26, -110]];
     if (chipped) {
-      shape(cp.concat([cp[0]]), { wash: '#c8bc9e', washA: 1, w: 2.4, col: LN, shade: { gap: 5, a: 0.3, col: '#6a5a3a', ang: 1.1 } });
-      glow(86, -110, 160, 'rgba(120,230,220,1)', 0.55 * gl * (0.8 + 0.2 * Math.sin(t * 6)));
-      push(86, -112, 1, -0.2);
-      for (let q = 0; q < 8; q++) ell(-4 + q * 1.5, 54 - q * 12, 9, 5, { wash: '#f6e6b0', washA: 1, w: 1.6, col: '#5a4a1a' });          // стебель-членики
-      blob([[-14, -44], [-22, -60], [0, -70], [22, -60], [14, -44]], { wash: '#f6e6b0', washA: 1, w: 2, col: '#5a4a1a' });            // чашечка
-      for (let q = -3; q <= 3; q++) { const a = -Math.PI / 2 + q * 0.28; line([[Math.cos(a) * 14, -58 + Math.sin(a) * 8], [Math.cos(a) * 40, -60 + Math.sin(a) * 36], [Math.cos(a) * 52 + q * 2, -66 + Math.sin(a) * 52]], { w: 3, col: '#f6e6b0' }); pencil([[Math.cos(a) * 14, -58], [Math.cos(a) * 52 + q * 2, -66 + Math.sin(a) * 52]], { w: 1.2, col: '#5a4a1a', a: 0.7, pass2: false }); }
+      shape(cp.concat([cp[0]]), { wash: '#9a8c6a', washA: 1, w: 3, col: LN, shade: { gap: 5, a: 0.35, col: '#4a3e26', ang: 1.1 } });
+      glow(86, -110, 130, 'rgba(90,210,200,1)', 0.35 * gl * (0.8 + 0.2 * Math.sin(t * 6)));
+      push(84, -100, 1.15, -0.2);
+      for (let q = 0; q < 8; q++) ell(-4 + q * 1.5, 54 - q * 12, 9, 5, { wash: '#f2d27a', washA: 1, w: 2, col: '#3a2a08' });          // стебель-членики
+      blob([[-14, -44], [-22, -60], [0, -70], [22, -60], [14, -44]], { wash: '#f2d27a', washA: 1, w: 2.4, col: '#3a2a08' });            // чашечка
+      for (let q = -3; q <= 3; q++) { const a = -Math.PI / 2 + q * 0.28; const arm = [[Math.cos(a) * 14, -58 + Math.sin(a) * 8], [Math.cos(a) * 34 + q * 3, -62 + Math.sin(a) * 34], [Math.cos(a) * 42 + q * 7, -70 + Math.sin(a) * 50], [Math.cos(a) * 36 + q * 9, -78 + Math.sin(a) * 58]]; line(arm, { w: 7, col: '#3a2a08' }); line(arm, { w: 4, col: '#f2d27a', pass2: false }); for (let z = 1; z < 4; z++) pencil([[arm[z][0] - 5, arm[z][1]], [arm[z][0] + 5, arm[z][1] - 2]], { w: 1.2, col: '#3a2a08', pass2: false, gap: false }); }
       pop();
-      ell(34, -60, 12, 9, { wash: '#f6e6b0', washA: 1, w: 1.6, col: '#5a4a1a' }); for (let q = -2; q <= 2; q++) pencil([[34, -54], [34 + q * 5, -68]], { w: 1, col: '#5a4a1a', pass2: false });   // брахиопода
+      ell(34, -60, 13, 10, { wash: '#f2d27a', washA: 1, w: 2, col: '#3a2a08' }); for (let q = -2; q <= 2; q++) pencil([[34, -54], [34 + q * 5, -68]], { w: 1, col: '#5a4a1a', pass2: false });   // брахиопода
       if (gl > 0) for (let i = 0; i < 10; i++) { const r = rng(hsh(FRAME, i, 7)); glow(30 + r() * 120, -180 + r() * 130, 6 + r() * 10, 'rgba(220,255,250,1)', 0.9 * gl); }
       // летящий кусок
-      const fk = (t - ch) / 0.7; if (fk < 1) { push(80 + fk * 260, -120 - Math.sin(fk * Math.PI) * 180 + fk * fk * 120, 1, fk * 5); shape(cp.map(([a, b]) => [a - 80, b + 112]).concat([[cp[0][0] - 80, cp[0][1] + 112]]), { wash: ST, washA: 1, w: 2.4, col: LN }); pop(); }
+      const fk = (t - ch) / 0.55; if (fk < 1) { push(80 + fk * 420, -120 - Math.sin(fk * Math.PI) * 140 + fk * fk * 260, 1, fk * 6); push(0, 0, 0.7); shape(cp.map(([a, b]) => [a - 80, b + 112]).concat([[cp[0][0] - 80, cp[0][1] + 112]]), { wash: '#d8ceb6', washA: 1, w: 2.4, col: LN, shade: { gap: 6, a: 0.3, col: '#6a5a3a', ang: 1.2 } }); pop(); pop(); }
     }
     // зубило и киянка лежат на блоке, пока Том их не взял
     if (t < EV.white_build) { push(-40, -h - 18, 1, -0.15); rect(-60, -6, 90, 12, { wash: '#7a7e86', washA: 1, w: 1.8, col: '#1a1a20' }); pop(); push(70, -h - 22, 1, 0.3); rect(-50, -5, 70, 10, { wash: WOOD, washA: 1, w: 1.6 }); rect(20, -16, 40, 32, { wash: '#8a6a40', washA: 1, w: 2 }); pop(); }
@@ -246,7 +246,7 @@
       bigBlock(660, 1460, t);
       cat();
       for (const h0 of hits) dustPuff(586, 1262, h0, t, 12, 140);
-      note('морская лилия, −310 млн лет', 870, 1150, t, EV.white_chip + 0.2, S1.white + 0.3, '#0f4a42', 44, -0.04, [[800, 1180], [760, 1260]]);
+      note('морская лилия, −310 млн', 640, 1505, t, EV.white_chip + 0.05, S1.white + 0.3, '#0f4a42', 42, -0.03, [[790, 1478], [770, 1390]]);
     });
     // передний план: жердь лесов, верёвка, пыль на ветру
     lay(0.6, () => {
@@ -280,7 +280,7 @@
     if (k < kc) drawBuf(A, 1 + k * 0.05, ix, iy); else drawBuf(B, 1.04 - 0.04 * clamp((k - kc) / (1 - kc)));
     scr(() => {
       if (k < hit + 0.04) { // молот входит в кадр
-        const hk = clamp(k / hit); push(ix + 140 - hk * 120, iy - 420 + hk * 400, 1.6, -1.2 + hk * 1.0); rect(-10, 0, 20, 260, { wash: WOOD, washA: 1, w: 2.4, col: WOODD }); rect(-50, -40, 100, 60, { wash: '#6a6e76', washA: 1, w: 3, col: '#1a1a20', shade: { gap: 5, a: 0.4, col: '#000', ang: 0.3 } }); pop(); }
+        const hk = clamp(k / hit); push(ix + 260 - hk * 220, iy - 520 + hk * 470, 2.2, -1.3 + hk * 1.1); rect(-10, 0, 20, 260, { wash: WOOD, washA: 1, w: 2.4, col: WOODD }); rect(-50, -40, 100, 60, { wash: '#6a6e76', washA: 1, w: 3, col: '#1a1a20', shade: { gap: 5, a: 0.4, col: '#000', ang: 0.3 } }); pop(); }
       if (k > hit && k < hit + 0.18) { const fk = (k - hit) / 0.18; whiteOut(1 - fk); glow(ix, iy, 500 * (1 + fk), 'rgba(255,240,200,1)', 1 - fk); for (let i = 0; i < 24; i++) { const r = rng(i * 5 + 3), a = r() * 6.283, d0 = 40 + fk * 200, d1 = d0 + 120 + r() * 400; pencil([[ix + Math.cos(a) * d0, iy + Math.sin(a) * d0], [ix + Math.cos(a) * d1, iy + Math.sin(a) * d1]], { w: 3 + r() * 4, col: i % 3 ? '#fff8e0' : '#ffc860', a: 1 - fk, pass2: false, gap: false }); } }
       if (k > hit) {
         const e = (k - hit) / (1 - hit), grow = 1 - Math.pow(1 - clamp(e / 0.45), 3), wind = clamp((k - kc) / (1 - kc)), wk = wind * wind;

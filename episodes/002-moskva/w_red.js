@@ -66,7 +66,7 @@
     const F = strokeX(t) + 20, cy = 990;
     push(F, cy, 1, 0.05);
     poly([[-60, -40], [-520, -1300], [-380, -1330], [10, -20]], { wash: '#9a6a38', washA: 1, w: 3.4, col: '#2a160a', shade: { gap: 7, a: 0.35, col: '#3a200c', ang: 1.0 } });
-    const fr = []; for (let i = 0; i <= 30; i++) { const y = -380 + i * 760 / 30; fr.push([110 + (i % 2) * 28 + Math.sin(i * 1.7) * 8, y]); }
+    const fr = []; for (let i = 0; i <= 64; i++) { const y = -380 + i * 760 / 64; fr.push([150 + (i % 2) * 10 + Math.sin(i * 0.9) * 10 + Math.sin(i * 2.3) * 5, y]); }
     const head = [[-70, -390], [40, -400], ...fr, [40, 400], [-70, 390]];
     const br = poly(head, { wash: '#d4b878', washA: 1, w: 2.6, col: '#5a4018' });
     ctx.save(); ctx.clip(br.path); const r = rng(hsh(FRAME, 5)); ctx.lineCap = 'round';

@@ -7,12 +7,12 @@
   EV.bell_cool = LF('k1', 0.36);               // остыл до бронзы
   EV.bell_ton = LF('k1', 0.5);                 // «тонн!» — гиря «200 т» приземляется на доску
   EV.bell_tap = WT('k1', 'разу') + 0.06;       // «разу» — молоточек: «тук.»
-  EV.bell_crack = LF('k1', 0.885);             // «звонил.» — трещина
-  EV.bell_beam = EV.bell_crack - 0.42;         // горящая балка начинает падать
-  EV.bell_beamLand = EV.bell_crack - 0.2;
-  EV.bell_water = EV.bell_crack - 0.14;        // ведро воды летит (удар в колокол ≈ crack − 0.04)
+  EV.bell_crack = LF('k1', 0.84);             // «звонил.» — трещина
+  EV.bell_beam = EV.bell_crack - 0.26;         // горящая балка начинает падать
+  EV.bell_beamLand = EV.bell_crack - 0.12;
+  EV.bell_water = EV.bell_crack - 0.15;        // ведро воды летит (удар в колокол ≈ crack − 0.04)
   EV.bell_chunk = EV.bell_crack + 0.08;        // кусок отваливается
-  EV.bell_chunkLand = EV.bell_crack + 0.3;
+  EV.bell_chunkLand = EV.bell_crack + 0.26;
   SHAKES.push([EV.bell_ton, 0.4, 22], [EV.bell_beamLand, 0.25, 10], [EV.bell_crack, 0.3, 16], [EV.bell_chunkLand, 0.32, 14]);
   KEYW.push('Царь-колокол', 'двести', 'тонн!', 'разу', 'звонил.');
 
@@ -31,7 +31,7 @@
 
   // ---------------------------------------------------------------- колокол: форма, рельеф, раскал
   function bell(t) {
-    const fillK = sm(fade(t, S0.bell - 0.05, EV.bell_fill1)), T = 1 - sm(fade(t, EV.bell_fill1, EV.bell_cool));
+    const fillK = sm(fade(t, S0.bell + 0.3, EV.bell_fill1)), T = 1 - sm(fade(t, EV.bell_fill1, EV.bell_cool));
     const broken = t >= EV.bell_chunk, reheat = sm(fade(t, EV.bell_beamLand, EV.bell_beamLand + 0.15)) * (1 - sm(fade(t, EV.bell_crack - 0.04, EV.bell_crack + 0.4)));
     // форма-глина (до заливки) и бронза
     wash(bellPath, '#6e5a46', 1);
@@ -43,7 +43,7 @@
     // патина и блики
     ctx.globalAlpha = 0.18; ctx.fillStyle = '#5aa391'; ctx.fillRect(BX - 430, BT + 480, 120, 400); ctx.fillRect(BX + 300, BT + 100, 130, 300); ctx.globalAlpha = 1;
     // рельеф: пояса, гирлянда, лики, картуши с фигурами
-    const relief = (pts, a = 0.8) => { pencil(pts, { w: 2.6, col: '#1e140a', a, pass2: false }); pencil(pts.map(([x, y]) => [x - 2, y - 3]), { w: 1.6, col: '#e8c890', a: a * 0.7, pass2: false, gap: false }); };
+    const relief = (pts, a = 0.8) => { pencil(pts, { w: 3.4, col: '#1a1008', a, pass2: false }); pencil(pts.map(([x, y]) => [x - 3, y - 3]), { w: 2.2, col: '#f0d49a', a: a * 0.9, pass2: false, gap: false }); };
     for (const ry of [110, 150, 770, 812, 860]) { const y = BT + ry, w = halfW(y); relief([[BX - w + 4, y + 6], [BX, y + 16], [BX + w - 4, y + 6]]); }
     for (let k = -6; k <= 6; k++) { const x = BX + k * 30, y = BT + 132 + Math.abs(k) * 0.6; ell(x, y, 10, 7, { wash: '#8a6a3a', washA: 0.8, w: 1.4, col: '#1e140a' }); }
     for (let k = -3; k <= 3; k++) { const x = BX + k * 56, y = BT + 70; ell(x, y, 9, 10, { wash: '#9a7a44', washA: 0.9, w: 1.4, col: '#1e140a' }); relief([[x - 26, y + 2], [x - 10, y - 8], [x - 4, y]], 0.6); relief([[x + 26, y + 2], [x + 10, y - 8], [x + 4, y]], 0.6); }
@@ -61,7 +61,7 @@
     // трещина от удара воды
     const ck = sm(fade(t, EV.bell_crack - 0.03, EV.bell_crack + 0.08));
     if (ck > 0) { const n = Math.max(2, Math.ceil(CRACK.length * ck)); const P = CRACK.slice(0, n).concat(ck > 0.95 ? CHUNK.slice(0, 3) : []);
-      pencil(P, { w: 5, col: '#0e0804', pass2: false, gap: false }); if (t < EV.bell_chunk + 0.3) pencil(P, { w: 2, col: '#ffcf80', a: 0.8, pass2: false, gap: false });
+      pencil(P, { w: 8, col: '#0e0804', pass2: false, gap: false }); if (t < EV.bell_chunk + 0.4) { pencil(P, { w: 3, col: '#ffe0a0', a: 0.9, pass2: false, gap: false }); glow(P[n - 1][0], P[n - 1][1], 90, 'rgba(255,200,120,1)', 0.6); }
       if (!broken) pencil(CHUNK.concat([CHUNK[0]]), { w: 3, col: '#0e0804', a: ck, pass2: false }); }
     if (broken) { wash(chunkPath, '#120a06', 1); ctx.save(); ctx.clip(chunkPath); vgrad(BT + 600, BT + 940, ['#2a1a10', '#0a0604']); glow(BX + 330, BT + 900, 160, 'rgba(255,150,60,1)', 0.3); ctx.restore(); pencil(CHUNK.concat([CHUNK[0]]), { w: 3, col: '#0a0604', pass2: false }); }
     ctx.restore();
@@ -113,7 +113,7 @@
   function burningBeam(t) {                      // горящая балка: падает сверху, ложится на плечо колокола
     if (t < EV.bell_beam) return; const f = clamp((t - EV.bell_beam) / (EV.bell_beamLand - EV.bell_beam)), land = t >= EV.bell_beamLand;
     const bounce = land ? Math.exp(-(t - EV.bell_beamLand) * 8) * Math.sin((t - EV.bell_beamLand) * 30) * 0.05 : 0;
-    const px = lerp(-80, 120, f), py = lerp(-300, 1180, f * f), rot = lerp(-0.2, -1.05, sm(f)) + bounce;
+    const px = lerp(-200, 70, f), py = lerp(-450, 1150, f * f), rot = lerp(-0.5, 0.6, sm(f)) + bounce;
     push(px, py, 1, rot);
     const b = rect(-40, -420, 80, 520, { wash: '#3a2214', washA: 1, w: 3, col: '#0e0602', shade: { gap: 6, a: 0.45, col: '#0a0402', ang: 0.2 } });
     for (let k = 0; k < 6; k++) pencil([[-30, -380 + k * 80], [30, -360 + k * 80]], { w: 2, col: '#ff7a2a', a: 0.6, pass2: false });
@@ -121,7 +121,7 @@
       blob(fp, { wash: k % 2 ? '#ff8a2a' : '#ffd060', washA: 0.92, w: 1.6, col: '#a8301a', a: 0.5 }); }
     glow(0, -160, 260, 'rgba(255,140,40,1)', 0.6);
     pop();
-    if (land && t < EV.bell_beamLand + 0.6) { const q = (t - EV.bell_beamLand) / 0.6, r = rng(31); for (let i = 0; i < 24; i++) { const a = -Math.PI * r(), v = 200 + r() * 500; glow(150 + Math.cos(a) * v * q, 900 + Math.sin(a) * v * q + 900 * q * q, 10, 'rgba(255,220,120,1)', 1 - q); } }
+    if (land && t < EV.bell_beamLand + 0.6) { const q = (t - EV.bell_beamLand) / 0.6, r = rng(31); for (let i = 0; i < 24; i++) { const a = -Math.PI * r(), v = 200 + r() * 500; glow(290 + Math.cos(a) * v * q, 800 + Math.sin(a) * v * q + 900 * q * q, 10, 'rgba(255,220,120,1)', 1 - q); } }
   }
   function water(t) {                             // ведро воды по дуге из-за кадра справа → удар о раскалённый бок, пар
     const t0 = EV.bell_water, hit = EV.bell_crack - 0.04; if (t < t0) return;
@@ -134,7 +134,7 @@
       if (q < 0.3) glow(hx, hy, 200, 'rgba(255,255,255,1)', 0.8 * (1 - q / 0.3)); }
   }
   function weight(t) {                            // гиря «200 т»
-    const t0 = EV.bell_ton - 0.28; if (t < t0) return; const f = clamp((t - t0) / 0.28), x = 1050, y = lerp(-200, 1450 + plankSag(t, x), f * f);
+    const t0 = EV.bell_ton - 0.28; if (t < t0) return; const f = clamp((t - t0) / 0.28), x = 1060, y = lerp(-200, 1450 + plankSag(t, x), f * f);
     push(x, y, 1, f < 1 ? 0.12 * (1 - f) : 0);
     const body = blob([[-110, 0], [-124, -90], [-90, -160], [90, -160], [124, -90], [110, 0]], { wash: '#2e2a28', washA: 1, w: 3.4, col: '#0a0806', shade: { gap: 6, a: 0.4, col: '#000', ang: 1.2 } });
     ctx.save(); ctx.clip(body.path); glow(-60, -110, 90, 'rgba(255,170,90,1)', 0.35); ctx.restore();
@@ -188,6 +188,7 @@
       push(1160, 1450 + plankSag(t, 1160), 1); poly([[-36, -70], [36, -70], [30, 0], [-30, 0]], { wash: '#6a4a2a', washA: 1, w: 2.4, col: '#1a0c04' }); for (const y of [-56, -16]) line([[-36, y], [36, y]], { w: 3, col: '#2a1a0c', smooth: false }); ell(0, -70, 34, 7, { wash: '#4a7aa0', washA: 1, w: 1.6 }); pop();
       weight(t); chunkPiece(t);
       cat();
+      if (t > EV.bell_tap && t < EV.bell_beam + 0.15) { const k = popK(t, EV.bell_tap, 0.2), a = clamp((EV.bell_beam + 0.15 - t) / 0.15); push(640, 1110, 0.8 + 0.2 * k, -0.08); txt('тук.', 0, 0, 72, { col: '#f6e7c8', a: 0.97 * a }); for (let i = 0; i < 3; i++) pencil([[56 + i * 4, -36 + i * 20], [74 + i * 10, -44 + i * 24]], { w: 2.6, col: '#f6e7c8', a: 0.85 * a, pass2: false }); pop(); }
     });
     lay(0.6, () => {                              // передний план: искры, пепел, стойка лесов
       line([[-30, -200], [-20, 2200]], { w: 60, col: '#1a0c06', smooth: false }); line([[8, -200], [14, 2200]], { w: 4, col: '#ff9a50', a: 0.4, smooth: false, pass2: false });
@@ -221,14 +222,12 @@
       push(P.x, P.y, P.s, 0, -1); push(h[0] + 4, h[1] - 6, 1, lerp(lerp(-0.4, -1.4, wind), 0.2, hit));
       line([[0, 10], [0, -70]], { w: 7, col: '#8a5a30', smooth: false }); rect(-22, -88, 44, 22, { wash: '#4a4a50', washA: 1, w: 2.2, col: '#0e0e10' }); pop(); pop();
     },
-    cam: () => [[S0.bell, 540, 960, 0], [S0.bell + 0.7, 470, 880, 0.07], [WT('k1', 'двести') - 0.1, 560, 960, 0.04], [EV.bell_ton, 680, 1020, 0.1], [EV.bell_ton + 0.3, 640, 1000, 0.03],
-      [EV.bell_tap - 0.35, 740, 1100, 0.2], [EV.bell_tap + 0.4, 760, 1100, 0.24], [EV.bell_beam + 0.05, 600, 1000, 0.04, 'x'], [S1.bell, 560, 980, 0.02]],
+    cam: () => [[S0.bell, 540, 960, -0.22], [S0.bell + 0.9, 520, 960, -0.12], [WT('k1', 'двести') - 0.1, 580, 980, -0.1], [EV.bell_ton, 640, 1020, -0.02], [EV.bell_ton + 0.3, 600, 1000, -0.1],
+      [EV.bell_tap - 0.35, 720, 1100, 0.1], [EV.bell_tap + 0.15, 740, 1100, 0.14], [EV.bell_beam + 0.12, 560, 980, -0.14, 'x'], [S1.bell, 560, 980, -0.12]],
     hud: t => {
       if (t < S0.bell || t > S1.bell + 0.4) return;
       if (t > EV.bell_tap && t < EV.bell_beam + 0.2) {   // «тук.» — от руки, в экранных координатах у точки удара
-        const k = popK(t, EV.bell_tap, 0.2), a = clamp((EV.bell_beam + 0.2 - t) / 0.2);
-        push(640, 1040, 0.8 + 0.2 * k, -0.08); txt('тук.', 0, 0, 58, { col: '#f6e7c8', a: 0.95 * a }); for (let i = 0; i < 3; i++) pencil([[50 + i * 6, -30 + i * 18], [64 + i * 10, -36 + i * 22]], { w: 2.4, col: '#f6e7c8', a: 0.8 * a, pass2: false }); pop();
-        note('ожидалось: БО-О-ОМ', 650, 1120, t, EV.bell_tap + 0.2, EV.bell_beam + 0.2, '#c9b89a', 34, -0.06);
+        note('(ожидалось: БО-О-ОМ)', 540, 470, t, EV.bell_tap + 0.1, EV.bell_beam + 0.15, '#f6e7c8', 46, -0.04);
       }
     }
   };

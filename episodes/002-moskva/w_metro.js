@@ -204,10 +204,10 @@
       const M = medalSt(t), up = t > EV.metro_may && t < EV.metro_medal, catch_ = M.m === 1;
       return Object.assign(b, {
         x: 470, y: 1462, s: 1.14,
-        look: catch_ ? [0.05, -0.9] : up ? [0.1, -1] : t > EV.metro_ny + 0.3 ? [0, 0.05] : [0.3, -0.1],
-        hand: t < EV.metro_may ? [170, -300] : catch_ ? [60, -340 + (1 - M.k) * 40] : M.m === 2 && t < EV.metro_ny ? [60, -200] : t >= EV.metro_ny ? [130, -320] : [70, -150],
-        handF: catch_ ? [-60, -340 + (1 - M.k) * 40] : M.m === 2 && t < EV.metro_ny ? [-40, -190] : undefined,
-        point: t >= EV.metro_ny, tilt: up ? -0.1 : catch_ ? -0.06 : 0, tailUp: M.m === 2,
+        look: catch_ ? [0.05, -0.7] : up ? [0.15, -0.6] : t > EV.metro_ny + 0.3 ? [0, 0.05] : [0.3, -0.1],
+        hand: t < EV.metro_may ? [170, -300] : catch_ ? [56, -430 + (1 - M.k) * 60] : M.m === 2 ? [60, -200] : [70, -150],
+        handF: catch_ ? [-56, -430 + (1 - M.k) * 60] : M.m === 2 && t < EV.metro_ny ? [-40, -190] : undefined,
+        tilt: up ? -0.1 : catch_ ? -0.06 : 0, tailUp: M.m === 2,
         walk: u < 0.5 ? t * 8 : undefined,
         squash: b.squash + (M.m === 2 && t < EV.metro_gp + 0.4 ? 0.3 * (1 - clamp((t - EV.metro_gp - 0.12) / 0.28)) : 0)
       });
@@ -215,9 +215,9 @@
     afterCat: (t, u, P) => {
       const M = medalSt(t); if (!M.m) return;
       const neck = [P.x, P.y - 262 * P.s], chest = [P.x + 6, P.y - 180 * P.s];
-      if (M.m === 1) { const y = lerp(P.y - 1500, P.y - 420 * P.s, M.k), x = P.x + Math.sin(M.k * 7) * 40 * (1 - M.k), s = lerp(1.6, 1.1, M.k) * P.s;
+      if (M.m === 1) { const y = lerp(P.y - 1300, P.y - 640 * P.s, 1 - Math.pow(1 - M.k, 2.2)), x = P.x + Math.sin(M.k * 7) * 40 * (1 - M.k), s = lerp(1.6, 1.1, M.k) * P.s;
         ribbonTo(x - 30 * s, y - 70 * s, x - 6 * s, y - 70 * s - 400, 30 * s); ribbonTo(x + 30 * s, y - 70 * s, x + 6 * s, y - 70 * s - 400, 30 * s);
-        medal(x, y, s, t, t * 9, 0); glow(x, y, 200 * s, 'rgba(255,230,140,1)', 0.5);
+        medal(x, y, s, t, Math.sin(t * 5) * 0.7, 0); glow(x, y, 200 * s, 'rgba(255,230,140,1)', 0.5);
       } else {
         const s = P.s * (0.9 + 0.1 * M.k), sol = sm((t - EV.metro_ny) / 0.3);
         ribbonTo(chest[0] - 22 * s, chest[1] - 70 * s, neck[0] - 46 * s, neck[1] + 4, 26 * s); ribbonTo(chest[0] + 22 * s, chest[1] - 70 * s, neck[0] + 46 * s, neck[1] + 4, 26 * s);
@@ -226,20 +226,24 @@
         if (sol > 0) {                                              // мини-статуя Свободы вырастает над медалью
           const k = popK(t, EV.metro_ny, 0.4), sx = chest[0] + 150 * s, sy = chest[1] - 40 * s;
           push(sx, sy, k * s * 1.1); const C = '#4aa08a', CD = '#1e4a40';
-          poly([[-40, 40], [40, 40], [30, 0], [-30, 0]], { wash: '#8a8070', washA: 1, w: 2, col: '#2a2420' });
-          blob([[-18, 0], [-22, -90], [-14, -140], [14, -140], [22, -90], [20, 0]], { wash: C, washA: 1, w: 2.2, col: CD });
-          ell(0, -156, 14, 16, { wash: C, washA: 1, w: 2, col: CD }); for (let q = 0; q < 7; q++) { const a = -2.6 + q * 0.35; pencil([[Math.cos(a) * 14, -160 + Math.sin(a) * 14], [Math.cos(a) * 30, -160 + Math.sin(a) * 30]], { w: 3, col: C, pass2: false, gap: false }); }
-          shape(tubeP([[12, -130], [24, -170], [26, -210]], 14, 10), { wash: C, washA: 1, w: 2, col: CD });
-          blob([[18, -212], [34, -212], [30, -226], [22, -226]], { wash: '#e8b840', washA: 1, w: 1.6, col: '#6a4a08' });
-          glow(26, -236, 40, 'rgba(255,200,90,1)', 0.9); flameT(26, -232, t);
-          rect(-30, -110, 22, 30, { wash: C, washA: 1, w: 1.6, col: CD });
+          poly([[-44, 50], [44, 50], [34, 0], [-34, 0]], { wash: '#9a9080', washA: 1, w: 2, col: '#2a2420', shade: { gap: 6, a: 0.25, col: '#3a3020' } });
+          poly([[-30, 0], [30, 0], [24, -10], [-24, -10]], { wash: '#b0a890', washA: 1, w: 1.6, col: '#2a2420' });
+          const robe = blob([[-26, -10], [-20, -70], [-24, -118], [-12, -134], [12, -134], [22, -116], [18, -70], [28, -10]], { wash: C, washA: 1, w: 2.2, col: CD });
+          hatch(robe.path, robe.bb, { gap: 6, a: 0.3, col: CD, ang: 1.45, key: 91 });
+          for (const fx_ of [-12, 0, 12]) pencil([[fx_ - 2, -110], [fx_ + 3, -14]], { w: 1.6, col: CD, a: 0.6, pass2: false });
+          poly([[-26, -96], [-6, -100], [-4, -66], [-24, -60]], { wash: '#5ab09a', washA: 1, w: 1.8, col: CD });                         // скрижаль
+          shape(tubeP([[12, -126], [22, -164], [24, -200]], 13, 10), { wash: C, washA: 1, w: 2, col: CD });                               // рука с факелом
+          ell(0, -148, 12, 14, { wash: C, washA: 1, w: 2, col: CD });
+          for (let q = 0; q < 7; q++) { const a = -2.75 + q * 0.42; poly([[Math.cos(a - 0.12) * 11, -152 + Math.sin(a - 0.12) * 11], [Math.cos(a) * 28, -152 + Math.sin(a) * 28], [Math.cos(a + 0.12) * 11, -152 + Math.sin(a + 0.12) * 11]], { wash: C, washA: 1, w: 1.2, col: CD }); }
+          blob([[16, -200], [32, -200], [29, -214], [19, -214]], { wash: '#e8b840', washA: 1, w: 1.6, col: '#6a4a08' });
+          glow(24, -226, 50, 'rgba(255,200,90,1)', 0.9); flameT(24, -214, t);
           pop();
-          note('снова Нью-Йорк!', chest[0] + 230 * s, chest[1] - 330 * s, t, EV.metro_ny + 0.2, S1.metro + 1, '#fff2d0', 48, -0.06);
         }
       }
     },
-    cam: () => [[S0.metro, 540, 920, 0.2], [S0.metro + 0.7, 540, 960, 0.0], [EV.metro_may, 540, 940, 0.02], [EV.metro_may + 0.5, 540, 820, 0.08], [EV.metro_medal + 0.2, 520, 900, 0.06], [EV.metro_gp + 0.15, 500, 1020, 0.14], [EV.metro_ny + 0.2, 560, 1040, 0.2], [S1.metro + 0.6, 560, 1040, 0.24]],
+    cam: () => [[S0.metro, 540, 920, 0.2], [S0.metro + 0.7, 540, 960, 0.0], [EV.metro_may, 540, 940, 0.02], [EV.metro_may + 0.5, 540, 870, 0.07], [EV.metro_medal + 0.2, 520, 900, 0.06], [EV.metro_gp + 0.15, 500, 1020, 0.14], [EV.metro_ny + 0.2, 560, 1040, 0.2], [S1.metro + 0.6, 560, 1040, 0.24]],
     hud: t => {
+      if (t > EV.metro_ny + 0.25 && t < S1.metro + 0.4) { const k = popK(t, EV.metro_ny + 0.25, 0.3); push(800, 780, k, -0.1); ctx.save(); ctx.font = '700 64px Hand'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round'; ctx.lineWidth = 12; ctx.strokeStyle = 'rgba(16,10,8,0.9)'; ctx.strokeText('снова Нью-Йорк!', 0, 0); ctx.fillStyle = '#f6ecd6'; ctx.fillText('снова Нью-Йорк!', 0, 0); ctx.restore(); pop(); }
       if (t < EV.metro_gp + 0.1 || t > S1.metro) return;
       const k = popK(t, EV.metro_gp + 0.1, 0.35), fade = clamp((S1.metro - t) / 0.25);
       push(540, 500, 0.6 + 0.4 * k, -0.04);
@@ -264,18 +268,18 @@
     rect(-240, 380, 480, 40, { wash: '#2a2424', washA: 1, w: 3, col: '#0a0606' });
     pop();
   }
-  TRANS_IN.metro = { a: 0.5, b: 0.45, runA: 1, fx(k, t, A, B) {
+  TRANS_IN.metro = { a: 0.36, b: 0.5, runA: 1, fx(k, t, A, B) {
     const sk = sm(k / 0.4);
     if (k < 0.74) {
       drawBuf(A, 1 + 0.06 * k);
       scr(() => {
         for (let i = 0; i < 26; i++) { const r = rng(i * 11 + 3), x = r() * W + Math.sin(t * 1.5 + i) * 60, y = r() * H - k * 300 * r(), R = 260 + r() * 500;
-          glow(x, y, R * (0.4 + sk), i % 3 ? 'rgba(58,44,42,1)' : 'rgba(96,74,66,1)', 0.95 * sk, 'source-over'); }
-        screenFill('#2a201e', 0.85 * sm((k - 0.15) / 0.3));
-        if (k > 0.28) { const q = (k - 0.28) / 0.46, s = 0.06 + Math.pow(q, 3.2) * 4.2, a = sm(q * 3);
+          glow(x, y, R * (0.4 + sk), i % 3 ? 'rgba(58,44,42,1)' : 'rgba(110,70,56,1)', 0.95 * sk, 'source-over'); }
+        screenFill('#2a201e', 0.55 * sm((k - 0.2) / 0.3)); glow(540, 1100, 900, 'rgba(255,100,40,1)', 0.35 * (1 - sm((k - 0.3) / 0.3)));
+        if (k > 0.2) { const q = (k - 0.2) / 0.54, s = 0.06 + Math.pow(q, 3.2) * 4.2, a = sm(q * 3);
           ctx.save(); ctx.globalAlpha = a; trainFront(540, 960 - 60 * s, s, t); ctx.restore();
           for (let i = 0; i < 14; i++) { const r = rng(i * 5 + 1); glow(r() * W, r() * H, 300 + r() * 300, 'rgba(60,46,44,1)', 0.6 * (1 - q), 'source-over'); }
-          for (const hx of [-200, 200]) glow(540 + hx * s, 960 - 60 * s + 250 * s, 120 + 600 * q, 'rgba(255,246,210,1)', 0.7 * a);
+          for (const hx of [-200, 200]) glow(540 + hx * s, 960 - 60 * s + 250 * s, 200 + 600 * q, 'rgba(255,246,210,1)', 0.85 * a);
           if (q > 0.6) { const rr = rng(hsh(FRAME, 9)); for (let i = 0; i < 40; i++) { const an = rr() * 6.283, d0 = 200 + rr() * 200, d1 = d0 + 400 + rr() * 600; pencil([[540 + Math.cos(an) * d0, 960 + Math.sin(an) * d0], [540 + Math.cos(an) * d1, 960 + Math.sin(an) * d1]], { w: 3, col: '#fff6e0', a: 0.6 * (q - 0.6) / 0.4, pass2: false, gap: false }); } }
         }
       });

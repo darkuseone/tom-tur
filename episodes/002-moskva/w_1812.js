@@ -23,7 +23,7 @@
   SHAKES.push([EV.fire_burst, 0.45, 14]);
   KEYW.push('Наполеон', 'ключей', 'Москвы.', 'дождался', 'пустой', 'горит.');
 
-  const fireK = t => sm((t - EV.fire_burst) / 0.55);
+  const fireK = t => sm((t - EV.fire_burst) / 0.3);
   const smokeK = t => clamp((t - EV.fire_empty) / 1.2) * 0.35 + fireK(t) * 0.65;
 
   // ---------------------------------------------------------------- город: купола, Кремль, Иван Великий, дома
@@ -125,7 +125,7 @@
       }
       if (f > 0) {
         glow(500, 1010, 900, 'rgba(255,80,20,1)', 0.65 * f); glow(500, 1000, 420, 'rgba(255,200,90,1)', 0.45 * f);
-        for (let i = 0; i < 46; i++) { const r = rng(i * 7 + 1), x = -900 + i * 62 + r() * 30, b = 1004 + (i % 3) * 22, h = (40 + r() * 120) * f * (0.6 + 0.4 * sm((t - EV.fire_burst - r() * 0.4) / 0.4));
+        for (let i = 0; i < 46; i++) { const r = rng(i * 7 + 1), x = -900 + i * 62 + r() * 30, b = 1004 + (i % 3) * 22, h = (60 + r() * 170) * f * (0.6 + 0.4 * sm((t - EV.fire_burst - r() * 0.3) / 0.3));
           flame(x, b, h, 24 + r() * 26, t, i * 13); }
       }
       pop();
@@ -303,11 +303,20 @@
       const hx = pv[0] - dir[0] * 80 * sc, hy = pv[1] - dir[1] * 80 * sc, ss = sm(show);
       bigKey(lerp(hx, P.x - 165 * P.s, ss), lerp(hy, P.y - 360 * P.s, ss), sc, th, t, show);
       cat();
-      note('ключи: 0 шт.', 800, 1400, t, Tm.key + 0.15, EV.fire_burst, '#fff0d0', 46, -0.05, [[830, 1365], [850, 1260], [860, 1150]]);
+      note('ключи: 0 шт.', 790, 1405, t, Tm.key + 0.15, EV.fire_burst, '#fff4dc', 58, -0.05, [[830, 1365], [850, 1260], [860, 1150]]);
       note('ни души', 330, 820, t, EV.fire_empty, EV.fire_burst + 0.2, '#fff0d0', 50, 0.04, [[360, 850], [420, 900], [480, 960]]);
     });
     // передний план: трава, пепел и искры летят в камеру
     lay(0.6, () => {
+      push(930, 1790, 1, -0.12);                                    // брошенный барабан гвардии
+      ell(0, 70, 130, 34, { wash: '#a02a2a', washA: 1, w: 3, col: '#2a0606' }); rect(-130, -70, 260, 140, { wash: '#2a3a7a', washA: 1, line: false });
+      pencil([[-130, -70], [-130, 70]], { w: 3, pass2: false }); pencil([[130, -70], [130, 70]], { w: 3, pass2: false });
+      for (let q = 0; q < 6; q++) pencil([[-120 + q * 46, -60], [-97 + q * 46, 60], [-74 + q * 46, -60]], { w: 2.4, col: '#f0e8d8', pass2: false, gap: false });
+      ell(0, -70, 130, 34, { wash: '#e8dcc0', washA: 1, w: 3, col: '#2a1a10' }); pencil(ellPts(0, -70, 130, 34, 0, 0.05), { w: 9, col: '#a02a2a', pass2: false, gap: false });
+      pencil([[-60, -110], [40, -150]], { w: 7, col: '#5a3a1a', pass2: false }); pencil([[20, -100], [120, -120]], { w: 7, col: '#5a3a1a', pass2: false });
+      pop();
+      for (const [bx, by] of [[90, 1840], [170, 1870], [130, 1800]]) { ell(bx, by, 34, 34, { wash: '#2a2828', washA: 1, w: 2.4, col: '#0a0808' }); glow(bx - 10, by - 12, 18, 'rgba(255,200,150,1)', 0.4); }
+      if (fireK(t) > 0) glow(540, 1700, 700, 'rgba(255,100,40,1)', 0.25 * fireK(t));
       for (let k = 0; k < 22; k++) { const x = -300 + k * 80, sw = Math.sin(t * 1.8 + k) * 14; pencil([[x, 2300], [x + sw, 1880 + (k % 4) * 40]], { w: 7, col: k % 2 ? '#3a3a14' : '#4a4a1c', pass2: false, gap: false }); }
     });
     if (f > 0) scr(() => {
