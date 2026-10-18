@@ -1,21 +1,26 @@
 {
  "num": "003",
  "city": "Киев",
- "title": "TODO",
- "hook": "TODO",
- "timeline": {
-  "scene_gap": 0.05,
-  "tail": 0.6
- },
+ "title": "Акула под Киевом?! История Киева за минуту",
+ "hook": "АКУЛА ПОД / КИЕВОМ?!",
  "worlds": [
   "props.js",
-  "w_hook.js",
+  "w_metro.js",
+  "w_heli.js",
+  "w_chimera.js",
+  "w_caves.js",
+  "w_anna.js",
+  "w_perun.js",
+  "w_oleg.js",
+  "w_kyi.js",
+  "w_mammoth.js",
+  "w_sea.js",
   "w_today.js",
   "w_cover.js"
  ],
  "scenes": [
   [
-   "hook",
+   "metro",
    [
     "h1",
     "h2"
@@ -24,6 +29,60 @@
   [
    "tunnel",
    []
+  ],
+  [
+   "heli",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "chimera",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "caves",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "anna",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "perun",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "oleg",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "kyi",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "mammoth",
+   [
+    "s9"
+   ]
+  ],
+  [
+   "sea",
+   [
+    "s10"
+   ]
   ],
   [
    "today",
@@ -37,5 +96,9 @@
     "x1"
    ]
   ]
- ]
+ ],
+ "timeline": {
+  "scene_gap": 0.02,
+  "tail": 0.35
+ }
 }
