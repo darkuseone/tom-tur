@@ -1,0 +1,41 @@
+{
+ "num": "003",
+ "city": "Киев",
+ "title": "TODO",
+ "hook": "TODO",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "w_hook.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
