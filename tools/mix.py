@@ -1,5 +1,5 @@
 """Микс выпуска: голос (build/<эп>/vf) + SFX/атмосферы/музыка из episodes/<эп>/sound.py -> build/<эп>/audio.m4a.
-  python3 tools/mix.py <эпизод>
+  python3 tools/mix.py <эпизод> [папка_голоса=vf] [выход=audio.m4a]     # для дубляжа: tools/dub.py вызывает с vf_en audio_en.m4a
 Громкость каждого клипа выравнивается по активному RMS (голос −17, SFX −25+поправка, атмосферы −33, музыка −29 дБ),
 SFX: highpass 35 / lowpass 8.5k / −4 дБ на 4.5k / лимитер — ничего не бьёт по ушам; атмосферы и музыка проседают под голосом (sidechain).
 Цель: mean ≈ −20 дБ, пик ≤ −1 дБ."""
@@ -23,7 +23,7 @@ def act_rms(path):
 gain = lambda p, tg: max(-24, min(24, tg - act_rms(p)))
 
 
-def main(ep):
+def main(ep, vfdir='vf', outname='audio.m4a'):
     d = ROOT / 'episodes' / ep; b = ROOT / 'build' / ep; b.mkdir(parents=True, exist_ok=True)
     T = json.load(open(d / 'times.json')); VO, VD, DUR = T['start'], T['dur'], T['DUR']
     tl = SimpleNamespace(LS=lambda k: VO[k], LE=lambda k: VO[k] + VD[k], LF=lambda k, f: VO[k] + VD[k] * f, DUR=DUR,
@@ -44,7 +44,7 @@ def main(ep):
     inp, fl, vl, bl, sl = [], [], [], [], []
     def add(f): inp.extend(['-i', str(f)]); return len(inp) // 2 - 1
     for k, t in VO.items():
-        f = b / 'vf' / f'{k}.wav'; g = gain(f, M['voice_db']); i = add(f); ms = int(t * 1000)
+        f = b / vfdir / f'{k}.wav'; g = gain(f, M['voice_db']); i = add(f); ms = int(t * 1000)
         fl.append(f'[{i}]volume={g:.2f}dB,acompressor=threshold=-22dB:ratio=2.5:attack=6:release=90:makeup=1,adelay={ms}|{ms}[v{i}]'); vl.append(f'[v{i}]')
     for n, t, rel in S['sfx']:
         f = SF / f'{n}.mp3'; g = gain(f, M['sfx_db'] + rel); i = add(f); ms = max(0, int(t * 1000))
@@ -59,13 +59,13 @@ def main(ep):
     fl.append('[bed][vsc]sidechaincompress=threshold=0.04:ratio=5:attack=25:release=350[bedd]')
     fl.append('[vo][bedd]' + ''.join(sl) + f'amix=inputs={2 + len(sl)}:normalize=0,apad=whole_dur={DUR},atrim=0:{DUR},'
               'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume=2dB,alimiter=limit=0.84:attack=2:release=40:level=0[out]')
-    (b / 'mix.txt').write_text(';\n'.join(fl))
-    out = b / 'audio.m4a'
-    subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex_script', str(b / 'mix.txt'), '-map', '[out]', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(out)], check=True)
+    (b / f'mix_{vfdir}.txt').write_text(';\n'.join(fl))
+    out = b / outname
+    subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex_script', str(b / f'mix_{vfdir}.txt'), '-map', '[out]', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(out)], check=True)
     r = subprocess.run(['ffmpeg', '-i', str(out), '-af', 'volumedetect', '-f', 'null', '-'], capture_output=True, text=True).stderr
     print(out.relative_to(ROOT), *[l.split('] ')[-1] for l in r.splitlines() if 'mean_volume' in l or 'max_volume' in l])
 
 
 if __name__ == '__main__':
     if len(sys.argv) < 2: sys.exit(__doc__)
-    main(sys.argv[1])
+    main(*sys.argv[1:4])
