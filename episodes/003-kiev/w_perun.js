@@ -72,13 +72,76 @@
       blob([[sx - 140 * (0.4 + q), sy], [sx - 60, sy - 220 * Math.sin(q * Math.PI)], [sx, sy - 300 * Math.sin(q * Math.PI)], [sx + 60, sy - 220 * Math.sin(q * Math.PI)], [sx + 140 * (0.4 + q), sy]], { wash: '#e8f4f8', washA: 0.9 * (1 - q), w: 2, col: '#3a6a82' }); }
   }
 
+  function cloud(x, y, w, h, a, seed) { const r = rng(seed); for (let k = 0; k < 7; k++) { const cx = x + (k - 3) * w / 7 + (r() - 0.5) * 20, cy = y - Math.sin(k / 6 * Math.PI) * h * 0.6 + (r() - 0.5) * 10; ell(cx, cy, w * 0.16 + r() * 20, h * 0.4 + r() * 10, { wash: '#fbf6ea', washA: a, w: 1.4, col: '#a8a090', a: 0.35 }); } sil([[x - w / 2, y + 10], [x + w / 2, y + 10], [x + w / 2 - 30, y + 26], [x - w / 2 + 30, y + 26]], '#d8d0c0', a * 0.6); }
+  function birds(t, x0, y0, n, seed) { const r = rng(seed); for (let k = 0; k < n; k++) { const x = x0 + r() * 300 + t * 30, y = y0 + r() * 120, f = Math.sin(t * 9 + k) * 8; pencil([[x - 12, y - f], [x, y], [x + 12, y - f]], { w: 2.4, col: '#3a3430', pass2: false }); } }
+  function farBank(t) {                                              // левый берег, острова, ладьи с парусами
+    sil([[-400, 1180], [1500, 1150], [1500, 1260], [-400, 1260]], '#8aa48a', 1);
+    for (let k = 0; k < 26; k++) { const x = -300 + k * 70; sil([[x, 1180], [x + 18, 1140 - (k % 4) * 12], [x + 36, 1180]], k % 2 ? '#5f7f5f' : '#6f8f6a', 0.9); }
+    sil([[-400, 1260], [1500, 1230], [1500, 1400], [-400, 1400]], '#7aa0b0', 1);
+    for (let k = 0; k < 10; k++) { const y = 1270 + k * 12, x = ((t * 20 + k * 211) % 1700) - 300; pencil([[x, y], [x + 60, y]], { w: 2, col: '#e8f2f4', a: 0.5, pass2: false }); }
+    sil([[300, 1300], [520, 1290], [600, 1310], [280, 1316]], '#9ab48a', 1);
+    for (const [bx, bs] of [[150, 0.5], [760, 0.42], [1000, 0.36]]) { const x = bx + Math.sin(t * 0.3 + bx) * 20; push(x, 1300, bs); blob([[-90, 0], [90, 0], [110, -26], [-110, -26]], { wash: '#6a4424', washA: 1, w: 2, col: '#2a1608' }); pencil([[0, -26], [0, -200]], { w: 5, col: '#4a2c14' }); const sl = poly([[-70, -190], [70, -190], [76, -50], [-76, -50]], { wash: '#efe4cc', washA: 1, w: 2, col: '#3a2a14' }); ctx.save(); ctx.clip(sl.path); for (let q = -70; q < 76; q += 36) { ctx.fillStyle = 'rgba(168,36,30,0.85)'; ctx.fillRect(q, -200, 18, 160); } ctx.restore(); pop(); }
+  }
+  function cityHill(t) {                                             // город Владимира на горе: валы, тын, башни, недостроенная церковь в лесах
+    const P = [[-400, 1400], [-400, 980], [-100, 900], [260, 870], [520, 900], [640, 980], [700, 1100], [760, 1300], [800, 1400]];
+    const h = shape(P, { wash: '#8a9a5a', washA: 1, w: 2.2, col: '#2a3014', key: 7750 }); hatch(h.path, h.bb, { gap: 9, a: 0.16, col: '#2a3014', ang: -0.6, key: 7751 });
+    for (let x = -380; x < 600; x += 18) { const y = 905 - Math.sin((x + 380) / 980 * Math.PI) * 40; pencil([[x, y], [x, y - 64]], { w: 9, col: x % 36 ? '#9a6e40' : '#8a5e34' }); poly([[x - 5, y - 64], [x, y - 76], [x + 5, y - 64]], { wash: '#8a5e34', washA: 1, w: 1 }); }
+    for (const [x, y, hh] of [[-260, 900, 150], [80, 860, 170], [420, 870, 150]]) { rect(x - 40, y - hh, 80, hh, { wash: '#a87a48', washA: 1, w: 2.2, col: '#2a1a0a' }); for (let q = 0; q < 5; q++) pencil([[x - 40, y - hh + q * 30], [x + 40, y - hh + q * 30]], { w: 1.4, col: '#5a3a1a', a: 0.6, pass2: false }); poly([[x - 52, y - hh], [x, y - hh - 70], [x + 52, y - hh]], { wash: '#6a4a2a', washA: 1, w: 2, col: '#2a1a0a' }); rect(x - 10, y - hh + 30, 20, 26, { wash: '#2a1a0a', washA: 1, w: 1 }); }
+    // недостроенная каменная церковь (Десятинная, с 989) в лесах
+    push(250, 830, 1); rect(-90, -170, 180, 170, { wash: '#e8d8b8', washA: 1, w: 2.2, col: '#4a3a2a' }); for (let q = 0; q < 6; q++) pencil([[-90, -170 + q * 28], [90, -170 + q * 28]], { w: 1.4, col: '#b88a5a', a: 0.7, pass2: false });
+    for (const x of [-60, 0, 60]) blob([[x - 20, -80], [x - 20, -130], [x, -146], [x + 20, -130], [x + 20, -80]], { wash: '#4a3a2a', washA: 0.85, w: 1.4 });
+    rect(-36, -250, 72, 80, { wash: '#e8d8b8', washA: 1, w: 2, col: '#4a3a2a' }); for (const x of [-110, -70, 70, 110]) pencil([[x, 0], [x, -280]], { w: 4, col: '#7a5a34' }); for (const y of [-60, -140, -220]) pencil([[-120, y], [120, y]], { w: 4, col: '#7a5a34' }); pencil([[-110, -140], [-70, -220]], { w: 3, col: '#7a5a34' }); pencil([[70, -60], [110, -140]], { w: 3, col: '#7a5a34' });
+    for (let k = 0; k < 3; k++) { const u = (t * 0.6 + k / 3) % 1; human(-40 + k * 50, -60 - k * 80, 0.22, t, { body: '#c8b090', armR: 'swing', seed: 40 + k }); }
+    pop();
+    for (let k = 0; k < 3; k++) { const u = (t * 0.25 + k / 3) % 1; glow(-200 + k * 300, 760 - u * 200, 30 + u * 50, 'rgba(170,160,150,1)', 0.3 * (1 - u), 'source-over'); }
+  }
+  function smallIdol(x, y, s, t, k, pulled) {                         // другие идолы пантеона: Хорс, Даждьбог, Стрибог… — их тоже валят
+    const lean = pulled ? Math.sin(t * 1.6 + k) * 0.06 + 0.12 : 0; push(x, y, s, lean);
+    const b = shape([[-40, 0], [-44, -220], [-30, -270], [30, -270], [44, -220], [40, 0]], { wash: ['#7a5232', '#8a6038', '#6e4a2c'][k % 3], washA: 1, w: 2.4, col: '#2a1608', key: 7760 + k }); fstr(b.path, b.bb, 16, 1.57, 50, '#3a2210', 0.5, 7761 + k);
+    ell(0, -300, 34, 38, { wash: ['#9a7448', '#a88050', '#8a6a40'][k % 3], washA: 1, w: 2.2, col: '#2a1608' }); for (const sd of [-1, 1]) ell(sd * 12, -306, 5, 4, { wash: '#1a0e06', washA: 1, line: false }); pencil([[-12, -284], [12, -284]], { w: 2.4, col: '#1a0e06', pass2: false });
+    rect(-44, -120, 88, 14, { wash: '#5a3a1a', washA: 1, w: 1.4 }); if (k === 1) { for (let q = 0; q < 8; q++) { const a = q / 8 * 6.283; pencil([[Math.cos(a) * 40, -300 + Math.sin(a) * 44], [Math.cos(a) * 56, -300 + Math.sin(a) * 60]], { w: 3, col: '#d6a842', pass2: false }); } }
+    pop();
+    if (pulled) { pencil([[x + 20 * s, y - 240 * s], [x + 200 * s, y - 40 * s]], { w: 3, col: '#c8b080', pass2: false }); }
+  }
+  function horse(x, y, s, t, tug) {                                  // конь, к хвосту которого привязали Перуна (ПВЛ, 988)
+    const ph = t * 6, st = tug ? Math.sin(ph) * 10 : 0; push(x, y, s);
+    for (let k = 0; k < 4; k++) { const lx = [-90, -60, 60, 90][k], sw = tug ? Math.sin(ph + k * 1.6) * 16 : 0; pencil([[lx, -150], [lx + sw, -70], [lx + sw * 0.6, -6]], { w: 16, col: k % 2 ? '#5a3a20' : '#6a4426' }); ell(lx + sw * 0.6, -4, 12, 7, { wash: '#2a1a0c', washA: 1, w: 1.2 }); }
+    const b = blob([[-130, -150], [-110, -220], [60, -230], [130, -200], [140, -140], [100, -110], [-110, -110]], { wash: '#7a4e2c', washA: 1, w: 2.8, col: '#1e1008', key: 7770 }); shadeG(b.path, 0, -110, 0, -230, '#3a2210', 0.5);
+    const n = blob([[100, -200], [150, -300], [200, -320], [214, -290], [170, -260], [140, -160]], { wash: '#7a4e2c', washA: 1, w: 2.6, col: '#1e1008' });
+    blob([[190, -320], [240, -300], [250, -270], [214, -270], [196, -290]], { wash: '#7a4e2c', washA: 1, w: 2.4, col: '#1e1008' }); ell(216, -306, 4, 4, { wash: '#0a0604', washA: 1, line: false });
+    for (let q = 0; q < 8; q++) pencil([[110 + q * 10, -200 - q * 14], [96 + q * 10, -180 - q * 14]], { w: 6, col: '#2a1a0c', pass2: false });
+    pencil(spline([[-130, -190], [-170, -170 + st], [-190, -120 + st], [-200, -80 + st]], false, 8), { w: 14, col: '#2a1a0c' });
+    pencil([[150, -230], [130, -200], [80, -190]], { w: 3, col: '#a8241e', pass2: false });
+    pop();
+  }
+  function crowd(t) {                                                // киевляне смотрят (позади, на склоне)
+    const P = [[-120, 1330, 0.62, { body: '#c8b8a0', hat: 'scarf', hatCol: '#c83a2a', face: 'shock', seed: 21 }], [-30, 1320, 0.58, { body: '#8a6a4a', hair: '#3a2a1a', beard: 'short', face: 'smile', armR: 'wave', seed: 22 }],
+      [70, 1315, 0.5, { body: '#d8c8a8', hat: 'scarf', hatCol: '#e8c040', face: 'grin', seed: 23 }], [470, 1325, 0.56, { body: '#6a7a8a', hair: '#5a3a1a', beard: 'long', face: 'shock', armL: 'up', seed: 24 }], [600, 1335, 0.5, { body: '#e8dcc8', hat: 'scarf', hatCol: '#3a6aa0', face: 'smile', seed: 25 }]];
+    for (const [x, y, s, o] of P) human(x, y, s, t, Object.assign({ legs: '#4a3a2a', trim: '#a8241e' }, o));
+  }
+  function meadow(t) {
+    const g = poly([[-400, 1300], [560, 1330], [900, 1420], [1100, 1560], [1100, 2400], [-400, 2400]], { wash: '#7a9a4a', washA: 1, w: 2.6, col: '#2a3014', key: 7740 }); hatch(g.path, g.bb, { gap: 8, a: 0.2, col: '#2a3014', ang: -0.4, key: 7741 });
+    poly([[600, 1340], [900, 1430], [1100, 1580], [1100, 2400], [1000, 2400], [880, 1500]], { wash: '#b8946a', washA: 1, w: 2, col: '#3a2a14' });
+    const r = rng(7742); for (let k = 0; k < 70; k++) { const x = -300 + r() * 1000, y = 1360 + r() * 700; if (x > 640 + (y - 1340) * 0.6) continue; pencil([[x, y], [x + 4, y - 18 - r() * 12]], { w: 2.4, col: '#4a6a2a', pass2: false }); if (r() < 0.3) ell(x + 4, y - 22, 5, 5, { wash: ['#e8e0f0', '#f0c040', '#d84a6a'][k % 3], washA: 1, line: false }); }
+    for (const [x, y, rr] of [[-80, 1560, 30], [380, 1700, 24], [700, 1600, 20]]) ell(x, y, rr * 1.6, rr, { wash: '#a8a090', washA: 1, w: 2, col: '#3a3428' });
+    // путь «по Боричеву» вниз: колея, следы волока
+    if (t > EV.per_fall) { const q = clamp((t - EV.per_fall) / 0.6); pencil([[IX, IY], [lerp(IX, IX + 600, q), lerp(IY, IY + 330, q)]], { w: 10, col: '#6a4a2a', a: 0.5, pass2: false }); }
+  }
+
   WORLD.perun = (t, u, cat) => {
-    lay(30, () => { vgrad(-600, 1600, ['#9ac2d8', '#e8e2c8', '#f0d8a8']); glow(900, 700, 500, 'rgba(255,236,190,1)', 0.6); });
-    lay(16, () => { sil([[-400, 1450], [1500, 1380], [1500, 1600], [-400, 1600]], '#8aa088', 0.8); for (let k = 0; k < 20; k++) { const x = -300 + k * 90; sil([[x, 1410], [x + 20, 1360 - (k % 3) * 20], [x + 40, 1410]], '#5a7a5a', 0.6); } haze('#e8e2c8', 0.25); });
+    lay(30, () => { vgrad(-600, 1600, ['#8ab8d8', '#d8e6e4', '#f6dcaa']); glow(900, 700, 520, 'rgba(255,236,190,1)', 0.6); cloud(200, 420, 380, 120, 0.85, 7781); cloud(860, 560, 300, 90, 0.75, 7782); cloud(-60, 700, 260, 70, 0.6, 7783); birds(t, 300, 600, 6, 7784); });
+    lay(18, () => { farBank(t); haze('#e0e8e0', 0.22); });
+    lay(6, () => { cityHill(t); smallIdol(-200, 1150, 0.7, t, 0, true); smallIdol(-60, 1140, 0.66, t, 1, true); smallIdol(560, 1150, 0.62, t, 2, false); haze('#e8e2c8', 0.12); });
     lay(1.4, () => { river(t); });
-    lay(1, () => { const g = poly([[-400, 1300], [560, 1330], [900, 1420], [1100, 1560], [1100, 2400], [-400, 2400]], { wash: '#7a8a4a', washA: 1, w: 2.6, col: '#2a3014', key: 7740 }); hatch(g.path, g.bb, { gap: 8, a: 0.2, col: '#2a3014', ang: -0.4, key: 7741 });
-      poly([[600, 1340], [900, 1430], [1100, 1580], [1100, 2400], [1000, 2400], [880, 1500]], { wash: '#a88a5a', washA: 1, w: 2, col: '#3a2a14' });
-      prince(60, 1310, t); man(190, 1340, 1.5, t, 0, 0); idol(t); man(560, 1350, 1.5, t, 1, 1.5); cat(); });
+    lay(1, () => { meadow(t); crowd(t);
+      const tug = t > EV.per_beat, hx = tug ? lerp(960, 1010, sm((t - EV.per_beat) / 1.5)) : 960; horse(hx, 1400, 0.75, t, tug);
+      if (t < EV.per_fall) pencil([[hx - 150, 1400 - 70], [IX + 60, IY - 120]], { w: 4, col: '#c8b080', pass2: false });
+      human(30, 1340, 1.05, t, { body: '#9a1a24', trim: '#d6a842', belt: '#4a2c14', legs: '#3a2418', boots: '#5a3a1a', hair: '#5a3a1a', beard: 'short', hat: 'fur', hatCol: '#a8241e', face: t > EV.per_vlad ? 'angry' : 'calm', armR: t > EV.per_vlad ? 'point' : 'hips', armL: 'hips', look: 0.6, seed: 31 });
+      const beat = t > EV.per_beat && t < EV.per_fall;
+      human(200, 1350, 1.1, t, { body: '#e8e0cc', trim: '#a8241e', belt: '#a8241e', legs: '#5a4a3a', hair: '#7a5a2a', beard: 'short', face: beat ? 'grin' : 'calm', armR: beat ? 'swing' : 'down', prop: 'stick', propAng: beat ? -0.6 : 0.2, look: 0.7, seed: 32 });
+      idol(t);
+      human(570, 1360, 1.1, t, { body: '#d8ccb0', trim: '#2a4a8a', belt: '#2a4a8a', legs: '#4a3a2a', hair: '#3a2a1a', beard: 'long', face: beat ? 'angry' : 'calm', armR: beat ? 'swing' : 'down', prop: 'stick', propAng: beat ? -0.6 : 0.2, look: -0.7, flip: -1, seed: 33 });
+      cat(); });
   };
   DIR.perun = {
     outfit: 'rubakha', light: { side: 1, rim: '#fff0c8' }, grade: ['#c8a060', 0.1],

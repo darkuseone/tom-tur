@@ -61,15 +61,29 @@
     glow(0, 0, 300, 'rgba(255,220,150,1)', 0.25); pop();
   }
 
+  function moon(t) { ell(860, 420, 54, 54, { wash: '#f6ecd0', washA: 1, w: 1.6, col: '#c8b890' }); glow(860, 420, 220, 'rgba(255,240,210,1)', 0.35); for (const [dx, dy, r] of [[-14, -10, 10], [16, 14, 7], [4, 22, 5]]) ell(860 + dx, 420 + dy, r, r, { wash: '#e0d4b4', washA: 1, line: false }); }
+  function herd(t) { for (const [x, s_, ph] of [[-80, 0.22, 0], [60, 0.18, 1], [200, 0.2, 2]]) { const xx = x + Math.sin(t * 0.2 + ph) * 20, y = 1120 - Math.sin(xx * 0.003 + 2) * 180 + 6; push(xx, y, s_); sil([[-170, 0], [-150, -220], [-60, -300], [60, -260], [160, -200], [190, 0]], '#3a2e3a', 0.85); sil([[-170, -150], [-240, -120], [-230, -20], [-210, 0], [-190, -120]], '#3a2e3a', 0.85); pencil([[-200, -160], [-290, -140], [-300, -200]], { w: 14, col: '#e8e0d0', a: 0.7, pass2: false }); pop(); } }
+  function camp(t) {                                                 // второе жилище, рама со шкурой, стойка копий, кости, скребущая шкуру женщина
+    push(900, 1430, 0.7); blob([[-200, 0], [-170, -200], [0, -270], [170, -200], [200, 0]], { wash: '#7a5a3a', washA: 1, w: 2.4, col: '#2a1a0a' }); for (let k = 0; k < 7; k++) { const a = Math.PI * (0.08 + 0.84 * k / 6); pencil([[Math.cos(a) * 190, -Math.sin(a) * 250], [Math.cos(a) * 210, -Math.sin(a) * 270]], { w: 14, col: '#e8dcbc' }); } glow(0, -60, 90, 'rgba(255,170,80,1)', 0.4); blob([[-40, 0], [-36, -100], [0, -120], [36, -100], [40, 0]], { wash: '#1a0e06', washA: 1, w: 1.6 }); pop();
+    push(-60, 1450, 1); pencil([[-90, 0], [-90, -240]], { w: 8, col: '#5a3a1e' }); pencil([[90, 0], [90, -240]], { w: 8, col: '#5a3a1e' }); pencil([[-100, -230], [100, -230]], { w: 7, col: '#5a3a1e' }); const hd = blob([[-80, -220], [80, -220], [70, -40], [10, -20], [-60, -50]], { wash: '#a8784a', washA: 1, w: 2, col: '#3a1a0a' }); fstr(hd.path, hd.bb, 40, 1.4, 20, '#6a4424', 0.5, 7988, 2); for (let k = 0; k < 6; k++) pencil([[-80 + k * 32, -224], [-76 + k * 32, -210]], { w: 2, col: '#2a1a0a', pass2: false }); pop();
+    push(560, 1440, 1); for (let k = 0; k < 4; k++) { pencil([[-40 + k * 26, 0], [-60 + k * 30, -300]], { w: 6, col: '#6a4424' }); poly([[-66 + k * 30, -300], [-54 + k * 30, -300], [-60 + k * 30, -340]], { wash: '#7a7a72', washA: 1, w: 1.4 }); } pop();
+    for (const [x, y, r] of [[120, 1600, 0.3], [640, 1560, -0.5], [760, 1650, 1.1], [-20, 1700, 0.8]]) { push(x, y, 1, r); pencil([[-40, 0], [40, 0]], { w: 10, col: '#e8dcbc' }); for (const sd of [-1, 1]) ell(sd * 44, 0, 10, 12, { wash: '#e8dcbc', washA: 1, w: 1.4, col: '#6a5a3a' }); pop(); }
+    human(780, 1460, 0.8, t, { body: '#8a6a44', legs: '#6a4a2a', boots: '#4a3020', hair: '#2a1a0e', face: 'calm', armR: 'swing', armL: 'hold', look: -0.4, seed: 111, long: 1 });
+    human(980, 1470, 0.85, t, { body: '#7a5a3a', legs: '#5a3a1e', hair: '#3a2410', beard: 'long', face: t > EV.mam_pic ? 'grin' : 'calm', armR: 'hold', prop: 'spear', look: -0.6, flip: -1, seed: 112 });
+  }
+  function scrubs() { const r = rng(7989); for (let k = 0; k < 14; k++) { const x = -200 + r() * 1500, y = 1380 + r() * 40; pencil([[x, y], [x, y - 40 - r() * 30]], { w: 3, col: '#3a3020', pass2: false }); for (let q = 0; q < 4; q++) pencil([[x, y - 20 - q * 10], [x + (q % 2 ? 14 : -14), y - 30 - q * 10]], { w: 2, col: '#3a4a2a', pass2: false }); } }
   WORLD.mammoth = (t, u, cat) => {
-    lay(30, () => { vgrad(-600, 1500, ['#2a2a4a', '#6a5a7a', '#d8906a']); motes(60, [0, 0, W, 800], 'rgba(255,250,230,1)', t, 7980, { sp: 0, sz: 2, a: 0.8, tw: 1 }); });
+    lay(30, () => { vgrad(-600, 1500, ['#2a2a4a', '#6a5a7a', '#d8906a']); motes(60, [0, 0, W, 800], 'rgba(255,250,230,1)', t, 7980, { sp: 0, sz: 2, a: 0.8, tw: 1 }); moon(t); });
     lay(12, () => { const P = [[-400, 1200]]; for (let x = -400; x <= 1500; x += 50) P.push([x, 1120 - Math.sin(x * 0.003 + 2) * 180]); P.push([1500, 1500], [-400, 1500]); shape(P, { wash: '#5a5a6a', washA: 1, w: 1.6, col: '#2a2a3a', a: 0.5 });
       for (let k = 0; k < 10; k++) { const x = -200 + k * 160; sil([[x, 1140 - Math.sin(x * 0.003 + 2) * 180], [x + 60, 1120 - Math.sin((x + 60) * 0.003 + 2) * 180], [x + 30, 1100 - Math.sin(x * 0.003 + 2) * 180]], '#e8e8ee', 0.6); }
-      const mk = sm((t - EV.mam_hunt) / 0.5); woolly(lerp(1400, 980, mk), 1110, 0.78, t, t > EV.mam_pic ? sm((t - EV.mam_pic) / 0.3) : 0); haze('#6a5a7a', 0.18); });
+      const mk = sm((t - EV.mam_hunt) / 0.5); herd(t); woolly(lerp(1400, 980, mk), 1110, 0.78, t, t > EV.mam_pic ? sm((t - EV.mam_pic) / 0.3) : 0); haze('#6a5a7a', 0.18); });
     lay(4, () => { const r = poly([[-400, 1330], [1500, 1300], [1500, 1440], [-400, 1460]], { wash: '#4a5a72', washA: 1, w: 2, col: '#1a2230', key: 7981 }); for (let k = 0; k < 6; k++) pencil([[-200 + k * 260, 1360 + k * 10], [-120 + k * 260, 1356 + k * 10]], { w: 2, col: '#e8b080', a: 0.5, pass2: false }); boneHut(160, 1420, 0.9, t); });
     lay(1, () => { const g = poly([[-400, 1400], [1500, 1380], [1500, 2400], [-400, 2400]], { wash: '#8a7a5a', washA: 1, w: 2.4, col: '#2a2214', key: 7982 }); hatch(g.path, g.bb, { gap: 9, a: 0.18, col: '#2a2214', ang: 0.1, key: 7983 });
       for (let k = 0; k < 8; k++) sil(ellPts(-100 + k * 170, 1440 + (k % 3) * 60, 70, 10, 0, 0, 12).map(([x, y], i) => [x, y + Math.sin(i * 2.1) * 4]), '#e8eaee', 0.55);
-      fire(420, 1500, t); hunter(260, 1510, 1.25, t); cat(); });
+      scrubs(); camp(t); fire(420, 1500, t);
+      { const cut = t > EV.mam_draw && t < EV.mam_pic; human(220, 1520, 1.05, t, { body: '#8a6a44', legs: '#6a4a2a', boots: '#4a3020', hair: '#2a1a0e', beard: 'long', face: t > EV.mam_pic ? 'grin' : 'calm', armL: 'hold', armR: cut ? 'swing' : 'hold', look: 0.5, seed: 113 });
+        const tk = spline([[60, 1420], [180, 1380], [300, 1386], [400, 1420]], false, 10); pencil(tk, { w: 30, col: '#efe4c8' }); pencil(tk, { w: 2.2, col: '#4a3a1a', pass2: false }); }
+      cat(); });
     lay(1, () => engraving(t));
   };
   DIR.mammoth = {

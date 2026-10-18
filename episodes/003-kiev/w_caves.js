@@ -67,8 +67,23 @@
     pop();
   }
 
+  function icon(x, y, s, k) {                                        // икона в нише: доска, золотой фон, нимб, лик, киноварь
+    push(x, y, s); rect(-44, -60, 88, 120, { wash: '#6a3a1a', washA: 1, w: 2, col: '#1a0a04' }); const g = rect(-36, -52, 72, 104, { wash: '#d6a842', washA: 1, w: 1.4, col: '#6a4a08' }); shadeG(g.path, -36, -52, 36, 52, '#8a5a14', 0.4);
+    ell(0, -18, 22, 22, { wash: '#f0d070', washA: 1, w: 1.4, col: '#8a5a14' }); ell(0, -16, 12, 15, { wash: '#c89a70', washA: 1, w: 1.2, col: '#3a1a0a' }); blob([[-24, 52], [-20, 4], [0, -2], [20, 4], [24, 52]], { wash: k % 2 ? '#a8241e' : '#2a4a7a', washA: 1, w: 1.4, col: '#1a0a04' });
+    pencil([[-5, -18], [-2, -18]], { w: 1.6, pass2: false }); pencil([[2, -18], [5, -18]], { w: 1.6, pass2: false }); pop();
+  }
+  function lampadas(t) { for (let k = 0; k < 5; k++) { const d = 1.2 + k * 0.7, sc = 1 / d, x = 540 + (k % 2 ? 1 : -1) * 120 * sc * 2.2, y = 900 - 520 * sc; pencil([[x, y - 200 * sc], [x, y]], { w: 1.4, col: '#3a2a1a', pass2: false }); blob([[x - 14 * sc, y], [x + 14 * sc, y], [x + 9 * sc, y + 20 * sc], [x - 9 * sc, y + 20 * sc]], { wash: k % 2 ? '#a8241e' : '#2a6a3a', washA: 0.9, w: 1.2 }); glow(x, y + 10 * sc, 70 * sc * flick(t, k), 'rgba(255,150,90,1)', 0.7); } }
+  function monk(t) {                                                 // монах со свечой проходит в глубине
+    const q = ((t - S0.caves) * 0.12) % 1, d = lerp(5.5, 3.5, q), sc = 1 / d, x = 540 + 80 * sc, y = 900 + 560 * sc;
+    human(x, y, 2.4 * sc, t, { body: '#1e1a18', bodyD: '#0a0806', hat: 'hood2', hatCol: '#141210', long: 1, face: 'calm', beard: 'long', hair: '#d8d0c0', armR: 'hold', prop: 'candle', seed: 91 });
+    glow(x + 30 * sc, y - 300 * sc, 260 * sc, 'rgba(255,190,110,1)', 0.5); }
+  function wallMarks(t) {                                            // следы кирки, надписи-граффити, корни из свода
+    const r = rng(7580); for (let k = 0; k < 40; k++) { const side = k % 2 ? 1 : -1, d = 0.8 + r() * 2.2, sc = 1 / d, x = 540 + side * (380 + r() * 120) * sc * 1.3, y = 900 + (r() - 0.6) * 900 * sc; pencil([[x, y], [x + 18 * sc * side, y + 8 * sc]], { w: 2, col: '#6a5034', a: 0.45, pass2: false }); }
+    for (const [x, y, s_, rr] of [[110, 1040, 'Г(оспод)и помози', -0.1], [880, 980, 'Илия', 0.08], [960, 1180, '✝', 0]]) txt(s_, x, y, 30, { font: 'Hand', col: '#4a2a14', a: 0.6, rot: rr });
+    for (let k = 0; k < 6; k++) { const x = 380 + k * 70, y = 260 + (k % 2) * 30; pencil([[x, y], [x + 6, y + 40], [x - 4, y + 80], [x + 3, y + 110]], { w: 2.2, col: '#3a2a14', a: 0.6, pass2: false }); }
+  }
   WORLD.caves = (t, u, cat) => {
-    lay(3, () => { tunnel(t); for (const [x, y, k] of [[150, 700, 1], [930, 760, 2], [300, 640, 3], [800, 640, 4]]) niche(x, y, 0.8, t, k); });
+    lay(3, () => { tunnel(t); wallMarks(t); lampadas(t); monk(t); for (const [x, y, k] of [[150, 700, 1], [930, 760, 2], [300, 640, 3], [800, 640, 4]]) niche(x, y, 0.8, t, k); icon(60, 900, 0.9, 1); icon(1010, 930, 0.9, 2); icon(330, 820, 0.55, 3); icon(760, 820, 0.55, 4); });
     lay(1.3, () => { reliquary(t); tally(t); });
     lay(1, () => { cat(); });
     lay(0.8, () => { bylina(t); report(t); });
