@@ -66,7 +66,8 @@ function hook(t) {
   for (const [s, y, c] of [[HOOK_LINES[0], -86, '#f6ecd6'], [HOOK_LINES[1], 80, K.amber]]) { ctx.lineWidth = 22; ctx.strokeStyle = 'rgba(12,8,6,0.94)'; ctx.strokeText(s, 0, y); ctx.fillStyle = c; ctx.fillText(s, 0, y); }
   ctx.restore(); pop();
 }
-function grade(name, o2) {                                         // цветокор на итоговом кадре: тон + виньетка
+function grade(name, o2) {                                         // цветокор на итоговом кадре: насыщенность (SAT из scenes.js, с 004 — 1.1) + тон + виньетка
+  if (typeof SAT !== 'undefined' && SAT !== 1) { o2.save(); o2.globalCompositeOperation = 'copy'; o2.filter = `saturate(${SAT})`; o2.drawImage(o2.canvas, 0, 0); o2.restore(); }
   const [c, a] = D_(name).grade || ['#000000', 0];
   o2.save(); o2.globalCompositeOperation = 'soft-light'; o2.globalAlpha = a; o2.fillStyle = c; o2.fillRect(0, 0, W, H);
   o2.globalCompositeOperation = 'multiply'; o2.globalAlpha = 1; const v = o2.createRadialGradient(540, 900, 380, 540, 960, 1250); v.addColorStop(0, 'rgba(255,255,255,1)'); v.addColorStop(1, 'rgba(120,100,90,1)'); o2.fillStyle = v; o2.fillRect(0, 0, W, H);

@@ -14,6 +14,7 @@ for f in ['direct.js', 'props.js', 'transitions.js']: shutil.copy(src / f, d / f
 s = (src / 'scenes.js').read_text()
 head = s.split('const SUBTITLE')[0].replace(src.name[:3], ep[:3])
 (d / 'scenes.js').write_text(head + f"""const SUBTITLE = '{city} сквозь время';
+const SAT = 1.1;                                          // насыщенность итогового кадра (владелец 18.10.2026: на ~10 % цветастее)
 const HOOK_LINES = ['TODO СТРОКА 1', 'TODO СТРОКА 2?!'];   // текст-хук первых ~2.4 с
 const YR = {{ hook: ['2026', 'TODO'], tunnel: ['', ''], /* сцена: ['год', 'ПОДПИСЬ'] */ today: ['2026', '{city.upper()}'], button: ['', ''] }};
 const SC = SCN.map(([n, a, b]) => [n, a, b, YR[n][0], YR[n][1]]);
