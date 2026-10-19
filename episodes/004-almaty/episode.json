@@ -1,0 +1,95 @@
+{
+ "num": "004",
+ "city": "Алматы",
+ "title": "Алматы — родина яблок",
+ "hook": "ЯБЛОКО — ОТСЮДА?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "w_hook.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "bears",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "saka",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "silk",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "aport",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "cathedral",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "vavilov",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "kino",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "blast",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "metro",
+   [
+    "s10"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
