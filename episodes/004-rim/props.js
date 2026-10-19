@@ -1,4 +1,4 @@
-/* 003 (из 002) — общие детали, туннель времени и реквизит, которые могут брать все миры выпуска. */
+/* 004 (из 002/003) — общие детали, туннель времени и реквизит, которые могут брать все миры выпуска. */
 function lerpC(a, b, k) { const pa = [1, 3, 5].map(i => parseInt(a.substr(i, 2), 16)), pb = [1, 3, 5].map(i => parseInt(b.substr(i, 2), 16)); return '#' + pa.map((v, i) => Math.round(lerp(v, pb[i], clamp(k))).toString(16).padStart(2, '0')).join(''); }
 function hills(y, amp, col, seed, a = 1) { const pts = [[-1200, 2400]]; for (let x = -1200; x <= W + 1200; x += 40) pts.push([x, y - Math.abs(Math.sin(x * 0.004 + seed)) * amp - Math.sin(x * 0.011 + seed * 2) * amp * 0.25]); pts.push([W + 1200, 2400]); return sil(pts, col, a); }
 function poster(x, y, s, rot, title, c1, c2, kind, t) {              // винтажный трэвел-постер города
@@ -19,7 +19,7 @@ function wTunnel(t, u, cat) {                                      // внутр
     if (k % 2 === 0) for (let n = 0; n < 12; n++) { const aa = n / 12 * 6.283; push(Math.cos(aa) * r * 0.86, Math.sin(aa) * r * 0.86, 1, aa + Math.PI / 2); txt(['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'][n], 0, 0, 10 + z * 70, { col: '#f6e2b0', font: 'Osw', a: 0.8 * a }); pop(); }
     pop(); }
   glow(cx, cy, 500, 'rgba(255,200,110,0.9)', 0.5);
-  const yrs = ['1909', '1901', 'XII в.', '1063', '988', '882', '482', '−17 000', '−41 млн', '2026'];
+  const yrs = ['2025', '1650', '1512', '125', '80', '70', '−44', '−753', '−600 000', 'MMXXVI'];
   yrs.forEach((y, k) => { const ph = (u * 1.3 + k / yrs.length) % 1, z = Math.pow(ph, 2), a = k * 0.7 + u; txt(y, cx + Math.cos(a) * z * 620, cy + Math.sin(a) * z * 820, 20 + z * 120, { col: '#ffe9b8', font: 'Osw', a: (1 - ph) * 0.9 }); });
   ctx.save(); ctx.globalCompositeOperation = 'lighter'; const r = rng(hsh(FRAME, 8)); for (let i = 0; i < 60; i++) { const a = r() * 6.283, d0 = 60 + r() * 300, d1 = d0 + 200 + r() * 600; ctx.strokeStyle = 'rgba(255,214,140,0.5)'; ctx.lineWidth = 1 + r() * 3; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * d0, cy + Math.sin(a) * d0); ctx.lineTo(cx + Math.cos(a) * d1, cy + Math.sin(a) * d1); ctx.stroke(); } ctx.restore();
   pencil([[-100, 1500], [cx, cy], [W + 100, 300]], { w: 6, col: '#ffd890', a: 0.9, pass2: false, gap: false }); glow(cx, cy, 120, 'rgba(255,240,200,1)', 0.8);
@@ -27,7 +27,7 @@ function wTunnel(t, u, cat) {                                      // внутр
 }
 
 WORLD.tunnel = wTunnel;
-DIR.tunnel = { outfit: 'hoodieK', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
+DIR.tunnel = { outfit: 'hoodieR', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
   pose: (t, u, b) => Object.assign(b, { x: 540, y: 1260, s: 1.0, rot: u * 3.2, look: [0, -0.2], watchInHand: true, glow: 1, spin: 1.5 }),
   cam: () => [[S0.tunnel, 540, 960, 0], [S1.tunnel, 540, 960, 0.1]] };
 
@@ -103,6 +103,7 @@ function human(x, y, s, t, o = {}) {
   const bp = blob(B, { wash: bc, washA: 1, w: 2.6, col: L, key: 7910 + sd });
   shadeG(bp.path, 56, 0, -20, 0, bd, 0.55); hatch(bp.path, bp.bb, { gap: 7, a: 0.12, col: bd, ang: 1.2, key: 7911 + sd, w: 1.2 });
   if (o.trim) { pencil([[0, top + 4], [0, hem]], { w: 5, col: o.trim, a: 0.9, pass2: false }); pencil([[-56, hem + 2], [56, hem + 2]], { w: 7, col: o.trim, pass2: false }); for (let q = 0; q < 5; q++) ell(0, top + 30 + q * 26, 3, 3, { wash: o.trim, washA: 1, line: false }); }
+  if (o.toga) { const tg = blob([[-50, top + 10], [-20, top - 2], [10, top + 40], [52, top + 120], [56, hem], [30, hem], [10, top + 120], [-40, top + 50]], { wash: o.toga, washA: 1, w: 2.2, col: L }); shadeG(tg.path, 50, 0, -30, 0, lerpC(o.toga, '#000000', 0.35), 0.5); if (o.stripe) pencil([[-44, top + 46], [8, top + 116], [32, hem]], { w: 7, col: o.stripe, pass2: false }); }
   if (o.belt) { rect(-54, top + 92, 108, 13, { wash: o.belt, washA: 1, w: 1.8, col: L }); rect(-8, top + 90, 16, 17, { wash: '#c8a040', washA: 1, w: 1.4, col: '#5a3a08' }); }
   // руки
   const arm = (side, mode) => { const sx = side * 46, sy = top + 22; let ex, ey, hx, hy;
@@ -146,6 +147,78 @@ function human(x, y, s, t, o = {}) {
   if (o.hat === 'cap') { blob([[-42, hy - 26], [-36, hy - 60], [36, hy - 60], [42, hy - 26]], { wash: hc, washA: 1, w: 2.2, col: L }); ell(28, hy - 26, 34, 8, { wash: lerpC(hc, '#000000', 0.3), washA: 1, w: 1.8, col: L }); }
   if (o.hat === 'scarf') blob([[-48, hy + 20], [-46, hy - 36], [0, hy - 58], [46, hy - 36], [48, hy + 20], [34, hy - 20], [-34, hy - 20]], { wash: hc, washA: 1, w: 2.2, col: L });
   if (o.hat === 'crown') { rect(-40, hy - 50, 80, 18, { wash: '#d6a842', washA: 1, w: 1.8, col: '#6a4a08' }); for (let q = 0; q < 5; q++) poly([[-40 + q * 20, hy - 50], [-30 + q * 20, hy - 74], [-20 + q * 20, hy - 50]], { wash: '#d6a842', washA: 1, w: 1.4, col: '#6a4a08' }); }
+  if (o.hat === 'laurel') for (let q = 0; q < 9; q++) { const a = Math.PI * (0.05 + q * 0.11); ell(-Math.cos(a) * 42, hy - 20 - Math.sin(a) * 26, 11, 5, { wash: q % 2 ? '#4a7a2a' : '#6a9a3a', washA: 1, w: 1.2, col: '#1e3a0a', rot: -a + 1.2 }); }
+  if (o.hat === 'galea') { const gh = blob([[-44, hy - 14], [-42, hy - 56], [0, hy - 82], [42, hy - 56], [44, hy - 14]], { wash: '#c08a3c', washA: 1, w: 2.2, col: L }); metalG(gh.path, 12, hy - 56, 50, '#ffe6a0', '#c08a3c', '#4a2a08'); for (let q = 0; q < 9; q++) pencil([[-30 + q * 7, hy - 76], [-40 + q * 10, hy - 120]], { w: 6, col: '#c2281e', pass2: false }); for (const sd of [-1, 1]) blob([[sd * 40, hy - 20], [sd * 46, hy + 20], [sd * 30, hy + 26], [sd * 30, hy - 12]], { wash: '#c08a3c', washA: 1, w: 1.6, col: L }); }
   if (o.hat === 'hood' || o.hat === 'hood2') blob([[-50, hy + 30], [-52, hy - 30], [0, hy - (o.hat === 'hood2' ? 100 : 70)], [52, hy - 30], [50, hy + 30], [38, hy - 10], [-38, hy - 10]], { wash: hc, washA: 1, w: 2.2, col: L, shade: { gap: 5, a: 0.3, col: L, ang: 1.2 } });
   pop();
+}
+
+/* ---- 004 Рим: общие детали ---- */
+/* Кошка римской колонии (не Том): pose 'sit'|'lie'|'walk'|'loaf', col/stripe/belly, look (−1…1), flip, seed. Высота сидячей ≈ 120·s. */
+function kitty(x, y, s, t, o = {}) {
+  const c = o.col || '#c8843a', d = lerpC(c, '#000000', 0.45), L = '#1c120a', sd = o.seed || 1, fl = o.flip || 1, ps = o.pose || 'sit';
+  const br = Math.sin(t * 2.2 + sd) * 1.5, tw = Math.sin(t * 2.6 + sd * 2);
+  push(x, y, s, 0, fl);
+  ell(0, 3, ps === 'lie' ? 80 : 50, 9, { wash: '#000000', washA: 0.2, line: false });
+  let hx = 0, hy = -110;
+  if (ps === 'sit') {
+    pencil(spline([[30, -8], [62, -10], [76, -40 + tw * 8], [66, -70 + tw * 10]], false, 8), { w: 13, col: c });
+    const bd = blob([[-36, 0], [-42, -46], [-26, -82], [0, -90 + br], [26, -82], [42, -46], [36, 0]], { wash: c, washA: 1, w: 2.2, col: L, key: 9100 + sd }); shadeG(bd.path, 40, 0, -20, 0, d, 0.5);
+    if (o.belly) blob([[-14, -2], [-18, -50], [0, -66], [18, -50], [14, -2]], { wash: o.belly, washA: 1, line: false });
+    for (const k of [-1, 1]) ell(k * 14, -4, 11, 7, { wash: o.belly || c, washA: 1, w: 1.6, col: L });
+    hy = -110 + br;
+  } else if (ps === 'loaf') {
+    const bd = blob([[-56, 0], [-60, -40], [-30, -62], [30, -62], [60, -40], [56, 0]], { wash: c, washA: 1, w: 2.2, col: L, key: 9100 + sd }); shadeG(bd.path, 50, 0, -20, 0, d, 0.5);
+    pencil(spline([[50, -6], [70, -2], [76, -16]], false, 6), { w: 11, col: c }); hx = -34; hy = -72 + br;
+  } else if (ps === 'lie') {
+    const bd = blob([[-70, 0], [-74, -26], [-40, -46], [40, -42], [76, -22], [72, 0]], { wash: c, washA: 1, w: 2.2, col: L, key: 9100 + sd }); shadeG(bd.path, 0, 0, 0, -46, d, 0.35);
+    pencil(spline([[70, -10], [100, -6], [120, -18 + tw * 6]], false, 6), { w: 11, col: c }); hx = -66; hy = -50 + br;
+  } else {
+    const ph = t * 6 + sd; for (const [lx, k] of [[-40, 0], [-24, 1], [30, 2], [46, 3]]) pencil([[lx, -44], [lx + Math.sin(ph + k * 1.6) * 10, 0]], { w: 11, col: k % 2 ? d : c });
+    const bd = blob([[-56, -30], [-50, -62], [40, -64], [60, -40], [50, -26], [-40, -24]], { wash: c, washA: 1, w: 2.2, col: L, key: 9100 + sd }); shadeG(bd.path, 0, -24, 0, -64, d, 0.4);
+    pencil(spline([[54, -54], [86, -80], [96, -112 + tw * 8]], false, 6), { w: 11, col: c }); hx = -62; hy = -80 + br;
+  }
+  if (o.stripe) { ctx.save(); ctx.globalAlpha = 0.7; for (let q = 0; q < 4; q++) pencil([[hx - 30 + q * 22 + (ps === 'sit' ? 20 : 30), hy + 50], [hx - 24 + q * 22 + (ps === 'sit' ? 20 : 30), hy + 74]], { w: 4, col: o.stripe, pass2: false }); ctx.restore(); }
+  // голова
+  const lk = (o.look || 0) * 6;
+  for (const k of [-1, 1]) poly([[hx + k * 30, hy - 18], [hx + k * 26, hy - 54], [hx + k * 8, hy - 30]], { wash: c, washA: 1, w: 2, col: L });
+  for (const k of [-1, 1]) poly([[hx + k * 26, hy - 22], [hx + k * 24, hy - 44], [hx + k * 13, hy - 28]], { wash: '#e8a0a0', washA: 0.8, line: false });
+  const hp = ell(hx, hy, 34, 29, { wash: c, washA: 1, w: 2.2, col: L, key: 9120 + sd }); shadeG(hp.path, 30, 0, -10, 0, d, 0.35);
+  if (o.belly) ell(hx, hy + 12, 16, 11, { wash: o.belly, washA: 1, line: false });
+  const blink = Math.sin(t * 1.7 + sd * 5) > 0.95 || o.sleep;
+  for (const k of [-1, 1]) { if (blink) pencil([[hx + k * 13 - 6 + lk, hy - 4], [hx + k * 13 + 6 + lk, hy - 4]], { w: 2.4, col: L, pass2: false }); else { ell(hx + k * 13 + lk, hy - 4, 6.5, 7, { wash: o.eye || '#c8d040', washA: 1, w: 1.2, col: L }); ell(hx + k * 13 + lk * 1.3, hy - 4, 2, 5.4, { wash: L, washA: 1, line: false }); } }
+  poly([[hx - 4 + lk, hy + 6], [hx + 4 + lk, hy + 6], [hx + lk, hy + 11]], { wash: '#d86a6a', washA: 1, line: false });
+  if (o.crown) { ctx.save(); ctx.globalAlpha *= o.crown; for (let q = 0; q < 9; q++) { const a = Math.PI * (0.05 + q * 0.11); ell(hx - Math.cos(a) * 34, hy - 26 - Math.sin(a) * 16, 9, 4, { wash: q % 2 ? '#4a7a2a' : '#7aa83a', washA: 1, w: 1, col: '#1e3a0a', rot: -a + 1.2 }); } glow(hx, hy - 40, 30, 'rgba(255,230,140,1)', 0.5 * o.crown); ctx.restore(); }
+  for (const k of [-1, 1]) for (const dy of [0, 6]) pencil([[hx + k * 14 + lk, hy + 10 + dy], [hx + k * 44 + lk, hy + 4 + dy * 1.6]], { w: 1.2, col: '#f6f0e0', a: 0.8, pass2: false });
+  pop();
+}
+/* Античная колонна: x,y — низ, h — высота, r — полуширина; o.cap 'cor'|'ion'|'dor', o.broken (0..1 — обломан сверху), o.col, o.flute */
+function column(x, y, h, r, o = {}) {
+  const c = o.col || '#e6dcc4', d = lerpC(c, '#5a4a30', 0.5), L = '#2a2014', top = y - h * (1 - (o.broken || 0) * 0.5);
+  rect(x - r * 1.3, y - r * 0.4, r * 2.6, r * 0.4, { wash: c, washA: 1, w: 2, col: L });
+  const sh = o.broken ? poly([[x - r, y - r * 0.4], [x - r * 0.9, top + 10], [x - r * 0.3, top - 8], [x + r * 0.2, top + 14], [x + r * 0.86, top], [x + r, y - r * 0.4]], { wash: c, washA: 1, w: 2.2, col: L, key: o.key || 9200 })
+    : poly([[x - r, y - r * 0.4], [x - r * 0.88, top + r * 0.5], [x + r * 0.88, top + r * 0.5], [x + r, y - r * 0.4]], { wash: c, washA: 1, w: 2.2, col: L, key: o.key || 9200 });
+  shadeG(sh.path, x + r, 0, x - r * 0.2, 0, d, 0.6);
+  if (o.flute !== false) for (let q = -2; q <= 2; q++) pencil([[x + q * r * 0.36, y - r * 0.5], [x + q * r * 0.32, top + r * 0.6]], { w: 1.4, col: d, a: 0.55, pass2: false });
+  if (!o.broken) {
+    if (o.cap === 'cor') { const cp = poly([[x - r * 0.9, top + r * 0.5], [x - r * 1.5, top - r * 0.4], [x + r * 1.5, top - r * 0.4], [x + r * 0.9, top + r * 0.5]], { wash: c, washA: 1, w: 2, col: L }); for (let q = -2; q <= 2; q++) blob([[x + q * r * 0.5 - r * 0.2, top + r * 0.5], [x + q * r * 0.5, top - r * 0.2], [x + q * r * 0.5 + r * 0.2, top + r * 0.5]], { wash: lerpC(c, '#8a9a6a', 0.25), washA: 1, w: 1.2, col: L }); rect(x - r * 1.6, top - r * 0.7, r * 3.2, r * 0.3, { wash: c, washA: 1, w: 2, col: L }); }
+    else if (o.cap === 'ion') { rect(x - r * 1.3, top - r * 0.2, r * 2.6, r * 0.6, { wash: c, washA: 1, w: 2, col: L }); for (const k of [-1, 1]) { ell(x + k * r * 1.2, top + r * 0.2, r * 0.36, r * 0.36, { wash: c, washA: 1, w: 2, col: L }); ell(x + k * r * 1.2, top + r * 0.2, r * 0.14, r * 0.14, { wash: d, washA: 1, line: false }); } }
+    else rect(x - r * 1.25, top - r * 0.1, r * 2.5, r * 0.55, { wash: c, washA: 1, w: 2, col: L });
+  }
+}
+function umbrellaPine(x, y, s, seed, col = '#3e5a2a') {               // римская пиния
+  push(x, y, s); pencil(spline([[0, 0], [-10, -160], [8, -300], [-4, -380]], false, 8), { w: 18, col: '#5a3a24' }); pencil([[-4, -340], [-80, -400]], { w: 9, col: '#5a3a24' }); pencil([[0, -330], [70, -396]], { w: 9, col: '#5a3a24' });
+  const r = rng(seed), P = []; for (let k = 0; k <= 16; k++) { const a = Math.PI * k / 16; P.push([-Math.cos(a) * (190 + r() * 26), -410 - Math.sin(a) * (80 + r() * 24)]); }
+  P.push([180, -390], [0, -400], [-180, -390]); const cr = blob(P, { wash: col, washA: 1, w: 2.4, col: '#1a2a0e', key: seed }); shadeG(cr.path, 0, -380, 0, -500, '#1a2a0e', 0.45); hatch(cr.path, cr.bb, { gap: 7, a: 0.2, col: '#1a2a0e', ang: 0.3, key: seed + 1 });
+  pop();
+}
+function cypress(x, y, s, seed) { push(x, y, s); const c = blob([[-26, 0], [-34, -140], [-20, -300], [0, -360], [20, -300], [34, -140], [26, 0]], { wash: '#2e4a2a', washA: 1, w: 2.2, col: '#10200e', key: seed }); hatch(c.path, c.bb, { gap: 6, a: 0.25, col: '#10200e', ang: 1.3, key: seed + 1 }); pop(); }
+/* Штамп «МИФ ✗» / «ПРАВДА ✓» (экранные координаты, для hud) */
+function stamp(t, t0, kind, x, y, rot = -0.14, s = 1) {
+  if (t < t0 || t > t0 + 2.6) return; const k = popK(t, t0, 0.3), a = clamp((t0 + 2.6 - t) / 0.3);
+  const red = kind === 'myth', col = red ? '#c8241e' : '#2a8a3a';
+  ctx.save(); ctx.globalAlpha = a; push(x, y, s * (1.6 - 0.6 * k), rot);
+  ctx.save(); ctx.lineJoin = 'round'; ctx.strokeStyle = col; ctx.lineWidth = 9; ctx.strokeRect(-190, -62, 380, 124); ctx.lineWidth = 3; ctx.strokeRect(-176, -50, 352, 100); ctx.restore();
+  txt(red ? 'МИФ ✗' : 'ПРАВДА ✓', 0, 4, 78, { font: 'Osw', col });
+  pop(); ctx.restore();
 }

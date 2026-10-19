@@ -32,6 +32,11 @@
 | varyag | туника + спангенхельм | 003 | викинги, варяги |
 | soviet | серый костюм, галстук, значок | 003 | СССР 1960–80-х, чиновники |
 | caveman | шкура + копьё | 003 | палеолит |
+| hoodieR | худи «РИМ» + кепка R (бордовое) | 004 | сегодня в Италии |
+| vulcan | термокостюм вулканолога + капюшон с золотым забралом | 004 | вулканы, лава, жар |
+| toga | тога с пурпурной каймой, сандалии | 004 | Античный Рим, Греция, сенат |
+| gladiator | мурмиллон: шлем с гребнем, пояс с бронзой, поножи | 004 | арены, бои, Античность |
+| faber | римский строитель: туника, фартук, пилеус | 004 | стройка в Античности, ремесло |
 | scuba | гидрокостюм + маска + акваланг | 003 | подводные сцены (современный взгляд) |
 
-Реквизит `PROPS`: coin binoc trowel brush spyglass goblet scroll chisel key medal lantern mallet blueprint quill stick folder spear.
+Реквизит `PROPS`: gladius laurel coin binoc trowel brush spyglass goblet scroll chisel key medal lantern mallet blueprint quill stick folder spear.

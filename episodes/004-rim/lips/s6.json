@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/004-rim/vf/s6.wav",
+    "duration": 5.70
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.02, "value": "X" },
+    { "start": 0.02, "end": 0.06, "value": "B" },
+    { "start": 0.06, "end": 0.14, "value": "A" },
+    { "start": 0.14, "end": 0.54, "value": "F" },
+    { "start": 0.54, "end": 0.61, "value": "E" },
+    { "start": 0.61, "end": 1.17, "value": "B" },
+    { "start": 1.17, "end": 1.25, "value": "A" },
+    { "start": 1.25, "end": 1.62, "value": "D" },
+    { "start": 1.62, "end": 1.69, "value": "C" },
+    { "start": 1.69, "end": 1.90, "value": "B" },
+    { "start": 1.90, "end": 2.33, "value": "A" },
+    { "start": 2.33, "end": 2.42, "value": "B" },
+    { "start": 2.42, "end": 2.57, "value": "A" },
+    { "start": 2.57, "end": 2.66, "value": "G" },
+    { "start": 2.66, "end": 2.73, "value": "E" },
+    { "start": 2.73, "end": 2.87, "value": "C" },
+    { "start": 2.87, "end": 3.15, "value": "F" },
+    { "start": 3.15, "end": 3.22, "value": "C" },
+    { "start": 3.22, "end": 3.29, "value": "E" },
+    { "start": 3.29, "end": 3.64, "value": "D" },
+    { "start": 3.64, "end": 3.71, "value": "B" },
+    { "start": 3.71, "end": 3.78, "value": "C" },
+    { "start": 3.78, "end": 4.06, "value": "B" },
+    { "start": 4.06, "end": 4.20, "value": "C" },
+    { "start": 4.20, "end": 4.62, "value": "B" },
+    { "start": 4.62, "end": 4.69, "value": "C" },
+    { "start": 4.69, "end": 4.76, "value": "B" },
+    { "start": 4.76, "end": 4.88, "value": "A" },
+    { "start": 4.88, "end": 5.06, "value": "C" },
+    { "start": 5.06, "end": 5.13, "value": "B" },
+    { "start": 5.13, "end": 5.27, "value": "C" },
+    { "start": 5.27, "end": 5.69, "value": "B" },
+    { "start": 5.69, "end": 5.70, "value": "X" }
+  ]
+}
