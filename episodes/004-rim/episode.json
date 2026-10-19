@@ -1,0 +1,103 @@
+{
+ "num": "004",
+ "city": "Рим",
+ "title": "Рим: мифы",
+ "hook": "ЦЕЗАРЬ И КОТЫ?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "w_hook.js",
+  "w_volcano.js",
+  "w_wolf.js",
+  "w_caesar.js",
+  "w_vespasian.js",
+  "w_colosseum.js",
+  "w_pantheon.js",
+  "w_sistine.js",
+  "w_forum.js",
+  "w_metro.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "volcano",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "wolf",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "caesar",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "vespasian",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "colosseum",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "pantheon",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "sistine",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "forum",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "metro",
+   [
+    "s9"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

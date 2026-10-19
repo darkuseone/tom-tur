@@ -313,7 +313,7 @@ function costume5(OF, bob, t, bp, L, o) {                            // дета
   if (OF.collar === 'sailor') { poly([[-80, -246 + b], [80, -246 + b], [60, -196 + b], [0, -170 + b], [-60, -196 + b]], { wash: '#1e2a4a', washA: 1, w: 2.4, col: TM.line }); for (const s of [-1, 1]) pencil([[s * 70, -238 + b], [s * 52, -200 + b], [0, -180 + b]], { w: 2, col: '#f4f0e6', pass2: false }); poly([[-8, -184 + b], [8, -184 + b], [16, -150 + b], [-16, -150 + b]], { wash: '#c8302a', washA: 1, w: 1.6 }); }
   if (OF.tie === 'bow') { poly([[0, -238 + b], [-26, -250 + b], [-26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); poly([[0, -238 + b], [26, -250 + b], [26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); ell(0, -238 + b, 6, 6, { wash: '#1a1a1a', washA: 1, w: 1 }); }
   if (OF.strap) pencil([[50, -236 + b], [-40, -110 + b]], { w: 6, col: '#3a2a1a' });
-  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
+  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'vulcan', 'toga', 'faber'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
 }
 function hat5(h, t, o, fx = 0, L = { side: 1, rim: '#ffe3a8' }, OF = {}) {   // головные уборы (на макушке, y≈−90 при голове r≈100)
   if (OF.splash || OF.soot) face6(OF, t, fx);
@@ -1041,3 +1041,77 @@ function prop5(name, hn, t, ang) { push(hn[0], hn[1], 1, ang); PROPS[name](t); p
 
 // совместимость с мирами v3/v4
 const tubePts = tubeP, fstrokes = fstr, softShade = shadeG, rim = rimL;
+
+/* ---- 004 Рим: костюмы, шапки, обувь, реквизит */
+Object.assign(OUTFIT, {
+  hoodieR: { top: '#8a2420', topD: '#4a0e0c', topL: '#c25a48', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'РИМ', capTxt: 'R' },
+  vulcan: { top: '#b9bcc0', topD: '#5e6268', topL: '#f2f4f6', pants: '#b9bcc0', detail: 'vulcan', hat: 'vulcanH', boots: 'rubber', gloves: 1 },
+  toga: { top: '#f1ebdb', topD: '#a89c80', topL: '#ffffff', pants: null, detail: 'toga', hat: null, boots: 'sandal', trim: '#6e1a52', long: 1 },
+  gladiator: { top: '#8f7b63', topD: '#3b2d21', topL: '#c9b79a', pants: null, detail: 'gladiator', hat: 'murmillo', boots: 'greave', bare: 1 },
+  faber: { top: '#b49a6c', topD: '#6a5434', topL: '#dcc8a0', pants: null, detail: 'faber', hat: 'pileus', boots: 'sandal', canvas: 1, long: 1 }
+});
+Object.assign(BOOTS, { sandal: { c: '#9a6634', d: '#3a2210', h: 30, wrap: '#5a3416' }, greave: { c: '#c08a3c', d: '#5a3a10', h: 84, shine: 1, trim: '#8a1c16' } });
+Object.assign(COST6, {
+  vulcan(OF, b, t, bp, L) {                                            // вулканолог: алюминизированный термокостюм, блики, складки, молния
+    ctx.save(); ctx.clip(bp.path);
+    for (const [x, w] of [[-62, 12], [-20, 6], [38, 14]]) pencil([[x, -258 + b], [x + 10, -84 + b]], { w, col: 'rgba(255,255,255,0.55)', pass2: false, gap: false });
+    for (let y = -226; y < -96; y += 30) pencil(spline([[-100, y + b], [-40, y + 12 + b], [30, y + 4 + b], [100, y + 14 + b]], false, 6), { w: 1.8, col: OF.topD, a: 0.55, pass2: false });
+    ctx.restore();
+    rect(-9, -252 + b, 18, 150, { wash: '#7e8288', washA: 1, w: 1.8, col: TM.line, key: 701 }); for (let y = -244; y < -108; y += 10) pencil([[-6, y + b], [6, y + b]], { w: 1.4, col: '#3a3e44', pass2: false, gap: false });
+    const bl = rect(-98, -132 + b, 196, 20, { wash: '#3e4248', washA: 1, w: 2.2, col: TM.line, key: 702 }); rect(-14, -134 + b, 28, 24, { wash: '#c9cdd2', washA: 1, w: 2, col: TM.line });
+    const pt = ell(-58, -206 + b, 22, 22, { wash: '#e8742a', washA: 1, w: 2, col: TM.line, key: 703 }); poly([[-70, -196 + b], [-58, -222 + b], [-46, -196 + b]], { wash: '#3a1a0a', washA: 1, w: 1.2 }); glow(-58, -214 + b, 8, 'rgba(255,200,80,1)', 0.8);
+    rect(30, -200 + b, 54, 22, { wash: '#f4f0e6', washA: 1, w: 1.6, col: TM.line }); txt('INGV', 57, -189 + b, 17, { col: '#1e3a6a', font: 'Osw' });
+  },
+  toga(OF, b, t, bp, L) {                                              // сенатор: тога с пурпурной каймой, драпировка через левое плечо
+    const sk = skirt6(OF, b, L, -118, -26, 92, 110, 710);
+    for (const P of [bp, sk]) hatch(P.path, P.bb, { gap: 7, a: 0.1, col: OF.topD, ang: 1.0, key: 711, w: 1.2 });
+    pencil(spline([[-108, -30 + b], [-50, -24 + b], [0, -22 + b], [50, -24 + b], [108, -30 + b]], false, 8), { w: 9, col: OF.trim, pass2: false });
+    const D = [[-96, -244 + b], [-50, -266 + b], [-6, -232 + b], [40, -178 + b], [94, -116 + b], [110, -62 + b], [84, -40 + b], [52, -96 + b], [6, -150 + b], [-50, -196 + b], [-100, -206 + b]];
+    const dp = softShape(D, { wash: OF.topL, washA: 1, w: 2.8, col: TM.line, key: 712 }, 1.6, 3); shadeG(dp.path, -L.side * 80, 0, L.side * 60, 0, OF.topD, 0.45);
+    for (const f of [0.25, 0.5, 0.75]) pencil(spline([[lerp(-90, -50, f), lerp(-236, -260, f) + b], [lerp(-40, 0, f), lerp(-200, -190, f) + b], [lerp(20, 60, f), lerp(-150, -150, f) + b], [lerp(70, 96, f), lerp(-80, -90, f) + b]], false, 8), { w: 2, col: OF.topD, a: 0.6, pass2: false });
+    pencil(spline([[-100, -206 + b], [-50, -196 + b], [6, -150 + b], [52, -96 + b], [84, -40 + b]], false, 10), { w: 8, col: OF.trim, pass2: false });
+    rimL(D, L.side, L.rim, 0.6, 3);
+  },
+  gladiator(OF, b, t, bp, L) {                                         // мурмиллон: красная набедренная повязка, широкий пояс с бронзой, ремень через грудь
+    const sk = skirt6(OF, b, L, -116, -56, 92, 100, 720, '#a8241e'); shadeG(sk.path, 0, -56 + b, 0, -116 + b, '#4a0806', 0.3);
+    for (const x of [-60, -20, 20, 60]) pencil([[x, -112 + b], [x * 1.08, -60 + b]], { w: 1.8, col: '#5a0c0a', a: 0.6, pass2: false });
+    const bl = rect(-100, -140 + b, 200, 34, { wash: '#6a4020', washA: 1, w: 2.6, col: TM.line, key: 721 });
+    for (let x = -84; x <= 84; x += 28) { const pl = rect(x - 11, -136 + b, 22, 26, { wash: '#c08a3c', washA: 1, w: 1.6, col: '#5a3a10' }); metalG(pl.path, x - 4, -128 + b, 20, '#f6d88a', '#c08a3c', '#5a3a10'); }
+    pencil(spline([[-80, -250 + b], [-20, -200 + b], [40, -160 + b], [92, -138 + b]], false, 8), { w: 14, col: '#6a4020', pass2: false }); for (const [x, y] of [[-50, -226], [10, -182], [64, -150]]) nb(x, y + b, 4, '#c08a3c');
+  },
+  faber(OF, b, t, bp, L) {                                             // римский строитель: туника с подпоясом, закатанные рукава, кожаный фартук, пыль
+    const sk = skirt6(OF, b, L, -118, -48, 90, 104, 730);
+    for (const P of [bp, sk]) hatch(P.path, P.bb, { gap: 5, a: 0.14, col: OF.topD, ang: 0.8, key: 731, w: 1.3 });
+    poly([[-36, -256 + b], [36, -256 + b], [20, -214 + b], [-20, -214 + b]], { wash: OF.topD, washA: 0.5, w: 1.6, col: TM.line });
+    const ap = blob([[-60, -150 + b], [60, -150 + b], [66, -56 + b], [-66, -56 + b]], { wash: '#7a4a24', washA: 1, w: 2.4, col: TM.line, key: 732 }); shadeG(ap.path, 0, -56 + b, 0, -150 + b, '#3a1e0a', 0.35);
+    for (let k = 0; k < 7; k++) { const r = rng(733 + k); ell(-50 + r() * 100, -140 + r() * 80 + b, 4 + r() * 6, 3 + r() * 4, { wash: '#e8e0cc', washA: 0.7, line: false }); }
+    const bl = rect(-94, -138 + b, 188, 12, { wash: '#4a2c14', washA: 1, w: 1.8, col: TM.line }); for (const sd of [-1, 1]) pencil([[sd * 30, -132 + b], [sd * 38, -96 + b]], { w: 4, col: '#4a2c14', pass2: false });
+  }
+});
+Object.assign(HAT6, {
+  vulcanH(t, o, fx, L) {                                               // термокапюшон с поднятым золотым забралом
+    const P = [[-130, -40], [-128, -120], [-80, -188], [0, -206], [80, -188], [128, -120], [130, -40], [100, -60], [0, -74], [-100, -60]];
+    const h = softShape(P, { wash: '#c4c8cc', washA: 1, w: 3, col: TM.line, key: 740 }, 1.2, 4); metalG(h.path, L.side * 40, -170, 200, '#ffffff', '#c4c8cc', '#5e6268');
+    for (const x of [-60, 0, 60]) pencil(spline([[x * 1.6, -60], [x * 1.2, -140], [x * 0.6, -196]], false, 6), { w: 1.6, col: '#6e7278', a: 0.5, pass2: false });
+    push(0, -4, 1, -0.03); const v = blob([[-100, -112], [100, -112], [92, -150], [0, -164], [-92, -150]], { wash: '#d6a842', washA: 1, w: 2.6, col: '#5a3a08', key: 741 }); metalG(v.path, -30, -146, 120, '#fff2b0', '#d6a842', '#6a4a08');
+    pencil([[-70, -146], [-20, -150]], { w: 5, col: 'rgba(255,255,255,0.7)', pass2: false }); pop();
+  },
+  murmillo(t, o, fx, L) {                                              // бронзовый шлем мурмиллона: широкие поля, высокий гребень с алыми перьями
+    const cr = []; for (let k = 0; k <= 14; k++) { const a = Math.PI * (0.12 + 0.76 * k / 14); cr.push([Math.cos(a) * -150, -150 - Math.sin(a) * 120]); }
+    for (let k = 0; k < 26; k++) { const a = Math.PI * (0.1 + 0.8 * k / 25), sw = Math.sin(t * 6 + k) * 3; pencil([[Math.cos(a) * -40, -170 - Math.sin(a) * 30], [Math.cos(a) * -150 + sw, -150 - Math.sin(a) * 124]], { w: 9, col: k % 3 ? '#c2281e' : '#e8503a', pass2: false }); }
+    const ridge = shape(tubeP(cr.map(([x, y]) => [x * 0.34, y * 0.88 + 8]), 26, 26), { wash: '#c08a3c', washA: 1, w: 2.2, col: '#4a2a08', key: 750 });
+    const dome = blob([[-112, -80], [-104, -150], [-50, -196], [50, -196], [104, -150], [112, -80]], { wash: '#c08a3c', washA: 1, w: 3, col: '#3a2206', key: 751 }); metalG(dome.path, L.side * 40, -160, 170, '#ffe6a0', '#c08a3c', '#4a2a08');
+    const br = ell(0, -74, 168, 26, { wash: '#b07a30', washA: 1, w: 2.8, col: '#3a2206', key: 752 }); metalG(br.path, L.side * 60, -82, 180, '#f6d88a', '#b07a30', '#4a2a08');
+    for (let x = -90; x <= 90; x += 30) nb(x, -100, 4.4, '#e8c060');
+  },
+  pileus(t, o, fx, L) {                                                // войлочный колпак-пилеус
+    const P = [[-112, -64], [-90, -140], [-36, -210], [10, -232], [44, -200], [92, -132], [112, -64], [0, -80]];
+    const h = softShape(P, { wash: '#8a6a44', washA: 1, w: 3, col: TM.line, key: 760 }, 1.8, 5); shadeG(h.path, -L.side * 100, 0, L.side * 40, 0, '#3a2814', 0.55); fstr(h.path, h.bb, 50, 1.2, 10, '#5a4228', 0.4, 761, 2);
+    pencil(spline([[-112, -66], [0, -84], [112, -66]], false, 8), { w: 5, col: '#5a4228', pass2: false });
+  }
+});
+Object.assign(PROPS, {
+  gladius() { const bl = blob([[-9, -20], [9, -20], [8, -150], [0, -176], [-8, -150]], { wash: '#c8ccd0', washA: 1, w: 2.2, col: TM.line, key: 770 }); metalG(bl.path, -3, -110, 90, '#ffffff', '#c8ccd0', '#5a6064'); pencil([[0, -24], [0, -160]], { w: 1.6, col: '#7a8084', pass2: false });
+    rect(-26, -24, 52, 12, { wash: '#c08a3c', washA: 1, w: 2, col: '#4a2a08' }); rect(-7, -12, 14, 34, { wash: '#6a4020', washA: 1, w: 2, col: TM.line }); ell(0, 26, 11, 9, { wash: '#c08a3c', washA: 1, w: 2, col: '#4a2a08' }); },
+  laurel() { for (let k = 0; k < 8; k++) { const a = -1.4 + k * 0.4; ell(Math.cos(a) * 30, Math.sin(a) * 30 - 20, 14, 6, { wash: '#4a7a2a', washA: 1, w: 1.4, col: '#1e3a0a', rot: a + 1.57 }); } }
+});
