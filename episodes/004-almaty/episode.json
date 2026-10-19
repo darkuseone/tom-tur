@@ -10,6 +10,16 @@
  "worlds": [
   "props.js",
   "w_hook.js",
+  "w_bears.js",
+  "w_saka.js",
+  "w_silk.js",
+  "w_aport.js",
+  "w_cathedral.js",
+  "w_vavilov.js",
+  "w_kino.js",
+  "w_blast.js",
+  "w_metro.js",
+  "w_names.js",
   "w_today.js",
   "w_cover.js"
  ],
@@ -77,6 +87,12 @@
    "metro",
    [
     "s10"
+   ]
+  ],
+  [
+   "names",
+   [
+    "s11"
    ]
   ],
   [

@@ -33,5 +33,12 @@
 | soviet | серый костюм, галстук, значок | 003 | СССР 1960–80-х, чиновники |
 | caveman | шкура + копьё | 003 | палеолит |
 | scuba | гидрокостюм + маска + акваланг | 003 | подводные сцены (современный взгляд) |
+| sak | «Золотой человек» саков: кожаный кафтан в золотых бляшках, пояс с архаром, высокий золотой колпак `sakhat` со зверями и стрелами | 004 | сары, скифы, курганы, степь IV в. до н. э., золото |
+| chapan | полосатый стёганый халат (синий/малиновый), вышитая кайма, кушак + белый тюрбан `turban` | 004 | Шёлковый путь, караван, купцы, Восток XIII–XVII вв. |
+| botanist | льняной пиджак, рубашка, галстук, панама `panama`, шнурованные ботинки (реквизит `herbarium`, `apple`) | 004 | экспедиции 1920–30-х, учёные-натуралисты |
+| director | тёмная шерстяная куртка, водолазка, шарф, кепка `flatcap`, галифе + сапоги (реквизит `megaphone`) | 004 | кино 1930–40-х, режиссёры, военное время |
+| hoodieA | красное худи «АЛМАТЫ» + зелёная кепка «A» | 004 финал | сегодня; шаблон перекраски (`capCol/capTxtCol/printCol/accent`) |
 
-Реквизит `PROPS`: coin binoc trowel brush spyglass goblet scroll chisel key medal lantern mallet blueprint quill stick folder spear.
+Реквизит `PROPS`: coin binoc trowel brush spyglass goblet scroll chisel key medal lantern mallet blueprint quill stick folder spear apple megaphone herbarium.
+
+Новые шапки 004: `sakhat` (колпак-конус ≈2 головы), `turban`, `panama`. Обувь: `sak`, `soft`, `field` (шнуровка), `rider`. Помощники в tom.js: `plaques6` (золотые бляшки с бликами), `stripesV`, `quilt4`, `arrow4`, `ram4`, `leo4`, `gl4`; опции `OF.stripes` (полосы на рукавах), `capCol/capTxtCol/printCol/accent` (перекраска худи).

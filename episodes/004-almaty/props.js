@@ -19,7 +19,7 @@ function wTunnel(t, u, cat) {                                      // внутр
     if (k % 2 === 0) for (let n = 0; n < 12; n++) { const aa = n / 12 * 6.283; push(Math.cos(aa) * r * 0.86, Math.sin(aa) * r * 0.86, 1, aa + Math.PI / 2); txt(['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'][n], 0, 0, 10 + z * 70, { col: '#f6e2b0', font: 'Osw', a: 0.8 * a }); pop(); }
     pop(); }
   glow(cx, cy, 500, 'rgba(255,200,110,0.9)', 0.5);
-  const yrs = ['1909', '1901', 'XII в.', '1063', '988', '882', '482', '−17 000', '−41 млн', '2026'];
+  const yrs = ['−?', 'IV в. до н. э.', 'XIII в.', '1865', '1911', '1929', '1943', '1966', '2011', '2026'];
   yrs.forEach((y, k) => { const ph = (u * 1.3 + k / yrs.length) % 1, z = Math.pow(ph, 2), a = k * 0.7 + u; txt(y, cx + Math.cos(a) * z * 620, cy + Math.sin(a) * z * 820, 20 + z * 120, { col: '#ffe9b8', font: 'Osw', a: (1 - ph) * 0.9 }); });
   ctx.save(); ctx.globalCompositeOperation = 'lighter'; const r = rng(hsh(FRAME, 8)); for (let i = 0; i < 60; i++) { const a = r() * 6.283, d0 = 60 + r() * 300, d1 = d0 + 200 + r() * 600; ctx.strokeStyle = 'rgba(255,214,140,0.5)'; ctx.lineWidth = 1 + r() * 3; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * d0, cy + Math.sin(a) * d0); ctx.lineTo(cx + Math.cos(a) * d1, cy + Math.sin(a) * d1); ctx.stroke(); } ctx.restore();
   pencil([[-100, 1500], [cx, cy], [W + 100, 300]], { w: 6, col: '#ffd890', a: 0.9, pass2: false, gap: false }); glow(cx, cy, 120, 'rgba(255,240,200,1)', 0.8);
@@ -27,56 +27,10 @@ function wTunnel(t, u, cat) {                                      // внутр
 }
 
 WORLD.tunnel = wTunnel;
-DIR.tunnel = { outfit: 'hoodieK', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
+DIR.tunnel = { outfit: 'hoodieA', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
   pose: (t, u, b) => Object.assign(b, { x: 540, y: 1260, s: 1.0, rot: u * 3.2, look: [0, -0.2], watchInHand: true, glow: 1, spin: 1.5 }),
   cam: () => [[S0.tunnel, 540, 960, 0], [S1.tunnel, 540, 960, 0.1]] };
 
-/* ---- 003 Киев: общие детали ---- */
-/* Otodus (родня мегалодона), профиль мордой вправо. jaw 0..1 — открыта пасть, ghost — призрак (полупрозрачный, без штриховки), glowEye 0..1 */
-function shark(x, y, s, t, o = {}) {
-  const jaw = o.jaw || 0, a = o.a ?? 1, ghost = o.ghost || 0, sw = Math.sin(t * (o.sp || 3)) * 0.08, fl = o.flip || 1;
-  const C = o.col || '#6c7f8c', CD = o.colD || '#26343e', CL = o.colL || '#d8e0e2';
-  push(x, y, s, o.rot || 0, fl); ctx.save(); ctx.globalAlpha = a;
-  const tw = sw * 120;                                                    // изгиб хвоста
-  // хвостовой плавник (полумесяц)
-  const tail = blob([[-400, -10], [-470, -110 + tw], [-560, -210 + tw], [-520, -60 + tw], [-500, 10 + tw], [-540, 130 + tw], [-450, 60 + tw], [-400, 20]], { wash: C, washA: 0.96, w: 3, col: CD, key: 7101 });
-  if (!ghost) shadeG(tail.path, -560, 0, -400, 0, CD, 0.4);
-  // грудной (дальний) плавник
-  blob([[140, 40], [90, 120], [20, 190], [60, 120], [70, 50]], { wash: lerpC(C, '#000000', 0.25), washA: 0.9, w: 2.4, col: CD });
-  // тело
-  const top = [[-400, -10], [-300, -50 + tw * 0.2], [-160, -96], [40, -128], [200, -118], [320, -76], [400, -30], [430, 0]];
-  const bot = [[430, 0], [400, 30], [330, 50 - jaw * 6], [200, 80], [40, 96], [-160, 70], [-300, 36 + tw * 0.2], [-400, 20]];
-  const body = blob(top.concat(bot), { wash: C, washA: 0.97, w: 3.4, col: CD, key: 7102 });
-  // светлое брюхо (противотень)
-  ctx.save(); ctx.clip(body.path); ctx.fillStyle = CL; ctx.globalAlpha = a * 0.85; ctx.beginPath(); ctx.moveTo(-420, 30); for (let k = 0; k <= 20; k++) { const xx = -420 + k * 44; ctx.lineTo(xx, 24 + Math.sin(k * 1.3) * 4 - Math.max(0, xx - 200) * 0.12); } ctx.lineTo(460, 140); ctx.lineTo(-420, 140); ctx.fill(); ctx.restore();
-  if (!ghost) { hatch(body.path, body.bb, { gap: 7, a: 0.22, col: CD, ang: -0.35, key: 7103, w: 1.4 }); shadeG(body.path, 0, -130, 0, 20, '#0e1820', 0.35); }
-  // спинной и второй спинной, брюшной плавники
-  blob([[-10, -122], [60, -250], [120, -268], [110, -210], [150, -118]], { wash: C, washA: 0.97, w: 3, col: CD, key: 7104 });
-  blob([[-300, -46], [-320, -96], [-280, -60]], { wash: C, washA: 0.97, w: 2, col: CD });
-  blob([[-200, 66], [-250, 120], [-170, 76]], { wash: C, washA: 0.97, w: 2, col: CD });
-  // ближний грудной
-  blob([[180, 60], [140, 150], [60, 240], [130, 220], [230, 80]], { wash: C, washA: 0.98, w: 3, col: CD, key: 7105 });
-  // жабры
-  for (let k = 0; k < 5; k++) pencil([[250 - k * 20, -60], [244 - k * 20, -10], [252 - k * 20, 40]], { w: 2.2, col: CD, a: 0.8, pass2: false });
-  // пасть: нижняя челюсть открывается
-  const jx = 360, jy = 26, ja = jaw * 0.5;
-  ctx.save(); ctx.fillStyle = '#3a0e12'; ctx.beginPath(); ctx.moveTo(250, 30); ctx.lineTo(420, 6); ctx.lineTo(250 + 170 * Math.cos(ja), 30 + 170 * Math.sin(ja) + 10); ctx.closePath(); ctx.globalAlpha = a * clamp(jaw * 3); ctx.fill(); ctx.restore();
-  pencil([[250, 30], [330, 22], [420, 6]], { w: 3, col: CD, pass2: false });
-  pencil([[250, 32], [250 + 85 * Math.cos(ja), 34 + 85 * Math.sin(ja) + 6], [250 + 165 * Math.cos(ja), 34 + 165 * Math.sin(ja) + 8]], { w: 3, col: CD, pass2: false });
-  for (let k = 0; k < 7; k++) { const u = 0.15 + k * 0.12, ux = lerp(250, 418, u), uy = lerp(30, 8, u); poly([[ux - 7, uy], [ux + 7, uy], [ux, uy + 16 + jaw * 6]], { wash: '#f4efe2', washA: 1, w: 1.2, col: '#5a5048' });
-    const lx = 250 + 165 * u * Math.cos(ja), ly = 36 + 165 * u * Math.sin(ja) + 8 * u; if (jaw > 0.1) poly([[lx - 6, ly], [lx + 6, ly], [lx, ly - 14]], { wash: '#f4efe2', washA: 1, w: 1.2, col: '#5a5048' }); }
-  // глаз
-  ell(330, -36, 11, 9, { wash: '#101418', washA: 1, w: 2, col: CD }); ell(327, -39, 3, 3, { wash: '#ffffff', washA: 0.9, line: false });
-  if (o.glowEye) glow(330, -36, 70, 'rgba(255,220,120,1)', 0.8 * o.glowEye);
-  ctx.restore(); pop();
-}
-/* позвонок акулы — «таблетка» с кольцами роста (находка из метро) */
-function vertebra(x, y, r, rot, o = {}) {
-  push(x, y, 1, rot); const c = ell(0, 0, r, r * 0.92, { wash: o.col || '#cdbb96', washA: 1, w: 2.4, col: '#4a3a24', key: 7120 + Math.round(r) });
-  shadeG(c.path, -r, -r, r, r, '#5a4628', 0.45); for (let k = 1; k < 5; k++) pencil(ellPts(0, 0, r * k / 5, r * 0.92 * k / 5, 0, 0.05, 30), { w: 1.3, col: '#6a5434', a: 0.7, pass2: false, gap: false });
-  ell(0, 0, r * 0.14, r * 0.13, { wash: '#4a3a24', washA: 0.9, line: false }); pop();
-}
-/* мерцание огня (свеча, факел, костёр) */
 const flick = (t, k = 0) => 1 + Math.sin(t * 17 + k) * 0.07 + Math.sin(t * 7.3 + k * 2) * 0.05;
 function candle(x, y, s, t, k = 0, lit = 1) {
   push(x, y, s); const b = rect(-9, -64, 18, 64, { wash: '#efe2bf', washA: 1, w: 1.8, col: '#6a5a3a', key: 7130 + k }); shadeG(b.path, -9, 0, 9, 0, '#a08a5a', 0.4);
@@ -148,4 +102,53 @@ function human(x, y, s, t, o = {}) {
   if (o.hat === 'crown') { rect(-40, hy - 50, 80, 18, { wash: '#d6a842', washA: 1, w: 1.8, col: '#6a4a08' }); for (let q = 0; q < 5; q++) poly([[-40 + q * 20, hy - 50], [-30 + q * 20, hy - 74], [-20 + q * 20, hy - 50]], { wash: '#d6a842', washA: 1, w: 1.4, col: '#6a4a08' }); }
   if (o.hat === 'hood' || o.hat === 'hood2') blob([[-50, hy + 30], [-52, hy - 30], [0, hy - (o.hat === 'hood2' ? 100 : 70)], [52, hy - 30], [50, hy + 30], [38, hy - 10], [-38, hy - 10]], { wash: hc, washA: 1, w: 2.2, col: L, shade: { gap: 5, a: 0.3, col: L, ang: 1.2 } });
   pop();
+}
+
+/* ---- 004 Алматы: общие детали ---- */
+function apple(x, y, r, rot = 0, o = {}) {                          // яблоко: красно-зелёный бочок, блик, хвостик, листик
+  const c1 = o.col || '#c8342a', c2 = o.col2 || '#8ab040', a = o.a ?? 1;
+  push(x, y, 1, rot); ctx.save(); ctx.globalAlpha *= a;
+  const p = blob([[0, -r * 0.78], [r * 0.62, -r * 0.98], [r * 1.02, -r * 0.4], [r * 0.9, r * 0.5], [r * 0.4, r * 0.98], [0, r * 0.86], [-r * 0.4, r * 0.98], [-r * 0.9, r * 0.5], [-r * 1.02, -r * 0.4], [-r * 0.62, -r * 0.98]], { wash: c2, washA: 1, w: Math.max(1.2, r * 0.06), col: '#3a1408' });
+  ctx.save(); ctx.clip(p.path); const g = ctx.createRadialGradient(-r * 0.3, -r * 0.2, r * 0.1, -r * 0.1, 0, r * 1.2); g.addColorStop(0, c1); g.addColorStop(0.7, lerpC(c1, '#5a0e08', 0.35)); g.addColorStop(1, 'rgba(90,14,8,0)'); ctx.fillStyle = g; ctx.fillRect(-r * 2, -r * 2, r * 4, r * 4);
+  for (let k = 0; k < 7; k++) pencil([[-r + k * r * 0.3, -r], [-r * 0.8 + k * r * 0.3, r]], { w: Math.max(1, r * 0.03), col: '#7a1a10', a: 0.2, pass2: false }); ctx.restore();
+  ell(-r * 0.38, -r * 0.42, r * 0.18, r * 0.12, { wash: '#fff6e0', washA: 0.75, line: false, rot: -0.6 });
+  pencil([[0, -r * 0.7], [r * 0.06, -r * 1.25]], { w: Math.max(1.4, r * 0.09), col: '#4a2c14', pass2: false });
+  if (!o.noLeaf) blob([[r * 0.06, -r * 1.12], [r * 0.5, -r * 1.42], [r * 0.85, -r * 1.2], [r * 0.4, -r * 1.02]], { wash: '#5a8a2a', washA: 1, w: Math.max(1, r * 0.05), col: '#1e3a0a' });
+  if (o.bite) ell(r * 0.85, -r * 0.1, r * 0.42, r * 0.5, { wash: '#f6ecc8', washA: 1, w: Math.max(1, r * 0.05), col: '#8a6a3a' });
+  ctx.restore(); pop();
+}
+function alatau(t, base, o = {}) {                                   // Заилийский Алатау: зубчатые пики, снег, ледники, тени
+  const sc = o.s || 1, snow = o.snow ?? 1, col = o.col || '#6a7a96', colD = o.colD || '#3a4664';
+  const peaks = [[-300, 0], [-120, -380], [20, -260], [160, -520], [300, -360], [420, -470], [560, -300], [700, -560], [860, -380], [980, -440], [1140, -280], [1400, 0]];
+  push(0, base, 1); const P = [[-400, 300]].concat(peaks.map(([x, y]) => [x, y * sc])).concat([[1500, 300]]);
+  const m = poly(P, { wash: col, washA: 1, w: 2.2, col: colD, key: o.key || 9400 });
+  shadeG(m.path, 0, -500 * sc, 0, 200, colD, 0.4);
+  for (let i = 1; i < peaks.length - 1; i++) { const [x, y] = peaks[i], yy = y * sc;
+    ctx.save(); ctx.clip(m.path); poly([[x - 10, yy - 4], [x + 10, yy - 4], [x + 120, yy + 160 * sc], [x + 60, yy + 140 * sc], [x + 20, yy + 230 * sc], [x - 30, yy + 150 * sc], [x - 90, yy + 190 * sc], [x - 120, yy + 150 * sc]], { wash: '#f4f6fa', washA: snow, w: 1.4, col: '#9aa6c0', a: 0.6 * snow });
+    pencil([[x, yy], [x + 18, yy + 120 * sc], [x - 6, yy + 260 * sc]], { w: 2, col: colD, a: 0.5, pass2: false });
+    poly([[x, yy], [x + 140, yy + 200 * sc], [x + 40, yy + 260 * sc]], { wash: colD, washA: 0.25, line: false }); ctx.restore(); }
+  pop();
+}
+function appleTree(x, y, h, t, seed, o = {}) {                       // дикая яблоня Сиверса: кривой ствол, раскидистая крона, яблоки/цветы
+  const r = rng(seed), sw = Math.sin(t * 1.4 + seed) * 4, a = o.a ?? 1;
+  push(x, y, h / 400); ctx.save(); ctx.globalAlpha *= a;
+  shape(tubeP([[0, 0], [-8, -90], [12, -170], [-6, -230]], 46, 22), { wash: o.bark || '#5a4030', washA: 1, w: 2.4, col: '#1e120a' });
+  for (const [bx, by, ex, ey] of [[0, -170, -120, -260], [4, -190, 130, -280], [-4, -220, -40, -330], [6, -210, 60, -340]]) pencil([[bx, by], [(bx + ex) / 2 + sw, (by + ey) / 2], [ex + sw, ey]], { w: 12, col: o.bark || '#5a4030' });
+  const cols = o.bloom ? ['#f4e2e6', '#f8eef0', '#e8c8d0'] : (o.leaf || ['#5e8a32', '#4a7428', '#76a040']);
+  for (let k = 0; k < 9; k++) { const cx = (r() - 0.5) * 300 + sw, cy = -260 - r() * 130, rr = 70 + r() * 50;
+    const c = blob(ellPts(cx, cy, rr, rr * 0.8, 0, 0.3, 9).map(([px, py]) => [px + (r() - 0.5) * 20, py + (r() - 0.5) * 20]), { wash: cols[k % 3], washA: 1, w: 1.8, col: o.bloom ? '#a88890' : '#2a4414', a: 0.8 });
+    hatch(c.path, c.bb, { gap: 7, a: 0.16, col: o.bloom ? '#a88890' : '#1e3a0a', ang: 0.9, key: seed + k }); }
+  if (!o.bloom) for (let k = 0; k < (o.n ?? 14); k++) apple((r() - 0.5) * 300 + sw, -230 - r() * 160, 11 + r() * 5, r() - 0.5, { noLeaf: true, col: r() > 0.3 ? '#c8342a' : '#d8b03a' });
+  else for (let k = 0; k < 40; k++) ell((r() - 0.5) * 320 + sw, -230 - r() * 180, 5, 5, { wash: '#fff8fa', washA: 1, line: false });
+  ctx.restore(); pop();
+}
+function spruce(x, y, h, col = '#2e4a3a', a = 1) {                   // тянь-шаньская ель: узкая тёмная пирамида
+  ctx.save(); ctx.globalAlpha *= a; pencil([[x, y], [x, y - h]], { w: Math.max(2, h * 0.03), col: '#3a2a1a' });
+  for (let k = 0; k < 6; k++) { const yy = y - h * 0.15 - k * h * 0.14, w = h * (0.2 - k * 0.028); poly([[x - w, yy], [x, yy - h * 0.22], [x + w, yy]], { wash: col, washA: 1, w: 1.4, col: '#0e1e14', a: 0.6 }); } ctx.restore();
+}
+const nrmW = s => s.toLowerCase().replace(/[^а-яёa-z0-9-]/g, '');
+function wtw(k, w) {                                                  // время слова внутри субтитра-фрагмента (пропорция по буквам)
+  const c = CAPS.find(c => c.key === k && c.words.some(x => nrmW(x) === nrmW(w))) || CAPS.find(c => c.key === k && c.words.some(x => nrmW(x).startsWith(nrmW(w)))); if (!c) return WT(k, w);
+  const i = c.words.findIndex(x => nrmW(x).startsWith(nrmW(w))); const L = c.words.map(x => x.length + 1), tot = L.reduce((a, b) => a + b, 0), pre = L.slice(0, i).reduce((a, b) => a + b, 0);
+  return c.t0 + (c.t1 - c.t0) * pre / tot;
 }
