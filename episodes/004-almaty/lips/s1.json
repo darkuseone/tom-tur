@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/004-almaty/vf/s1.wav",
+    "duration": 4.32
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.25, "value": "B" },
+    { "start": 0.25, "end": 0.33, "value": "A" },
+    { "start": 0.33, "end": 0.53, "value": "B" },
+    { "start": 0.53, "end": 0.60, "value": "C" },
+    { "start": 0.60, "end": 0.67, "value": "G" },
+    { "start": 0.67, "end": 0.88, "value": "F" },
+    { "start": 0.88, "end": 0.96, "value": "A" },
+    { "start": 0.96, "end": 1.19, "value": "B" },
+    { "start": 1.19, "end": 1.27, "value": "A" },
+    { "start": 1.27, "end": 1.51, "value": "B" },
+    { "start": 1.51, "end": 1.59, "value": "A" },
+    { "start": 1.59, "end": 1.93, "value": "B" },
+    { "start": 1.93, "end": 2.14, "value": "C" },
+    { "start": 2.14, "end": 2.55, "value": "B" },
+    { "start": 2.55, "end": 2.62, "value": "H" },
+    { "start": 2.62, "end": 2.76, "value": "C" },
+    { "start": 2.76, "end": 2.84, "value": "A" },
+    { "start": 2.84, "end": 2.95, "value": "F" },
+    { "start": 2.95, "end": 3.16, "value": "E" },
+    { "start": 3.16, "end": 3.23, "value": "B" },
+    { "start": 3.23, "end": 3.42, "value": "X" },
+    { "start": 3.42, "end": 3.57, "value": "B" },
+    { "start": 3.57, "end": 3.71, "value": "C" },
+    { "start": 3.71, "end": 3.78, "value": "B" },
+    { "start": 3.78, "end": 3.85, "value": "C" },
+    { "start": 3.85, "end": 3.92, "value": "F" },
+    { "start": 3.92, "end": 4.06, "value": "C" },
+    { "start": 4.06, "end": 4.16, "value": "A" },
+    { "start": 4.16, "end": 4.31, "value": "B" },
+    { "start": 4.31, "end": 4.32, "value": "X" }
+  ]
+}
