@@ -20,9 +20,9 @@ X264=(-c:v libx264 -preset slow -b:v 5000k -pix_fmt yuv420p -passlogfile "$B/pf"
 ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" "${X264[@]}" -pass 1 -an -f mp4 /dev/null
 ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" -map 1:a "${X264[@]}" -pass 2 -c:a copy -shortest -movflags +faststart "$E/final.mp4"
 DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$E/final.mp4")
-VB=$(python3 -c "print(int(29*1024*1024*8/$DUR/1000 - 140))")
+VB=$(python3 -c "print(int(29.4*1024*1024*8/$DUR/1000 - 140))")
 # в чат (и на выкладку): H.265 из мастера, а не из final.mp4 (без двойного сжатия); hvc1 — играет на iPhone, принимают TikTok и YouTube
-X265=(-c:v libx265 -preset medium -b:v ${VB}k -pix_fmt yuv420p -tag:v hvc1)
+X265=(-c:v libx265 -preset slow -b:v ${VB}k -pix_fmt yuv420p -tag:v hvc1)
 ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" "${X265[@]}" -x265-params pass=1:stats="$B/x265.log":log-level=error -an -f mp4 /dev/null
 ffmpeg -y -v error "${VIN[@]}" "${VMAP[@]}" -map 1:a "${X265[@]}" -x265-params pass=2:stats="$B/x265.log":log-level=error -c:a aac -b:a 128k -movflags +faststart "$B/chat.mp4"
 ls -la "$E/final.mp4" "$B/chat.mp4"
