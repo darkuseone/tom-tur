@@ -19,7 +19,7 @@ function wTunnel(t, u, cat) {                                      // внутр
     if (k % 2 === 0) for (let n = 0; n < 12; n++) { const aa = n / 12 * 6.283; push(Math.cos(aa) * r * 0.86, Math.sin(aa) * r * 0.86, 1, aa + Math.PI / 2); txt(['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'][n], 0, 0, 10 + z * 70, { col: '#f6e2b0', font: 'Osw', a: 0.8 * a }); pop(); }
     pop(); }
   glow(cx, cy, 500, 'rgba(255,200,110,0.9)', 0.5);
-  const yrs = ['1909', '1901', 'XII в.', '1063', '988', '882', '482', '−17 000', '−41 млн', '2026'];
+  const yrs = ['1966', '1952', '1840', '1836', '1822', '1820', '1466', 'миоцен', '−12 млн', '2026'];
   yrs.forEach((y, k) => { const ph = (u * 1.3 + k / yrs.length) % 1, z = Math.pow(ph, 2), a = k * 0.7 + u; txt(y, cx + Math.cos(a) * z * 620, cy + Math.sin(a) * z * 820, 20 + z * 120, { col: '#ffe9b8', font: 'Osw', a: (1 - ph) * 0.9 }); });
   ctx.save(); ctx.globalCompositeOperation = 'lighter'; const r = rng(hsh(FRAME, 8)); for (let i = 0; i < 60; i++) { const a = r() * 6.283, d0 = 60 + r() * 300, d1 = d0 + 200 + r() * 600; ctx.strokeStyle = 'rgba(255,214,140,0.5)'; ctx.lineWidth = 1 + r() * 3; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * d0, cy + Math.sin(a) * d0); ctx.lineTo(cx + Math.cos(a) * d1, cy + Math.sin(a) * d1); ctx.stroke(); } ctx.restore();
   pencil([[-100, 1500], [cx, cy], [W + 100, 300]], { w: 6, col: '#ffd890', a: 0.9, pass2: false, gap: false }); glow(cx, cy, 120, 'rgba(255,240,200,1)', 0.8);
@@ -27,7 +27,7 @@ function wTunnel(t, u, cat) {                                      // внутр
 }
 
 WORLD.tunnel = wTunnel;
-DIR.tunnel = { outfit: 'hoodieK', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
+DIR.tunnel = { outfit: 'hoodieKi', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
   pose: (t, u, b) => Object.assign(b, { x: 540, y: 1260, s: 1.0, rot: u * 3.2, look: [0, -0.2], watchInHand: true, glow: 1, spin: 1.5 }),
   cam: () => [[S0.tunnel, 540, 960, 0], [S1.tunnel, 540, 960, 0.1]] };
 
@@ -147,5 +147,175 @@ function human(x, y, s, t, o = {}) {
   if (o.hat === 'scarf') blob([[-48, hy + 20], [-46, hy - 36], [0, hy - 58], [46, hy - 36], [48, hy + 20], [34, hy - 20], [-34, hy - 20]], { wash: hc, washA: 1, w: 2.2, col: L });
   if (o.hat === 'crown') { rect(-40, hy - 50, 80, 18, { wash: '#d6a842', washA: 1, w: 1.8, col: '#6a4a08' }); for (let q = 0; q < 5; q++) poly([[-40 + q * 20, hy - 50], [-30 + q * 20, hy - 74], [-20 + q * 20, hy - 50]], { wash: '#d6a842', washA: 1, w: 1.4, col: '#6a4a08' }); }
   if (o.hat === 'hood' || o.hat === 'hood2') blob([[-50, hy + 30], [-52, hy - 30], [0, hy - (o.hat === 'hood2' ? 100 : 70)], [52, hy - 30], [50, hy + 30], [38, hy - 10], [-38, hy - 10]], { wash: hc, washA: 1, w: 2.2, col: L, shade: { gap: 5, a: 0.3, col: L, ang: 1.2 } });
+  pop();
+}
+
+/* ---- 004 Кишинёв: общие детали (арка, собор, колокольня, колокол, дома, лоза, бочки) ---- */
+const KI = { lime: '#efe2c4', limeD: '#b89e74', limeL: '#fbf3df', ink: '#3a2a1c', roofG: '#3e6a5e', gold: '#e2b44a', wine: '#6a1428', wineL: '#a8304a' };
+/* Триумфальная арка Кишинёва (1840): нижний ярус с аркой и парными колоннами, антаблемент, верхний ярус с проёмом для колокола.
+   o.build 0..1 — сколько построено (снизу вверх), o.scaff — леса, o.bell 0..1 — колокол в верхнем ярусе (качание o.swing), o.lit — вечерний свет */
+function kArch(x, y, s, t, o = {}) {
+  const L = KI.ink, bk = o.build ?? 1, top = -680 * bk;
+  push(x, y, s);
+  ctx.save(); ctx.beginPath(); ctx.rect(-400, top - 4, 800, 700 - top); ctx.clip();
+  ell(0, 6, 330, 26, { wash: '#000000', washA: 0.16, line: false });
+  // цоколь и ступени
+  for (let k = 0; k < 3; k++) rect(-290 + k * 10, -14 - k * 14, 580 - k * 20, 16, { wash: k % 2 ? '#d8c8a4' : '#cdbb94', washA: 1, w: 1.8, col: L });
+  // нижний ярус
+  const lo = rect(-262, -430, 524, 388, { wash: KI.lime, washA: 1, w: 2.6, col: L, key: 9400 });
+  shadeG(lo.path, 262, 0, -262, 0, KI.limeD, 0.45); hatch(lo.path, lo.bb, { gap: 9, a: 0.07, col: '#7a6040', ang: 1.25, key: 9401, w: 1.2 });
+  for (let r = 0; r < 9; r++) pencil([[-258, -82 - r * 38], [258, -82 - r * 38]], { w: 1.2, col: '#a8906a', a: 0.35, pass2: false });   // руст кладки
+  // арочный проём
+  const AP = [[-92, -42], [-92, -250]]; for (let a = 0; a <= 16; a++) { const q = Math.PI + a / 16 * Math.PI; AP.push([Math.cos(q) * 92, -250 + Math.sin(q) * 92]); } AP.push([92, -42]);
+  const ap = shape(AP, { wash: o.through || '#3a2e2a', washA: 1, w: 3, col: L, key: 9402 });
+  ctx.save(); ctx.clip(ap.path); if (o.through) glow(0, -200, 160, 'rgba(255,240,200,1)', 0.35); else { vgrad(-340, -40, ['#4a3c34', '#2a201c']); glow(40, -120, 120, 'rgba(255,220,160,1)', 0.18); } ctx.restore();
+  for (let a = 0; a <= 8; a++) { const q = Math.PI + a / 8 * Math.PI; pencil([[Math.cos(q) * 92, -250 + Math.sin(q) * 92], [Math.cos(q) * 118, -250 + Math.sin(q) * 118]], { w: 2, col: L, a: 0.7, pass2: false }); }   // клинчатые камни
+  poly([[-14, -362], [14, -362], [10, -330], [-10, -330]], { wash: KI.limeL, washA: 1, w: 2, col: L });   // замковый камень
+  // парные колонны (коринфский ордер, упрощённо)
+  for (const cx of [-226, -172, 172, 226]) {
+    const c = rect(cx - 17, -372, 34, 322, { wash: KI.limeL, washA: 1, w: 2.2, col: L });
+    shadeG(c.path, cx + 17, 0, cx - 17, 0, '#c8b48c', 0.55); for (let f = -1; f <= 1; f++) pencil([[cx + f * 9, -366], [cx + f * 9, -56]], { w: 1.2, col: '#9a8460', a: 0.5, pass2: false });
+    rect(cx - 22, -56, 44, 14, { wash: '#e0d2b2', washA: 1, w: 1.8, col: L }); blob([[cx - 26, -372], [cx - 20, -392], [cx, -398], [cx + 20, -392], [cx + 26, -372]], { wash: '#e8dcc0', washA: 1, w: 1.8, col: L });
+    for (const sd of [-1, 1]) pencil([[cx + sd * 6, -376], [cx + sd * 18, -392], [cx + sd * 24, -386]], { w: 1.6, col: L, a: 0.7, pass2: false });
+  }
+  // антаблемент и карниз
+  rect(-280, -470, 560, 44, { wash: '#e6d8b8', washA: 1, w: 2.4, col: L }); for (let k = -13; k <= 13; k++) rect(k * 20 - 5, -470, 10, 12, { wash: '#c8b48c', washA: 1, w: 1, col: L, a: 0.6 });
+  poly([[-300, -470], [300, -470], [290, -490], [-290, -490]], { wash: '#f2e6cc', washA: 1, w: 2.2, col: L });
+  txt('MDCCCXL', 0, -446, 26, { font: 'Osw', col: '#7a6040', a: 0.8 });
+  // верхний ярус с проёмом для колокола
+  const up = rect(-176, -640, 352, 150, { wash: KI.lime, washA: 1, w: 2.4, col: L, key: 9403 }); shadeG(up.path, 176, 0, -176, 0, KI.limeD, 0.45);
+  const BP = [[-62, -500], [-62, -580]]; for (let a = 0; a <= 12; a++) { const q = Math.PI + a / 12 * Math.PI; BP.push([Math.cos(q) * 62, -580 + Math.sin(q) * 46]); } BP.push([62, -500]);
+  const bpp = shape(BP, { wash: '#2a221e', washA: 1, w: 2.4, col: L });
+  if ((o.bell ?? 0) > 0) { ctx.save(); ctx.clip(bpp.path); pencil([[-62, -612], [62, -612]], { w: 5, col: '#4a3020', pass2: false }); kBell(0, -506, 0.13, t, { swing: o.swing || 0, a: o.bell }); ctx.restore(); }
+  for (const sd of [-1, 1]) { rect(sd * 120 - 16, -630, 32, 132, { wash: KI.limeL, washA: 1, w: 1.8, col: L }); }
+  rect(-196, -664, 392, 26, { wash: '#f2e6cc', washA: 1, w: 2.2, col: L }); poly([[-206, -664], [206, -664], [196, -680], [-196, -680]], { wash: '#e6d8b8', washA: 1, w: 2, col: L });
+  for (let k = -8; k <= 8; k++) rect(k * 22 - 4, -700, 8, 20, { wash: KI.limeL, washA: 1, w: 1.2, col: L, a: 0.8 });   // балюстрада
+  pencil([[-196, -702], [196, -702]], { w: 3, col: L, pass2: false });
+  if (o.lit) { ctx.save(); ctx.globalCompositeOperation = 'soft-light'; glow(-200, -360, 420, 'rgba(255,190,110,1)', 0.5 * o.lit); ctx.restore(); }
+  ctx.restore();
+  // строительная кромка и леса
+  if (bk < 1) { pencil([[-262, top], [262, top]], { w: 4, col: '#8a7050', pass2: false }); for (let k = 0; k < 6; k++) { const r = rng(9410 + k); rect(-240 + k * 82, top - 26 - r() * 10, 70, 26, { wash: '#e6d6b2', washA: 1, w: 1.6, col: L }); } }
+  if (o.scaff) { const a = o.scaff; for (const sx of [-330, -300, 300, 330]) pencil([[sx, 0], [sx, -760]], { w: 7, col: '#7a5432', a, pass2: false });
+    for (let k = 0; k < 6; k++) { const yy = -110 - k * 120; pencil([[-340, yy], [340, yy]], { w: 6, col: '#8a6038', a, pass2: false }); pencil([[-330, yy], [-300, yy - 120]], { w: 3, col: '#6a4428', a: a * 0.8, pass2: false }); pencil([[330, yy], [300, yy - 120]], { w: 3, col: '#6a4428', a: a * 0.8, pass2: false }); } }
+  pop();
+}
+/* колокол: профиль с короной-ушками, поясами и рельефом; o.hot 0..1 — раскал, o.swing — угол качания, o.a — прозрачность */
+function kBell(x, y, s, t, o = {}) {
+  const L = '#1a1008', H = 900, PR = [[0, 140], [40, 190], [220, 210], [460, 236], [660, 290], [800, 360], [880, 404], [900, 420]];
+  push(x, y, s, o.swing || 0); ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  const R = PR.map(([yy, w]) => [w, yy - H]), Lf = PR.map(([yy, w]) => [-w, yy - H]).reverse();
+  const pts = spline([[-110, -H - 4], [0, -H - 20], [110, -H - 4], ...R, [0, 6], ...Lf], true, 6), bp = pathOf(pts);
+  const T = o.hot || 0, g = ctx.createLinearGradient(-430, 0, 430, 0);
+  g.addColorStop(0, lerpC('#2a1c10', '#c04a1a', T)); g.addColorStop(0.32, lerpC('#7a5a32', '#ff9a30', T)); g.addColorStop(0.45, lerpC('#c8a060', '#fff2b8', T)); g.addColorStop(0.62, lerpC('#6a4c2a', '#ffae40', T)); g.addColorStop(1, lerpC('#22160c', '#b8401a', T));
+  ctx.save(); ctx.clip(bp); ctx.fillStyle = g; ctx.fillRect(-440, -H - 30, 880, H + 40);
+  hatch(bp, [-430, -H - 30, 430, 0], { gap: 10, a: 0.2 * (1 - T), col: '#1a1008', ang: 1.35, key: 9420 });
+  if (T < 0.5) { ctx.globalAlpha = 0.16; ctx.fillStyle = '#5aa391'; ctx.fillRect(-430, -440, 110, 380); ctx.globalAlpha = 1; }
+  const rel = (P, a = 0.8) => { pencil(P, { w: 4, col: L, a, pass2: false }); pencil(P.map(([a1, b1]) => [a1 - 3, b1 - 3]), { w: 2.4, col: T > 0.4 ? '#fff6d0' : '#f0d49a', a: a * 0.9, pass2: false, gap: false }); };
+  for (const ry of [120, 160, 760, 810, 860]) { const w = PR.reduce((acc, [yy, ww], i) => i && ry <= yy && ry > PR[i - 1][0] ? lerp(PR[i - 1][1], ww, (ry - PR[i - 1][0]) / (yy - PR[i - 1][0])) : acc, 420); rel([[-w + 6, ry - H + 6], [0, ry - H + 16], [w - 6, ry - H + 6]]); }
+  for (let k = -5; k <= 5; k++) ell(k * 34, 140 - H, 11, 8, { wash: '#8a6a3a', washA: 0.8, w: 1.4, col: L });
+  rel(ellPts(0, 460 - H, 90, 120, 0, 0.05, 36), 0.7); rel([[-30, 560 - H], [0, 380 - H], [30, 560 - H]], 0.6); rel([[-50, 470 - H], [50, 470 - H]], 0.6);   // медальон с крестом
+  if (T > 0) glow(0, -H * 0.5, 500, 'rgba(255,200,120,1)', 0.5 * T);
+  ctx.restore();
+  pencil(pts, { w: 4, col: L, key: 9421 }); rimL(pts, -1, '#ffd8a0', 0.5, 4);
+  for (const dx of [-70, 0, 70]) { const p = []; for (let a = 0; a <= 14; a++) { const q = Math.PI + a / 14 * Math.PI; p.push([dx + Math.cos(q) * 30, -H - 18 + Math.sin(q) * 54]); } pencil(p, { w: 11, col: T > 0.3 ? '#ffb050' : '#4a3420', pass2: false }); pencil(p, { w: 3, col: L, a: 0.6, pass2: false }); }
+  ell(0, -40, 34, 44, { wash: '#3a2a18', washA: 1, w: 2.4, col: L });   // язык
+  ctx.restore(); pop();
+}
+/* собор Рождества Христова (1836): куб, портик 6 колонн с фронтоном, барабан-ротонда с колоннами, купол, крест */
+function kCathedral(x, y, s, t, o = {}) {
+  const L = KI.ink; push(x, y, s);
+  ell(0, 6, 420, 30, { wash: '#000', washA: 0.14, line: false });
+  const bd = rect(-360, -460, 720, 460, { wash: KI.lime, washA: 1, w: 2.4, col: L, key: 9430 }); shadeG(bd.path, 360, 0, -360, 0, KI.limeD, 0.5);
+  for (const wx of [-300, -240, 240, 300]) { rect(wx - 18, -330, 36, 120, { wash: '#4a3e3a', washA: 1, w: 1.8, col: L }); pencil([[wx - 24, -340], [wx + 24, -340]], { w: 3, col: L, pass2: false }); }
+  rect(-380, -500, 760, 42, { wash: '#e6d8b8', washA: 1, w: 2.2, col: L });
+  // портик
+  for (let k = 0; k < 3; k++) rect(-230 + k * 8, -14 - k * 12, 460 - k * 16, 14, { wash: '#d8c8a4', washA: 1, w: 1.6, col: L });
+  rect(-170, -380, 340, 340, { wash: '#d8c6a2', washA: 1, w: 1.6, col: L }); rect(-50, -230, 100, 190, { wash: '#5a3a24', washA: 1, w: 2, col: L, shade: { gap: 6, a: 0.3, col: L, ang: 1.57 } });
+  for (let k = 0; k < 6; k++) { const cx = -200 + k * 80, c = rect(cx - 15, -390, 30, 350, { wash: KI.limeL, washA: 1, w: 2, col: L }); shadeG(c.path, cx + 15, 0, cx - 15, 0, '#c8b48c', 0.55); blob([[cx - 22, -390], [cx - 14, -408], [cx + 14, -408], [cx + 22, -390]], { wash: '#e8dcc0', washA: 1, w: 1.6, col: L }); }
+  rect(-240, -440, 480, 34, { wash: '#efe2c4', washA: 1, w: 2, col: L });
+  const pd = poly([[-250, -440], [250, -440], [0, -560]], { wash: '#f2e6cc', washA: 1, w: 2.4, col: L }); poly([[-200, -450], [200, -450], [0, -538]], { wash: '#e0d0ae', washA: 1, w: 1.4, col: L, a: 0.8 });
+  // барабан-ротонда
+  const dr = rect(-170, -720, 340, 220, { wash: KI.lime, washA: 1, w: 2.2, col: L }); shadeG(dr.path, 170, 0, -170, 0, KI.limeD, 0.5);
+  for (let k = 0; k < 8; k++) { const cx = -150 + k * 43; rect(cx - 9, -704, 18, 190, { wash: KI.limeL, washA: 1, w: 1.6, col: L }); if (k < 7) { rect(cx + 12, -660, 18, 80, { wash: '#4a3e3a', washA: 1, w: 1.2, col: L }); } }
+  rect(-186, -740, 372, 24, { wash: '#e6d8b8', washA: 1, w: 2, col: L });
+  const dp = []; for (let a = 0; a <= 20; a++) { const q = Math.PI + a / 20 * Math.PI; dp.push([Math.cos(q) * 176, -740 + Math.sin(q) * 190]); }
+  const dm = shape([...dp, [176, -740]], { wash: o.dome || '#4a6a8a', washA: 1, w: 2.6, col: L, key: 9431 }); metalG(dm.path, -40, -860, 200, '#9ab8d0', o.dome || '#4a6a8a', '#1e2e44');
+  for (let k = -3; k <= 3; k++) pencil(spline([[k * 50, -740], [k * 40, -840], [k * 12, -926]], false, 6), { w: 1.6, col: '#1e2e44', a: 0.6, pass2: false });
+  rect(-26, -960, 52, 34, { wash: '#e6d8b8', washA: 1, w: 1.8, col: L }); ell(0, -980, 22, 26, { wash: KI.gold, washA: 1, w: 1.8, col: '#6a4a08' });
+  pencil([[0, -1004], [0, -1090]], { w: 6, col: KI.gold, pass2: false }); pencil([[-24, -1066], [24, -1066]], { w: 5, col: KI.gold, pass2: false }); pencil([[-14, -1036], [14, -1042]], { w: 4, col: KI.gold, pass2: false });
+  glow(0, -1040, 50, 'rgba(255,230,160,1)', 0.6);
+  pop();
+}
+/* колокольня собора (1836): 4 яруса с арочными проёмами, шпиль; o.win — индекс яруса с подсвеченным окном (куда «не лезет» колокол) */
+function kBelfry(x, y, s, t, o = {}) {
+  const L = KI.ink; push(x, y, s);
+  const T = [[0, -380, 150], [-380, -640, 124], [-640, -860, 100], [-860, -1030, 78]];
+  T.forEach(([y0, y1, w], i) => {
+    const b = rect(-w, y1, w * 2, y0 - y1, { wash: KI.lime, washA: 1, w: 2.4, col: L, key: 9440 + i }); shadeG(b.path, w, 0, -w, 0, KI.limeD, 0.5); hatch(b.path, b.bb, { gap: 10, a: 0.06, col: '#7a6040', ang: 1.2, key: 9445 + i, w: 1 });
+    const ow = w * (o.win === i && o.winW ? o.winW : 0.42), oh = (y0 - y1) * 0.56, oy = y0 - (y0 - y1) * 0.18; const P = [[-ow, oy], [-ow, oy - oh + ow]]; for (let a = 0; a <= 12; a++) { const q = Math.PI + a / 12 * Math.PI; P.push([Math.cos(q) * ow, oy - oh + ow + Math.sin(q) * ow]); } P.push([ow, oy]);
+    if (i > 0 || o.door) shape(P, { wash: o.win === i ? '#1a1410' : '#3a302c', washA: 1, w: 2.2, col: L });
+    for (const sd of [-1, 1]) { rect(sd * (w - 18) - 10, y1 + 10, 20, y0 - y1 - 20, { wash: KI.limeL, washA: 1, w: 1.6, col: L }); }
+    rect(-w - 12, y1 - 18, w * 2 + 24, 22, { wash: '#e6d8b8', washA: 1, w: 2, col: L });
+  });
+  const dp = []; for (let a = 0; a <= 16; a++) { const q = Math.PI + a / 16 * Math.PI; dp.push([Math.cos(q) * 70, -1048 + Math.sin(q) * 90]); }
+  const dm = shape([...dp, [70, -1048]], { wash: o.dome || '#4a6a8a', washA: 1, w: 2.2, col: L }); metalG(dm.path, -20, -1110, 100, '#9ab8d0', o.dome || '#4a6a8a', '#1e2e44');
+  pencil([[0, -1136], [0, -1300]], { w: 7, col: KI.gold, pass2: false }); ell(0, -1150, 14, 16, { wash: KI.gold, washA: 1, w: 1.6, col: '#6a4a08' }); pencil([[-22, -1260], [22, -1260]], { w: 5, col: KI.gold, pass2: false });
+  glow(0, -1240, 40, 'rgba(255,230,160,1)', 0.5);
+  pop();
+}
+/* бессарабский дом: беленые известняковые стены, галерея-прispa на столбиках, черепица/камыш, ставни; o.roof 'reed'|'tile', o.lit — свет в окнах */
+function bHouse(x, y, w, h, o = {}) {
+  const L = KI.ink, seed = o.seed || 1, r = rng(9450 + seed);
+  push(x, y, o.s || 1);
+  const wl = rect(-w / 2, -h, w, h, { wash: o.wall || '#f2ead6', washA: 1, w: 2.2, col: L, key: 9451 + seed }); shadeG(wl.path, w / 2, 0, -w / 2, 0, '#c8b894', 0.45);
+  rect(-w / 2, -26, w, 26, { wash: '#8a7a64', washA: 1, w: 1.6, col: L });   // цоколь
+  const nw = Math.max(1, Math.floor(w / 110));
+  for (let i = 0; i < nw; i++) { const wx = -w / 2 + (i + 0.5) * w / nw; if (o.door && i === Math.floor(nw / 2)) { rect(wx - 26, -h * 0.82, 52, h * 0.82 - 26, { wash: '#6a4428', washA: 1, w: 2, col: L, shade: { gap: 5, a: 0.3, col: L, ang: 1.57 } }); continue; }
+    rect(wx - 22, -h * 0.74, 44, 52, { wash: o.lit ? '#ffd890' : '#4a5a6a', washA: 1, w: 2, col: L }); if (o.lit) glow(wx, -h * 0.74 + 26, 60, 'rgba(255,210,130,1)', 0.55 * o.lit);
+    pencil([[wx, -h * 0.74], [wx, -h * 0.74 + 52]], { w: 1.8, col: L, pass2: false }); pencil([[wx - 22, -h * 0.74 + 26], [wx + 22, -h * 0.74 + 26]], { w: 1.8, col: L, pass2: false });
+    for (const sd of [-1, 1]) rect(wx + sd * 22 + (sd < 0 ? -18 : 0), -h * 0.74 - 2, 18, 56, { wash: o.shut || '#3a6a9a', washA: 1, w: 1.6, col: L }); }
+  const rh = h * 0.7, RP = [[-w / 2 - 30, -h + 6], [-w / 2 + 40, -h - rh], [w / 2 - 40, -h - rh], [w / 2 + 30, -h + 6]];
+  const rf = poly(RP, { wash: o.roof === 'tile' ? '#b0563a' : '#b8a070', washA: 1, w: 2.4, col: L, key: 9452 + seed });
+  if (o.roof === 'tile') { for (let k = 0; k < 6; k++) { const yy = -h - rh + 6 + k * rh / 6; pencil([[lerp(-w / 2 + 40, -w / 2 - 30, k / 6), yy], [lerp(w / 2 - 40, w / 2 + 30, k / 6), yy]], { w: 1.6, col: '#6a2a1a', a: 0.7, pass2: false }); } }
+  else hatch(rf.path, rf.bb, { gap: 5, a: 0.35, col: '#6a5430', ang: 1.45, key: 9453 + seed, w: 1.4 });
+  if (o.chim !== false) { rect(w / 4 - 12, -h - rh * 0.9, 24, rh * 0.5, { wash: '#e8e0cc', washA: 1, w: 1.6, col: L }); if (o.smoke) for (let k = 0; k < 4; k++) { const ph = ((o.t || 0) * 0.4 + k / 4 + seed * 0.3) % 1; glow(w / 4 + Math.sin(ph * 5 + seed) * 20, -h - rh * 0.9 - ph * 200, 20 + ph * 50, 'rgba(200,196,190,1)', 0.4 * (1 - ph), 'source-over'); } }
+  if (o.porch) { for (let k = 0; k < 4; k++) { const px = -w / 2 + 20 + k * (w - 40) / 3; pencil([[px, -10], [px, -h + 10]], { w: 8, col: '#7a5432', pass2: false }); } pencil([[-w / 2 + 10, -h + 14], [w / 2 - 10, -h + 14]], { w: 6, col: '#6a4428', pass2: false }); }
+  pop();
+}
+function poplar(x, y, h, t, seed = 1, col = '#4a7a3a') {          // пирамидальный тополь
+  const r = rng(9460 + seed), sw = Math.sin(t * 1.3 + seed) * 6; push(x, y, 1);
+  pencil([[0, 0], [sw * 0.2, -h * 0.3]], { w: 10, col: '#5a4030', pass2: false });
+  const P = [[0, -h * 0.12]]; for (let k = 0; k <= 10; k++) { const q = k / 10; P.push([h * 0.09 * Math.sin(q * Math.PI) * (1 + 0.15 * (r() - 0.5)) + sw * q, -h * 0.12 - q * h * 0.88]); } for (let k = 10; k >= 0; k--) { const q = k / 10; P.push([-h * 0.09 * Math.sin(q * Math.PI) * (1 + 0.15 * (r() - 0.5)) + sw * q, -h * 0.12 - q * h * 0.88]); }
+  const b = blob(P, { wash: col, washA: 1, w: 2, col: '#1e2e18', key: 9461 + seed }); shadeG(b.path, h * 0.09, 0, -h * 0.09, 0, '#1e3a1a', 0.55); hatch(b.path, b.bb, { gap: 6, a: 0.2, col: '#1e3a1a', ang: 1.4, key: 9462 + seed, w: 1.2 });
+  pop();
+}
+function acacia(x, y, h, t, seed = 1, col = '#6a8a3a') {           // раскидистая акация (кишинёвские улицы)
+  const r = rng(9470 + seed), sw = Math.sin(t * 1.1 + seed) * 5; push(x, y, 1);
+  shape(tubeP([[0, 0], [sw * 0.1 - 6, -h * 0.4], [sw * 0.3 + 10, -h * 0.62]], 22, 10), { wash: '#5a4232', washA: 1, w: 2, col: '#2a1a10' });
+  for (let k = 0; k < 7; k++) { const a = -Math.PI / 2 + (k - 3) * 0.42, d = h * (0.28 + r() * 0.12); const cx = Math.cos(a) * d * 1.2 + sw, cy = -h * 0.66 + Math.sin(a) * d * 0.7;
+    const b = ell(cx, cy, h * 0.17, h * 0.12, { wash: lerpC(col, '#2e4a1e', r() * 0.4), washA: 1, w: 1.8, col: '#1e2e18' }); hatch(b.path, b.bb, { gap: 6, a: 0.16, col: '#1e3a1a', ang: 1.2, key: 9471 + seed * 9 + k, w: 1 }); }
+  pop();
+}
+function vine(x, y, h, t, seed = 1, ripe = 1) {                   // виноградная лоза на колу с гроздьями
+  const r = rng(9480 + seed), sw = Math.sin(t * 1.6 + seed) * 4; push(x, y, 1);
+  pencil([[0, 0], [0, -h]], { w: 5, col: '#8a6a44', pass2: false }); pencil([[-60, -h * 0.8], [60, -h * 0.8]], { w: 2, col: '#6a5a4a', a: 0.7, pass2: false });
+  line([[0, 0], [-6, -h * 0.4], [8, -h * 0.7], [-30, -h * 0.82], [-60, -h * 0.8]], { w: 6, col: '#5a3a24' }); line([[8, -h * 0.7], [40, -h * 0.82], [60, -h * 0.8]], { w: 5, col: '#5a3a24' });
+  for (let k = 0; k < 9; k++) { const lx = (r() - 0.5) * 140 + sw, ly = -h * 0.72 - r() * h * 0.3; const lf = blob([[lx - 22, ly], [lx - 14, ly - 18], [lx, ly - 24], [lx + 14, ly - 18], [lx + 22, ly], [lx, ly + 14]], { wash: lerpC('#5a8a2e', '#2e5a1e', r()), washA: 1, w: 1.4, col: '#1e3a14' }); pencil([[lx, ly + 10], [lx, ly - 16]], { w: 1, col: '#1e3a14', a: 0.6, pass2: false }); }
+  for (let g = 0; g < 3; g++) { const gx = -40 + g * 40 + sw, gy = -h * 0.74; for (let q = 0; q < 10; q++) { const row = Math.floor(Math.sqrt(q * 2)), cx = gx + (q - row * (row + 1) / 2 - row / 2) * 9, cy = gy + row * 10; ell(cx, cy, 6, 6.5, { wash: lerpC('#8ab04a', '#4a1a3a', ripe), washA: 1, w: 1, col: '#1a0a14' }); } }
+  pop();
+}
+function barrel(x, y, s, o = {}) {                                // дубовая бочка лёжа (торцом к зрителю) или стоя
+  const L = '#1a0e06'; push(x, y, s);
+  if (o.side) { const b = blob([[-120, -80], [-60, -96], [60, -96], [120, -80], [128, 0], [120, 80], [60, 96], [-60, 96], [-120, 80], [-128, 0]], { wash: '#8a5a32', washA: 1, w: 2.4, col: L }); shadeG(b.path, 0, -96, 0, 96, '#3a2010', 0.6);
+    for (const bx of [-88, -40, 40, 88]) pencil([[bx, -92], [bx * 1.04, 0], [bx, 92]], { w: 6, col: '#3a3a3e', pass2: false }); for (let k = -2; k <= 2; k++) pencil([[-124, k * 34], [124, k * 34]], { w: 1.2, col: '#4a2a14', a: 0.5, pass2: false }); }
+  else { const e = ell(0, 0, 100, 100, { wash: '#a06a3a', washA: 1, w: 2.6, col: L }); shadeG(e.path, -60, -60, 60, 60, '#4a2a14', 0.5); for (let k = 0; k < 5; k++) pencil([[-90 + k * 45, -40 + Math.abs(k - 2) * -10], [-90 + k * 45, 40 + Math.abs(k - 2) * 10]], { w: 1.2, col: '#5a3418', a: 0.55, pass2: false });
+    pencil(ellPts(0, 0, 100, 100, 0, 0.02, 40), { w: 9, col: '#3a3a3e', pass2: false }); pencil(ellPts(0, 0, 84, 84, 0, 0.02, 40), { w: 2, col: '#2a1408', a: 0.6, pass2: false });
+    ell(0, 30, 10, 10, { wash: '#3a2010', washA: 1, w: 1.6, col: L }); if (o.label) { rect(-48, -34, 96, 34, { wash: '#efe4c8', washA: 1, w: 1.4, col: L }); txt(o.label, 0, -16, 20, { font: 'Hand', col: '#4a1020' }); } }
+  pop();
+}
+function bottle(x, y, s, rot = 0, col = '#2a3a1e', label) {        // винная бутылка
+  push(x, y, s, rot); const b = blob([[-22, 0], [-24, -110], [-18, -132], [-8, -146], [-8, -190], [8, -190], [8, -146], [18, -132], [24, -110], [22, 0]], { wash: col, washA: 1, w: 2, col: '#0a0a08' });
+  ctx.save(); ctx.clip(b.path); ctx.globalAlpha = 0.35; ctx.fillStyle = '#ffffff'; ctx.fillRect(-16, -140, 6, 130); ctx.restore(); rect(-9, -196, 18, 12, { wash: '#a8302a', washA: 1, w: 1.2 });
+  if (label) { rect(-20, -84, 40, 44, { wash: '#efe4c8', washA: 1, w: 1.2, col: '#3a2a1a' }); txt(label, 0, -62, 11, { font: 'Osw', col: '#5a1020' }); }
   pop();
 }
