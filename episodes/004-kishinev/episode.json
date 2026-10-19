@@ -1,0 +1,104 @@
+{
+ "num": "004",
+ "city": "Кишинёв",
+ "title": "Колокол не влез?! История Кишинёва за минуту",
+ "hook": "КОЛОКОЛ / НЕ ВЛЕЗ?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "w_hook.js",
+  "w_sea.js",
+  "w_dino.js",
+  "w_boyar.js",
+  "w_pushkin.js",
+  "w_duel.js",
+  "w_bell.js",
+  "w_arch.js",
+  "w_cellar.js",
+  "w_gagarin.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "sea",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "dino",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "boyar",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "pushkin",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "duel",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "bell",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "arch",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "cellar",
+   [
+    "s9"
+   ]
+  ],
+  [
+   "gagarin",
+   [
+    "s10"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

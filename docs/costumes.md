@@ -34,4 +34,7 @@
 | caveman | шкура + копьё | 003 | палеолит |
 | scuba | гидрокостюм + маска + акваланг | 003 | подводные сцены (современный взгляд) |
 
+| hoodieKi | бордовое худи «КИШИНЁВ» + кепка MD | 004 | сегодня в Молдове |
+| vintner | винодел: льняная рубаха, винный фартук, берет, штопор | 004 | виноделие, погреба, рынки |
+
 Реквизит `PROPS`: coin binoc trowel brush spyglass goblet scroll chisel key medal lantern mallet blueprint quill stick folder spear.

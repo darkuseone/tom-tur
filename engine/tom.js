@@ -95,7 +95,10 @@ const OUTFIT = {
   varyag: { top: '#6a7260', topD: '#2e342a', topL: '#9aa48c', pants: '#4a4234', detail: 'varyag', hat: 'spangen', boots: 'varyag', cuff: '#7a5a2a', long: 1 },
   soviet: { top: '#6a6e74', topD: '#33363c', topL: '#9a9ea6', pants: '#55585e', detail: 'soviet', hat: null, boots: 'oxford', shirt: '#f2f0ea' },
   caveman: { top: '#8f7b63', topD: '#3b2d21', topL: '#c9b79a', pants: null, detail: 'caveman', hat: null, bare: 1 },
-  scuba: { top: '#14232e', topD: '#070d12', topL: '#2a4658', pants: '#14232e', detail: 'scuba', hat: 'mask', boots: 'fin' }
+  scuba: { top: '#14232e', topD: '#070d12', topL: '#2a4658', pants: '#14232e', detail: 'scuba', hat: 'mask', boots: 'fin' },
+  // ---- 004 Кишинёв
+  hoodieKi: { top: '#7a2236', topD: '#3e0c1a', topL: '#b04a5e', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'КИШИНЁВ', capTxt: 'MD' },
+  vintner: { top: '#efe8d8', topD: '#a49a86', topL: '#fffaf0', pants: '#3a3228', detail: 'vintner', hat: 'berretto', boots: 'leather', rolled: 1 }
 };
 
 function tom(o = {}) {
@@ -537,6 +540,18 @@ const COST6 = {
     dashL(edgeOff(spline(AP.slice(1, 5), false, 6), -8), '#c8a070', 0.55); dashL(edgeOff(spline([AP[0], AP[8], AP[7], AP[6]], false, 6), 8), '#c8a070', 0.55);
     for (const sd of [-1, 1]) pencil([[sd * 54, -212 + b], [sd * 34, -254 + b]], { w: 5, col: '#4a2c16', pass2: false });
     rect(14, -160 + b, 40, 32, { wash: '#4a2c16', washA: 1, w: 2, col: TM.line }); dashL([[18, -156 + b], [50, -156 + b]], '#c8a070', 0.6);
+  },
+  vintner(OF, b, t, bp, L) {                                          // винодел 004: льняная рубаха, длинный винный фартук с пятнами, пояс-завязка, штопор
+    hatch(bp.path, bp.bb, { gap: 6, a: 0.1, col: OF.topD, ang: 1.3, key: 3941, w: 1.2 });
+    pencil([[0, -250 + b], [2, -212 + b]], { w: 2, col: TM.line, a: 0.6, pass2: false }); for (const y of [-238, -222]) ell(4, y + b, 3, 3, { wash: '#d8ccb0', washA: 1, w: 1, col: TM.line });
+    const AP = [[-58, -196 + b], [58, -196 + b], [66, -140 + b], [84, -72 + b], [94, -18 + b], [0, -10 + b], [-94, -18 + b], [-84, -72 + b], [-66, -140 + b]];
+    const ap = blob(AP, { wash: '#6a1428', washA: 1, w: 3, col: TM.line, key: 3942 });
+    shadeG(ap.path, -L.side * 100, 0, L.side * 70, 0, '#2a0410', 0.7); hatch(ap.path, ap.bb, { gap: 6, a: 0.13, col: '#1e0208', ang: -1.2, key: 3943 });
+    ctx.save(); ctx.clip(ap.path); const R = rng(3944); for (let k = 0; k < 6; k++) { const x = (R() - 0.5) * 130, y = -170 + R() * 140, rr = 5 + R() * 9; ctx.globalAlpha = 0.55; ctx.fillStyle = '#3a0010'; ctx.beginPath(); ctx.ellipse(x, y + b, rr * 1.6, rr, R() * 3, 0, 6.283); ctx.fill(); ctx.globalAlpha = 0.35; ctx.fillStyle = '#c0405a'; ctx.beginPath(); ctx.ellipse(x - 2, y + b - 2, rr * 0.6, rr * 0.4, 0, 0, 6.283); ctx.fill(); } ctx.restore(); ctx.globalAlpha = 1;
+    dashL(edgeOff(spline(AP.slice(1, 5), false, 6), -8), '#e0a0b0', 0.45); dashL(edgeOff(spline([AP[0], AP[8], AP[7], AP[6]], false, 6), 8), '#e0a0b0', 0.45);
+    for (const sd of [-1, 1]) pencil([[sd * 52, -194 + b], [sd * 30, -254 + b]], { w: 4, col: '#4a0c18', pass2: false });
+    rect(-70, -132 + b, 140, 12, { wash: '#d8c8a0', washA: 1, w: 1.8, col: TM.line }); pencil([[60, -126 + b], [78, -96 + b]], { w: 5, col: '#d8c8a0', pass2: false }); pencil([[66, -126 + b], [92, -104 + b]], { w: 5, col: '#d8c8a0', pass2: false });
+    rect(-46, -112 + b, 34, 26, { wash: '#4a0c18', washA: 1, w: 2, col: TM.line }); push(-30, -116 + b, 1, 0.5); pencil([[0, 0], [0, -26]], { w: 3, col: '#9aa0a6', pass2: false }); pencil([[-12, -26], [12, -26]], { w: 5, col: '#7a4a26', pass2: false }); pop();
   },
   hussar(OF, b, t, bp, L) {                                           // гусар 1812: доломан с бранденбурами, кушак, ментик на плече, ташка
     const C = OF.cord;
