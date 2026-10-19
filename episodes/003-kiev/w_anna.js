@@ -57,9 +57,26 @@
     pop();
   }
 
+  function tapestry(x, y, w, h, t) {                                 // гобелен: охота, всадник, олень, кайма
+    const p = poly([[x, y], [x + w, y], [x + w, y + h], [x + w * 0.5, y + h - 20], [x, y + h]], { wash: '#7a2a24', washA: 1, w: 2.2, col: '#2a0a08', key: 7690 }); hatch(p.path, p.bb, { gap: 5, a: 0.18, col: '#2a0a08', ang: 1.57, key: 7691 });
+    rect(x + 14, y + 14, w - 28, h - 60, { wash: '#c8a868', washA: 0.9, w: 1.4, col: '#5a3a14' }); pencil([[x - 10, y], [x + w + 10, y]], { w: 6, col: '#5a3a1a', pass2: false });
+    push(x + w * 0.35, y + h * 0.55, 0.6); blob([[-60, 0], [-50, -40], [20, -46], [60, -30], [56, 0]], { wash: '#f4f0e6', washA: 1, w: 1.6, col: '#3a2a14' }); for (const lx of [-44, -20, 20, 44]) pencil([[lx, 0], [lx, 40]], { w: 5, col: '#f4f0e6', pass2: false }); ell(0, -80, 18, 22, { wash: '#2a4a8a', washA: 1, w: 1.4 }); pop();
+    push(x + w * 0.72, y + h * 0.6, 0.5); blob([[-40, 0], [-36, -30], [30, -30], [40, 0]], { wash: '#8a5a2a', washA: 1, w: 1.4 }); for (const sd of [-1, 1]) pencil([[20, -40], [20 + sd * 20, -80], [20 + sd * 30, -100]], { w: 3, col: '#5a3a1a', pass2: false }); pop();
+    for (let k = 0; k < 8; k++) ell(x + 20 + k * (w - 40) / 7, y + h - 44, 5, 5, { wash: '#e6c060', washA: 1, line: false });
+  }
+  function candelabra(x, y, s, t) { push(x, y, s); pencil([[0, 0], [0, -200]], { w: 7, col: '#8a6a2a' }); ell(0, 6, 40, 10, { wash: '#8a6a2a', washA: 1, w: 1.6 }); pencil([[-60, -200], [60, -200]], { w: 6, col: '#8a6a2a' }); for (const cx of [-60, 0, 60]) candle(cx, -200, 0.9, t, cx); pop(); }
+  function floorTiles() { for (let j = 0; j < 8; j++) for (let i = -2; i < 12; i++) { const y0 = 1240 + j * 30 + j * j * 3, x0 = i * 110 - j * 12, c = (i + j) % 2 ? '#8a6a4a' : '#c8a878'; poly([[x0, y0], [x0 + 110, y0], [x0 + 110 + 12, y0 + 30 + j * 3], [x0 + 12, y0 + 30 + j * 3]], { wash: c, washA: 1, w: 1, col: '#3a2a1a', a: 0.5 }); } }
+  function feastTable(t) {                                           // стол за спиной у короля: кубки, хлеб, блюдо, чернильница
+    rect(-200, 1140, 600, 26, { wash: '#6a4428', washA: 1, w: 2.2, col: '#2a1408' }); const tc = rect(-200, 1110, 600, 34, { wash: '#efe6d0', washA: 1, w: 1.6, col: '#5a4a3a' }); for (let k = 0; k < 10; k++) pencil([[-190 + k * 60, 1144], [-185 + k * 60, 1166]], { w: 1.4, col: '#a8241e', pass2: false });
+    for (const [x, c] of [[-120, '#d6a842'], [0, '#c8ccd0'], [160, '#d6a842']]) { push(x, 1110, 1); blob([[-14, 0], [-18, -30], [-24, -60], [24, -60], [18, -30], [14, 0]], { wash: c, washA: 1, w: 1.6, col: '#5a4a1a' }); ell(0, -60, 24, 6, { wash: '#7a1a1a', washA: 1, w: 1 }); pop(); }
+    ell(60, 1100, 60, 14, { wash: '#b8bec4', washA: 1, w: 1.6 }); blob([[30, 1096], [40, 1070], [80, 1066], [96, 1096]], { wash: '#c8904a', washA: 1, w: 1.6, col: '#5a3a14' });
+  }
+  function hound(x, y, t) { push(x, y, 1); const wag = Math.sin(t * 8) * 10; blob([[-70, 0], [-60, -50], [40, -54], [70, -30], [60, 0]], { wash: '#c8b8a0', washA: 1, w: 2, col: '#3a2a1a' }); blob([[60, -40], [110, -70], [130, -50], [96, -30]], { wash: '#c8b8a0', washA: 1, w: 2, col: '#3a2a1a' }); ell(116, -60, 3, 3, { wash: '#1a0e06', washA: 1, line: false });
+    pencil([[-70, -30], [-110, -60 + wag]], { w: 6, col: '#c8b8a0', pass2: false }); for (const lx of [-50, -20, 30, 50]) pencil([[lx, -4], [lx, 20]], { w: 6, col: '#c8b8a0', pass2: false }); pop(); }
+
   WORLD.anna = (t, u, cat) => {
-    lay(4, () => { hall(t); });
-    lay(1.6, () => { baron(860, 1260, 0.85, 0); baron(980, 1300, 0.9, 1); king(250, 1300, t); });
+    lay(4, () => { hall(t); tapestry(560, 470, 260, 380, t); floorTiles(); candelabra(470, 1240, 0.9, t); candelabra(1000, 1260, 0.9, t); });
+    lay(1.6, () => { feastTable(t); human(720, 1250, 0.9, t, { body: '#3a2a4a', hat: 'hood', hatCol: '#2a1a2a', long: 1, face: 'calm', armR: 'hold', prop: 'scroll', look: -0.6, seed: 101 }); baron(860, 1260, 0.85, 0); baron(980, 1300, 0.9, 1); king(250, 1300, t); hound(120, 1420, t); });
     lay(1, () => { rect(-200, 1180, 1500, 60, { wash: '#6a4428', washA: 1, w: 2.6, col: '#2a1408' }); cat(); charter(t); });
   };
   DIR.anna = {

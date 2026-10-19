@@ -34,6 +34,18 @@
     // корни и подземные трубы наверху (город над нами)
     for (let k = 0; k < 6; k++) { const x = 120 + k * 170 + Math.sin(k * 4) * 40; pencil([[x, 340], [x + 14, 420], [x - 10, 500], [x + 6, 560]], { w: 2, col: '#4a3420', a: 0.5, pass2: false }); }
     rect(-100, 430, 1300, 34, { wash: '#6a6a6e', washA: 0.9, w: 2, col: '#2a2a2e' }); for (let x = -60; x < 1200; x += 140) rect(x, 424, 18, 46, { wash: '#5a5a5e', washA: 1, w: 1.6, col: '#2a2a2e' });
+    // фундаменты домов, подвал с бочками, канализация, кабели — город над нами
+    for (const [x, w] of [[-60, 260], [300, 200], [620, 300]]) { rect(x, 300, w, 120, { wash: '#a85a3a', washA: 1, w: 2, col: '#3a1a0a', key: 7280 + x }); for (let yy = 306; yy < 420; yy += 14) for (let xx = x + ((yy / 14) % 2) * 14; xx < x + w; xx += 28) rect(xx, yy, 26, 12, { wash: '#b8664a', washA: 0.9, line: false }); }
+    push(380, 360, 1); rect(-90, -40, 180, 80, { wash: '#2a1a10', washA: 1, w: 2, col: '#140a04' }); for (const bx of [-50, 0, 50]) { ell(bx, 14, 22, 26, { wash: '#7a4a24', washA: 1, w: 1.6, col: '#2a1608' }); pencil([[bx - 22, 6], [bx + 22, 6]], { w: 3, col: '#4a4a4a', pass2: false }); } glow(0, -10, 80, 'rgba(255,190,110,1)', 0.25); pop();
+    pencil([[-200, 480], [1300, 480]], { w: 16, col: '#4a5a5a' }); for (let x = -160; x < 1300; x += 180) rect(x, 468, 16, 26, { wash: '#3a4a4a', washA: 1, w: 1.4 });
+    const dr = (t * 1.2) % 1; ell(700, 492 + dr * 60, 4, 6, { wash: '#9ac8d8', washA: 1 - dr, line: false });
+    for (const [y, c] of [[530, '#3a3a3a'], [546, '#8a3a2a'], [560, '#2a4a8a']]) pencil([[-200, y], [1300, y + 8]], { w: 5, col: c, a: 0.8, pass2: false });
+    // окаменелости: нуммулиты-«монетки», морские ежи, раковины, зубы акул
+    const rr = rng(7290); for (let k = 0; k < 40; k++) { const x = -60 + rr() * 1200, y = 1260 + rr() * 700, kind = k % 4;
+      if (kind === 0) { ell(x, y, 9, 9, { wash: '#e8e2d0', washA: 1, w: 1.2, col: '#5a5a4a' }); pencil(ellPts(x, y, 5, 5, 0, 0, 12), { w: 1, col: '#7a7a6a', pass2: false }); }
+      else if (kind === 1) { ell(x, y, 14, 10, { wash: '#d8c8a8', washA: 1, w: 1.2, col: '#5a4a3a' }); for (let q = 0; q < 5; q++) { const a = q / 5 * 6.283; pencil([[x, y], [x + Math.cos(a) * 12, y + Math.sin(a) * 8]], { w: 1, col: '#8a7a5a', pass2: false }); } }
+      else if (kind === 2) { blob([[x - 14, y + 6], [x - 10, y - 8], [x, y - 12], [x + 10, y - 8], [x + 14, y + 6]], { wash: '#efe4d0', washA: 1, w: 1.2, col: '#6a5a4a' }); for (let q = -2; q <= 2; q++) pencil([[x + q * 5, y + 6], [x + q * 3, y - 8]], { w: 1, col: '#8a7a6a', pass2: false }); }
+      else { poly([[x - 7, y + 6], [x + 7, y + 6], [x, y - 14]], { wash: '#f4efe2', washA: 1, w: 1.2, col: '#4a4a40' }); if (Math.sin(t * 3 + k) > 0.9) glow(x, y - 4, 20, 'rgba(255,255,230,1)', 0.7); } }
     for (const [s_, x, y] of STRATA.map(q => [q[2], 860, q[0] + 70])) if (y > 500) txt(s_, x, y, 34, { font: 'Hand', col: '#2a1e14', a: 0.75, rot: -0.03 });
   }
   function tunnelBand(t) {                                           // наклонный тоннель: тюбинги, свод, лампы
@@ -48,6 +60,9 @@
     for (let x = -260; x < 1400; x += 190) { const by = Ly(x) - 230; pencil([[x, by], [x, by - 150]], { w: 5, col: '#c49a5a', pass2: false }); ell(x, by - 150, 9, 6, { wash: '#a07a40', washA: 1, w: 1.4 });
       const f = flick(t, x) * 0.02 + 0.98; glow(x, by - 180, 150, 'rgba(255,214,150,1)', 0.55 * f); const gl = ell(x, by - 180, 26, 34, { wash: '#fff2d2', washA: 0.95, w: 2, col: '#8a6a3a' }); shadeG(gl.path, x + 20, 0, x - 10, 0, '#e8c088', 0.6);
       ell(x, by - 214, 14, 6, { wash: '#a07a40', washA: 1, w: 1.4 }); }
+    // лайтбоксы с рекламой между лампами
+    const AD = [['ТОМ-ТУР', 'история за минуту', '#2a4a8a'], ['КАШТАН', 'кофейня', '#8a3a2a'], ['ВИСТАВКА', 'мамонти', '#3a6a3a'], ['КАВА', '24/7', '#6a3a7a'], ['ТЕАТР', 'прем\'єра', '#8a6a1a'], ['МУЗЕЙ', 'Лавра', '#2a6a7a'], ['ЧИТАЙ', 'книги', '#7a2a4a'], ['ВОДА', 'Дніпро', '#2a5a8a'], ['КІНО', 'сьогодні', '#5a2a2a']];
+    AD.forEach(([a, b2, c], i) => { const x = -170 + i * 190, y = Ly(x) - 380; push(x, y, 1, Math.atan(SL)); rect(-60, -40, 120, 80, { wash: '#f4ecd8', washA: 1, w: 2, col: '#2a2420' }); rect(-54, -34, 108, 68, { wash: c, washA: 1, line: false }); txt(a, 0, -8, 24, { font: 'Osw', col: '#fff4e0' }); txt(b2, 0, 18, 15, { font: 'Hand', col: '#ffe8b8' }); glow(0, 0, 90, 'rgba(255,240,210,1)', 0.18); pop(); });
     // дальний эскалатор (вверх): тёмная лента и поручень
     pencil([[-300, Ly(-300) - 240], [1400, Ly(1400) - 240]], { w: 12, col: '#16100c', pass2: false }); pencil([[-300, Ly(-300) - 300], [1400, Ly(1400) - 300]], { w: 8, col: '#0e0a08', pass2: false });
   }
@@ -86,7 +101,11 @@
   WORLD.metro = (t, u, cat) => {
     lay(1.25, () => { earth(t); fossilSpot(t); });
     lay(1.08, () => { tunnelBand(t); });
-    lay(1, () => { rider(170, 1.0, t, 0); rider(330, 1.02, t, 1); cat(); rider(930, 1.08, t, 2); stepsNear(t); });
+    lay(1, () => { const rh = (x, s_, o) => human(x, Ly(x), s_, t, o);
+      rh(40, 0.95, { body: '#3a4a6a', legs: '#2a2a3a', hair: '#5a3a1a', face: 'calm', armR: 'hold', prop: 'phone', look: 0.5, seed: 61 });
+      rh(200, 1.0, { body: '#8a3a3a', legs: '#2a2a2a', hat: 'cap', hatCol: '#2a2a2a', face: t > EV.metro_shark ? 'shock' : 'calm', armR: t > EV.metro_shark ? 'point' : 'down', look: -0.4, seed: 62 });
+      rh(340, 1.02, { body: '#c8b890', legs: '#3a3a4a', hair: '#c89a5a', hat: 'scarf', hatCol: '#3a7a5a', face: t > EV.metro_shark ? 'shock' : 'smile', armL: t > EV.metro_shark ? 'up' : 'down', seed: 63 });
+      cat(); rh(940, 1.08, { body: '#2a3a2a', legs: '#2a2a2a', hair: '#2a1a10', beard: 'short', face: 'calm', armR: 'hold', prop: 'phone', look: -0.5, flip: -1, seed: 64 }); stepsNear(t); });
   };
   DIR.metro = {
     outfit: 'hoodieK', light: { side: 1, rim: '#ffd8a0' }, grade: ['#3a4a6a', 0.14],

@@ -81,10 +81,37 @@
       push(x, y, k); ell(0, 0, 40, 40, { wash: top ? '#f6ecd6' : K.amber, washA: 0.95, w: 3, col: '#1a120c' }); txt(String(i + 1), 0, 2, 50, { font: 'Osw', col: '#1a120c' }); pop(); }
   }
 
+  function cloudC(x, y, w, h, seed) { const r = rng(seed); for (let k = 0; k < 6; k++) ell(x + (k - 2.5) * w / 6 + (r() - 0.5) * 20, y - Math.sin(k / 5 * Math.PI) * h * 0.5, w * 0.17 + r() * 16, h * 0.42, { wash: '#fbf8f0', washA: 0.8, w: 1.2, col: '#a8a8a0', a: 0.3 }); }
+  function townhouse(x, base, w, h, c, seed, t) {                    // доходный дом 1900-х: карниз, окна с наличниками, балкон, крыша с трубами
+    const r = rng(seed); rect(x, base - h, w, h, { wash: c, washA: 1, w: 2, col: '#3a3830', key: 7480 + seed }); rect(x - 8, base - h - 16, w + 16, 16, { wash: lerpC(c, '#ffffff', 0.3), washA: 1, w: 1.6, col: '#3a3830' });
+    poly([[x - 4, base - h - 16], [x + w / 2, base - h - 60], [x + w + 4, base - h - 16]], { wash: '#6a6e6a', washA: 1, w: 1.8, col: '#2a2a2a' }); rect(x + w * 0.7, base - h - 70, 14, 40, { wash: '#8a5a4a', washA: 1, w: 1.4 });
+    const nf = Math.floor(h / 90), nw = Math.max(2, Math.floor(w / 60)); for (let i = 0; i < nf; i++) for (let j = 0; j < nw; j++) { const wx = x + 16 + j * (w - 32) / nw, wy = base - h + 24 + i * 90, ww = (w - 32) / nw - 18;
+      rect(wx, wy, ww, 54, { wash: (i + j + seed) % 4 ? '#5a6a7a' : '#ffd890', washA: 1, w: 1.4, col: '#2a2a2a' }); pencil([[wx - 4, wy - 4], [wx + ww + 4, wy - 4]], { w: 3, col: lerpC(c, '#ffffff', 0.4), pass2: false }); }
+    if (h > 200) { rect(x + w * 0.3, base - h + 108, w * 0.4, 8, { wash: '#4a4a4a', washA: 1, w: 1 }); for (let q = 0; q < 6; q++) pencil([[x + w * 0.3 + q * w * 0.08, base - h + 108], [x + w * 0.3 + q * w * 0.08, base - h + 90]], { w: 1.6, col: '#4a4a4a', pass2: false }); }
+  }
+  function cab(x, y, t) {                                            // извозчик на Банковой
+    push(x, y, 0.8); const ph = t * 7; for (let k = 0; k < 4; k++) { const lx = 60 + k * 26, sw = Math.sin(ph + k * 1.5) * 12; pencil([[lx, -80], [lx + sw, -10]], { w: 8, col: '#3a2a1a' }); }
+    blob([[40, -130], [160, -130], [170, -80], [40, -80]], { wash: '#4a3020', washA: 1, w: 2, col: '#1a0e06' }); blob([[160, -130], [200, -180], [220, -160], [180, -110]], { wash: '#4a3020', washA: 1, w: 2, col: '#1a0e06' });
+    blob([[-120, -60], [20, -60], [30, -130], [-100, -150]], { wash: '#1e2a3a', washA: 1, w: 2, col: '#0a0e14' }); pencil(ellPts(-60, -30, 30, 30, 0, 0.05, 24), { w: 4, col: '#2a2a2a', pass2: false }); pencil(ellPts(10, -30, 26, 26, 0, 0.05, 24), { w: 4, col: '#2a2a2a', pass2: false });
+    human(-10, -140, 0.4, t, { body: '#2a2a3a', hat: 'cap', hatCol: '#2a2a2a', beard: 'long', hair: '#3a2a1a', armR: 'hold', seed: 81 }); pop();
+  }
+  function slopeTrees(t) { for (const [x, y, s_] of [[620, 1300, 0.9], [700, 1380, 0.7], [520, 1200, 0.8]]) { push(x, y, s_); pencil([[0, 0], [4, -120]], { w: 12, col: '#4a3222' }); for (let k = 0; k < 7; k++) { const a = -Math.PI * (0.1 + 0.8 * k / 6); blob(ellPts(Math.cos(a) * 60, -150 + Math.sin(a) * 50, 46, 38, k, 0, 10), { wash: ['#5a7a3a', '#6a8a42', '#4a6a30'][k % 3], washA: 0.96, w: 1.4, col: '#1e3414' }); } pop(); } }
+
   WORLD.chimera = (t, u, cat) => {
-    lay(30, () => { vgrad(-600, 1500, ['#c8ccd0', '#e6e2d8', '#d8d4c4']); glow(800, 300, 500, 'rgba(255,246,220,1)', 0.4); });
-    lay(10, () => { for (let k = 0; k < 9; k++) { const x = 820 + k * 90, h = 160 + (k * 53) % 130; rect(x, 1260 - h, 80, h + 200, { wash: '#b0aca0', washA: 1, w: 1.4, col: '#4a4840', a: 0.5 }); } haze('#e0dccc', 0.3); });
-    lay(1, () => { house(t); slope(t); if (t > EV.chim_top) counter(t, -1); if (t > EV.chim_down) counter(t, 1); cat(); });
+    lay(30, () => { vgrad(-600, 1500, ['#b8c8d8', '#e6e2d8', '#e8dcc4']); glow(800, 300, 500, 'rgba(255,246,220,1)', 0.4); cloudC(300, 360, 420, 110, 7491); cloudC(900, 480, 300, 80, 7492);
+      for (let k = 0; k < 4; k++) { const x = 200 + k * 130 + t * 25, y = 520 + Math.sin(t * 2 + k) * 20, f = Math.sin(t * 8 + k) * 8; pencil([[x - 14, y - f], [x, y], [x + 14, y - f]], { w: 2.4, col: '#3a3a3a', pass2: false }); } });
+    lay(10, () => { for (let k = 0; k < 9; k++) { const x = 820 + k * 90, h = 160 + (k * 53) % 130; rect(x, 1260 - h, 80, h + 200, { wash: '#b0aca0', washA: 1, w: 1.4, col: '#4a4840', a: 0.5 }); for (let q = 0; q < 3; q++) rect(x + 14 + q * 20, 1280 - h, 12, 18, { wash: '#7a8a9a', washA: 0.8, line: false }); }
+      sil([[900, 1100], [905, 900], [915, 900], [920, 1100]], '#9a9a90', 1); haze('#e0dccc', 0.28); });
+    lay(2.2, () => { townhouse(-380, GT, 220, 340, '#d8c8a8', 1, t); townhouse(-150, GT, 200, 300, '#c8b0a0', 2, t); townhouse(860, GB, 240, 520, '#d0c0a0', 3, t); townhouse(1100, GB, 200, 440, '#bca890', 4, t); });
+    lay(1, () => { house(t); slope(t);
+      { const sx0 = HX0 + 170, sy0 = GT + 80, sx1 = HX1 - 30, sy1 = GB - 30, n = 16; for (let i = 0; i < n; i++) { const u0 = i / n, x = lerp(sx0, sx1, u0), y = lerp(sy0, sy1, u0), dx = (sx1 - sx0) / n, dy = (sy1 - sy0) / n;
+        poly([[x - 40, y], [x + dx - 40, y], [x + dx - 40, y + dy], [x + dx + 40, y + dy], [x + 40, y], [x - 40, y]], { wash: '#b8b0a0', washA: 1, w: 1.4, col: '#4a4438' }); }
+        pencil([[sx0 + 40, sy0 - 50], [sx1 + 40, sy1 - 50]], { w: 3, col: '#3a3a3a', pass2: false }); for (let i = 0; i <= 8; i++) { const x = lerp(sx0 + 40, sx1 + 40, i / 8), y = lerp(sy0 - 50, sy1 - 50, i / 8); pencil([[x, y], [x, y + 50]], { w: 2.4, col: '#3a3a3a', pass2: false }); } }
+      { const r = rng(7495); for (let k = 0; k < 14; k++) { const u = r(), x = lerp(HX0 + 200, HX1 - 80, u) + (r() - 0.5) * 120, y = lerp(GT + 120, GB - 40, u) + 40 + r() * 60; blob(ellPts(x, y, 26 + r() * 18, 16 + r() * 8, 0, 0, 10), { wash: ['#5a7a3a', '#6a8a42'][k % 2], washA: 1, w: 1.4, col: '#1e3414' }); if (k % 3 === 0) ell(x + 6, y - 8, 4, 4, { wash: '#f0d040', washA: 1, line: false }); } }
+      slopeTrees(t); cab(Math.min(-60, -260 + (t - S0.chimera) * 70), GT - 14, t);
+      human(-40, GT - 10, 0.55, t, { body: '#4a3a5a', hat: 'merchant', hatCol: '#2a2a2a', face: 'shock', look: 0.8, armR: 'point', seed: 82 }); human(20, GT - 10, 0.52, t, { body: '#c8a8a0', hat: 'scarf', hatCol: '#8a2a3a', face: 'smile', seed: 83, long: 1 });
+      human(820, GB, 0.62, t, { body: '#3a4a3a', hat: 'cap', hatCol: '#3a3a3a', face: t > EV.chim_down ? 'shock' : 'calm', look: -0.8, armL: t > EV.chim_down ? 'up' : 'down', seed: 84 });
+      if (t > EV.chim_top) counter(t, -1); if (t > EV.chim_down) counter(t, 1); cat(); });
   };
   DIR.chimera = {
     outfit: 'architect', light: { side: -1, rim: '#fff4dc' }, grade: ['#6a7a8a', 0.12],

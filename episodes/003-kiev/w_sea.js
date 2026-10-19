@@ -36,11 +36,25 @@
     txt('здесь будет Киев', 560, y0 + 70, 46, { font: 'Hand', col: '#f6ecd6' }); ctx.restore();
   }
 
+  function reef(x, y, s, t, seed) {                                  // риф: камень с губками, кораллами, ежами, анемонами
+    const r = rng(seed); push(x, y, s); const rk = blob([[-200, 0], [-180, -120], [-90, -200], [40, -190], [160, -130], [210, 0]], { wash: '#6a7a6a', washA: 1, w: 2.4, col: '#1e2a24', key: seed }); hatch(rk.path, rk.bb, { gap: 8, a: 0.2, col: '#1e2a24', ang: 0.8, key: seed + 1 });
+    for (let k = 0; k < 6; k++) { const bx = -150 + k * 60, by = -140 - Math.sin(k) * 40, c = ['#e8805a', '#d8b040', '#c85a8a', '#6ab0a0', '#e8a060', '#a86ad8'][k]; for (let q = 0; q < 4; q++) { const a = -Math.PI / 2 + (q - 1.5) * 0.4 + Math.sin(t * 1.5 + k + q) * 0.08; pencil([[bx, by], [bx + Math.cos(a) * 50, by + Math.sin(a) * 50]], { w: 8, col: c, pass2: false }); ell(bx + Math.cos(a) * 52, by + Math.sin(a) * 52, 7, 7, { wash: c, washA: 1, line: false }); } }
+    for (let k = 0; k < 4; k++) { const ux = -120 + k * 80, uy = -40 - (k % 2) * 40; ell(ux, uy, 18, 14, { wash: '#3a2a4a', washA: 1, w: 1.4, col: '#1a0e1a' }); for (let q = 0; q < 12; q++) { const a = q / 12 * 6.283; pencil([[ux + Math.cos(a) * 14, uy + Math.sin(a) * 10], [ux + Math.cos(a) * 30, uy + Math.sin(a) * 24]], { w: 1.6, col: '#3a2a4a', pass2: false }); } }
+    for (let k = 0; k < 3; k++) { const ax = 120 + k * 40, ay = -120 + k * 30; for (let q = 0; q < 9; q++) { const a = -Math.PI * (q / 8) ; pencil([[ax, ay], [ax + Math.cos(a) * 28 + Math.sin(t * 2 + q) * 4, ay + Math.sin(a) * 28]], { w: 3, col: '#f0a0b0', pass2: false }); } }
+    pop();
+  }
+  function turtle(t) { const q = ((t - S0.sea) * 0.15) % 1, x = lerp(1100, -200, q), y = 820 + Math.sin(t) * 20; push(x, y, 0.55, -0.1); const f = Math.sin(t * 3) * 0.4;
+    for (const [dx, dy, sd] of [[-60, 20, -1], [60, 24, 1]]) { push(dx, dy, 1, sd * f); blob([[0, 0], [-sd * -10, 40], [-sd * -40, 70], [-sd * -10, 30]], { wash: '#6a8a5a', washA: 1, w: 1.6, col: '#2a3a1e' }); pop(); }
+    const sh = ell(0, 0, 100, 60, { wash: '#7a6a3a', washA: 1, w: 2.2, col: '#2a2010' }); for (let k = 0; k < 5; k++) pencil(ellPts(-50 + k * 25, -6, 16, 14, 0, 0.1, 10), { w: 1.6, col: '#3a3018', pass2: false });
+    ell(-118, -6, 28, 22, { wash: '#6a8a5a', washA: 1, w: 1.8, col: '#2a3a1e' }); ell(-126, -12, 3, 3, { wash: '#0a0a0a', washA: 1, line: false }); pop(); }
+  function starfish(x, y, s, c) { push(x, y, s); const P = []; for (let k = 0; k <= 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, r = k % 2 ? 12 : 34; P.push([Math.cos(a) * r, Math.sin(a) * r]); } poly(P, { wash: c, washA: 1, w: 1.6, col: '#5a2a1a' }); pop(); }
+  function colorFish(t) { for (let k = 0; k < 7; k++) { const dir = k % 2 ? 1 : -1, x = ((t * 60 * (0.6 + k * 0.1) * dir + k * 233) % 1500 + 1500) % 1500 - 200, y = 700 + k * 110; push(x, y, 0.6 + (k % 3) * 0.2, 0, dir); const c = ['#e8a030', '#3ab0c8', '#e86a5a', '#f0d040', '#8a6ad8'][k % 5];
+    blob([[-40, 0], [-10, -20], [30, -14], [44, 0], [30, 14], [-10, 20]], { wash: c, washA: 1, w: 1.6, col: '#1e2a2a' }); poly([[-40, 0], [-62, -18], [-58, 0], [-62, 18]], { wash: c, washA: 1, w: 1.4, col: '#1e2a2a' }); for (const xx of [-10, 10]) pencil([[xx, -18], [xx, 18]], { w: 3, col: '#ffffff', a: 0.6, pass2: false }); ell(30, -4, 3, 3, { wash: '#0a0a0a', washA: 1, line: false }); pop(); } }
   WORLD.sea = (t, u, cat) => {
     lay(30, () => { vgrad(-200, 2200, ['#7fc8d8', '#2e7a92', '#14405a']); });
     lay(10, () => { surface(t); const kx = 1300 - clamp((t - S0.sea) / (EV.sea_kin - S0.sea)) * 1700; if (t < EV.sea_bite) shark(kx, 900, 0.45, t, { flip: -1, a: 0.7, col: '#4e6e7e', colD: '#1e3440', colL: '#a8c8d0' }); haze('#2e7a92', 0.25); });
-    lay(4, () => { school(300, 760, t, 14, 8030, 1); ray(840, 1060, 0.9, t, 1); aturia(180, 1150, 0.8, t, 2); });
-    lay(1.3, () => { seabed(t); school(820, 1300, t, 8, 8031, 1.3); });
+    lay(4, () => { turtle(t); school(300, 760, t, 14, 8030, 1); ray(840, 1060, 0.9, t, 1); aturia(180, 1150, 0.8, t, 2); reef(120, 1430, 0.9, t, 8040); reef(1000, 1440, 0.8, t, 8050); colorFish(t); });
+    lay(1.3, () => { seabed(t); starfish(240, 1600, 1, '#e8803a'); starfish(900, 1680, 0.8, '#d8504a'); starfish(560, 1760, 0.9, '#f0b040'); school(820, 1300, t, 8, 8031, 1.3); });
     lay(1, () => { cat(); motes(30, [0, 400, W, 1800], 'rgba(230,250,255,1)', t, 8032, { sp: -40, sz: 3, a: 0.5, wob: 10 }); });
     if (t > EV.sea_bite - 0.05) lay(0.7, () => { const q = clamp((t - EV.sea_bite) / (S1.sea - EV.sea_bite + 0.1)), s = lerp(0.6, 2.6, Math.pow(q, 1.8));
       shark(lerp(-200, 380, sm(q)), lerp(1000, 900, q), s, t, { jaw: Math.min(1, q * 2.5), glowEye: 0, sp: 6 }); });

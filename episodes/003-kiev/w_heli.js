@@ -31,13 +31,15 @@
     rect(-12, -400, 24, 30, { wash: G, washA: 1, w: 1.4, col: GD }); ell(0, -408, 12, 10, { wash: Au, washA: 1, w: 1.4 }); line([[0, -416], [0, -470]], { w: 3.4, col: Au }); line([[-12, -452], [12, -452]], { w: 3, col: Au });
     pop();
   }
-  function chestnut(x, y, h, t, seed) {                              // каштан в цвету: крона-шапка, белые «свечи»
-    const r = rng(seed); pencil([[x, y], [x - 6, y - h * 0.3], [x + 4, y - h * 0.55]], { w: 22, col: '#4a3424' }); pencil([[x, y - h * 0.4], [x + 60, y - h * 0.62]], { w: 10, col: '#4a3424' });
-    for (let k = 0; k < 9; k++) { const a = -Math.PI * (0.1 + 0.8 * k / 8), rr = h * 0.42; const cx = x + Math.cos(a) * rr * 1.1, cy = y - h * 0.62 + Math.sin(a) * rr * 0.7;
-      const b = blob(ellPts(cx, cy, h * 0.24, h * 0.2, r(), 0, 10).map(([px, py]) => [px + (r() - 0.5) * 16, py + (r() - 0.5) * 16]), { wash: k % 2 ? '#4f7a3a' : '#3e6a30', washA: 0.97, w: 1.8, col: '#1e3414', key: seed + k });
-      hatch(b.path, b.bb, { gap: 7, a: 0.2, col: '#1e3414', ang: 0.9, key: seed + 20 + k, w: 1.2 }); }
-    for (let k = 0; k < 16; k++) { const cx = x + (r() - 0.5) * h * 1.0, cy = y - h * (0.5 + r() * 0.5), sw = Math.sin(t * 1.6 + k) * 3;
-      poly([[cx - 7, cy + 4], [cx + 7, cy + 4], [cx + sw, cy - 26]], { wash: '#fbf6ea', washA: 1, w: 1.2, col: '#8a7a6a', a: 0.6 }); ell(cx + sw * 0.3, cy - 10, 2, 2, { wash: '#e07a6a', washA: 0.8, line: false }); }
+  function chestnut(x, y, h, t, seed) {                              // каштан в цвету: ствол с ветками, много гроздьев листвы, белые «свечи» соцветий
+    const r = rng(seed); const tr = shape(tubeP([[x, y], [x - 8, y - h * 0.3], [x + 6, y - h * 0.55]], 46, 24), { wash: '#5a3e2a', washA: 1, w: 2.4, col: '#1e120a' }); fstr(tr.path, tr.bb, 20, 1.57, 60, '#2a1a0e', 0.5, seed + 90);
+    for (const [dx, dy] of [[-140, -0.7], [150, -0.72], [-60, -0.85], [80, -0.9]]) pencil([[x, y - h * 0.5], [x + dx * 0.6, y + h * dy * 0.95], [x + dx, y + h * dy]], { w: 10, col: '#4a3222' });
+    for (let k = 0; k < 22; k++) { const a = -Math.PI * (0.05 + 0.9 * r()), rr = h * (0.15 + 0.32 * r()); const cx = x + Math.cos(a) * rr * 1.35, cy = y - h * 0.62 + Math.sin(a) * rr * 0.75, R = h * (0.09 + 0.06 * r());
+      const c = ['#3e6a30', '#4f7a3a', '#5e8a42', '#355e2a'][k % 4]; const b = blob(ellPts(cx, cy, R, R * 0.8, r(), 0, 12).map(([px, py], i) => [px + Math.sin(i * 2.1 + k) * R * 0.18, py + Math.cos(i * 1.7 + k) * R * 0.18]), { wash: c, washA: 0.97, w: 1.6, col: '#1e3414', key: seed + k });
+      for (let q = 0; q < 5; q++) { const la = -1.4 + q * 0.7; pencil([[cx, cy + R * 0.2], [cx + Math.cos(la) * R * 0.7, cy + Math.sin(la) * R * 0.6]], { w: 1.4, col: '#2a4a1e', a: 0.6, pass2: false }); }
+      shadeG(b.path, cx, cy - R, cx, cy + R, '#9ac06a', 0.25); }
+    for (let k = 0; k < 26; k++) { const cx = x + (r() - 0.5) * h * 1.05, cy = y - h * (0.42 + r() * 0.5), sw = Math.sin(t * 1.6 + k) * 2;
+      for (let q = 0; q < 6; q++) { const yy = cy - q * 5, ww = 7 - q; ell(cx + sw * q / 6, yy, ww, 3.4, { wash: q % 2 ? '#fdf8ee' : '#f4ecdc', washA: 1, line: false }); } ell(cx, cy - 12, 1.8, 1.8, { wash: '#e0607a', washA: 0.9, line: false }); }
   }
   function shed(t) {                                                 // сарай-мастерская с открытыми воротами
     const b = shape([[-140, 1330], [-140, 900], [80, 780], [300, 900], [300, 1330]], { wash: '#9a7650', washA: 1, w: 3, col: '#2a1a0c', key: 7300 });
@@ -89,14 +91,35 @@
     scr(() => { ringFX(cx, cy, R, t, ['#e8a33c', '#fff1c8'], k * 0.7); push(cx, cy + R + 44, k); txt('США · 1939', 0, 0, 46, { font: 'Osw', col: '#fff4d8' }); pop(); });
   }
 
+  function cloudH(x, y, w, h, seed) { const r = rng(seed); for (let k = 0; k < 6; k++) ell(x + (k - 2.5) * w / 6 + (r() - 0.5) * 20, y - Math.sin(k / 5 * Math.PI) * h * 0.5, w * 0.17 + r() * 16, h * 0.42, { wash: '#fff8ea', washA: 0.85, w: 1.2, col: '#b8a888', a: 0.3 }); }
+  function shedInside(t) {                                           // в воротах сарая: верстак, инструменты на стене, чертежи, лампа
+    push(40, 1000, 1); ctx.save(); ctx.beginPath(); ctx.rect(-100, 0, 200, 330); ctx.clip();
+    for (let k = 0; k < 6; k++) { const x = -80 + k * 30; pencil([[x, 40], [x, 60 + (k % 3) * 20]], { w: 3, col: '#a8a8a8', pass2: false }); }
+    pencil([[-70, 40], [-50, 90]], { w: 6, col: '#7a5a34' }); ell(-48, 96, 12, 8, { wash: '#8a8e92', washA: 1, w: 1.4 });
+    rect(10, 30, 70, 50, { wash: '#e8e0cc', washA: 1, w: 1.4, col: '#3a2a14' }); pencil([[20, 70], [40, 44], [60, 70]], { w: 1.6, col: '#2a4a8a', pass2: false }); ell(40, 44, 14, 3, { wash: 'rgba(0,0,0,0)', washA: 0, w: 1.4, col: '#2a4a8a' });
+    rect(-90, 200, 180, 16, { wash: '#7a5432', washA: 1, w: 1.6 }); for (const bx of [-60, 40]) rect(bx, 216, 10, 110, { wash: '#6a4426', washA: 1, w: 1.2 });
+    pencil([[0, 0], [0, 120]], { w: 1.4, col: '#2a2a2a', pass2: false }); ell(0, 128, 14, 10, { wash: '#ffe6a8', washA: 1, w: 1.4 }); glow(0, 140, 120, 'rgba(255,214,140,1)', 0.45 + Math.sin(t * 9) * 0.03);
+    ctx.restore(); pop();
+  }
+  function yardProps(t) {                                            // ящик «ANZANI», бочка с бензином, велосипед, куры, бельё, ребята за забором
+    push(640, 1440, 1); const cr = rect(-90, -110, 180, 110, { wash: '#b8905a', washA: 1, w: 2.4, col: '#2a1a0a', key: 7350 }); fstr(cr.path, cr.bb, 14, 0.02, 160, '#6a4a24', 0.35, 7351); for (const y of [-80, -40]) pencil([[-90, y], [90, y]], { w: 2, col: '#5a3a1a', pass2: false });
+    txt('ANZANI', 0, -70, 30, { font: 'Osw', col: '#2a1a0a' }); txt('PARIS · 25 HP', 0, -32, 20, { font: 'Osw', col: '#5a2a1a' }); pop();
+    push(-180, 1450, 1); const br = blob([[-40, 0], [-44, -90], [-30, -110], [30, -110], [44, -90], [40, 0]], { wash: '#3a5a3a', washA: 1, w: 2.2, col: '#1a2a1a' }); for (const y of [-20, -88]) pencil([[-42, y], [42, y]], { w: 4, col: '#2a2a2a', pass2: false }); txt('БЕНЗИНЪ', 0, -56, 18, { font: 'Osw', col: '#e8e0c0' }); pop();
+    push(1000, 1420, 0.9); for (const wx of [-60, 60]) { pencil(ellPts(wx, 0, 44, 44, 0, 0.05, 30), { w: 3, col: '#2a2a2a', pass2: false }); for (let q = 0; q < 6; q++) { const a = q / 6 * 6.283; pencil([[wx, 0], [wx + Math.cos(a) * 44, Math.sin(a) * 44]], { w: 1, col: '#6a6a6a', pass2: false }); } }
+      pencil([[-60, 0], [0, -50], [60, 0], [-10, -6], [-60, 0]], { w: 4, col: '#2a2a2a', pass2: false }); pencil([[0, -50], [10, -80], [40, -84]], { w: 4, col: '#2a2a2a', pass2: false }); ell(-14, -54, 14, 4, { wash: '#4a2a1a', washA: 1, w: 1 }); pop();
+    for (let k = 0; k < 3; k++) { const x = 200 + k * 110 + Math.sin(t * 1.3 + k) * 20, y = 1520 + k * 30, pk = Math.max(0, Math.sin(t * 5 + k * 2)) * 10; push(x, y, 0.7, 0, k % 2 ? -1 : 1);
+      blob([[-30, 0], [-36, -30], [-10, -46], [20, -40], [34, -20], [24, 0]], { wash: k === 1 ? '#c87a3a' : '#f4ece0', washA: 1, w: 2, col: '#3a2a1a' }); ell(26, -48 + pk, 12, 12, { wash: k === 1 ? '#c87a3a' : '#f4ece0', washA: 1, w: 1.8, col: '#3a2a1a' });
+      poly([[36, -48 + pk], [48, -44 + pk], [36, -40 + pk]], { wash: '#e8a030', washA: 1, w: 1 }); blob([[22, -60 + pk], [26, -70 + pk], [32, -60 + pk]], { wash: '#c8241e', washA: 1, w: 1 }); ell(30, -50 + pk, 2, 2, { wash: '#1a0e06', washA: 1, line: false }); pencil([[-4, 0], [-4, 14]], { w: 2, col: '#c8901a', pass2: false }); pencil([[8, 0], [8, 14]], { w: 2, col: '#c8901a', pass2: false }); pop(); }
+    pencil([[320, 1060], [1180, 1020]], { w: 2, col: '#3a3a3a', pass2: false }); for (const [x, c, w] of [[420, '#f4f0e6', 60], [520, '#c8d8e8', 50], [620, '#e8c8c0', 70], [1040, '#f4f0e6', 56]]) { const y = 1056 - (x - 320) * 0.046, sw = Math.sin(t * 2 + x) * 4; poly([[x, y], [x + w, y - 2], [x + w + sw, y + 70], [x + sw, y + 74]], { wash: c, washA: 1, w: 1.6, col: '#5a5a5a' }); }
+  }
   WORLD.heli = (t, u, cat) => {
-    lay(30, () => { vgrad(-600, 1500, ['#e9d2a0', '#f4e3be', '#cfe0dc']); glow(900, 360, 420, 'rgba(255,236,190,1)', 0.5); });
+    lay(30, () => { vgrad(-600, 1500, ['#e9d2a0', '#f4e3be', '#cfe0dc']); glow(900, 360, 420, 'rgba(255,236,190,1)', 0.5); cloudH(200, 380, 420, 120, 7361); cloudH(860, 520, 320, 90, 7362); });
     lay(14, () => { const P = [[-400, 1000]]; for (let x = -400; x <= 1500; x += 50) P.push([x, 1000 - Math.sin(x * 0.004 + 1) * 120 - (x < 400 ? 100 : 0)]); P.push([1500, 1500], [-400, 1500]); shape(P, { wash: '#a8a07a', washA: 1, w: 1.6, col: '#4a4430', a: 0.5 });
       for (let k = 0; k < 14; k++) { const x = -200 + k * 120, y = 960 - Math.sin(x * 0.004 + 1) * 120 - (x < 400 ? 100 : 0); rect(x, y - 50, 70, 54, { wash: k % 3 ? '#e4d8c0' : '#d8c4a4', washA: 1, w: 1.2, col: '#5a4a38', a: 0.6 }); poly([[x - 6, y - 50], [x + 35, y - 84], [x + 76, y - 50]], { wash: k % 2 ? '#8a4a3a' : '#5a6a5a', washA: 1, w: 1.2, col: '#3a2a20', a: 0.6 }); }
       andrew(250, 830, 0.85); haze('#efe0c0', 0.28); });
     lay(4, () => { chestnut(-40, 1340, 760, t, 7330); chestnut(1160, 1340, 700, t, 7340); });
-    lay(1.6, () => { fence(); shed(t); });
-    lay(1, () => { ground(t); heli(HX, HY, 1.3, t); cat(); });
+    lay(1.6, () => { fence(); shed(t); shedInside(t); for (const [x, o] of [[560, { body: '#4a5a7a', hat: 'cap', hatCol: '#3a3a3a', face: 'shock', seed: 71 }], [650, { body: '#c8a878', hat: 'scarf', hatCol: '#d8504a', face: 'smile', armL: 'wave', seed: 72 }]]) { ctx.save(); ctx.beginPath(); ctx.rect(x - 90, 880, 180, 225); ctx.clip(); human(x, 1300, 0.78, t, o); ctx.restore(); } });
+    lay(1, () => { ground(t); yardProps(t); heli(HX, HY, 1.3, t); cat(); });
   };
   DIR.heli = {
     outfit: 'aviator', light: { side: 1, rim: '#ffe6b0' }, grade: ['#c08a4a', 0.14],

@@ -21,7 +21,7 @@
     for (const [x, y] of [[40, 900], [380, 845], [720, 880]]) { rect(x - 40, y - 160, 80, 160, { wash: '#9a7044', washA: 1, w: 2.2, col: '#2a1a0a' }); poly([[x - 52, y - 160], [x, y - 230], [x + 52, y - 160]], { wash: '#5a3e24', washA: 1, w: 2, col: '#2a1a0a' }); rect(x - 10, y - 130, 20, 26, { wash: '#2a1a0a', washA: 1, w: 1 }); }
     for (let k = 0; k < 3; k++) { const u = (t * 0.3 + k / 3) % 1; glow(260 + k * 140, 820 - u * 260, 30 + u * 60, 'rgba(160,150,140,1)', 0.35 * (1 - u), 'source-over'); }
   }
-  function water(t) { const p = poly([[-400, 1420], [1500, 1420], [1500, 2400], [-400, 2400]], { wash: '#3e6a7e', washA: 1, w: 2, col: '#1e3a4a', key: 7810 });
+  function water(t) { const p0 = 0; const p = poly([[-400, 1420], [1500, 1420], [1500, 2400], [-400, 2400]], { wash: '#3e6a7e', washA: 1, w: 2, col: '#1e3a4a', key: 7810 });
     for (let k = 0; k < 16; k++) { const y = 1450 + k * 34, x = ((t * 30 + k * 157) % 1600) - 200; pencil([[x, y], [x + 70, y - 3], [x + 140, y]], { w: 2.2, col: '#bcd8e2', a: 0.55, pass2: false }); } }
   function pier() { const d = rect(-300, 1380, 760, 40, { wash: '#8a6238', washA: 1, w: 2.4, col: '#2a1a0a', key: 7820 }); for (let x = -280; x < 460; x += 40) pencil([[x, 1380], [x, 1420]], { w: 1.4, col: '#4a2c14', pass2: false }); for (const x of [-200, 0, 200, 420]) rect(x, 1420, 22, 200, { wash: '#6a4424', washA: 1, w: 2, col: '#2a1a0a' }); }
   function boat(t) {                                                 // ладья с драконьим носом, тюки под рогожей, дружина внутри
@@ -61,14 +61,36 @@
   function sign(t) { if (t < EV.oleg_merch - 0.1) return; const k = popK(t, EV.oleg_merch, 0.35); push(470, 1080, k, -0.06); pencil([[0, 100], [0, 220]], { w: 8, col: '#5a3a1a' });
     rect(-150, -60, 300, 160, { wash: '#efe2c0', washA: 1, w: 2.6, col: '#3a2410' }); txt('ТОВАР', 0, -20, 40, { font: 'Osw', col: '#2a1a0a' }); txt('ИЗ ГРЕЦИИ', 0, 24, 34, { font: 'Osw', col: '#2a1a0a' }); txt('недорого!', 0, 66, 30, { font: 'Hand', col: '#a8241e' }); pop(); }
 
+  function cloudO(x, y, w, h, seed) { const r = rng(seed); for (let k = 0; k < 6; k++) ell(x + (k - 2.5) * w / 6 + (r() - 0.5) * 20, y - Math.sin(k / 5 * Math.PI) * h * 0.5, w * 0.17 + r() * 16, h * 0.42, { wash: '#fbf4e4', washA: 0.85, w: 1.2, col: '#b8a888', a: 0.3 }); }
+  function gulls(t) { for (let k = 0; k < 5; k++) { const x = 200 + k * 170 + Math.sin(t * 0.8 + k) * 60 + t * 20 % 200, y = 640 + Math.sin(t * 1.3 + k * 2) * 40 + k * 26, f = Math.sin(t * 8 + k) * 10; pencil([[x - 18, y - f], [x - 6, y - 2], [x, y], [x + 6, y - 2], [x + 18, y - f]], { w: 2.6, col: '#3a3a3a', pass2: false }); } }
+  function farBoats(t) { for (const [bx, s, c] of [[-120, 0.38, '#2a4a8a'], [980, 0.32, '#a8241e'], [1180, 0.3, '#d6a842']]) { const x = bx + Math.sin(t * 0.4 + bx) * 14; push(x, 1416, s); blob([[-150, 0], [150, 0], [180, -36], [-180, -36]], { wash: '#6a4424', washA: 1, w: 2.4, col: '#2a1608' }); pencil([[0, -36], [0, -300]], { w: 6, col: '#4a2c14' }); const sl = poly([[-110, -290], [110, -290], [120, -80], [-120, -80]], { wash: '#efe4cc', washA: 1, w: 2, col: '#3a2a14' }); ctx.save(); ctx.clip(sl.path); for (let q = -110; q < 120; q += 50) { ctx.fillStyle = c; ctx.globalAlpha = 0.85; ctx.fillRect(q, -300, 25, 230); } ctx.restore(); for (let q = 0; q < 6; q++) ell(-110 + q * 44, -18, 14, 14, { wash: c, washA: 1, w: 1.4 }); pop(); } }
+  function podol(t) {                                               // Подол у воды: избы, амбары, дымки, ворота
+    for (let k = 0; k < 9; k++) { const x = -160 + k * 150 + (k % 2) * 30, y = 1250 + (k % 3) * 18, w = 110 + (k % 3) * 20;
+      rect(x, y - 90, w, 90, { wash: k % 2 ? '#9a7044' : '#8a6238', washA: 1, w: 2, col: '#2a1a0a' }); for (let q = 0; q < 4; q++) pencil([[x, y - 90 + q * 22], [x + w, y - 90 + q * 22]], { w: 1.4, col: '#4a2c14', a: 0.6, pass2: false });
+      poly([[x - 10, y - 90], [x + w / 2, y - 150], [x + w + 10, y - 90]], { wash: '#c8a868', washA: 1, w: 2, col: '#3a2a14', shade: { gap: 5, a: 0.3, col: '#6a4a24', ang: 0.6 } }); rect(x + w / 2 - 12, y - 66, 24, 26, { wash: k % 3 ? '#2a1a0a' : '#ffd890', washA: 1, w: 1.4 });
+      if (k % 3 === 0) { const u = (t * 0.4 + k / 9) % 1; glow(x + w / 2, y - 170 - u * 160, 26 + u * 40, 'rgba(170,160,150,1)', 0.35 * (1 - u), 'source-over'); } }
+    rect(700, 1080, 120, 190, { wash: '#9a7044', washA: 1, w: 2.4, col: '#2a1a0a' }); blob([[720, 1270], [720, 1170], [760, 1140], [800, 1170], [800, 1270]], { wash: '#2a1a0a', washA: 1, w: 2 }); poly([[690, 1080], [760, 1010], [830, 1080]], { wash: '#6a4a2a', washA: 1, w: 2, col: '#2a1a0a' });
+  }
+  function cargo(t) {                                               // товар на причале: бочки, амфоры, меха, сундук
+    const barrel = (x, y, s) => { push(x, y, s); const b = blob([[-36, 0], [-42, -50], [-36, -100], [36, -100], [42, -50], [36, 0]], { wash: '#8a5a32', washA: 1, w: 2.4, col: '#2a1608' }); for (const yy of [-12, -50, -88]) pencil([[-40, yy], [40, yy]], { w: 5, col: '#4a4a4a', pass2: false }); fstr(b.path, b.bb, 10, 1.57, 30, '#4a2c14', 0.4, 7850 + x); pop(); };
+    const amph = (x, y, s, r) => { push(x, y, s, r); const a = blob([[-8, 0], [-34, -50], [-30, -100], [-14, -120], [14, -120], [30, -100], [34, -50], [8, 0]], { wash: '#c8784a', washA: 1, w: 2.2, col: '#4a1e0a' }); shadeG(a.path, 30, 0, -20, 0, '#6a2a10', 0.5); for (const sd of [-1, 1]) pencil([[sd * 14, -116], [sd * 34, -130], [sd * 30, -96]], { w: 5, col: '#c8784a', pass2: false }); rect(-12, -136, 24, 18, { wash: '#c8784a', washA: 1, w: 1.6, col: '#4a1e0a' }); pop(); };
+    barrel(-230, 1384, 1); barrel(-160, 1384, 0.9); barrel(-196, 1290, 0.85); amph(-90, 1384, 1, -0.1); amph(-50, 1384, 0.9, 0.15); amph(-70, 1300, 0.7, 1.4);
+    push(250, 1384, 1); const ch = rect(-80, -70, 160, 70, { wash: '#7a4a24', washA: 1, w: 2.4, col: '#2a1608' }); for (const x of [-60, 0, 60]) pencil([[x, -70], [x, 0]], { w: 5, col: '#4a4a4a', pass2: false }); blob([[-80, -70], [-70, -100], [70, -100], [80, -70]], { wash: '#8a5a32', washA: 1, w: 2.2, col: '#2a1608' }); ell(0, -50, 9, 11, { wash: '#d6a842', washA: 1, w: 1.4 });
+    for (let k = 0; k < 4; k++) { const f = blob([[-90 + k * 10, -100 - k * 18], [-40, -126 - k * 18], [40, -122 - k * 18], [90 - k * 10, -100 - k * 18]], { wash: ['#6a3a1a', '#3a2a1a', '#8a5a2a', '#d8c8a8'][k], washA: 1, w: 1.8, col: '#1a0e06' }); fstr(f.path, f.bb, 30, 0.2, 18, '#1a0e06', 0.4, 7860 + k, 2); }
+    txt('меха', 0, -180, 30, { font: 'Hand', col: '#2a1a0a', rot: -0.05 }); pop();
+  }
+
   WORLD.oleg = (t, u, cat) => {
-    lay(30, () => { vgrad(-600, 1500, ['#a8c8d8', '#efe6cc', '#e8d0a0']); glow(300, 600, 500, 'rgba(255,236,190,1)', 0.45); });
-    lay(6, () => { fortress(t); haze('#efe6cc', 0.2); });
-    lay(1.2, () => { water(t); pier(); });
-    lay(1, () => { boat(t); sign(t); const sur = t > EV.oleg_reveal ? 1 : 0;
-      person(20, 1390, 1.3, t, { col: '#6a2a3a', beard: '#5a3a1a', hat: 'fur', k: 1, flip: 1, smile: !sur });
-      person(150, 1395, 1.3, t, { col: '#2a4a3a', beard: '#3a2a1a', hat: 'fur', k: 2, flip: 1, smile: !sur });
-      person(340, 1390, 1.4, t, { col: '#8a6a3a', beard: '#c89a5a', hat: 'merchant', k: 3, flip: -1, smile: 1, bow: t < EV.oleg_reveal });
+    lay(30, () => { vgrad(-600, 1500, ['#98c0d8', '#efe6cc', '#f0d4a0']); glow(300, 600, 520, 'rgba(255,236,190,1)', 0.45); cloudO(260, 420, 420, 110, 7871); cloudO(900, 520, 300, 80, 7872); gulls(t); });
+    lay(6, () => { fortress(t); haze('#efe6cc', 0.16); });
+    lay(3, () => { podol(t); haze('#efe6cc', 0.08); });
+    lay(1.2, () => { water(t); farBoats(t); pier(); cargo(t);
+      for (let y = 1500; y < 1800; y += 16) { const w = Math.sin(y * 0.3 + t * 3) * 14; for (let x = 600; x < 980; x += 60) pencil([[x + w, y], [x + 30 + w, y]], { w: 5, col: (x / 60) % 2 ? '#a8241e' : '#efe4cc', a: 0.35 * (1 - (y - 1500) / 300), pass2: false }); pencil([[420 + w, y], [1200 + w, y]], { w: 2, col: '#2a1608', a: 0.12, pass2: false }); }
+      ctx.save(); ctx.globalAlpha = 0.25; for (let k = 0; k < 8; k++) pencil([[-200 + k * 60, 1440 + k * 4], [-160 + k * 60, 1440 + k * 4]], { w: 3, col: '#e8f2f4', pass2: false }); ctx.restore(); });
+    lay(1, () => { boat(t); sign(t); const sur = t > EV.oleg_reveal;
+      human(10, 1390, 1.0, t, { body: '#6a2a3a', trim: '#d6a842', belt: '#3a2010', legs: '#3a2a20', hair: '#5a3a1a', beard: 'long', hat: 'fur', hatCol: '#7a1a20', face: sur ? 'shock' : 'smile', armL: sur ? 'up' : 'down', armR: sur ? 'up' : 'hips', look: 0.6, seed: 51 });
+      human(140, 1395, 0.98, t, { body: '#2a4a3a', trim: '#c8a040', belt: '#3a2010', legs: '#2a2420', hair: '#2a1a10', beard: 'short', hat: 'fur', hatCol: '#3a5a2a', face: sur ? 'shock' : 'calm', armL: 'down', armR: sur ? 'up' : 'down', look: 0.7, seed: 52 });
+      human(360, 1390, 1.05, t, { body: '#8a6a3a', trim: '#2a4a8a', belt: '#4a2c14', legs: '#4a3a2a', hair: '#c89a5a', beard: 'long', hat: 'merchant', hatCol: '#2a4a8a', face: sur ? 'grin' : 'smile', armL: sur ? 'point' : 'hold', armR: sur ? 'up' : 'wave', look: -0.6, flip: -1, seed: 53 });
       cat(); });
   };
   DIR.oleg = {

@@ -60,9 +60,28 @@
       for (let i = 0; i < 16; i++) { const a = i / 16 * 6.283; pencil([[cx + Math.cos(a) * R * 0.6, cy + Math.sin(a) * R * 0.6 + q * 40], [cx + Math.cos(a) * R, cy + Math.sin(a) * R + q * 60]], { w: 4, col: c, a: 1 - q * 0.8, pass2: false }); glow(cx + Math.cos(a) * R, cy + Math.sin(a) * R + q * 60, 14, 'rgba(255,240,200,1)', (1 - q) * 0.8); } }
     const k = popK(t, EV.kyi_jub, 0.4); push(540, 760, k, 0.03); rect(-380, -60, 760, 120, { wash: '#a8241e', washA: 1, w: 3, col: '#4a0a08' }); txt('КИЕВУ — 1500 ЛЕТ!', 0, 4, 64, { font: 'Osw', col: '#ffd34a' }); pop(); }
 
+  function shelf(x, y, t) {                                          // стеллаж с папками «ДЕЛО», бюст-болванка, грамоты
+    rect(x, y, 300, 560, { wash: '#5a3a1e', washA: 1, w: 2.4, col: '#1e1008', key: 7940 }); for (let q = 1; q < 5; q++) pencil([[x, y + q * 112], [x + 300, y + q * 112]], { w: 8, col: '#3a2410', pass2: false });
+    const r = rng(7941); for (let row = 0; row < 4; row++) { let xx = x + 10; while (xx < x + 280) { const w = 18 + r() * 16, h = 70 + r() * 30, c = ['#d8c08a', '#a8241e', '#2a4a8a', '#c8a868', '#4a6a3a'][Math.floor(r() * 5)]; rect(xx, y + row * 112 + 108 - h, w, h, { wash: c, washA: 1, w: 1.2, col: '#2a1a0a' }); pencil([[xx + 4, y + row * 112 + 108 - h + 14], [xx + w - 4, y + row * 112 + 108 - h + 14]], { w: 1.4, col: '#f4ecd8', pass2: false }); xx += w + 3; if (r() < 0.12) xx += 30; } }
+    push(x + 230, y + 448, 1); blob([[-30, 0], [-34, -40], [-20, -70], [20, -70], [34, -40], [30, 0]], { wash: '#9a9a8a', washA: 1, w: 1.6, col: '#3a3a30' }); ell(0, -96, 24, 28, { wash: '#a8a898', washA: 1, w: 1.6, col: '#3a3a30' }); pop();
+  }
+  function wallMap(x, y) {                                           // карта-схема Киева с Днепром и мостами
+    rect(x, y, 300, 230, { wash: '#f0e6cc', washA: 1, w: 2.4, col: '#3a2a14', key: 7950 }); const r = pathOf([[x + 170, y], [x + 150, y + 60], [x + 180, y + 120], [x + 160, y + 230], [x + 210, y + 230], [x + 230, y + 120], [x + 200, y + 60], [x + 220, y]]); wash(r, '#7ab0c8', 1);
+    for (const yy of [y + 50, y + 110, y + 170]) pencil([[x + 140, yy], [x + 240, yy + 6]], { w: 3, col: '#5a5a5a', pass2: false }); for (let k = 0; k < 18; k++) { const xx = x + 20 + (k % 6) * 22, yy = y + 30 + Math.floor(k / 6) * 60; rect(xx, yy, 14, 10, { wash: '#c8a878', washA: 1, line: false }); }
+    txt('КИЕВ', x + 70, y + 210, 26, { font: 'Osw', col: '#a8241e' }); ell(x + 120, y + 100, 6, 6, { wash: '#a8241e', washA: 1, line: false });
+  }
+  function ficus(x, y, t) { push(x, y, 1); const pt = blob([[-50, 0], [-60, -90], [60, -90], [50, 0]], { wash: '#a8643a', washA: 1, w: 2, col: '#3a1a0a' }); for (let k = 0; k < 9; k++) { const a = -Math.PI * (0.1 + 0.8 * k / 8), r = 80 + (k % 3) * 40; pencil([[0, -90], [Math.cos(a) * r * 0.6, -90 + Math.sin(a) * r * 1.4]], { w: 3, col: '#3a5a2a', pass2: false }); ell(Math.cos(a) * r * 0.6, -90 + Math.sin(a) * r * 1.4, 26, 12, { wash: ['#3e7a3a', '#4f8a42'][k % 2], washA: 1, w: 1.4, col: '#1e3a14', rot: a }); } pop(); }
+  function wallClock(x, y, t) { ell(x, y, 50, 50, { wash: '#f4f0e6', washA: 1, w: 3, col: '#3a2a1a' }); for (let k = 0; k < 12; k++) { const a = k / 12 * 6.283; pencil([[x + Math.cos(a) * 40, y + Math.sin(a) * 40], [x + Math.cos(a) * 46, y + Math.sin(a) * 46]], { w: 2, pass2: false, gap: false }); } const m = t * 1.2, h = t * 0.1; pencil([[x, y], [x + Math.sin(m) * 38, y - Math.cos(m) * 38]], { w: 2.4, pass2: false, gap: false }); pencil([[x, y], [x + Math.sin(h) * 24, y - Math.cos(h) * 24]], { w: 4, pass2: false, gap: false }); }
+  function deskStuff(t) {                                            // пишущая машинка, настольная лампа, стакан чая в подстаканнике, флажок
+    push(-60, 1250, 1); const tw = blob([[-110, 0], [-100, -60], [100, -60], [110, 0]], { wash: '#3a4a3a', washA: 1, w: 2.4, col: '#1a2018' }); for (let q = 0; q < 3; q++) for (let k = 0; k < 7; k++) ell(-70 + k * 22 + q * 6, -14 - q * 14, 7, 5, { wash: '#e8e4d8', washA: 1, w: 1, col: '#2a2a2a' });
+    rect(-90, -110, 180, 50, { wash: '#f4f0e6', washA: 1, w: 1.6, col: '#5a5a5a' }); for (let q = 0; q < 3; q++) pencil([[-80, -100 + q * 12], [40 + q * 10, -100 + q * 12]], { w: 1.4, col: '#2a2a2a', pass2: false }); pop();
+    push(1080, 1250, 1); pencil([[0, 0], [-30, -160], [-90, -200]], { w: 7, col: '#2a2a2a', pass2: false }); blob([[-130, -210], [-60, -230], [-50, -180], [-120, -170]], { wash: '#3a6a3a', washA: 1, w: 2, col: '#1a2a1a' }); glow(-90, -160, 160, 'rgba(255,230,160,1)', 0.5); ell(0, 2, 40, 10, { wash: '#2a2a2a', washA: 1, w: 1.4 }); pop();
+    push(980, 1250, 1); rect(-18, -60, 36, 60, { wash: 'rgba(200,120,60,0.7)', washA: 1, w: 1.6, col: '#5a5a5a' }); const h2 = rect(-22, -40, 44, 40, { wash: '#b8bec4', washA: 1, w: 1.6, col: '#3a3a3a' }); metalG(h2.path, 6, -24, 30, '#ffffff', '#b8bec4', '#4a5058'); pencil([[22, -32], [36, -26], [22, -12]], { w: 3, col: '#8a8e92', pass2: false }); for (let k = 0; k < 2; k++) { const u = (t * 0.7 + k / 2) % 1; pencil([[0 + Math.sin(u * 8 + k) * 6, -70 - u * 60], [4 + Math.sin(u * 8 + k + 1) * 6, -90 - u * 60]], { w: 2, col: '#f4f0e6', a: 1 - u, pass2: false }); } pop();
+  }
+
   WORLD.kyi = (t, u, cat) => {
-    lay(3, () => { office(t); });
-    lay(1, () => { cat(); desk(t); });
+    lay(3, () => { office(t); shelf(1060, 380, t); wallMap(640, 880 - 0); wallClock(640, 480, t); ficus(-80, 1250, t); });
+    lay(1, () => { cat(); desk(t); deskStuff(t); });
     lay(0.9, () => { salute(t); });
   };
   DIR.kyi = {
