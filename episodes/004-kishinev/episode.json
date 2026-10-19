@@ -11,14 +11,14 @@
   "props.js",
   "w_hook.js",
   "w_sea.js",
-  "w_quarry.js",
-  "w_cellar.js",
-  "w_gagarin.js",
+  "w_dino.js",
+  "w_boyar.js",
   "w_pushkin.js",
   "w_duel.js",
-  "w_cannons.js",
   "w_bell.js",
   "w_arch.js",
+  "w_cellar.js",
+  "w_gagarin.js",
   "w_today.js",
   "w_cover.js"
  ],
@@ -41,21 +41,15 @@
    ]
   ],
   [
-   "quarry",
+   "dino",
    [
     "s2"
    ]
   ],
   [
-   "cellar",
+   "boyar",
    [
     "s3"
-   ]
-  ],
-  [
-   "gagarin",
-   [
-    "s4"
    ]
   ],
   [
@@ -71,21 +65,27 @@
    ]
   ],
   [
-   "cannons",
+   "bell",
    [
     "s7"
    ]
   ],
   [
-   "bell",
+   "arch",
    [
     "s8"
    ]
   ],
   [
-   "arch",
+   "cellar",
    [
     "s9"
+   ]
+  ],
+  [
+   "gagarin",
+   [
+    "s10"
    ]
   ],
   [
