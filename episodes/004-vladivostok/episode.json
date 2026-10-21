@@ -1,0 +1,104 @@
+{
+ "num": "004",
+ "city": "Владивосток",
+ "title": "Владивосток — на широте Сочи?! История Владивостока за минуту",
+ "hook": "ШИРОТА / СОЧИ?!",
+ "worlds": [
+  "props.js",
+  "w_hook.js",
+  "w_golden.js",
+  "w_post.js",
+  "w_tsar.js",
+  "w_interv.js",
+  "w_brynner.js",
+  "w_anna.js",
+  "w_khrush.js",
+  "w_japan.js",
+  "w_bridge.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "golden",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "post",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "tsar",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "interv",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "brynner",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "anna",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "khrush",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "japan",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "bridge",
+   [
+    "s9"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "timeline": {
+  "scene_gap": 0.02,
+  "tail": 0.35
+ }
+}
