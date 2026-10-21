@@ -95,7 +95,12 @@ const OUTFIT = {
   varyag: { top: '#6a7260', topD: '#2e342a', topL: '#9aa48c', pants: '#4a4234', detail: 'varyag', hat: 'spangen', boots: 'varyag', cuff: '#7a5a2a', long: 1 },
   soviet: { top: '#6a6e74', topD: '#33363c', topL: '#9a9ea6', pants: '#55585e', detail: 'soviet', hat: null, boots: 'oxford', shirt: '#f2f0ea' },
   caveman: { top: '#8f7b63', topD: '#3b2d21', topL: '#c9b79a', pants: null, detail: 'caveman', hat: null, bare: 1 },
-  scuba: { top: '#14232e', topD: '#070d12', topL: '#2a4658', pants: '#14232e', detail: 'scuba', hat: 'mask', boots: 'fin' }
+  scuba: { top: '#14232e', topD: '#070d12', topL: '#2a4658', pants: '#14232e', detail: 'scuba', hat: 'mask', boots: 'fin' },
+  // ---- 004 Берлин
+  hoodieB: { top: '#7a2432', topD: '#3e0e18', topL: '#b0505e', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'БЕРЛИН', capTxt: 'B' },
+  burgher: { top: '#3e5e8e', topD: '#1a2a48', topL: '#7a9ac4', pants: '#4a3a2a', detail: 'burgher', hat: 'chaperon', boots: 'shoe', long: 1, cape: '#9a2a22' },
+  fireman: { top: '#22305a', topD: '#0e1630', topL: '#4e5e94', pants: '#22305a', detail: 'fireman', hat: 'firehelm', boots: 'leather', cuff: '#b0261e' },
+  denim: { top: '#5f80b6', topD: '#2a3e66', topL: '#a4bede', pants: '#2e3e5e', detail: 'denim', hat: null, boots: 'sneaker', shirt: '#f2efe6' }
 };
 
 function tom(o = {}) {
@@ -313,7 +318,7 @@ function costume5(OF, bob, t, bp, L, o) {                            // дета
   if (OF.collar === 'sailor') { poly([[-80, -246 + b], [80, -246 + b], [60, -196 + b], [0, -170 + b], [-60, -196 + b]], { wash: '#1e2a4a', washA: 1, w: 2.4, col: TM.line }); for (const s of [-1, 1]) pencil([[s * 70, -238 + b], [s * 52, -200 + b], [0, -180 + b]], { w: 2, col: '#f4f0e6', pass2: false }); poly([[-8, -184 + b], [8, -184 + b], [16, -150 + b], [-16, -150 + b]], { wash: '#c8302a', washA: 1, w: 1.6 }); }
   if (OF.tie === 'bow') { poly([[0, -238 + b], [-26, -250 + b], [-26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); poly([[0, -238 + b], [26, -250 + b], [26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); ell(0, -238 + b, 6, 6, { wash: '#1a1a1a', washA: 1, w: 1 }); }
   if (OF.strap) pencil([[50, -236 + b], [-40, -110 + b]], { w: 6, col: '#3a2a1a' });
-  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
+  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'burgher', 'fireman', 'denim'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
 }
 function hat5(h, t, o, fx = 0, L = { side: 1, rim: '#ffe3a8' }, OF = {}) {   // головные уборы (на макушке, y≈−90 при голове r≈100)
   if (OF.splash || OF.soot) face6(OF, t, fx);
@@ -661,6 +666,46 @@ const COST6 = {
     line([[-56, -208 + b], [-56, -192 + b]], { w: 1.6, col: CU.steelD, pass2: false }); poly([[-56, -208 + b], [-38, -204 + b], [-38, -194 + b], [-56, -198 + b]], { wash: '#c8201e', washA: 1, w: 1.4, col: TM.line }); ell(-48, -201 + b, 2, 2, { wash: CU.goldL, washA: 1, line: false });
     for (const sd of [-1, 1]) { rect(sd * 56 - 18, -112 + b, 36, 12, { wash: OF.topD, washA: 0.7, w: 1.6, col: TM.line, a: 0.7 }); }
   },
+  burgher(OF, b, t, bp, L) {                                           // 1237: горожанин — шерстяная туника до колен, пояс с кошелём и ножом, капюшон-оплечье с зубцами
+    const sk = skirt6(OF, b, L, -118, -44, 92, 110, 570);
+    for (const P of [bp, sk]) { hatch(P.path, P.bb, { gap: 6, a: 0.14, col: OF.topD, ang: 0.8, key: 571, w: 1.3 }); hatch(P.path, P.bb, { gap: 6, a: 0.1, col: OF.topD, ang: -0.8, key: 572, w: 1.2 }); }
+    pencil([[0, -236 + b], [0, -196 + b]], { w: 2.4, col: OF.topD, a: 0.8, pass2: false }); for (let y = -230; y < -196; y += 10) { pencil([[-6, y + b], [6, y + 4 + b]], { w: 1.4, col: '#e8d8b0', a: 0.8, pass2: false, gap: false }); }
+    const bl = rect(-96, -126 + b, 192, 13, { wash: '#4a2c14', washA: 1, w: 2, col: TM.line, key: 573 }); shadeG(bl.path, 0, -113 + b, 0, -126 + b, '#1a0e04', 0.4);
+    const bk = rect(-12, -130 + b, 24, 21, { wash: CU.copper, washA: 1, w: 2, col: CU.copperD }); metalG(bk.path, -4, -124 + b, 16, CU.copperL, CU.copper, CU.copperD); pencil([[-12, -120 + b], [30, -120 + b]], { w: 2, col: '#2a1808', pass2: false });
+    pencil([[30, -114 + b], [24, -84 + b], [36, -60 + b]], { w: 4, col: '#2a1808', a: 0.9, pass2: false });
+    const pu = blob([[40, -112 + b], [72, -112 + b], [78, -78 + b], [58, -64 + b], [36, -78 + b]], { wash: '#7a4a24', washA: 1, w: 2.2, col: TM.line, key: 574 }); shadeG(pu.path, 76, 0, 40, 0, '#2a1608', 0.5);
+    blob([[38, -112 + b], [74, -112 + b], [70, -96 + b], [56, -90 + b], [42, -96 + b]], { wash: '#5a3416', washA: 1, w: 1.8, col: TM.line }); nb(56, -96 + b, 3.2, CU.copper);
+    push(-70, -112 + b, 1, 0.2); blob([[-6, 0], [6, 0], [5, 46], [0, 56], [-5, 46]], { wash: '#3a2412', washA: 1, w: 2, col: TM.line }); rect(-4, -20, 8, 20, { wash: '#8a6a3a', washA: 1, w: 1.6, col: TM.line }); rect(-9, -2, 18, 5, { wash: CU.steel, washA: 1, w: 1.2, col: CU.steelD }); pop();
+    const C = OF.cape || '#9a2a22', CD = '#4a0e0a', CL = '#d0605a', Pc = [[-102, -250 + b], [-62, -276 + b], [0, -282 + b], [62, -276 + b], [102, -250 + b], [108, -214 + b]];
+    for (let k = 0; k <= 12; k++) { const x = 108 - k * 18, y = (k % 2 ? -178 : -200) + Math.abs(x) * 0.12 + b; Pc.push([x, y]); }
+    Pc.push([-108, -214 + b]); const cp = shape(Pc, { wash: C, washA: 1, w: 2.6, col: TM.line, key: 575 }); shadeG(cp.path, -L.side * 110, 0, L.side * 40, 0, CD, 0.6); hatch(cp.path, cp.bb, { gap: 5, a: 0.16, col: CD, ang: 1.1, key: 576, w: 1.2 });
+    pencil(spline([[-60, -262 + b], [0, -250 + b], [60, -262 + b]], false, 6), { w: 2, col: CL, a: 0.6, pass2: false }); rimL(Pc.slice(0, 7), L.side, L.rim, 0.7, 3);
+  },
+  fireman(OF, b, t, bp, L) {                                           // 1862: прусская пожарная команда — двубортный мундир, красный кант, ремень с латунной пряжкой, топорик
+    ctx.save(); ctx.clip(bp.path); for (let x = -90; x <= 90; x += 12) pencil([[x, -250 + b], [x * 1.03, -96 + b]], { w: 1.1, col: OF.topL, a: 0.22, pass2: false, gap: false }); ctx.restore();
+    pencil([[-6, -248 + b], [-8, -100 + b]], { w: 3, col: '#b0261e', a: 0.9, pass2: false }); pencil([[-6, -248 + b], [-8, -100 + b]], { w: 1.2, col: OF.topD, a: 0.6, pass2: false });
+    for (const sd of [-1, 1]) for (let k = 0; k < 4; k++) { const x = sd * 30 - 4, y = -226 + k * 26 + b; const bt = ell(x, y, 6.5, 6.5, { wash: CU.gold, washA: 1, w: 1.4, col: CU.goldD }); metalG(bt.path, x - 2, y - 2, 6, CU.goldL, CU.gold, CU.goldD); }
+    const cl = rect(-58, -262 + b, 116, 20, { wash: '#b0261e', washA: 1, w: 2.2, col: TM.line, key: 580 }); shadeG(cl.path, 0, -242 + b, 0, -262 + b, '#4a0806', 0.5); pencil([[-56, -252 + b], [56, -252 + b]], { w: 1.4, col: CU.goldL, a: 0.7, pass2: false });
+    for (const sd of [-1, 1]) { const ep = rect(sd * 78 - 16, -254 + b, 32, 12, { wash: '#b0261e', washA: 1, w: 1.8, col: TM.line }); nb(sd * 72, -248 + b, 3, CU.gold); }
+    const bl = rect(-96, -132 + b, 192, 19, { wash: '#1a1410', washA: 1, w: 2.2, col: TM.line, key: 581 }); pencil([[-94, -127 + b], [94, -127 + b]], { w: 1.2, col: '#5a4a3a', a: 0.6, pass2: false });
+    const bk = rect(-18, -136 + b, 36, 27, { wash: CU.gold, washA: 1, w: 2.2, col: CU.goldD, key: 582 }); metalG(bk.path, -6, -128 + b, 26, CU.goldL, CU.gold, CU.goldD); ell(0, -122 + b, 7, 7, { wash: CU.goldD, washA: 0.6, line: false });
+    push(-78, -112 + b, 1, -0.28); const hd = rect(-5, -14, 10, 78, { wash: '#8a5a2a', washA: 1, w: 2, col: TM.line, key: 583 }); hatch(hd.path, hd.bb, { gap: 4, a: 0.25, col: '#3a2208', ang: 1.4, key: 584, w: 1 });
+    const bl2 = blob([[4, -6], [34, -18], [40, 12], [30, 22], [4, 12]], { wash: CU.steel, washA: 1, w: 2.2, col: TM.line, key: 585 }); metalG(bl2.path, 22, 0, 26, CU.steelL, CU.steel, CU.steelD); blob([[-4, -6], [-18, -2], [-14, 10], [-4, 10]], { wash: CU.steelD, washA: 1, w: 1.6, col: TM.line }); pop();
+    pencil(spline([[60, -240 + b], [80, -190 + b], [70, -140 + b]], false, 6), { w: 5, col: '#e8dcc0', a: 0.9, pass2: false }); pencil(spline([[60, -240 + b], [80, -190 + b], [70, -140 + b]], false, 6), { w: 1.4, col: '#8a7a5a', a: 0.7, pass2: false });
+  },
+  denim(OF, b, t, bp, L) {                                             // 1989: варёная джинсовка нараспашку, белая футболка, оранжевая строчка, значки
+    ctx.save(); ctx.clip(bp.path); const g = ctx.createRadialGradient(-10, -190 + b, 10, -10, -190 + b, 110); g.addColorStop(0, 'rgba(230,240,255,0.45)'); g.addColorStop(1, 'rgba(230,240,255,0)'); ctx.fillStyle = g; ctx.fillRect(-120, -300 + b, 240, 220);
+    const r = rng(590); for (let k = 0; k < 50; k++) { const x = -90 + r() * 180, y = -250 + r() * 150; pencil([[x, y + b], [x + 6 + r() * 10, y + b + (r() - 0.5) * 4]], { w: 2 + r() * 3, col: 'rgba(235,242,255,1)', a: 0.25, pass2: false, gap: false }); } ctx.restore();
+    const ts = poly([[-34, -256 + b], [34, -256 + b], [30, -100 + b], [-30, -100 + b]], { wash: OF.shirt, washA: 1, w: 2, col: TM.line, key: 591 }); shadeG(ts.path, L.side * 40, 0, -L.side * 30, 0, '#b8b0a0', 0.35);
+    txt('TOM', 0, -186 + b, 26, { col: '#2a3e66', font: 'Osw' });
+    for (const sd of [-1, 1]) { pencil([[sd * 36, -254 + b], [sd * 32, -98 + b]], { w: 3, col: OF.topD, a: 0.9, pass2: false }); for (let y = -246; y < -104; y += 11) pencil([[sd * 42, y + b], [sd * 41.5, y + 6 + b]], { w: 1.6, col: '#e0902a', a: 0.85, pass2: false, gap: false });
+      const cf = poly([[sd * 34, -258 + b], [sd * 86, -250 + b], [sd * 70, -222 + b], [sd * 40, -214 + b]], { wash: OF.topL, washA: 1, w: 2.2, col: TM.line, key: 592 + sd }); shadeG(cf.path, sd * 40, -214 + b, sd * 80, -250 + b, OF.topD, 0.3);
+      const pk = rect(sd * 64 - 20, -206 + b, 40, 34, { wash: OF.top, washA: 0.6, w: 2, col: TM.line }); const fl = poly([[sd * 64 - 22, -208 + b], [sd * 64 + 22, -208 + b], [sd * 64 + 22, -194 + b], [sd * 64, -186 + b], [sd * 64 - 22, -194 + b]], { wash: OF.topL, washA: 0.9, w: 1.8, col: TM.line });
+      nb(sd * 64, -192 + b, 3.4, '#c8ccd0'); for (let x = -18; x < 20; x += 6) pencil([[sd * 64 + x, -170 + b], [sd * 64 + x + 3, -170 + b]], { w: 1.4, col: '#e0902a', a: 0.8, pass2: false, gap: false }); }
+    const wb = rect(-98, -122 + b, 196, 22, { wash: OF.topD, washA: 0.85, w: 2.2, col: TM.line, key: 594 }); for (let x = -92; x < 92; x += 8) pencil([[x, -104 + b], [x + 4, -104 + b]], { w: 1.4, col: '#e0902a', a: 0.8, pass2: false, gap: false });
+    const sm1 = ell(-62, -146 + b, 14, 14, { wash: '#f2c81e', washA: 1, w: 1.8, col: TM.line }); ell(-66, -150 + b, 1.8, 2.6, { wash: TM.line, washA: 1, line: false }); ell(-58, -150 + b, 1.8, 2.6, { wash: TM.line, washA: 1, line: false }); pencil(spline([[-70, -142 + b], [-62, -137 + b], [-54, -142 + b]], false, 5), { w: 1.6, col: TM.line, pass2: false });
+    const pn = rect(48, -152 + b, 34, 16, { wash: '#2a2a2e', washA: 1, w: 1.6, col: TM.line }); txt('TOM', 65, -144 + b, 13, { col: '#f6e7c8', font: 'Osw' });
+  },
   caveman(OF, b, t, bp, L) {                                           // палеолит: пятнистая шкура через плечо, ремешки, клыки на шее
     const bi = fluff(ellPts(34, -212 + b, 38, 34, 0, 0, 20), 5, 41); shape(bi.concat([bi[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 });
     const HP = [[-90, -238 + b], [-44, -262 + b], [-6, -250 + b], [34, -186 + b], [88, -134 + b], [96, -86 + b], [66, -58 + b], [22, -72 + b], [-26, -56 + b], [-78, -70 + b], [-98, -128 + b], [-96, -190 + b]];
@@ -839,6 +884,25 @@ const HAT6 = {
     rect(-14, -86, 28, 11, { wash: CU.gold, washA: 1, w: 2, col: CU.goldD });
     rimL(spline(P.slice(0, 8), false, 6), L.side, L.rim, 0.75, 3);
   },
+  chaperon(t, o, fx, L) {                                              // 1237: капюшон-шаперон с длинным хвостом (liripipe), открытое лицо
+    const C = '#9a2a22', CD = '#4a0e0a', CL = '#d0605a';
+    const tail = spline([[40, -150], [120, -176], [190, -150], [214, -80], [206, 10]], false, 8); const tp = shape(tubeP(tail, 34, 14), { wash: C, washA: 1, w: 2.4, col: TM.line, key: 650 }); shadeG(tp.path, 230, 0, 120, 0, CD, 0.6);
+    const P = [[-124, 20], [-128, -60], [-100, -134], [-40, -170], [30, -172], [96, -138], [126, -64], [124, 20], [104, -20], [80, -80], [30, -112], [-30, -112], [-82, -80], [-104, -20]];
+    const hp = blob(P, { wash: C, washA: 1, w: 3, col: TM.line, key: 651 }); shadeG(hp.path, -L.side * 130, 0, L.side * 40, 0, CD, 0.65); hatch(hp.path, hp.bb, { gap: 5, a: 0.18, col: CD, ang: 1.1, key: 652, w: 1.2 });
+    pencil(spline([[-104, -20], [-82, -80], [-30, -112], [30, -112], [80, -80], [104, -20]], false, 8), { w: 3, col: CL, a: 0.7, pass2: false });
+    rimL(spline(P.slice(0, 8), false, 6), L.side, L.rim, 0.75, 3);
+  },
+  firehelm(t, o, fx, L) {                                              // 1862: латунная пожарная каска с гребнем, козырьком и назатыльником, герб-орёл
+    const P = [[-100, -64], [-98, -120], [-70, -172], [0, -194], [70, -172], [98, -120], [100, -64], [0, -56]];
+    const dp = blob(P, { wash: CU.gold, washA: 1, w: 3.2, col: TM.line, key: 660 }); metalG(dp.path, L.side * 40, -150, 170, CU.goldL, CU.gold, CU.goldD); hatch(dp.path, dp.bb, { gap: 6, a: 0.14, col: CU.goldD, ang: -1.2, key: 661 });
+    const vz = blob([[-108, -70], [-40, -60], [40, -60], [108, -70], [124, -50], [40, -42], [-40, -42], [-124, -50]], { wash: '#2a1c10', washA: 1, w: 2.4, col: TM.line, key: 662 }); pencil([[-110, -66], [110, -66]], { w: 3, col: CU.goldL, a: 0.8, pass2: false });
+    const cb = blob([[-74, -170], [-30, -206], [0, -222], [30, -206], [74, -170], [40, -184], [0, -200], [-40, -184]], { wash: CU.goldL, washA: 1, w: 2.4, col: CU.goldD, key: 663 }); metalG(cb.path, 0, -210, 60, '#fff6d0', CU.goldL, CU.gold);
+    for (let x = -60; x <= 60; x += 15) nb(x, -184 - (1 - Math.abs(x) / 70) * 14, 2.6, CU.goldL);
+    const sh = poly([[-22, -150], [22, -150], [24, -112], [0, -94], [-24, -112]], { wash: '#d8d4cc', washA: 1, w: 2, col: CU.goldD, key: 664 }); metalG(sh.path, -6, -132, 30, '#ffffff', '#c8c4bc', '#6a665e');
+    blob([[-14, -136], [0, -146], [14, -136], [10, -116], [0, -108], [-10, -116]], { wash: '#1a1a1a', washA: 0.85, w: 1.2 }); pencil([[-18, -132], [-26, -124]], { w: 2.4, col: '#1a1a1a', pass2: false }); pencil([[18, -132], [26, -124]], { w: 2.4, col: '#1a1a1a', pass2: false });
+    ctx.save(); ctx.clip(dp.path); ctx.strokeStyle = 'rgba(255,255,240,0.7)'; ctx.lineCap = 'round'; ctx.lineWidth = 9 / S; ctx.beginPath(); ctx.moveTo(L.side * 30, -180); ctx.quadraticCurveTo(L.side * 70, -150, L.side * 82, -96); ctx.stroke(); ctx.restore();
+    rimL(spline(P.slice(0, 7), false, 6), L.side, L.rim, 0.8, 3);
+  },
   bowler(t, o, fx, L) {                                                // котелок: загнутые поля, лента, блик
     const C = '#18181c', CD = '#000', CL = '#3a3a42';
     const br = ell(0, -76, 112, 19, { wash: C, washA: 1, w: 3, col: TM.line, key: 610 }); shadeG(br.path, 0, -60, 0, -92, CL, 0.6);
@@ -927,7 +991,8 @@ const BOOTS = {
   knyaz: { c: '#9a2a1e', d: '#3a0a06', h: 62, trim: CU.gold, tip: 1 }, hussar: { c: '#161416', d: '#000', h: 66, trim: '#ecc554', tassel: 1 }, lapti: { c: '#c8a868', d: '#7a6034', h: 20, lapti: 1 },
   shoe: { c: '#3a2a1e', d: '#120a06', h: 18 }, rubber: { c: '#26282c', d: '#08090a', h: 62, shine: 1 },
   aviator: { c: '#4a2c16', d: '#1a0e06', h: 62, trim: '#8a5a2a' }, oxford: { c: '#1c1a1c', d: '#000', h: 18, shine: 1 }, bogatyr: { c: '#3a2414', d: '#120a04', h: 56, trim: '#a8302a' },
-  varyag: { c: '#5a3c22', d: '#22160a', h: 58, wrap: '#b8a070' }, fin: { c: '#14232e', d: '#050a0e', h: 34, fin: 1 }
+  varyag: { c: '#5a3c22', d: '#22160a', h: 58, wrap: '#b8a070' }, fin: { c: '#14232e', d: '#050a0e', h: 34, fin: 1 },
+  sneaker: { c: '#ece8e0', d: '#9a968c', h: 24, shine: 1 }
 };
 function boot5(fx, fy, lx, bob, OF, k) {
   const B = BOOTS[OF.boots] || BOOTS.leather, top = fy - B.h;
