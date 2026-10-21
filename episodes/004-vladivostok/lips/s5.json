@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/004-vladivostok/vf/s5.wav",
+    "duration": 4.29
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.28, "value": "B" },
+    { "start": 0.28, "end": 0.42, "value": "C" },
+    { "start": 0.42, "end": 0.84, "value": "B" },
+    { "start": 0.84, "end": 1.05, "value": "F" },
+    { "start": 1.05, "end": 1.61, "value": "B" },
+    { "start": 1.61, "end": 1.68, "value": "C" },
+    { "start": 1.68, "end": 1.89, "value": "F" },
+    { "start": 1.89, "end": 1.97, "value": "A" },
+    { "start": 1.97, "end": 2.32, "value": "F" },
+    { "start": 2.32, "end": 2.39, "value": "C" },
+    { "start": 2.39, "end": 2.53, "value": "E" },
+    { "start": 2.53, "end": 2.60, "value": "B" },
+    { "start": 2.60, "end": 2.79, "value": "C" },
+    { "start": 2.79, "end": 2.84, "value": "E" },
+    { "start": 2.84, "end": 3.02, "value": "F" },
+    { "start": 3.02, "end": 3.23, "value": "B" },
+    { "start": 3.23, "end": 3.44, "value": "C" },
+    { "start": 3.44, "end": 3.51, "value": "B" },
+    { "start": 3.51, "end": 3.65, "value": "C" },
+    { "start": 3.65, "end": 3.86, "value": "B" },
+    { "start": 3.86, "end": 4.07, "value": "F" },
+    { "start": 4.07, "end": 4.14, "value": "B" },
+    { "start": 4.14, "end": 4.28, "value": "E" },
+    { "start": 4.28, "end": 4.29, "value": "X" }
+  ]
+}

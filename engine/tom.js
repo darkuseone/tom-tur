@@ -95,7 +95,17 @@ const OUTFIT = {
   varyag: { top: '#6a7260', topD: '#2e342a', topL: '#9aa48c', pants: '#4a4234', detail: 'varyag', hat: 'spangen', boots: 'varyag', cuff: '#7a5a2a', long: 1 },
   soviet: { top: '#6a6e74', topD: '#33363c', topL: '#9a9ea6', pants: '#55585e', detail: 'soviet', hat: null, boots: 'oxford', shirt: '#f2f0ea' },
   caveman: { top: '#8f7b63', topD: '#3b2d21', topL: '#c9b79a', pants: null, detail: 'caveman', hat: null, bare: 1 },
-  scuba: { top: '#14232e', topD: '#070d12', topL: '#2a4658', pants: '#14232e', detail: 'scuba', hat: 'mask', boots: 'fin' }
+  scuba: { top: '#14232e', topD: '#070d12', topL: '#2a4658', pants: '#14232e', detail: 'scuba', hat: 'mask', boots: 'fin' },
+  // ---- 004 Владивосток
+  hawaii: { top: '#12b0b8', topD: '#0a6068', topL: '#7ae6e0', pants: '#b8a468', detail: 'hawaii', hat: 'shades', boots: 'flip', shorts: 1, short: 1, flowers: 1 },
+  hawaiiS: { top: '#12b0b8', topD: '#0a6068', topL: '#7ae6e0', pants: '#b8a468', detail: 'hawaii', hat: 'shades', boots: 'flip', shorts: 1, short: 1, flowers: 1, scarf: 1 },
+  general: { top: '#1c4a30', topD: '#0a2616', topL: '#3e7a52', pants: '#20222a', detail: 'general', hat: 'generalCap', boots: 'sapog', cuff: '#b0202a', cuffLine: 1, gloves: '#f6f3ea', lampas: '#b0202a', epaul: 1, long: 1 },
+  soldier: { top: '#d6cdb0', topD: '#8a8266', topL: '#f2ecd8', pants: '#2c3a2a', detail: 'soldier', hat: 'beskozyrka', boots: 'sapogB' },
+  railman: { top: '#1c2c5c', topD: '#0a1230', topL: '#4a5e9a', pants: '#1e2028', detail: 'railman', hat: 'railCap', boots: 'sapog', shirt: '#f4f0e6', long: 1 },
+  photog: { top: '#eee8da', topD: '#a09882', topL: '#ffffff', pants: '#7a6a52', detail: 'photog', hat: 'tweedcap', boots: 'gaiter', tie: 'bow', rolled: 1, shorts: 'knee' },
+  kingsiam: { top: '#d8a830', topD: '#7a5414', topL: '#f6dc8a', pants: '#6a1424', detail: 'kingsiam', hat: 'siamcrown', boots: 'siam', cuff: '#b8202a', cuffLine: 1, long: 1 },
+  kozhanka: { top: '#17171b', topD: '#050507', topL: '#50505c', pants: '#2a4ca6', detail: 'kozhanka', hat: 'cap90', boots: 'sneaker', stripe3: '#f4f2ea', sheen: 1 },
+  hardhat: { top: '#2f56a2', topD: '#14295a', topL: '#6a8ed0', pants: '#4a5262', detail: 'hardhat', hat: 'helmetW', boots: 'work' }
 };
 
 function tom(o = {}) {
@@ -126,8 +136,12 @@ function tom(o = {}) {
   for (const [k, dx] of [[0, -28], [1, 28]]) {
     const s_ = (k ? sw : -sw) * 22, lift = Math.max(0, k ? sw : -sw) * 14;
     const leg = fluff([[dx - 24, -112 + bob * 0.6], [dx + 24, -112 + bob * 0.6], [dx + 22 + s_ * 0.8, -22 - lift], [dx - 22 + s_ * 0.8, -20 - lift]], 5, 10 + k);
-    const lp = shape(leg.concat([leg[0]]), { wash: OF.pants || (k ? TM.fur : TM.furM), washA: 0.98, w: 3, col: TM.line, key: 10 + k });
-    if (!OF.pants) fstr(lp.path, lp.bb, 30, 1.5, 12, TM.furD, 0.5, 12 + k); else hatch(lp.path, lp.bb, { gap: 7, a: 0.25, col: '#000', ang: 1.3, key: 13 + k });
+    const lp = shape(leg.concat([leg[0]]), { wash: OF.shorts ? (k ? TM.fur : TM.furM) : (OF.pants || (k ? TM.fur : TM.furM)), washA: 0.98, w: 3, col: TM.line, key: 10 + k });
+    if (!OF.pants || OF.shorts) fstr(lp.path, lp.bb, 30, 1.5, 12, TM.furD, 0.5, 12 + k); else hatch(lp.path, lp.bb, { gap: 7, a: 0.25, col: '#000', ang: 1.3, key: 13 + k });
+    { const sd = k ? 1 : -1, yb = -110 + bob * 0.6, ye = -26 - lift;                          // 004: лампас, три полосы, шорты
+      if (OF.lampas) pencil([[dx + sd * 17, yb], [dx + sd * 16 + s_ * 0.8, ye]], { w: 9, col: OF.lampas, a: 1, pass2: false, gap: false });
+      if (OF.stripe3) for (const o_ of [11, 16.5, 22]) pencil([[dx + sd * o_, yb], [dx + sd * (o_ - 2) + s_ * 0.8, ye]], { w: 3.2, col: OF.stripe3, a: 1, pass2: false, gap: false });
+      if (OF.shorts) shorts6(OF, dx, s_, bob, k); }
     const fx = dx + 4 + s_, fy = -10 - lift;
     if (OF.boots) { boot5(fx, fy, dx + s_ * 0.8, bob, OF, k); continue; }
     const fp = shape(fluff(ellPts(fx, fy, 30, 15, 0, 0, 18), 4, 20 + k), { wash: TM.furL, washA: 0.99, w: 2.8, col: TM.line, key: 22 + k });
@@ -277,7 +291,8 @@ function shadeC(c) { const p = [1, 3, 5].map(i => Math.round(parseInt(c.substr(i
 function paw5(x, y, OF, far, point) {
   push(x, y, 1);
   if (OF.mitt) { mitt5(OF, far); pop(); return; }
-  if (OF.gloves) { const g = blob([[-22, -18], [0, -26], [22, -18], [26, 6], [14, 22], [-14, 22], [-26, 6]], { wash: '#8a6a44', washA: 0.99, w: 2.8, col: TM.line }); pop(); return; }
+  if (OF.gloves) { const g = blob([[-22, -18], [0, -26], [22, -18], [26, 6], [14, 22], [-14, 22], [-26, 6]], { wash: typeof OF.gloves === 'string' ? (far ? '#d8d4c8' : OF.gloves) : '#8a6a44', washA: 0.99, w: 2.8, col: TM.line });
+    if (typeof OF.gloves === 'string') { for (const x of [-9, 0, 9]) pencil([[x, 8], [x + 1, 20]], { w: 1.6, col: '#8a867a', a: 0.7, pass2: false, gap: false }); pencil([[-24, -14], [24, -14]], { w: 2, col: '#8a867a', a: 0.6, pass2: false, gap: false }); } pop(); return; }
   const p = shape(fluff(ellPts(0, 0, 24, 21, 0, 0, 18), 4, far ? 90 : 91), { wash: far ? TM.furM : TM.furL, washA: 0.99, w: 2.8, col: TM.line, key: far ? 92 : 93 });
   for (let k = -1; k <= 1; k++) line([[k * 9, 8], [k * 10, 20]], { w: 1.8, a: 0.7, pass2: false, smooth: false });
   if (point) blob([[6, -12], [16, -16], [40, -40], [34, -46], [8, -26]], { wash: TM.furL, washA: 0.99, w: 2.4, col: TM.line });
@@ -313,7 +328,7 @@ function costume5(OF, bob, t, bp, L, o) {                            // дета
   if (OF.collar === 'sailor') { poly([[-80, -246 + b], [80, -246 + b], [60, -196 + b], [0, -170 + b], [-60, -196 + b]], { wash: '#1e2a4a', washA: 1, w: 2.4, col: TM.line }); for (const s of [-1, 1]) pencil([[s * 70, -238 + b], [s * 52, -200 + b], [0, -180 + b]], { w: 2, col: '#f4f0e6', pass2: false }); poly([[-8, -184 + b], [8, -184 + b], [16, -150 + b], [-16, -150 + b]], { wash: '#c8302a', washA: 1, w: 1.6 }); }
   if (OF.tie === 'bow') { poly([[0, -238 + b], [-26, -250 + b], [-26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); poly([[0, -238 + b], [26, -250 + b], [26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); ell(0, -238 + b, 6, 6, { wash: '#1a1a1a', washA: 1, w: 1 }); }
   if (OF.strap) pencil([[50, -236 + b], [-40, -110 + b]], { w: 6, col: '#3a2a1a' });
-  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
+  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'hawaii', 'general', 'soldier', 'railman', 'photog', 'kingsiam', 'kozhanka', 'hardhat'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
 }
 function hat5(h, t, o, fx = 0, L = { side: 1, rim: '#ffe3a8' }, OF = {}) {   // головные уборы (на макушке, y≈−90 при голове r≈100)
   if (OF.splash || OF.soot) face6(OF, t, fx);
@@ -444,6 +459,95 @@ function embroid(P, w, key, col = '#b8302a', base = '#efe8d6') {          // в�
   const R = resample(C, w * 1.05), r = w * 0.27;
   R.forEach(([x, y]) => { ctx.globalAlpha = 0.95; ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x, y - r); ctx.lineTo(x + r, y); ctx.lineTo(x, y + r); ctx.lineTo(x - r, y); ctx.closePath(); ctx.fill(); ctx.fillStyle = base; ctx.beginPath(); ctx.arc(x, y, r * 0.3, 0, 6.283); ctx.fill(); });
   ctx.globalAlpha = 1; return sp;
+}
+/* ---- 004 Владивосток: помощники костюмов (гибискус, эполет, шорты, шарф, эмблема путейцев, обувь) */
+function hibiscus(x, y, r, rot, col, colD) {                          // цветок гибискуса: 5 лепестков, тёмная сердцевина, жёлтый пестик
+  push(x, y, 1, rot);
+  for (let k = 0; k < 5; k++) { push(0, 0, 1, k / 5 * 6.2832);
+    blob([[0, 0], [r * 0.3, -r * 0.5], [r * 0.9, -r * 0.55], [r * 1.08, 0], [r * 0.9, r * 0.55], [r * 0.3, r * 0.5]], { wash: col, washA: 1, w: 1.3, col: colD, a: 0.85 }); pop(); }
+  ctx.save(); const g = ctx.createRadialGradient(0, 0, 1, 0, 0, r * 0.6); g.addColorStop(0, colD); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.globalAlpha = 0.85; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, r * 0.6, 0, 6.283); ctx.fill(); ctx.restore();
+  pencil([[0, 0], [r * 0.6, -r * 0.3], [r * 0.95, -r * 0.5]], { w: 2, col: '#f6d44a', pass2: false, gap: false, a: 1 });
+  for (const [dx, dy] of [[0.95, -0.5], [1.05, -0.36], [0.84, -0.64]]) ell(r * dx, r * dy, 2, 2, { wash: '#f6d44a', washA: 1, line: false });
+  pop();
+}
+function leaf6(x, y, len, rot, col = '#2a9a52') {                     // лист
+  push(x, y, 1, rot);
+  blob([[0, 0], [len * 0.3, -len * 0.17], [len * 0.8, -len * 0.1], [len, 0], [len * 0.8, len * 0.1], [len * 0.3, len * 0.17]], { wash: col, washA: 1, w: 1.2, col: '#0a3a1a', a: 0.7 });
+  pencil([[0, 0], [len * 0.95, 0]], { w: 1.2, col: '#0a3a1a', a: 0.55, pass2: false, gap: false }); pop();
+}
+function star6(x, y, r, col, colD, n = 5, k = 0.45) {                 // звезда (орден, бляха)
+  const P = []; for (let i = 0; i < n * 2; i++) { const a = -Math.PI / 2 + i / (n * 2) * 6.2832, rr = i % 2 ? r * k : r; P.push([x + Math.cos(a) * rr, y + Math.sin(a) * rr]); }
+  return poly(P, { wash: col, washA: 1, w: 1.5, col: colD });
+}
+function epaul6(x, y, sd) {                                           // эполет: золотая планка с бахромой
+  push(x, y, 1, sd * 0.3);
+  for (let k = 0; k < 9; k++) { const yy = -9 + k * 2.2; pencil([[sd * 28, yy], [sd * (36 + (k % 2) * 3), yy + 12 + (k % 3) * 2]], { w: 3.4, col: CU.gold, a: 1, pass2: false, gap: false }); pencil([[sd * 36, yy + 9], [sd * (37 + (k % 2) * 3), yy + 14 + (k % 3) * 2]], { w: 3.4, col: CU.goldD, a: 0.9, pass2: false, gap: false }); }
+  const bd = poly([[-28, -11], [28, -13], [34, -4], [34, 6], [28, 11], [-26, 10]], { wash: CU.gold, washA: 1, w: 2.2, col: CU.goldD });
+  metalG(bd.path, -6, -6, 46, CU.goldL, CU.gold, CU.goldD); for (const yy of [-5, 4]) pencil([[-22, yy], [28, yy - 1]], { w: 1.4, col: CU.goldD, a: 0.75, pass2: false, gap: false });
+  nb(-sd * 20, 0, 4.2, CU.goldL); star6(sd * 8, -1, 5.5, '#fff6d0', CU.goldD);
+  pop();
+}
+function railEmb(x, y, s) {                                           // эмблема путейцев: молоток и разводной ключ крест-накрест
+  push(x, y, s);
+  for (const [a, b2] of [[[-16, 17], [17, -17]], [[16, 17], [-17, -17]]]) { pencil([a, b2], { w: 8, col: '#3a2a08', a: 0.9, pass2: false, gap: false }); pencil([a, b2], { w: 4.6, col: '#f2c430', a: 1, pass2: false, gap: false }); }
+  poly([[10, -27], [27, -11], [21, -5], [4, -21]], { wash: '#f2c430', washA: 1, w: 1.6, col: '#3a2a08' });
+  ell(-18, -18, 8.5, 8.5, { wash: 'rgba(0,0,0,0)', washA: 0, w: 4, col: '#f2c430' }); poly([[-23, -26], [-17, -20], [-13, -26]], { wash: '#16184a', washA: 1, line: false });
+  pop();
+}
+function shorts6(OF, dx, s_, b, k) {                                   // штанина-шорты (бермуды / бриджи) поверх ноги
+  const kn = OF.shorts === 'knee', fl = kn ? 7 : 3, y0 = -118 + b * 0.6, y1 = kn ? -46 : -58, w0 = 26 + fl, w1 = 30 + fl * 1.4;
+  const P = [[dx - w0, y0], [dx + w0, y0], [dx + w0 + 3, (y0 + y1) / 2], [dx + w1 + s_ * 0.4, y1], [dx - w1 + s_ * 0.4, y1], [dx - w0 - 3, (y0 + y1) / 2]];
+  const sp = shape(spline(P, true, 6), { wash: OF.pants, washA: 1, w: 3, col: TM.line, key: 760 + k });
+  shadeG(sp.path, dx - 30, 0, dx + 24, 0, '#000', 0.4); hatch(sp.path, sp.bb, { gap: 6, a: 0.2, col: '#000', ang: 1.2, key: 762 + k, w: 1.3 });
+  const sd = k ? 1 : -1, hy = y1 - 8;
+  pencil([[dx - w1 + s_ * 0.4 + 2, hy], [dx + w1 + s_ * 0.4 - 2, hy]], { w: 2.2, col: TM.line, a: 0.65, pass2: false, gap: false });
+  dashL([[dx - w1 + s_ * 0.4 + 4, hy + 4], [dx + w1 + s_ * 0.4 - 4, hy + 4]], '#000', 0.4);
+  if (!kn) { rect(dx + sd * 6 - 12, y0 + 30, 24, 22, { wash: OF.pants, washA: 1, w: 1.8, col: TM.line, a: 0.8 }); pencil([[dx + sd * 6 - 12, y0 + 38], [dx + sd * 6 + 12, y0 + 38]], { w: 1.6, col: '#000', a: 0.5, pass2: false, gap: false }); nb(dx + sd * 6, y0 + 41, 2.4, '#6a5a38'); }
+  else { for (let i = 0; i < 3; i++) pencil([[dx - 18 + i * 18, y0 + 8], [dx - 20 + i * 20, y1 - 12]], { w: 1.4, col: '#000', a: 0.28, pass2: false, gap: false }); nb(dx + w1 * 0.6 * sd, y1 - 8, 2.6, '#3a2a18'); }
+}
+function scarfBand(C, w, key, o = {}) {                                // вязаный шарф: красно-белая полоса
+  const sp = shape(tubeP(C, w, w), { wash: '#f2ede0', washA: 1, w: 2.6, col: TM.line, key });
+  const R = resample(C, 15), A = edgeOff(R, -w / 2 - 2), B = edgeOff(R, w / 2 + 2);
+  ctx.save(); ctx.clip(sp.path); ctx.fillStyle = '#c8302a'; for (let i = 0; i + 1 < R.length; i += 2) { ctx.beginPath(); ctx.moveTo(A[i][0], A[i][1]); ctx.lineTo(A[i + 1][0], A[i + 1][1]); ctx.lineTo(B[i + 1][0], B[i + 1][1]); ctx.lineTo(B[i][0], B[i][1]); ctx.closePath(); ctx.fill(); } ctx.restore();
+  hatch(sp.path, sp.bb, { gap: 4, a: 0.2, col: '#3a2418', ang: 1.0, key: key + 1, w: 1.2 }); hatch(sp.path, sp.bb, { gap: 4, a: 0.14, col: '#3a2418', ang: -1.0, key: key + 2, w: 1.2 });
+  shadeG(sp.path, -40, 0, 40, 0, '#3a1810', 0.3);
+  if (o.fringe) { const e = C[C.length - 1], p = C[C.length - 3], an = Math.atan2(e[1] - p[1], e[0] - p[0]); for (let i = -4; i <= 4; i++) { const nx = -Math.sin(an) * i * (w / 9), ny = Math.cos(an) * i * (w / 9); pencil([[e[0] + nx, e[1] + ny], [e[0] + nx + Math.cos(an) * 14 + i * 0.6, e[1] + ny + Math.sin(an) * 14]], { w: 2.6, col: i % 2 ? '#c8302a' : '#f2ede0', a: 1, pass2: false, gap: false }); } }
+  return sp;
+}
+function bootFlip(fx, fy, k, B) {                                      // вьетнамки на босых лапах
+  const so = blob([[fx - 38, fy + 8], [fx - 32, fy - 2], [fx + 32, fy - 4], [fx + 48, fy + 6], [fx + 40, fy + 18], [fx - 30, fy + 19]], { wash: B.c, washA: 1, w: 2.8, col: TM.line, key: 772 + k });
+  shadeG(so.path, fx - 40, 0, fx + 40, 0, B.d, 0.4); pencil([[fx - 30, fy + 15], [fx + 38, fy + 14]], { w: 2, col: B.d, a: 0.6, pass2: false, gap: false });
+  const fp = shape(fluff(ellPts(fx + 2, fy - 3, 30, 14, 0, 0, 18), 4, 20 + k), { wash: TM.furL, washA: 0.99, w: 2.8, col: TM.line, key: 22 + k });
+  for (let q = -1; q <= 1; q++) line([[fx + 4 + q * 10, fy - 9], [fx + 4 + q * 11, fy + 5]], { w: 2, a: 0.7, pass2: false, smooth: false });
+  pencil([[fx + 26, fy + 2], [fx + 4, fy - 9], [fx - 14, fy - 8]], { w: 5.5, col: B.strap, a: 1, pass2: false, gap: false }); pencil([[fx + 26, fy + 2], [fx + 2, fy + 12], [fx - 16, fy + 12]], { w: 5.5, col: B.strap, a: 1, pass2: false, gap: false });
+  ell(fx + 27, fy + 2, 4.5, 4.5, { wash: B.strap, washA: 1, w: 1.4, col: TM.line });
+}
+function bootExtra(B, OF, fx, fy, lx, top, bp, k) {                    // детали обуви 004: шаровары мешком, гетры, кроссовки, рабочие ботинки, туфли с загнутым носом
+  if (B.blouse) {
+    const bl = blob([[lx - 31, top - 16], [lx + 31, top - 16], [lx + 42, top + 8], [lx + 28, top + 22], [lx, top + 15], [lx - 28, top + 22], [lx - 42, top + 8]], { wash: OF.pants, washA: 1, w: 2.8, col: TM.line, key: 780 + k });
+    hatch(bl.path, bl.bb, { gap: 5, a: 0.25, col: '#000', ang: 1.1, key: 782 + k, w: 1.3 }); shadeG(bl.path, lx - 42, 0, lx + 30, 0, '#000', 0.35);
+    for (const a of [-18, 2, 20]) pencil([[lx + a, top - 10], [lx + a * 1.3, top + 16]], { w: 1.6, col: '#000', a: 0.3, pass2: false, gap: false }); }
+  if (B.shoe) {                                                         // гетры + ботинок
+    const sh = blob([[lx - 25, fy - 16], [lx + 25, fy - 16], [fx + 34, fy - 2], [fx + 33, fy + 11], [fx, fy + 16], [fx - 33, fy + 11], [fx - 34, fy - 2]], { wash: B.shoe, washA: 1, w: 2.6, col: TM.line, key: 784 + k });
+    shadeG(sh.path, fx - 40, 0, fx + 30, 0, '#000', 0.35); pencil([[fx - 30, fy + 10], [fx + 32, fy + 10]], { w: 2.6, col: '#000', a: 0.75, pass2: false, gap: false });
+    for (let y = top + 6; y < fy - 18; y += 8) { pencil([[lx - 24, y], [lx + 24, y + 2]], { w: 1.2, col: B.d, a: 0.3, pass2: false, gap: false }); }
+    for (let y = top + 8; y < fy - 18; y += 9) nb(lx + 15, y, 2.2, '#5a4a30'); }
+  if (B.sneaker) {                                                       // кроссовок: толстая подошва, шнуровка, полосы
+    rect(fx - 35, fy + 6, 72, 11, { wash: '#e4e2dc', washA: 1, w: 2.4, col: TM.line, key: 786 + k }); pencil([[fx - 32, fy + 12], [fx + 34, fy + 12]], { w: 2.2, col: '#c8302a', a: 0.9, pass2: false, gap: false });
+    for (let i = 0; i < 3; i++) pencil([[lx - 12, top + 4 + i * 6], [lx + 12, top + 7 + i * 6]], { w: 2.2, col: '#2a4aa0', a: 0.9, pass2: false, gap: false });
+    blob([[fx + 6, fy - 6], [fx + 36, fy - 2], [fx + 33, fy + 8], [fx + 6, fy + 6]], { wash: '#f6f4ee', washA: 1, w: 1.8, col: TM.line, a: 0.7 });
+    pencil([[fx - 22, fy - 4], [fx - 2, fy - 12], [fx + 14, fy - 8]], { w: 3.4, col: '#2a4aa0', a: 0.9, pass2: false, gap: false });
+    pencil([[lx - 18, top + 3], [lx + 18, top + 3]], { w: 3, col: '#bfbcb4', a: 0.8, pass2: false, gap: false }); }
+  if (B.work) {                                                          // рабочий ботинок: жёлтая подошва, шнурки, носок
+    rect(fx - 36, fy + 5, 74, 12, { wash: '#e8b020', washA: 1, w: 2.4, col: TM.line, key: 788 + k }); for (let x = fx - 30; x < fx + 34; x += 9) pencil([[x, fy + 7], [x, fy + 15]], { w: 1.2, col: '#6a4a00', a: 0.6, pass2: false, gap: false });
+    blob([[fx + 8, fy - 6], [fx + 36, fy - 2], [fx + 34, fy + 6], [fx + 8, fy + 5]], { wash: '#8a6a40', washA: 1, w: 1.8, col: TM.line, a: 0.7 });
+    for (let i = 0; i < 4; i++) { pencil([[lx - 14, top + 6 + i * 7], [lx + 14, top + 9 + i * 7]], { w: 2, col: '#d8d0b0', a: 0.9, pass2: false, gap: false }); nb(lx - 14, top + 6 + i * 7, 2, '#a8a8a8'); nb(lx + 14, top + 9 + i * 7, 2, '#a8a8a8'); }
+    rect(lx - 25, top, 50, 7, { wash: '#2a2218', washA: 0.9, w: 1.6, col: TM.line }); }
+  if (B.curl) {                                                          // золотая туфля с загнутым носком
+    const ct = blob([[fx + 20, fy + 8], [fx + 40, fy + 2], [fx + 56, fy - 12], [fx + 58, fy - 24], [fx + 48, fy - 16], [fx + 34, fy - 8], [fx + 16, fy - 4]], { wash: B.c, washA: 1, w: 2.4, col: TM.line, key: 790 + k });
+    metalG(ct.path, fx + 34, fy - 6, 36, CU.goldL, CU.gold, CU.goldD); ell(fx + 58, fy - 24, 3.4, 3.4, { wash: CU.ruby, washA: 1, w: 1.2, col: CU.goldD });
+    for (let i = 0; i < 3; i++) pencil([[lx - 14 + i * 14, top + 2], [lx - 12 + i * 14, fy - 12]], { w: 1.4, col: CU.goldD, a: 0.55, pass2: false, gap: false });
+    pencil([[lx - 24, top + 3], [lx + 24, top + 3]], { w: 4, col: '#b8202a', pass2: false, gap: false }); }
 }
 /* ---- детали туловища новых костюмов (вызываются из costume5 по OF.detail) */
 const COST6 = {
@@ -691,6 +795,131 @@ const COST6 = {
     pencil([[-72, -200 + b], [72, -200 + b]], { w: 1.6, col: '#050a0c', a: 0.5, pass2: false });
     rect(-90, -134 + b, 180, 16, { wash: '#1a1c20', washA: 1, w: 2.2, col: TM.line, key: 583 }); rect(-14, -137 + b, 28, 22, { wash: CU.steel, washA: 1, w: 2, col: CU.steelD }); for (const x of [-70, -50, 50, 70]) { rect(x - 8, -132 + b, 16, 26, { wash: '#4a4e54', washA: 1, w: 1.6, col: TM.line }); }
     pencil(spline([[-70, -250 + b], [-40, -262 + b], [40, -262 + b], [70, -250 + b]], false, 8), { w: 9, col: '#0a1014', a: 0.95 }); pencil(spline([[-70, -250 + b], [-40, -262 + b], [40, -262 + b], [70, -250 + b]], false, 8), { w: 2, col: '#16b0a6', a: 0.9, pass2: false });
+  },
+  hawaii(OF, b, t, bp, L) {                                            // 004: гавайская рубашка: гибискусы, открытый ворот, пуговицы-кокос; hawaiiS — ещё и шарф
+    hatch(bp.path, bp.bb, { gap: 6, a: 0.12, col: OF.topD, ang: 1.2, key: 730, w: 1.3 });
+    const RED = ['#e0303a', '#7a0a1a'], YEL = ['#f6c82a', '#9a6208'], ORA = ['#ff7a2a', '#8a2a08'];
+    const FL = [[-58, -206, 17, 0.3, RED], [52, -200, 15, 1.2, YEL], [-72, -150, 15, 2.2, YEL], [-22, -146, 19, 0.9, RED], [42, -126, 17, 2.7, RED], [-52, -104, 15, 1.7, ORA], [22, -100, 14, 0.5, YEL], [78, -160, 13, 1.9, ORA], [-88, -186, 12, 0.2, RED], [86, -106, 12, 1.1, RED]];
+    ctx.save(); ctx.clip(bp.path);
+    for (const [x, y, r, a] of FL) { leaf6(x, y + b, r * 1.7, a + 1.0); leaf6(x, y + b, r * 1.5, a - 1.5, '#1f8a46'); }
+    for (const [x, y, r, a, c] of FL) hibiscus(x, y + b, r, a, c[0], c[1]);
+    ctx.restore();
+    pencil(spline([[-88, -104 + b], [-40, -90 + b], [40, -90 + b], [88, -104 + b]], false, 8), { w: 2.4, col: OF.topD, a: 0.85, pass2: false }); dashL([[-84, -99 + b], [-40, -86 + b], [40, -86 + b], [84, -99 + b]], '#f2ede0', 0.6);
+    poly([[-27, -254 + b], [27, -254 + b], [4, -197 + b], [-4, -197 + b]], { wash: TM.bib, washA: 1, w: 1.6, col: TM.line, a: 0.6 });
+    for (let k = 0; k < 9; k++) pencil([[-14 + k * 3.4, -246 + b + k % 3 * 4], [-12 + k * 3.4, -231 + b + k % 3 * 4]], { w: 1.3, col: TM.creamD, a: 0.85, pass2: false, gap: false });
+    pencil([[3, -197 + b], [3, -92 + b]], { w: 2, col: OF.topD, a: 0.8, pass2: false }); for (let k = 0; k < 4; k++) nb(3, -176 + k * 24 + b, 3.6, '#7a5230');
+    for (const sd of [-1, 1]) { const lp = poly([[sd * 26, -256 + b], [sd * 80, -248 + b], [sd * 54, -204 + b], [sd * 4, -195 + b]], { wash: OF.topL, washA: 1, w: 2.2, col: TM.line, key: 731 });
+      shadeG(lp.path, 0, -195 + b, sd * 70, -256 + b, OF.topD, 0.4); dashL([[sd * 30, -248 + b], [sd * 74, -242 + b], [sd * 52, -208 + b], [sd * 8, -200 + b]], OF.topD, 0.5);
+      ctx.save(); ctx.clip(lp.path); hibiscus(sd * 56, -232 + b, 9, sd * 0.8, YEL[0], YEL[1]); ctx.restore(); }
+    if (OF.scarf) {                                                    // толстый шарф: концы висят и покачиваются
+      const sw = Math.sin(t * 2.2) * 4;
+      for (const [x0, w, len, ph, key] of [[-36, 32, 116, 0, 740], [-8, 28, 92, 1.6, 744]]) {
+        const C = spline([[x0, -238 + b], [x0 - 4, -204 + b], [x0 - 2 + Math.sin(t * 2.2 + ph) * 4, -164 + b], [x0 - 6 + Math.sin(t * 2.2 + ph) * 8 + sw * 0.4, -238 + b + len]], false, 8);
+        scarfBand(C, w, key, { fringe: 1 }); }
+      scarfBand(spline([[-96, -248 + b], [-66, -232 + b], [0, -222 + b], [66, -232 + b], [96, -248 + b]], false, 8), 36, 748, {});
+    }
+  },
+  general(OF, b, t, bp, L) {                                           // 1859: тёмно-зелёный двубортный мундир, красный воротник с шитьём, эполеты
+    const sk = skirt6(OF, b, L, -118, -88, 90, 100, 800);
+    for (const P of [bp, sk]) hatch(P.path, P.bb, { gap: 6, a: 0.16, col: OF.topD, ang: 1.2, key: 801, w: 1.4 });
+    for (const sd of [-1, 1]) { pencil([[sd * 48, -240 + b], [sd * 50, -100 + b]], { w: 2, col: OF.topD, a: 0.85, pass2: false }); dashL([[sd * 44, -236 + b], [sd * 46, -102 + b]], OF.topL, 0.5); }
+    pencil([[0, -214 + b], [0, -96 + b]], { w: 1.6, col: OF.topD, a: 0.6, pass2: false });
+    for (const sd of [-1, 1]) for (let k = 0; k < 6; k++) nb(sd * 26, -200 + k * 21 + b, 4.4);
+    star6(-62, -176 + b, 13, CU.goldL, CU.goldD, 8, 0.5); ell(-62, -176 + b, 4.4, 4.4, { wash: CU.ruby, washA: 1, w: 1, col: CU.goldD });
+    for (const sd of [-1, 1]) { rect(sd * 70 - 14, -126 + b, 28, 10, { wash: OF.topD, washA: 0.7, w: 1.6, col: TM.line, a: 0.7 }); nb(sd * 70 - 8, -121 + b, 2.4); nb(sd * 70 + 8, -121 + b, 2.4); }
+    const cp = poly([[-60, -264 + b], [60, -264 + b], [66, -226 + b], [36, -208 + b], [0, -204 + b], [-36, -208 + b], [-66, -226 + b]], { wash: '#b0202a', washA: 1, w: 2.4, col: TM.line, key: 802 });
+    shadeG(cp.path, -L.side * 60, 0, L.side * 60, 0, '#4a0a10', 0.4); hatch(cp.path, cp.bb, { gap: 5, a: 0.18, col: '#4a0a10', ang: 1.1, key: 803, w: 1.2 });
+    goldBand([[-62, -230 + b], [-30, -214 + b], [0, -210 + b], [30, -214 + b], [62, -230 + b]], 11, 804, {});
+    for (const sd of [-1, 1]) { pencil([[sd * 18, -256 + b], [sd * 34, -232 + b]], { w: 3.4, col: CU.gold, a: 1, pass2: false, gap: false }); pencil([[sd * 30, -258 + b], [sd * 46, -236 + b]], { w: 3.4, col: CU.gold, a: 1, pass2: false, gap: false }); nb(sd * 20, -240 + b, 3.4, CU.goldL); }
+    epaul6(-70, -250 + b, -1);
+  },
+  soldier(OF, b, t, bp, L) {                                           // 1860: льняная гимнастёрка, красный кант, погоны, ремень с бляхой, подсумок
+    ctx.save(); ctx.clip(bp.path); for (let x = -100; x <= 100; x += 5) pencil([[x, -250 + b], [x, -80 + b]], { w: 1, col: OF.topD, a: 0.16, pass2: false, gap: false }); for (let y = -250; y <= -80; y += 5) pencil([[-100, y + b], [100, y + b]], { w: 1, col: OF.topD, a: 0.12, pass2: false, gap: false }); ctx.restore();
+    shadeG(bp.path, 0, -90 + b, 0, -150 + b, OF.topD, 0.3);
+    for (const sd of [-1, 1]) { const st = poly([[sd * 30, -252 + b], [sd * 84, -240 + b], [sd * 86, -218 + b], [sd * 34, -228 + b]], { wash: '#2c4a30', washA: 1, w: 2, col: TM.line }); pencil([[sd * 32, -252 + b], [sd * 84, -240 + b]], { w: 2.4, col: '#b8302a', a: 1, pass2: false, gap: false }); pencil([[sd * 34, -228 + b], [sd * 86, -218 + b]], { w: 2.4, col: '#b8302a', a: 1, pass2: false, gap: false }); nb(sd * 52, -236 + b, 3.2, CU.gold); }
+    const cl = poly([[-40, -262 + b], [40, -262 + b], [38, -234 + b], [0, -226 + b], [-38, -234 + b]], { wash: OF.topL, washA: 1, w: 2.2, col: TM.line, key: 810 }); shadeG(cl.path, 0, -226 + b, 0, -262 + b, OF.topD, 0.35);
+    pencil([[-38, -234 + b], [0, -226 + b], [38, -234 + b]], { w: 2.4, col: '#b8302a', a: 1, pass2: false, gap: false });
+    pencil([[0, -226 + b], [2, -138 + b]], { w: 2, col: OF.topD, a: 0.8, pass2: false }); dashL([[6, -224 + b], [8, -140 + b]], OF.topD, 0.5); for (let k = 0; k < 4; k++) nb(1, -212 + k * 22 + b, 3.6, CU.copperL);
+    pencil([[-58, -250 + b], [64, -112 + b]], { w: 12, col: '#efe9da', a: 1, pass2: false, gap: false }); pencil([[-58, -250 + b], [64, -112 + b]], { w: 12, col: '#8a8470', a: 0.25, pass2: false, gap: false }); dashL([[-54, -252 + b], [60, -114 + b]], '#8a8470', 0.7);
+    const pc = rect(46, -128 + b, 38, 32, { wash: '#1c1816', washA: 1, w: 2, col: TM.line, key: 811 }); pencil([[46, -118 + b], [84, -118 + b]], { w: 1.6, col: '#5a5048', a: 0.8, pass2: false, gap: false }); nb(65, -112 + b, 3.2, CU.gold);
+    const bt = rect(-95, -134 + b, 190, 22, { wash: '#1c1816', washA: 1, w: 2.4, col: TM.line, key: 812 }); pencil([[-92, -130 + b], [92, -130 + b]], { w: 1.4, col: '#5a5048', a: 0.7, pass2: false, gap: false });
+    const bk = rect(-19, -140 + b, 38, 34, { wash: CU.gold, washA: 1, w: 2.2, col: CU.goldD, key: 813 }); metalG(bk.path, -6, -128 + b, 40, CU.goldL, CU.gold, CU.goldD); star6(0, -123 + b, 11, CU.goldL, CU.goldD); ell(0, -123 + b, 3, 3, { wash: '#7a1a1a', washA: 1, line: false });
+  },
+  railman(OF, b, t, bp, L) {                                           // 1891: тёмно-синяя тужурка, два ряда медных пуговиц, белая рубашка, эмблема на воротнике
+    const sk = skirt6(OF, b, L, -118, -70, 90, 98, 820);
+    for (const P of [bp, sk]) hatch(P.path, P.bb, { gap: 6, a: 0.15, col: OF.topD, ang: 1.25, key: 821, w: 1.4 });
+    poly([[-34, -262 + b], [34, -262 + b], [30, -226 + b], [0, -196 + b], [-30, -226 + b]], { wash: OF.shirt, washA: 1, w: 2, col: TM.line, key: 822 });
+    for (const sd of [-1, 1]) poly([[sd * 4, -256 + b], [sd * 38, -262 + b], [sd * 30, -234 + b]], { wash: OF.shirt, washA: 1, w: 1.8, col: TM.line });
+    poly([[-5, -246 + b], [5, -246 + b], [4, -226 + b], [-4, -226 + b]], { wash: '#16161a', washA: 1, w: 1.4 }); poly([[-4, -226 + b], [4, -226 + b], [9, -186 + b], [0, -178 + b], [-9, -186 + b]], { wash: '#16161a', washA: 1, w: 1.6 });
+    for (const sd of [-1, 1]) { const lp = poly([[sd * 36, -262 + b], [sd * 80, -250 + b], [sd * 66, -190 + b], [sd * 30, -150 + b], [sd * 40, -214 + b]], { wash: OF.topL, washA: 1, w: 2.4, col: TM.line, key: 823 }); shadeG(lp.path, 0, -150 + b, 0, -262 + b, OF.topD, 0.4); dashL([[sd * 40, -254 + b], [sd * 76, -244 + b], [sd * 62, -192 + b]], '#0a1230', 0.6); }
+    railEmb(-62, -222 + b, 0.5);
+    for (const sd of [-1, 1]) { pencil([[sd * 22, -196 + b], [sd * 26, -96 + b]], { w: 1.8, col: OF.topD, a: 0.8, pass2: false }); for (let k = 0; k < 4; k++) nb(sd * 26, -178 + k * 22 + b, 4.2, CU.copperL); }
+    for (const sd of [-1, 1]) { rect(sd * 62 - 17, -122 + b, 34, 26, { wash: OF.top, washA: 1, w: 1.8, col: TM.line, a: 0.8 }); poly([[sd * 62 - 19, -124 + b], [sd * 62 + 19, -124 + b], [sd * 62 + 17, -110 + b], [sd * 62 - 17, -110 + b]], { wash: OF.topL, washA: 0.6, w: 1.6, col: TM.line, a: 0.7 }); nb(sd * 62, -112 + b, 2.8, CU.copperL); }
+    pencil(spline([[-2, -176 + b], [-18, -150 + b], [-34, -140 + b]], false, 6), { w: 2.2, col: CU.copper, pass2: false }); ell(-36, -135 + b, 5, 6, { wash: CU.copperL, washA: 1, w: 1.4, col: CU.copperD });
+  },
+  photog(OF, b, t, bp, L) {                                            // 1918: жилет в ёлочку поверх белой рубашки, подтяжки, бабочка (рисуется общим кодом)
+    ctx.save(); ctx.clip(bp.path); for (let y = -250; y <= -80; y += 9) pencil([[-100, y + b], [100, y + 2 + b]], { w: 1, col: OF.topD, a: 0.14, pass2: false, gap: false }); ctx.restore();
+    for (const sd of [-1, 1]) poly([[sd * 4, -258 + b], [sd * 40, -262 + b], [sd * 30, -234 + b]], { wash: OF.top, washA: 1, w: 1.8, col: TM.line });
+    const VP = [[-48, -250 + b], [-14, -238 + b], [0, -200 + b], [14, -238 + b], [48, -250 + b], [56, -190 + b], [58, -106 + b], [0, -92 + b], [-58, -106 + b], [-56, -190 + b]];
+    const vs = poly(VP, { wash: '#8a7a64', washA: 1, w: 2.6, col: TM.line, key: 830 });
+    ctx.save(); ctx.clip(vs.path); let row = 0; for (let y = -252; y < -88; y += 9, row++) for (let x = -62; x < 62; x += 12) { const d = row % 2 ? 1 : -1; pencil([[x, y + 5 * d + 4], [x + 6, y + 4 - 5 * d + 0], [x + 12, y + 5 * d + 4]], { w: 1.5, col: row % 2 ? '#3a2e20' : '#d8ccb0', a: 0.5, pass2: false, gap: false, taper: false }); } ctx.restore();
+    shadeG(vs.path, -L.side * 60, 0, L.side * 50, 0, '#2a2014', 0.4); pencil([[0, -198 + b], [0, -94 + b]], { w: 1.8, col: '#2a2014', a: 0.7, pass2: false });
+    for (let k = 0; k < 5; k++) nb(1, -184 + k * 19 + b, 3.4, '#3a2a1a');
+    pencil([[-44, -232 + b], [-52, -190 + b], [-54, -110 + b]], { w: 2, col: '#2a2014', a: 0.7, pass2: false }); pencil([[44, -232 + b], [52, -190 + b], [54, -110 + b]], { w: 2, col: '#2a2014', a: 0.7, pass2: false });
+    for (const sd of [-1, 1]) { pencil([[sd * 62, -262 + b], [sd * 70, -200 + b], [sd * 74, -112 + b]], { w: 10, col: '#4a2e1a', a: 1, pass2: false, gap: false }); dashL([[sd * 64, -258 + b], [sd * 71, -200 + b], [sd * 75, -112 + b]], '#c8a070', 0.5); nb(sd * 74, -118 + b, 4, CU.copperL); }
+    rect(-8, -190 + b, 16, 14, { wash: 'rgba(0,0,0,0)', washA: 0, w: 1.4, col: '#3a2a1a', a: 0.5 }); pencil([[-60, -128 + b], [-50, -128 + b]], { w: 1.8, col: '#2a2014', a: 0.7, pass2: false, gap: false });
+  },
+  kingsiam(OF, b, t, bp, L) {                                          // «Король и я» (1956): золотой камзол с вышивкой, красный кушак, шёлковые шаровары
+    const sk = skirt6(OF, b, L, -124, -40, 86, 108, 840, OF.pants);
+    metalG(sk.path, L.side * 40, -90 + b, 140, '#b8405a', '#6a1424', '#2a040c', 0.55);
+    for (const f of [-0.75, -0.4, -0.05, 0.3, 0.65]) { pencil(spline([[f * 84, -118 + b], [f * 100 + 4, -80 + b], [f * 112, -46 + b]], false, 6), { w: 5, col: 'rgba(255,190,200,0.2)', pass2: false, gap: false }); }
+    for (const P of [bp, sk]) hatch(P.path, P.bb, { gap: 7, a: 0.1, col: '#000', ang: 1.3, key: 841, w: 1.3 });
+    ctx.save(); ctx.clip(bp.path); { const jc = new Path2D(); jc.rect(-300, -400 + b, 600, 292); ctx.clip(jc); } metalG(bp.path, L.side * 30, -200 + b, 150, OF.topL, OF.top, OF.topD, 0.7);
+    for (let k = -8; k <= 8; k++) { pencil([[k * 24 - 120, -260 + b], [k * 24 + 40, -90 + b]], { w: 1.2, col: OF.topD, a: 0.5, pass2: false, gap: false }); pencil([[k * 24 + 120, -260 + b], [k * 24 - 40, -90 + b]], { w: 1.2, col: OF.topD, a: 0.5, pass2: false, gap: false }); }
+    for (let r = 0; r < 6; r++) for (let c = -4; c <= 4; c++) { const x = c * 24 + (r % 2) * 12, y = -246 + r * 26 + b; if (Math.abs(x) < 88) ell(x, y, 2.6, 2.6, { wash: '#b8202a', washA: 0.95, line: false }); }
+    ctx.restore();
+    for (const sd of [-1, 1]) { const ml = ell(sd * 44, -196 + b, 17, 17, { wash: 'rgba(0,0,0,0)', washA: 0, w: 2.6, col: CU.goldD }); ell(sd * 44, -196 + b, 11, 11, { wash: '#b8202a', washA: 0.85, w: 1.6, col: CU.goldD }); star6(sd * 44, -196 + b, 8, CU.goldL, CU.goldD, 6, 0.5); }
+    goldBand([[-4, -246 + b], [-3, -170 + b], [0, -108 + b]], 12, 842, { pearls: 1 });
+    for (let k = 0; k < 5; k++) pearlDot(0, -224 + k * 26 + b, 3.4);
+    const cl = poly([[-46, -272 + b], [46, -272 + b], [44, -236 + b], [0, -226 + b], [-44, -236 + b]], { wash: OF.topL, washA: 1, w: 2.4, col: TM.line, key: 843 }); shadeG(cl.path, 0, -226 + b, 0, -272 + b, OF.topD, 0.4);
+    goldBand([[-44, -240 + b], [0, -230 + b], [44, -240 + b]], 10, 844, {}); for (const sd of [-1, 1]) gem(sd * 20, -250 + b, 3.2, CU.ruby);
+    const ss = rect(-96, -148 + b, 192, 38, { wash: '#c0202e', washA: 1, w: 2.6, col: TM.line, key: 845 }); shadeG(ss.path, 0, -110 + b, 0, -148 + b, '#4a0610', 0.45); metalG(ss.path, L.side * 50, -138 + b, 120, '#e8505a', '#c0202e', '#6a0a16', 0.5);
+    for (let x = -88; x < 92; x += 14) pencil([[x, -146 + b], [x + 5, -112 + b]], { w: 1.4, col: '#6a0a16', a: 0.4, pass2: false, gap: false });
+    pencil([[-96, -142 + b], [96, -142 + b]], { w: 1.6, col: CU.gold, a: 0.9, pass2: false, gap: false }); pencil([[-96, -116 + b], [96, -116 + b]], { w: 1.6, col: CU.gold, a: 0.9, pass2: false, gap: false });
+    ell(56, -128 + b, 15, 14, { wash: '#a8101e', washA: 1, w: 2.2, col: TM.line }); for (const [x0, a] of [[52, 0.1], [64, -0.25]]) { const E = spline([[x0, -118 + b], [x0 + 6 + a * 20, -90 + b], [x0 + 4 + a * 34, -58 + b]], false, 6); shape(tubeP(E, 13, 11), { wash: '#b8202a', washA: 1, w: 2, col: TM.line }); const e = E[E.length - 1]; for (let k = -2; k <= 2; k++) line([[e[0] + k * 2.4, e[1]], [e[0] + k * 2.8, e[1] + 13]], { w: 2, col: CU.gold, pass2: false, smooth: false }); }
+  },
+  kozhanka(OF, b, t, bp, L) {                                          // 90-е: чёрная кожанка с бликами, молния, воротник; под ней красная олимпийка
+    const sk = skirt6(OF, b, L, -118, -78, 90, 98, 850);
+    const ol = poly([[-40, -262 + b], [40, -262 + b], [30, -214 + b], [0, -150 + b], [-30, -214 + b]], { wash: '#c42a30', washA: 1, w: 2, col: TM.line, key: 851 });
+    pencil([[-34, -256 + b], [-24, -222 + b], [-2, -156 + b]], { w: 5, col: '#f4f0e6', a: 1, pass2: false, gap: false }); pencil([[34, -256 + b], [24, -222 + b], [2, -156 + b]], { w: 5, col: '#f4f0e6', a: 1, pass2: false, gap: false });
+    pencil([[0, -250 + b], [0, -152 + b]], { w: 2.4, col: '#7a7a82', a: 1, pass2: false, gap: false });
+    for (const P of [bp, sk]) { metalG(P.path, L.side * 44, -216 + b, 150, '#6c6c7c', '#17171b', '#040406', 0.75); hatch(P.path, P.bb, { gap: 7, a: 0.3, col: '#000', ang: 1.2, key: 852, w: 1.4 }); }
+    ctx.save(); ctx.clip(bp.path); ctx.lineCap = 'round'; for (const [a, c, w] of [[0.5, -226, 9], [0.32, -190, 6]]) { ctx.strokeStyle = `rgba(255,255,255,${a})`; ctx.lineWidth = w / S; ctx.beginPath(); ctx.moveTo(-L.side * 66, c + b); ctx.quadraticCurveTo(-L.side * 52, c + 26 + b, -L.side * 54, c + 56 + b); ctx.stroke(); ctx.beginPath(); ctx.moveTo(L.side * 30, c - 14 + b); ctx.quadraticCurveTo(L.side * 56, c + 6 + b, L.side * 74, c + 30 + b); ctx.stroke(); } ctx.restore();
+    for (const sd of [-1, 1]) { const lp = poly([[sd * 28, -264 + b], [sd * 84, -250 + b], [sd * 66, -192 + b], [sd * 26, -168 + b], [sd * 14, -214 + b]], { wash: OF.top, washA: 1, w: 2.6, col: TM.line, key: 853 }); metalG(lp.path, sd * 60, -240 + b, 70, '#6a6a78', '#1c1c22', '#040406', 0.85); pencil([[sd * 30, -258 + b], [sd * 78, -246 + b], [sd * 62, -196 + b]], { w: 4, col: 'rgba(255,255,255,0.28)', pass2: false, gap: false }); dashL([[sd * 32, -252 + b], [sd * 76, -240 + b], [sd * 60, -194 + b], [sd * 28, -172 + b]], '#8a8a96', 0.55); }
+    pencil([[0, -166 + b], [1, -90 + b]], { w: 3.4, col: '#a8aab2', a: 1, pass2: false, gap: false }); dashL([[-3, -164 + b], [-2, -92 + b]], '#2a2a30', 0.8, 1.6, 1);
+    rect(-5, -176 + b, 10, 16, { wash: '#c8cad2', washA: 1, w: 1.6, col: TM.line }); ell(0, -158 + b, 3.4, 3.4, { wash: 'rgba(0,0,0,0)', washA: 0, w: 1.4, col: '#c8cad2' });
+    for (const sd of [-1, 1]) { pencil([[sd * 30, -138 + b], [sd * 66, -112 + b]], { w: 3, col: '#a8aab2', a: 0.9, pass2: false, gap: false }); pencil([[sd * 30, -144 + b], [sd * 68, -118 + b]], { w: 1.6, col: '#000', a: 0.6, pass2: false, gap: false }); rect(sd * 66 - 4, -118 + b, 8, 10, { wash: '#c8cad2', washA: 1, w: 1.2, col: TM.line }); }
+    const hm = rect(-92, -102 + b, 184, 20, { wash: OF.topD, washA: 1, w: 2.2, col: TM.line, key: 854 }); for (let x = -86; x <= 86; x += 8) pencil([[x, -100 + b], [x, -84 + b]], { w: 1.4, col: '#4a4a52', a: 0.4, pass2: false, gap: false });
+    pencil(spline([[-70, -188 + b], [-50, -170 + b], [-28, -160 + b]], false, 6), { w: 1.6, col: '#000', a: 0.4, pass2: false, gap: false }); pencil(spline([[60, -150 + b], [40, -136 + b], [18, -126 + b]], false, 6), { w: 1.6, col: '#000', a: 0.4, pass2: false, gap: false });
+  },
+  hardhat(OF, b, t, bp, L) {                                           // 2012: оранжевый сигнальный жилет со светоотражателями, страховочная обвязка, карабин
+    hatch(bp.path, bp.bb, { gap: 6, a: 0.14, col: OF.topD, ang: 1.2, key: 860, w: 1.4 });
+    pencil([[0, -250 + b], [0, -90 + b]], { w: 2, col: OF.topD, a: 0.7, pass2: false });
+    for (const sd of [-1, 1]) {
+      const vp = poly([[sd * 32, -254 + b], [sd * 64, -248 + b], [sd * 82, -208 + b], [sd * 84, -170 + b], [sd * 90, -128 + b], [sd * 78, -98 + b], [sd * 4, -94 + b], [sd * 4, -200 + b]], { wash: '#ff7a14', washA: 1, w: 2.6, col: TM.line, key: 861 });
+      hatch(vp.path, vp.bb, { gap: 5, a: 0.16, col: '#8a2a00', ang: 1.1, key: 862, w: 1.3 }); shadeG(vp.path, -L.side * 80, 0, L.side * 40, 0, '#8a2a00', 0.4);
+      ctx.save(); ctx.clip(vp.path); for (const x of [44, 60]) { const rs = poly([[sd * x - 5, -256 + b], [sd * x + 5, -256 + b], [sd * (x + 6) + 5, -90 + b], [sd * (x + 6) - 5, -90 + b]], { wash: '#d4dadf', washA: 1, w: 1, col: '#6a7076', a: 0.7 }); pencil([[sd * x, -248 + b], [sd * (x + 5), -96 + b]], { w: 2, col: '#ffffff', a: 0.8, pass2: false, gap: false }); } 
+      const hb = rect(sd > 0 ? 4 : -90, -146 + b, 86, 13, { wash: '#d4dadf', washA: 1, w: 1, col: '#6a7076', a: 0.7 }); pencil([[sd > 0 ? 8 : -86, -142 + b], [sd > 0 ? 86 : -8, -142 + b]], { w: 2, col: '#ffffff', a: 0.8, pass2: false, gap: false }); ctx.restore();
+      dashL([[sd * 34, -248 + b], [sd * 62, -242 + b], [sd * 80, -206 + b], [sd * 82, -168 + b]], '#8a2a00', 0.6);
+    }
+    for (const sd of [-1, 1]) { pencil(spline([[sd * 30, -258 + b], [sd * 32, -214 + b], [sd * 26, -168 + b], [sd * 38, -124 + b]], false, 8), { w: 11, col: '#1a1a1e', a: 1, pass2: false, gap: false }); dashL([[sd * 33, -256 + b], [sd * 35, -214 + b], [sd * 29, -168 + b], [sd * 41, -124 + b]], '#f2c430', 0.9, 1.4, 1); }
+    pencil([[-30, -196 + b], [30, -196 + b]], { w: 9, col: '#1a1a1e', a: 1, pass2: false, gap: false }); const bk = rect(-10, -204 + b, 20, 16, { wash: '#b4b8c0', washA: 1, w: 1.8, col: TM.line }); metalG(bk.path, -2, -198 + b, 18, '#ffffff', '#b4b8c0', '#4a4e54');
+    const wb = rect(-94, -130 + b, 188, 18, { wash: '#1a1a1e', washA: 1, w: 2.2, col: TM.line, key: 863 }); dashL([[-90, -126 + b], [90, -126 + b]], '#f2c430', 0.7); const dr = rect(-12, -134 + b, 24, 24, { wash: '#b4b8c0', washA: 1, w: 2, col: TM.line }); metalG(dr.path, -3, -126 + b, 24, '#ffffff', '#b4b8c0', '#4a4e54'); rect(-6, -128 + b, 12, 12, { wash: '#1a1a1e', washA: 1, w: 1.2, col: TM.line });
+    for (const sd of [-1, 1]) { pencil([[sd * 52, -112 + b], [sd * 44, -96 + b]], { w: 9, col: '#1a1a1e', a: 1, pass2: false, gap: false }); }
+    ell(66, -120 + b, 8, 9, { wash: '#b4b8c0', washA: 1, w: 2, col: TM.line }); const ls = spline([[66, -112 + b], [78 + Math.sin(t * 2) * 3, -90 + b], [60, -74 + b], [74, -58 + b]], false, 8);
+    pencil(ls, { w: 8, col: '#e8b020', a: 1, pass2: false, gap: false }); dashL(ls, '#7a4a00', 0.8, 1.6, 1);
+    const ce = ls[ls.length - 1]; ell(ce[0], ce[1] + 10, 9, 14, { wash: 'rgba(0,0,0,0)', washA: 0, w: 3.6, col: '#c4c8d0' }); pencil([[ce[0] + 6, ce[1] + 2], [ce[0] + 9, ce[1] + 12]], { w: 3, col: '#c4c8d0', a: 1, pass2: false, gap: false });
+    rect(-62, -206 + b, 34, 28, { wash: '#ff8a24', washA: 1, w: 1.8, col: TM.line, a: 0.8 }); pencil([[-62, -198 + b], [-28, -198 + b]], { w: 1.8, col: '#8a2a00', a: 0.7, pass2: false, gap: false }); line([[-52, -206 + b], [-52, -216 + b]], { w: 3, col: '#2a5aa0', pass2: false });
   }
 };
 /* ---- голова: брызги извести / сажа на шерсти */
@@ -900,6 +1129,82 @@ const HAT6 = {
     ctx.save(); ctx.fillStyle = '#10161a'; ctx.fill(outer, 'evenodd'); ctx.restore(); pencil(OP.concat([OP[0]]), { w: 3, col: TM.line, a: 0.9, pass2: false }); pencil(IP.concat([IP[0]]), { w: 3.4, col: '#14a8a0', a: 0.95, pass2: false });
     ctx.save(); ctx.clip(gp.path); ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineCap = 'round'; ctx.lineWidth = 6 / S; ctx.beginPath(); ctx.moveTo(cx - 74, cy - 24); ctx.lineTo(cx - 40, cy - 40); ctx.stroke(); ctx.lineWidth = 3 / S; ctx.globalAlpha = 0.7; ctx.beginPath(); ctx.moveTo(cx - 30, cy - 40); ctx.lineTo(cx - 16, cy - 44); ctx.stroke(); ctx.restore();
     pencil([[cx + 56, cy + 14], [cx + 74, cy + 8]], { w: 2.4, col: 'rgba(255,255,255,0.6)', pass2: false, gap: false });
+  },
+  shades(t, o, fx, L) {                                                // 004: солнечные очки-«капли» на лбу (уши видны)
+    for (const sd of [-1, 1]) pencil(spline([[sd * 66, -78], [sd * 100, -66], [sd * 116, -38]], false, 6), { w: 3.4, col: '#14120e', a: 0.9, pass2: false });
+    for (const sd of [-1, 1]) { const x0 = sd * 34, y0 = -76, P = [[-22, -14], [0, -19], [22, -13], [26, 2], [19, 17], [3, 23], [-9, 19], [-22, 6]].map(([x, y]) => [x0 + sd * x * 0.92, y0 + y * 0.92]);
+      const ln = shape(spline(P, true, 6), { wash: '#16262c', washA: 0.97, w: 3.2, col: CU.gold, key: 870 + sd });
+      ctx.save(); ctx.clip(ln.path); const g = ctx.createLinearGradient(0, y0 - 18, 0, y0 + 22); g.addColorStop(0, 'rgba(255,170,90,0.7)'); g.addColorStop(0.45, 'rgba(120,70,60,0.2)'); g.addColorStop(1, 'rgba(40,120,150,0.55)'); ctx.fillStyle = g; ctx.fillRect(x0 - 40, y0 - 24, 80, 50); ctx.restore();
+      pencil([[x0 - sd * 16, y0 - 8], [x0 - sd * 4, y0 - 14]], { w: 3.6, col: 'rgba(255,255,255,0.85)', pass2: false, gap: false }); pencil(spline(P, true, 6), { w: 1.6, col: CU.goldL, a: 0.7, pass2: false, gap: false }); }
+    pencil(spline([[-12, -86], [0, -92], [12, -86]], false, 6), { w: 3, col: CU.gold, pass2: false }); pencil([[-11, -80], [11, -80]], { w: 1.8, col: CU.goldD, a: 0.8, pass2: false, gap: false });
+  },
+  generalCap(t, o, fx, L) {                                            // фуражка генерал-губернатора: зелёный тулья, красный околыш, чёрный козырёк, кокарда
+    const vz = blob([[8, -68], [76, -76], [132, -68], [150, -52], [116, -40], [40, -46], [6, -54]], { wash: '#17171b', washA: 1, w: 2.8, col: TM.line, key: 880 }); shadeG(vz.path, 0, -76, 0, -40, '#ffffff', 0.25); pencil([[40, -66], [100, -66]], { w: 3, col: 'rgba(255,255,255,0.5)', pass2: false, gap: false });
+    const cr = poly([[-90, -96], [-112, -150], [-62, -178], [0, -184], [62, -178], [112, -150], [90, -96]], { wash: '#1e4a2e', washA: 1, w: 3, col: TM.line, key: 881 }); shadeG(cr.path, -L.side * 120, 0, L.side * 60, 0, '#0a2616', 0.55); hatch(cr.path, cr.bb, { gap: 6, a: 0.14, col: '#0a2616', ang: 1.2, key: 882, w: 1.3 });
+    pencil([[-108, -148], [-60, -174], [0, -180], [60, -174], [108, -148]], { w: 3, col: '#b0202a', a: 1, pass2: false }); pencil([[-62, -176], [0, -182], [62, -176]], { w: 1.6, col: CU.gold, a: 0.9, pass2: false, gap: false });
+    const bd = rect(-94, -104, 188, 34, { wash: '#b0202a', washA: 1, w: 2.6, col: TM.line, key: 883 }); shadeG(bd.path, -L.side * 100, 0, L.side * 60, 0, '#4a0a10', 0.4); hatch(bd.path, bd.bb, { gap: 4, a: 0.2, col: '#4a0a10', ang: 1.57, key: 884, w: 1.2 });
+    pencil([[-94, -102], [94, -102]], { w: 2.4, col: CU.gold, a: 0.9, pass2: false, gap: false }); pencil([[-94, -72], [94, -72]], { w: 2.4, col: CU.gold, a: 0.9, pass2: false, gap: false });
+    const ck = ell(0, -88, 21, 17, { wash: CU.gold, washA: 1, w: 2.2, col: CU.goldD, key: 885 }); metalG(ck.path, -5, -94, 26, CU.goldL, CU.gold, CU.goldD); ell(0, -88, 12, 9.5, { wash: '#16161a', washA: 1, w: 1.4, col: CU.goldD }); ell(0, -88, 5, 4, { wash: CU.gold, washA: 1, line: false });
+    rimL(spline([[-90, -96], [-112, -150], [-62, -178], [0, -184], [62, -178], [112, -150], [90, -96]], false, 6), L.side, L.rim, 0.7, 3);
+  },
+  beskozyrka(t, o, fx, L) {                                            // бескозырка солдата 1860: низкий зелёный цилиндр, красный околыш, без козырька
+    const cr = blob([[-90, -100], [-100, -126], [-62, -142], [0, -146], [62, -142], [98, -124], [90, -100], [0, -96]], { wash: '#2c4a30', washA: 1, w: 3, col: TM.line, key: 890 }); shadeG(cr.path, -L.side * 120, 0, L.side * 60, 0, '#0e2412', 0.55); hatch(cr.path, cr.bb, { gap: 5, a: 0.18, col: '#0e2412', ang: 1.2, key: 891, w: 1.3 });
+    pencil([[-98, -124], [-60, -140], [0, -144], [60, -140], [96, -122]], { w: 2.6, col: '#b8302a', a: 1, pass2: false });
+    const bd = blob([[-94, -104], [-96, -78], [0, -66], [96, -78], [94, -104], [0, -96]], { wash: '#b8302a', washA: 1, w: 2.8, col: TM.line, key: 892 }); shadeG(bd.path, -L.side * 100, 0, L.side * 60, 0, '#4a0a10', 0.4); hatch(bd.path, bd.bb, { gap: 4, a: 0.2, col: '#4a0a10', ang: 1.57, key: 893, w: 1.2 });
+    const ck = ell(0, -84, 13, 11, { wash: CU.gold, washA: 1, w: 2, col: CU.goldD, key: 894 }); metalG(ck.path, -3, -88, 16, CU.goldL, CU.gold, CU.goldD); ell(0, -84, 6, 5, { wash: '#16161a', washA: 1, line: false });
+    ctx.save(); ctx.clip(cr.path); ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineCap = 'round'; ctx.lineWidth = 7 / S; ctx.beginPath(); ctx.moveTo(L.side * 24, -140); ctx.quadraticCurveTo(L.side * 60, -132, L.side * 74, -112); ctx.stroke(); ctx.restore();
+  },
+  railCap(t, o, fx, L) {                                               // фуражка путейца 1891: синяя, чёрный околыш, козырёк, эмблема «молоток и ключ»
+    const vz = blob([[8, -66], [72, -74], [124, -66], [142, -52], [108, -40], [40, -46], [6, -52]], { wash: '#15151a', washA: 1, w: 2.8, col: TM.line, key: 895 }); shadeG(vz.path, 0, -74, 0, -40, '#ffffff', 0.22); pencil([[38, -64], [96, -64]], { w: 3, col: 'rgba(255,255,255,0.45)', pass2: false, gap: false });
+    const cr = poly([[-90, -98], [-108, -146], [-60, -172], [0, -178], [60, -172], [108, -146], [90, -98]], { wash: '#27408a', washA: 1, w: 3, col: TM.line, key: 896 }); shadeG(cr.path, -L.side * 120, 0, L.side * 60, 0, '#0a1230', 0.55); hatch(cr.path, cr.bb, { gap: 6, a: 0.14, col: '#0a1230', ang: 1.2, key: 897, w: 1.3 });
+    pencil([[-106, -144], [-60, -168], [0, -174], [60, -168], [106, -144]], { w: 2.6, col: '#f2c430', a: 0.9, pass2: false });
+    const bd = rect(-94, -104, 188, 34, { wash: '#16184a', washA: 1, w: 2.6, col: TM.line, key: 898 }); shadeG(bd.path, -L.side * 100, 0, L.side * 60, 0, '#000', 0.4); for (let x = -90; x < 92; x += 5) pencil([[x, -102], [x, -72]], { w: 1, col: '#4a5aa0', a: 0.18, pass2: false, gap: false });
+    pencil([[-94, -102], [94, -102]], { w: 2, col: '#f2c430', a: 0.9, pass2: false, gap: false });
+    ell(0, -87, 29, 25, { wash: '#27408a', washA: 1, w: 2.4, col: '#f2c430', key: 899 }); railEmb(0, -87, 0.62);
+    rimL(spline([[-90, -98], [-108, -146], [-60, -172], [0, -178], [60, -172], [108, -146], [90, -98]], false, 6), L.side, L.rim, 0.7, 3);
+  },
+  tweedcap(t, o, fx, L) {                                              // кепка-восьмиклинка из твида: клинья, пуговка, короткий козырёк
+    const vz = blob([[14, -72], [90, -80], [136, -66], [112, -52], [30, -56]], { wash: '#5a4a38', washA: 1, w: 2.8, col: TM.line, key: 900 }); hatch(vz.path, vz.bb, { gap: 4, a: 0.25, col: '#2a1e12', ang: 0.5, key: 901, w: 1.3 });
+    const P = [[-108, -68], [-102, -116], [-62, -142], [0, -150], [64, -142], [106, -116], [114, -70], [60, -58], [0, -56], [-60, -58]];
+    const cr = blob(P, { wash: '#8a7a62', washA: 1, w: 3, col: TM.line, key: 902 }); shadeG(cr.path, -L.side * 120, 0, L.side * 70, 0, '#2e2418', 0.5);
+    ctx.save(); ctx.clip(cr.path); const R = rng(903); for (let i = 0; i < 260; i++) { const x = -116 + R() * 232, y = -156 + R() * 100; ctx.globalAlpha = 0.5; ctx.fillStyle = i % 3 === 0 ? '#e8dcc0' : i % 3 === 1 ? '#4a3a28' : '#a8683a'; ctx.fillRect(x, y, 2.4, 2.4); } ctx.globalAlpha = 1;
+    for (let y = -150; y < -58; y += 8) for (let x = -112; x < 116; x += 10) { const d = ((x / 10 + y / 8) | 0) % 2 ? 1 : -1; pencil([[x, y + 3 * d], [x + 5, y - 3 * d], [x + 10, y + 3 * d]], { w: 1, col: '#3a2c1c', a: 0.2, pass2: false, gap: false, taper: false }); } ctx.restore();
+    for (const [x1, y1, c1x, c1y] of [[-96, -66, -80, -112], [-44, -60, -34, -112], [30, -58, 22, -112], [90, -66, 70, -110]]) pencil(spline([[0, -150], [c1x, c1y], [x1, y1]], false, 6), { w: 1.8, col: '#2a1e12', a: 0.7, pass2: false, gap: false });
+    pencil([[-110, -66], [-60, -58], [0, -56], [60, -58], [112, -68]], { w: 5, col: '#3a2c1c', a: 0.75, pass2: false, gap: false });
+    ell(0, -150, 6, 5, { wash: '#6a5a44', washA: 1, w: 1.6, col: TM.line }); rimL(spline(P.slice(0, 7), false, 6), L.side, L.rim, 0.65, 3);
+  },
+  siamcrown(t, o, fx, L) {                                             // небольшая золотая корона-шпиль (пагода) между ушами
+    const base = goldBand([[-40, -86], [-20, -80], [0, -78], [20, -80], [40, -86]], 15, 910, { pearls: 1 });
+    for (const [x, y, c] of [[-24, -84, CU.ruby], [0, -80, '#1a7a4a'], [24, -84, CU.ruby]]) gem(x, y, 3.4, c);
+    const T = [[34, -92, 28, -126, 7], [28, -122, 21, -152, 6], [21, -148, 14, -176, 5], [14, -172, 8, -200, 4]];
+    T.forEach(([w0, y0, w1, y1, sc], i) => {
+      const tp = blob([[-w0, y0], [-w0 - 5, (y0 + y1) / 2 + 4], [-w1, y1], [0, y1 - 8], [w1, y1], [w0 + 5, (y0 + y1) / 2 + 4], [w0, y0], [0, y0 + 4]], { wash: CU.gold, washA: 1, w: 2.4, col: CU.goldD, key: 911 + i });
+      metalG(tp.path, L.side * 8, (y0 + y1) / 2, w0 * 1.7, CU.goldL, CU.gold, CU.goldD); hatch(tp.path, tp.bb, { gap: 5, a: 0.14, col: CU.goldD, ang: 1.2, key: 915 + i, w: 1.2 });
+      for (const sd of [-1, 1]) { const x = sd * (w0 + 5), y = (y0 + y1) / 2 + 4; poly([[x - sd * 2, y + 8], [x + sd * 8, y - 6], [x - sd * 4, y - 2]], { wash: CU.goldL, washA: 1, w: 1.4, col: CU.goldD }); }
+      pencil([[-w0 * 0.7, y0 - 4], [w0 * 0.7, y0 - 4]], { w: 2, col: CU.goldD, a: 0.7, pass2: false, gap: false }); nb(0, (y0 + y1) / 2, 2.6, '#c0182a'); });
+    pencil([[0, -204], [0, -236]], { w: 3, col: CU.gold, a: 1, pass2: false, gap: false }); ell(0, -240, 4.6, 5, { wash: CU.goldL, washA: 1, w: 1.6, col: CU.goldD });
+  },
+  cap90(t, o, fx, L) {                                                 // чёрная бейсболка с прямым козырьком
+    const cr = blob([[-100, -66], [-92, -122], [-50, -146], [0, -152], [52, -146], [92, -122], [102, -66], [0, -60]], { wash: '#16161a', washA: 1, w: 3, col: TM.line, key: 920 }); metalG(cr.path, L.side * 40, -130, 150, '#5a5a66', '#16161a', '#030304', 0.85);
+    ctx.save(); ctx.clip(cr.path); ctx.strokeStyle = 'rgba(255,255,255,0.32)'; ctx.lineCap = 'round'; ctx.lineWidth = 8 / S; ctx.beginPath(); ctx.moveTo(L.side * 24, -146); ctx.quadraticCurveTo(L.side * 60, -130, L.side * 72, -100); ctx.stroke(); ctx.restore();
+    for (const [x1, y1, c1x, c1y] of [[-90, -66, -70, -118], [-40, -62, -30, -120], [38, -62, 28, -120], [88, -66, 68, -116]]) pencil(spline([[0, -152], [c1x, c1y], [x1, y1]], false, 6), { w: 1.6, col: '#000', a: 0.8, pass2: false, gap: false });
+    ell(0, -152, 6, 4.4, { wash: '#16161a', washA: 1, w: 1.6, col: TM.line });
+    for (let i = 0; i < 3; i++) pencil([[-34 + i * 7, -112], [-26 + i * 7, -96]], { w: 3.2, col: '#f4f2ea', a: 0.95, pass2: false, gap: false });
+    const br = poly([[18, -70], [96, -74], [152, -68], [152, -58], [96, -56], [20, -58]], { wash: '#16161a', washA: 1, w: 2.8, col: TM.line, key: 921 }); shadeG(br.path, 0, -76, 0, -56, '#ffffff', 0.22); pencil([[40, -69], [136, -66]], { w: 2.4, col: 'rgba(255,255,255,0.4)', pass2: false, gap: false });
+    pencil([[0, -62], [60, -58], [102, -66]], { w: 4, col: '#050506', a: 0.9, pass2: false, gap: false });
+  },
+  helmetW(t, o, fx, L) {                                               // белая строительная каска: козырёк, три ребра, эмблема-мост
+    const br = ell(0, -62, 112, 17, { wash: '#eceff2', washA: 1, w: 3, col: TM.line, key: 930 }); shadeG(br.path, 0, -46, 0, -78, '#7a828a', 0.5);
+    const pk = blob([[40, -66], [110, -74], [156, -62], [132, -48], [60, -50]], { wash: '#e4e8ec', washA: 1, w: 2.8, col: TM.line, key: 931 }); shadeG(pk.path, 0, -50, 0, -74, '#6a727a', 0.45);
+    const P = [[-96, -62], [-94, -108], [-62, -150], [0, -168], [62, -150], [94, -108], [96, -62], [0, -52]];
+    const dm = blob(P, { wash: '#f4f6f8', washA: 1, w: 3.2, col: TM.line, key: 932 }); metalG(dm.path, L.side * 36, -130, 170, '#ffffff', '#eef1f4', '#8a929a', 0.9);
+    for (const [c1x, x1] of [[0, 0], [-34, -52], [34, 52]]) { const rb = spline([[x1 * 0.4, -166], [c1x + (c1x ? c1x * 0.1 : 0), -116], [x1 * 1.3, -64]], false, 6); pencil(rb, { w: 7, col: '#c8cfd6', a: 0.8, pass2: false, gap: false }); pencil(edgeOff(rb, -4), { w: 1.6, col: '#6a727a', a: 0.7, pass2: false, gap: false }); pencil(edgeOff(rb, 4), { w: 1.6, col: '#ffffff', a: 0.7, pass2: false, gap: false }); }
+    ctx.save(); ctx.clip(dm.path); ctx.strokeStyle = 'rgba(255,255,255,0.8)'; ctx.lineCap = 'round'; ctx.lineWidth = 9 / S; ctx.beginPath(); ctx.moveTo(L.side * 46, -156); ctx.quadraticCurveTo(L.side * 76, -134, L.side * 84, -96); ctx.stroke(); ctx.restore();
+    const em = ell(0, -112, 24, 24, { wash: '#2a5aa0', washA: 1, w: 2.4, col: '#0a1e48', key: 933 });
+    ctx.save(); ctx.clip(em.path); ctx.strokeStyle = '#f4f6f8'; ctx.lineCap = 'round'; ctx.lineWidth = 2.4 / S; ctx.beginPath(); ctx.moveTo(-22, -100); ctx.lineTo(22, -100); ctx.moveTo(0, -100); ctx.lineTo(0, -128); for (const k of [-3, -2, -1, 1, 2, 3]) { ctx.moveTo(0, -126); ctx.lineTo(k * 6.4, -100); } ctx.stroke(); ctx.restore();
+    pencil(ellPts(0, -112, 24, 24, 0, 0.05, 36), { w: 1.4, col: '#f4f6f8', a: 0.8, pass2: false, gap: false });
+    pencil([[-96, -64], [0, -52], [96, -64]], { w: 3, col: '#8a929a', a: 0.7, pass2: false, gap: false });
+    rimL(spline(P.slice(0, 7), false, 6), L.side, L.rim, 0.7, 3);
   }
 };
 /* ---- рукава: кольчуга, прорези, закатанные рукава, манжеты, «венгерские узлы», известь */
@@ -919,6 +1224,13 @@ function arm6(C, p, OF, k, t, sh, hand) {
     if (OF.cuffFur) { curls(cp.path, cp.bb, 26, '#b8a888', 0.6, 450, 3.4); fstr(cp.path, cp.bb, 16, 1.4, 7, '#ffffff', 0.6, 451); }
     if (OF.cuffGold) { const R = resample(edgeOff(Cc, 0), 10); R.forEach(([x, y], i) => (i % 2 ? pearlDot(x, y, 2.6) : gem(x, y, 2.4, CU.ruby))); for (const sd of [-1, 1]) pencil(edgeOff(Cc, sd * 22), { w: 1.4, col: CU.goldD, pass2: false, gap: false }); } }
   if (OF.cuffKnot) { const i = C.length - 10, [x, y] = C[i]; pencil(spline([[x - 16, y + 18], [x - 6, y - 8], [x, y - 24], [x + 6, y - 8], [x + 16, y + 18]], false, 6), { w: 2.8, col: OF.cord, pass2: false }); ctx.strokeStyle = OF.cord; ctx.lineWidth = 2.4 / S; ctx.beginPath(); ctx.ellipse(x, y - 28, 6, 5, 0, 0, 6.283); ctx.stroke(); pencil(edgeOff(C.slice(-6, -2), 0).map(([a, b2]) => [a, b2]), { w: 4, col: OF.cord, a: 0.8, pass2: false }); }
+  if (OF.flowers) { if (!near) wash(p.path, '#000', 0.16); ctx.save(); ctx.clip(p.path); for (const [i, a, c] of [[3, 0.4, ['#e0303a', '#7a0a1a']], [5, 1.8, ['#f6c82a', '#9a6208']]]) { const [x, y] = C[i]; leaf6(x, y, 16, a + 1.1); hibiscus(x, y, 11, a, c[0], c[1]); } ctx.restore(); }
+  if (OF.short) { const m = Math.floor(C.length * 0.42), Cf = C.slice(m - 1);                       // короткий рукав: голое предплечье + отворот
+    const fp = shape(fluff(tubeP(Cf, 38, 34), 3, near ? 443 : 444), { wash: near ? TM.fur : TM.furM, washA: 0.99, w: 2.6, col: TM.line, key: 445 }); fstr(fp.path, fp.bb, 24, 1.4, 9, TM.furD, 0.5, 446); fstr(fp.path, fp.bb, 14, 1.3, 8, TM.furL, 0.5, 447);
+    const hm = shape(tubeP(C.slice(m - 2, m + 1), 47, 45), { wash: near ? OF.topL : shadeC(OF.topL), washA: 1, w: 2.4, col: TM.line, key: 448 }); pencil(edgeOff(C.slice(m - 2, m + 1), 3), { w: 1.6, col: OF.topD, a: 0.7, pass2: false, gap: false }); }
+  if (OF.cuffLine) { const Cc = C.slice(-6, -1); for (const sd of [-1, 1]) pencil(edgeOff(Cc, sd * 14), { w: 2, col: CU.gold, a: 0.95, pass2: false, gap: false }); }
+  if (OF.sheen) pencil(edgeOff(C.slice(1, -3), near ? -12 : 12), { w: 5, col: near ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.14)', pass2: false, gap: false });
+  if (OF.epaul && near) epaul6(sh[0] + 6, sh[1] - 18, 1);
   if (OF.splash && near) limeSplash(p.path, p.bb, 3, 452);
 }
 /* ---- обувь (рисуется вместо лапы-ступни) */
@@ -927,10 +1239,13 @@ const BOOTS = {
   knyaz: { c: '#9a2a1e', d: '#3a0a06', h: 62, trim: CU.gold, tip: 1 }, hussar: { c: '#161416', d: '#000', h: 66, trim: '#ecc554', tassel: 1 }, lapti: { c: '#c8a868', d: '#7a6034', h: 20, lapti: 1 },
   shoe: { c: '#3a2a1e', d: '#120a06', h: 18 }, rubber: { c: '#26282c', d: '#08090a', h: 62, shine: 1 },
   aviator: { c: '#4a2c16', d: '#1a0e06', h: 62, trim: '#8a5a2a' }, oxford: { c: '#1c1a1c', d: '#000', h: 18, shine: 1 }, bogatyr: { c: '#3a2414', d: '#120a04', h: 56, trim: '#a8302a' },
-  varyag: { c: '#5a3c22', d: '#22160a', h: 58, wrap: '#b8a070' }, fin: { c: '#14232e', d: '#050a0e', h: 34, fin: 1 }
+  varyag: { c: '#5a3c22', d: '#22160a', h: 58, wrap: '#b8a070' }, fin: { c: '#14232e', d: '#050a0e', h: 34, fin: 1 },
+  flip: { c: '#18b0a8', d: '#06504c', h: 0, flip: 1, strap: '#f2c430' }, sapog: { c: '#17151a', d: '#000', h: 44, shine: 1 }, sapogB: { c: '#1c1816', d: '#000', h: 54, shine: 1, blouse: 1 },
+  gaiter: { c: '#b8aa88', d: '#6a5e44', h: 42, shoe: '#3a2a1e' }, siam: { c: '#d6a842', d: '#7a5414', h: 14, curl: 1 }, sneaker: { c: '#f4f2ee', d: '#9a968c', h: 24, sneaker: 1 }, work: { c: '#6a4a26', d: '#241608', h: 38, work: 1 }
 };
 function boot5(fx, fy, lx, bob, OF, k) {
   const B = BOOTS[OF.boots] || BOOTS.leather, top = fy - B.h;
+  if (B.flip) { bootFlip(fx, fy, k, B); return; }
   if (B.fin) { const fn = blob([[fx - 18, fy - 6], [fx + 40, fy - 12], [fx + 98, fy - 4], [fx + 116, fy + 10], [fx + 100, fy + 18], [fx + 40, fy + 15], [fx - 18, fy + 15]], { wash: '#14b4aa', washA: 1, w: 2.8, col: TM.line, key: 472 + k }); shadeG(fn.path, fx, fy + 20, fx, fy - 14, '#06504c', 0.5); for (let x = fx + 24; x < fx + 108; x += 12) pencil([[x, fy - 8], [x + 6, fy + 13]], { w: 1.6, col: '#06504c', a: 0.7, pass2: false, gap: false }); pencil([[fx + 30, fy - 8], [fx + 100, fy - 1]], { w: 2.6, col: 'rgba(220,255,250,0.55)', pass2: false }); }
   if (B.lapti) { const on = rect(lx - 24, fy - 66, 48, 54, { wash: '#ece4d0', washA: 1, w: 2.2, col: TM.line, key: 460 + k }); for (let y = -60; y < -12; y += 12) pencil([[lx - 24, fy + y], [lx + 24, fy + y + 8]], { w: 2, col: '#7a5a34', a: 0.85, pass2: false, gap: false }); }
   const P = [[lx - 23, top], [lx + 23, top], [lx + 25, fy - 8], [fx + 34, fy - 2], [fx + 33, fy + 11], [fx, fy + 16], [fx - 33, fy + 11], [fx - 34, fy - 2], [lx - 25, fy - 8]];
@@ -939,6 +1254,7 @@ function boot5(fx, fy, lx, bob, OF, k) {
   if (B.felt) fstr(bp.path, bp.bb, 30, 1.5, 8, '#9a968e', 0.5, 464 + k, 2);
   if (B.lapti) hatch(bp.path, bp.bb, { gap: 5, a: 0.55, col: B.d, ang: 0.7, key: 466 + k, w: 1.6 }), hatch(bp.path, bp.bb, { gap: 5, a: 0.45, col: B.d, ang: -0.7, key: 468 + k, w: 1.6 });
   if (B.wrap) { ctx.save(); ctx.clip(bp.path); for (let y = top + 8; y < fy - 4; y += 10) { pencil([[lx - 28, y + 9], [lx + 28, y - 7]], { w: 5, col: B.wrap, a: 0.95, pass2: false, gap: false }); pencil([[lx - 28, y + 12], [lx + 28, y - 4]], { w: 1.6, col: B.d, a: 0.6, pass2: false, gap: false }); } ctx.restore(); }
+  bootExtra(B, OF, fx, fy, lx, top, bp, k);
   if (B.shine) pencil([[lx + 12, top + 10], [lx + 14, fy - 12]], { w: 4, col: 'rgba(255,255,255,0.35)', pass2: false });
   if (B.trim) { pencil([[lx - 23, top + 4], [lx + 23, top + 4]], { w: 4, col: B.trim, pass2: false, gap: false }); if (B.tassel) { line([[lx, top + 4], [lx, top + 16]], { w: 2, col: B.trim, pass2: false }); ell(lx, top + 20, 4, 5, { wash: B.trim, washA: 1, w: 1 }); } }
   if (B.tip) blob([[fx - 6, fy - 4], [fx + 6, fy - 4], [fx, fy - 16]], { wash: B.c, washA: 1, w: 2, col: TM.line });
