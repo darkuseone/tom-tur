@@ -19,13 +19,15 @@ def main(ep, keys):
     af = (f"silenceremove=start_periods=1:start_threshold={th}dB:stop_periods=-1:stop_duration={s['inner_pause']}:stop_threshold={th}dB:stop_silence={s['keep']},"
           f"areverse,silenceremove=start_periods=1:start_threshold={th}dB,areverse,atempo={CFG['tempo']}")
     L = json.load(open(d / 'lines.json')); dp = d / 'durs.json'
+    EXTRA = json.load(open(d / 'episode.json')).get('tempo_line', {})   # доп. ускорение отдельных реплик, напр. {"h2": 1.35} (бренд-связка ≤ 1,2 с)
     D = json.load(open(dp)) if dp.exists() else {}
     for k in L:
         if keys and k not in keys: continue
         src = d / 'voice' / f'{k}.mp3'
         if not src.exists(): sys.exit(f'нет {src}: сначала tools/tts.py lines {ep}')
         w = vf / f'{k}.wav'
-        subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', str(src), '-af', af, '-ar', '44100', '-ac', '1', str(w)], check=True)
+        a = af + (f',atempo={EXTRA[k]}' if k in EXTRA else '')
+        subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', str(src), '-af', a, '-ar', '44100', '-ac', '1', str(w)], check=True)
         D[k] = round(dur(w), 6)
         if RHUBARB.exists():
             subprocess.run([str(RHUBARB), '-q', '-r', 'phonetic', '-f', 'json', '-o', str(lips / f'{k}.json'), str(w)], check=True)

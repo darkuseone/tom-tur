@@ -1,0 +1,108 @@
+{
+ "num": "004",
+ "city": "Берлин",
+ "title": "Берлин = болото?! История Берлина за минуту",
+ "hook": "БЕРЛИН = / БОЛОТО?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "w_bog.js",
+  "w_ice.js",
+  "w_twins.js",
+  "w_huguenot.js",
+  "w_quadriga.js",
+  "w_bowl.js",
+  "w_yard.js",
+  "w_airlift.js",
+  "w_tower.js",
+  "w_wall.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "bog",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "ice",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "twins",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "huguenot",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "quadriga",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "bowl",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "yard",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "airlift",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "tower",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "wall",
+   [
+    "s9"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1",
+    "t2"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "tempo_line": {
+  "h2": 1.38
+ }
+}
