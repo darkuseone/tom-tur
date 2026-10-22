@@ -161,3 +161,42 @@ function human(x, y, s, t, o = {}) {
   if (o.hat === 'jangot') blob([[-54, hy + 70], [-56, hy - 30], [0, hy - 66], [56, hy - 30], [54, hy + 70], [36, hy - 6], [-36, hy - 6]], { wash: hc, washA: 1, w: 2, col: L, shade: { gap: 6, a: 0.25, col: L, ang: 1.2 } });
   pop();
 }
+
+/* ---- 004: общие хелперы любого выпуска (время слова, «пуф», неон, дом, толпа) ---- */
+function neon(x, y, w, h, s1, col, t, on = 1, o = {}) {                 // неоновая вывеска: тёмная плашка, трубки текста, ореол; on 0 → мёртвая
+  const f = on * (o.flick ? (Math.sin(t * 40 + x) > -0.6 ? 1 : 0.2) : 1);
+  rect(x - w / 2, y - h / 2, w, h, { wash: o.bg || '#16121c', washA: 0.95, w: 1.8, col: '#000', a: 0.8 });
+  if (f > 0.05) { glow(x, y, w * 0.8, col, 0.35 * f); }
+  txt(s1, x, y + h * 0.04, h * (o.size || 0.62), { font: o.font || 'KSign', col: f > 0.05 ? col : '#4a4450', bold: false, a: f > 0.05 ? 1 : 0.8 });
+  if (f > 0.05) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; txt(s1, x, y + h * 0.04, h * (o.size || 0.62), { font: o.font || 'KSign', col: '#ffffff', bold: false, a: 0.35 * f }); ctx.restore(); }
+}
+
+function cityBlock(x, base, w, h, col, t, o = {}) {                   // современный дом: фасад, окна, вывески на торце
+  const fp = rect(x, base - h, w, h, { wash: col, washA: 1, w: 2, col: '#0e0c12', a: 0.7, key: o.key });
+  hatch(fp.path, fp.bb, { gap: 8, a: 0.1, col: '#000', ang: 1.4, w: 1 });
+  windows(x + 6, base - h + 10, w - 12, h - 20, Math.max(2, Math.round(w / 34)), Math.max(3, Math.round(h / 40)), o.seed || 1, (o.on ?? 0.6), o.cA || '#ffd98a', o.cB || '#9fd8ff', (o.wa ?? 0.85));
+  pencil([[x, base - h], [x + w, base - h]], { w: 3, col: '#000', a: 0.5, pass2: false });
+}
+
+function crowd(x0, x1, base, n, t, seed, o = {}) {                     // толпа силуэтов (дальний план): головы, плечи, телефоны
+  const r = rng(seed);
+  for (let i = 0; i < n; i++) { const x = x0 + r() * (x1 - x0), s = (o.s || 1) * (0.8 + r() * 0.3), y = base + r() * (o.dy || 20), c = (o.cols || ['#2a2a36', '#3a2e3a', '#28343a', '#4a3a30', '#3a3a2a'])[i % 5], bob = Math.sin(t * 3 + i) * 2;
+    blob([[x - 22 * s, y], [x - 24 * s, y - 70 * s], [x - 14 * s, y - 92 * s], [x + 14 * s, y - 92 * s], [x + 24 * s, y - 70 * s], [x + 22 * s, y]], { wash: c, washA: 1, w: 1.4, col: '#0a0810', a: 0.6 });
+    ell(x, y - 108 * s + bob, 13 * s, 15 * s, { wash: o.skin || '#c89a78', washA: 1, w: 1.2, col: '#0a0810', a: 0.6 });
+    blob([[x - 14 * s, y - 110 * s + bob], [x - 10 * s, y - 126 * s + bob], [x + 10 * s, y - 126 * s + bob], [x + 14 * s, y - 110 * s + bob], [x, y - 116 * s + bob]], { wash: '#141010', washA: 1, line: false });
+    if (o.phones && r() < o.phones) { const px = x + 16 * s, py = y - 128 * s; rect(px - 5 * s, py - 9 * s, 10 * s, 16 * s, { wash: '#0a0a10', washA: 1, w: 1, col: '#000' }); glow(px, py, 26 * s, 'rgba(170,220,255,1)', 0.6); pencil([[x + 10 * s, y - 80 * s], [px, py + 6 * s]], { w: 5 * s, col: c, pass2: false }); }
+    if (o.flags && r() < o.flags) { const fx = x - 10 * s, fy = y - 150 * s; pencil([[fx, y - 70 * s], [fx, fy]], { w: 2, col: '#5a4a3a', pass2: false }); const wv = Math.sin(t * 6 + i) * 4; const F = o.flag || (typeof taeguk === 'function' ? taeguk : null); if (F) F(fx + 22 * s, fy + 14 * s, s * (1 + wv * 0.01)); }
+  }
+}
+
+function wtk(k, w) {                                                   // время слова внутри субтитра-фрагмента (пропорция по буквам)
+  const nrm = s => s.toLowerCase().replace(/[^а-яёa-z0-9-]/g, '');
+  const c = CAPS.find(c => c.key === k && c.words.some(x => nrm(x) === nrm(w))); if (!c) return WT(k, w);
+  const i = c.words.findIndex(x => nrm(x) === nrm(w)); const L = c.words.map(x => x.length + 1), tot = L.reduce((a, b) => a + b, 0), pre = L.slice(0, i).reduce((a, b) => a + b, 0);
+  return c.t0 + (c.t1 - c.t0) * pre / tot;
+}
+
+function puffK(x, y, s, t, t0, d = 0.5, seed = 1, col = '#f6efe0') {   // облачко «пуф» (переодевание)
+  if (t < t0 || t > t0 + d) return; const k = (t - t0) / d, r = rng(seed);
+  for (let i = 0; i < 12; i++) { const a = r() * 6.283, dd = (40 + r() * 90) * sm(k) * s; ell(x + Math.cos(a) * dd, y + Math.sin(a) * dd * 0.8, (40 + r() * 30) * s * (1 - k * 0.5), (34 + r() * 24) * s * (1 - k * 0.5), { wash: col, washA: 0.9 * (1 - k), w: 2, col: '#6a5a4a', a: 0.4 * (1 - k) }); }
+}
