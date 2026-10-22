@@ -1,0 +1,105 @@
+{
+ "num": "004",
+ "city": "Сеул",
+ "title": "Ночью — нельзя?! История Сеула за минуту",
+ "hook": "НОЧЬЮ — / НЕЛЬЗЯ?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "seoul.js",
+  "w_hook.js",
+  "w_granite.js",
+  "w_capital.js",
+  "w_wall.js",
+  "w_hangul.js",
+  "w_light.js",
+  "w_legation.js",
+  "w_ggb.js",
+  "w_curfew.js",
+  "w_gangnam.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "granite",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "capital",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "wall",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "hangul",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "light",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "legation",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "ggb",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "curfew",
+   [
+    "s9"
+   ]
+  ],
+  [
+   "gangnam",
+   [
+    "s10"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
