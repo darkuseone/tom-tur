@@ -4,7 +4,7 @@ description: Сдача выпуска ТОМ-ТУР — обложка, рен�
 ---
 # /deliver <эп>
 
-1. **Обложка**: `w_cover.js` → `COVER = { scene, t, cam, pose, title: [[строка, цвет], …], size, ty, badge, sub }` (обычно кадр хука, текст = хук). `python3 tools/mkpage.py <эп> && node tools/cover.cjs <эп>` → Read `build/<эп>/cover_small.jpg`: плашка города сразу под заголовком, всё в полосе y 240–1680.
+1. **Обложка**: `w_cover.js` → `COVER = { scene, t, cam, pose, title: [[строка, цвет], …], size, ty, badge, sub }` (обычно кадр хука, текст = хук). `python3 tools/mkpage.py <эп> && node tools/cover.cjs <эп>` → Read `build/<эп>/cover_small.jpg`: плашка города сразу под заголовком, всё в полосе y 280–1600 (безопасные зоны, CLAUDE.md §4: обложка — первый кадр ролика, верх перекрывают чёлка и кнопки; `ty` ≥ 400 при size 170).
 2. **Ошибки по всей длине**: `node tools/dbg.cjs build/<эп>/film $(python3 -c "print(' '.join(f'{x/4:.2f}' for x in range(0,244)))") | tail -1`.
 3. **Рендер** фоном (Bash `run_in_background: true`, ≈15–20 мин на 60 с): `tools/render.sh <эп> > build/<эп>/render.log 2>&1`. Пока идёт — пункты 5–6. Не опрашивать: придёт уведомление.
 4. **Проверка**: `tools/finalcheck.sh <эп>` → длина / громкость / размер chat.mp4 + Read `build/<эп>/fin/sheet.jpg` (обложка + середины сцен).

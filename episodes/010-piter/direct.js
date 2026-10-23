@@ -61,7 +61,7 @@ function hudFrame(t) {
   plate(); captions(t); endcard(t);
 }
 function hook(t) {
-  const k = popK(t, 0.0, 0.35); push(540, 430, 0.85 + 0.15 * k, -0.02);
+  const k = popK(t, 0.0, 0.35); push(540, 470, 0.85 + 0.15 * k, -0.02);
   ctx.save(); ctx.font = '600 150px Osw'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
   for (const [s, y, c] of [[HOOK_LINES[0], -86, '#f6ecd6'], [HOOK_LINES[1], 80, K.amber]]) { ctx.lineWidth = 22; ctx.strokeStyle = 'rgba(12,8,6,0.94)'; ctx.strokeText(s, 0, y); ctx.fillStyle = c; ctx.fillText(s, 0, y); }
   ctx.restore(); pop();
