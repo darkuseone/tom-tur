@@ -54,10 +54,13 @@ const BUF = [0, 1].map(() => { const c = document.createElement('canvas'); c.wid
 function renderTo(c, fn) { const prev = ctx, pS = S, pSS = SS.splice(0); ctx = c.getContext('2d'); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, W, H); S = 1; fn(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx = prev; S = pS; SS.push(...pSS); }
 
 // ------------------------------------------------------------------ HUD: титр эпохи, таймлайн, субтитры, плашка
+// Безопасные зоны (владелец, 23.10.2026): сверху 0–280 — статус-бар/чёлка/кнопки YouTube и поиск TikTok, снизу 1600–1920 — ник, описание, комментарии,
+// справа x > 900 при y 900–1700 — лайки/комменты. Текст и важное — только внутри SAFE; там лишь фон.
+const SAFE = { top: 280, bottom: 1600, left: 70, right: 900 };
 function logPos(yr) { const ago = Math.max(1, 2026 - yr); return 1 - Math.log10(ago) / Math.log10(4.6e8); }   // 0 = 450 млн лет назад … 1 = сейчас
 function titleCard(t) {
   const i = sceneAt(t), s = SC[i]; if (!s[3]) return; const u = t - s[1], roll = u < 0.5, k = popK(t, s[1], 0.3);
-  push(540, 228, 0.9 + 0.1 * k);
+  push(540, 372, 0.9 + 0.1 * k);
   const g = ctx.createLinearGradient(-330, 0, 330, 0); g.addColorStop(0, 'rgba(18,12,10,0)'); g.addColorStop(0.2, 'rgba(18,12,10,0.62)'); g.addColorStop(0.8, 'rgba(18,12,10,0.62)'); g.addColorStop(1, 'rgba(18,12,10,0)');
   ctx.fillStyle = g; ctx.fillRect(-360, -88, 720, 170);
   let year = s[3]; if (roll) { const r = rng(hsh(FRAME, 5)); year = year.replace(/[0-9]/g, () => String(Math.floor(r() * 10))); }
@@ -65,7 +68,7 @@ function titleCard(t) {
   txt(s[4], 0, 54, 34, { col: K.amber, font: 'Osw', a: 0.95 });
   pop();
   // таймлайн: логарифмическая шкала 450 млн лет → сегодня, маркер едет к эпохе
-  const y = 342, x0 = 140, x1 = 940; const prev = i > 0 ? SC.slice(0, i).reverse().find(q => YEARS[q[0]] !== undefined) : null;
+  const y = 488, x0 = 140, x1 = 940; const prev = i > 0 ? SC.slice(0, i).reverse().find(q => YEARS[q[0]] !== undefined) : null;
   const p1 = logPos(YEARS[s[0]] ?? 2026), p0 = prev ? logPos(YEARS[prev[0]]) : p1, p = lerp(p0, p1, sm(u / 0.6));
   ctx.save(); ctx.globalAlpha = 0.75; ctx.fillStyle = 'rgba(18,12,10,0.45)'; ctx.fillRect(x0 - 20, y - 16, x1 - x0 + 40, 32); ctx.restore();
   pencil([[x0, y], [x1, y]], { w: 2, col: '#f6e7c8', a: 0.8, pass2: false, gap: false });
@@ -74,7 +77,7 @@ function titleCard(t) {
 }
 function captions(t) {
   const c = CAPS.find(c => t >= c.t0 && t < c.t1 + 0.08); if (!c) return;
-  const y = 1588, size = 82; ctx.save(); ctx.font = `600 ${size}px Osw`;
+  const y = 1480, size = 82; ctx.save(); ctx.font = `600 ${size}px Osw`;
   const parts = c.words.map(w => ({ w, key: KEYW.includes(w) })); const sp = ctx.measureText(' ').width, widths = parts.map(p => ctx.measureText(p.w).width);
   const tw = widths.reduce((a, b) => a + b, 0) + sp * (parts.length - 1); ctx.restore();
   const k = popK(t, c.t0, 0.18); push(540, y, 0.92 + 0.08 * k);
@@ -87,7 +90,7 @@ function captions(t) {
     x += widths[i] + sp; });
   pop();
 }
-function plate() { push(60, 70, 1); txt('ТОМ-ТУР', 0, 0, 40, { align: 'left', font: 'Osw', col: '#f6e7c8', a: 0.9 }); txt(typeof SUBTITLE !== 'undefined' ? SUBTITLE : '', 168, 2, 36, { align: 'left', col: '#f6e7c8', a: 0.75 }); pop(); }
+function plate() { push(540, 540, 1); txt('ТОМ-ТУР · ' + (typeof SUBTITLE !== 'undefined' ? SUBTITLE : ''), 0, 0, 30, { col: '#f6e7c8', a: 0.75 }); pop(); }   // под таймлайном, не в зоне статус-бара
 function endcard(t) { if (t < DUR - 1.0) return; const k = popK(t, DUR - 1.0, 0.3); push(540, 1180, k, -0.03);
   ctx.save(); ctx.fillStyle = 'rgba(16,10,8,0.82)'; ctx.fillRect(-330, -80, 660, 160); ctx.restore(); pencil([[-330, -80], [330, -80], [330, 80], [-330, 80], [-330, -80]], { w: 3, col: K.amber, pass2: false });
   txt('ПОДПИШИСЬ', -50, 4, 104, { col: '#f6e7c8', font: 'Osw' });

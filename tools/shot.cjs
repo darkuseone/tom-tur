@@ -1,6 +1,6 @@
 // Быстрые контрольные кадры без HyperFrames: рисует кадры в Chromium и сохраняет PNG + контакт-лист.
 //   node tools/shot.cjs <папка film> <папка вывода> 0.5 3 8.2 ...        (опц. SCALE=0.5 — уменьшить PNG)
-// Пишет <вывод>/t<время>.png и <вывод>/sheet.jpg (по 4 в ряд, 360 px). JS-ошибки печатает со стеком.
+// Пишет <вывод>/t<время>.png и <вывод>/sheet.jpg (по 4 в ряд, 360 px; красные линии — безопасные зоны SAFE: y 280 / 1600, x 900). JS-ошибки печатает со стеком.
 const puppeteer = require('puppeteer-core'); const path = require('path'); const fs = require('fs'); const { execFileSync } = require('child_process');
 (async () => {
   const [film, out, ...ts] = process.argv.slice(2); fs.mkdirSync(out, { recursive: true });
@@ -17,7 +17,7 @@ const puppeteer = require('puppeteer-core'); const path = require('path'); const
   await b.close();
   if (files.length) {
     const cols = Math.min(4, files.length), rows = Math.ceil(files.length / cols), inp = [], fl = [];
-    files.forEach((f, i) => { inp.push('-i', f); fl.push(`[${i}]scale=360:-1,drawtext=text='${path.basename(f, '.png').slice(1)}':x=8:y=8:fontsize=28:fontcolor=yellow:box=1:boxcolor=black@0.6[v${i}]`); });
+    files.forEach((f, i) => { inp.push('-i', f); fl.push(`[${i}]scale=360:-1,drawbox=x=0:y=93:w=360:h=2:color=red@0.6:t=fill,drawbox=x=0:y=533:w=360:h=2:color=red@0.6:t=fill,drawbox=x=300:y=300:w=2:h=267:color=red@0.6:t=fill,drawtext=text='${path.basename(f, '.png').slice(1)}':x=8:y=8:fontsize=28:fontcolor=yellow:box=1:boxcolor=black@0.6[v${i}]`); });
     for (let i = files.length; i < rows * cols; i++) { fl.push(`color=black:s=360x640[v${i}]`); }
     const rowsF = []; for (let r = 0; r < rows; r++) { const ins = Array.from({ length: cols }, (_, c) => `[v${r * cols + c}]`).join(''); rowsF.push(cols > 1 ? `${ins}hstack=${cols}[r${r}]` : `${ins}null[r${r}]`); }
     const fin = rows > 1 ? `${Array.from({ length: rows }, (_, r) => `[r${r}]`).join('')}vstack=${rows}[o]` : `[r0]null[o]`;
