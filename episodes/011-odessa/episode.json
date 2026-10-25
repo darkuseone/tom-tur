@@ -1,0 +1,83 @@
+{
+ "num": "011",
+ "city": "Одесса",
+ "title": "TODO",
+ "hook": "TODO",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "w_hook.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "khadzhibey",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "richelieu",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "portofranco",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "stairs",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "potemkin",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "war",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "quarry",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

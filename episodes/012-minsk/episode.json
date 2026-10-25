@@ -1,0 +1,83 @@
+{
+ "num": "012",
+ "city": "Минск",
+ "title": "TODO",
+ "hook": "TODO",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "w_hook.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "nemiga",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "magdeburg",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "ratusha",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "congress",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "occupation",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "ruins",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "oswald",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
