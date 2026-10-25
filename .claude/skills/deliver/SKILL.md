@@ -12,3 +12,6 @@ description: Сдача выпуска ТОМ-ТУР — обложка, рен�
 6. **Документы** (одним python-скриптом replace, без чтения целиком): `docs/cities.md` (строка выпуска + «Следующему выпуску»), `docs/passport.md` (Сделано), `docs/costumes.md`, `docs/style.md` (таблица переходов выпуска), `docs/episode-formula.md` (что сделано впервые), `docs/decisions.md` (решения владельца), `assets/sfx/CATALOG.md`, `STATUS.md` (готово + слабые места), `script.md` (финал). Потом `python3 tools/libindex.py`.
 7. **Отправка**: SendUserFile `build/<эп>/chat.mp4` + `episodes/<эп>/cover.png` (status proactive). Сообщение: 2–3 строки сути, честно — слабые места и длина, расход кредитов; в конце — тексты выкладки колонкой без подписей.
 8. **Git**: коммит + `git push -u origin <ветка>` + черновой PR (если нет открытого) + `subscribe_pr_activity`. `final.mp4` ≈ 30–40 МБ — коммитить можно.
+
+
+Тест 011 (CLAUDE.md §6а): тексты выкладки — только TikTok и YouTube Shorts; `tools/finalcheck.sh` должен показать ≈ −14 LUFS и true peak ≤ −1 dBTP; петлю проверить, склеив последний и первый кадры (`ffmpeg -sseof -0.2` + начало) глазами.
