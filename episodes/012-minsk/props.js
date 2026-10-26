@@ -27,7 +27,7 @@ function wTunnel(t, u, cat) {                                      // внутр
 }
 
 WORLD.tunnel = wTunnel;
-DIR.tunnel = { outfit: 'hoodieM', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
+DIR.tunnel = { outfit: 'hoodieMn', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
   pose: (t, u, b) => Object.assign(b, { x: 540, y: 1260, s: 1.0, rot: u * 3.2, look: [0, -0.2], watchInHand: true, glow: 1, spin: 1.5 }),
   cam: () => [[S0.tunnel, 540, 960, 0], [S1.tunnel, 540, 960, 0.1]] };
 

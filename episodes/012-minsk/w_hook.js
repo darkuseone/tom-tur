@@ -34,7 +34,7 @@
     lay(0.7, () => motes(20, [0, 300, W, 1700], '#fff2c8', t, 12230, { sp: -10, sz: 2.2, a: 0.4, tw: 1, add: 1 }));
   };
   DIR.hook = {
-    outfit: 'hoodieM', light: { side: 1, rim: '#ffe0c0' }, grade: ['#c0a090', 0.1],
+    outfit: 'hoodieMn', light: { side: 1, rim: '#ffe0c0' }, grade: ['#c0a090', 0.1],
     act: () => [[0, 'shock'], [EV.hk_older, 'proud'], [EV.hk_young - 0.03, 'suspicious'], [EV.hk_why, 'sideeye'], [LS('h2'), 'smug'], [EV.hk_wind, 'grin']],
     pose: (t, u, b) => Object.assign(b, { x: 330, y: 1470, s: 1.06, look: t < EV.hk_young ? [0.6, 0.2] : t < LS('h2') ? [0.3, -0.5] : [0.1, 0], tilt: t < 0.4 ? -0.06 : 0, squash: b.squash + (t < 0.2 ? 0.06 : 0),
       point: t > EV.hk_older - 0.1 && t < EV.hk_young ? 1 : undefined, hand: t > EV.hk_wind - 0.05 ? [70, -330] : t > EV.hk_older - 0.1 && t < EV.hk_young ? [190, -250] : undefined, tailUp: t < LS('h2'),

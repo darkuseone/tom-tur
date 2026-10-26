@@ -32,7 +32,7 @@
     lay(0.7, () => { if (t > EV.td_new) motes(30, [0, 500, W, 1500], '#fff2c8', t, 12820, { sp: -30, sz: 3, a: 0.7, tw: 1, add: 1 }); });
   };
   DIR.today = {
-    outfit: 'hoodieM', light: { side: 1, rim: '#fff0d0' }, grade: ['#c0a080', 0.08],
+    outfit: 'hoodieMn', light: { side: 1, rim: '#fff0d0' }, grade: ['#c0a080', 0.08],
     act: () => [[S0.today, 'talk'], [EV.td_young, 'smug'], [EV.td_erase - 0.03, 'scared'], [EV.td_new, 'proud']],
     pose: (t, u, b) => Object.assign(b, { x: 330, y: 1480, s: 1.06, look: t < EV.td_new ? [0.5, -0.3] : [0.1, 0.05], hand: t > EV.td_new ? [100, -390] : [110, -270], tailUp: true }),
     cam: () => [[S0.today, 600, 1000, 0.04], [EV.td_young, 580, 1020, 0.08], [EV.td_erase, 560, 1000, 0.04], [EV.td_new, 560, 1040, 0.08], [S1.today, 560, 1040, 0.12]],
@@ -62,7 +62,7 @@
     motes(40, [0, 300, W, 1700], '#ffd8b0', t, 37, { sp: -14, sz: 2.4, a: 0.6, tw: 1, add: 1 });
   };
   DIR.button = {
-    outfit: 'hoodieM', light: { side: 1, rim: '#ffc890' }, grade: ['#3a2050', 0.24],
+    outfit: 'hoodieMn', light: { side: 1, rim: '#ffc890' }, grade: ['#3a2050', 0.24],
     act: () => [[S0.button, 'talk'], [EV.bt_point, 'grin'], [EV.bt_wink - 0.05, 'wink']],
     pose: (t, u, b) => { const pt = t > EV.bt_point && t < EV.bt_wink - 0.05, wv = Math.sin(t * 10) * 14;
       return Object.assign(b, { x: 640, y: 1600, s: 1.45, look: t < EV.portal + 0.3 ? [0.2, -0.5] : [0, 0.05], watchInHand: true, glow: 0.4 + 0.6 * sm((t - EV.portal) / 0.8), spin: 0.5 + (t > EV.bt_wink ? (t - EV.bt_wink) * 3 : 0),

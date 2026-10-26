@@ -111,8 +111,11 @@ const OUTFIT = {
   komissar: { top: '#2a2220', topD: '#0e0a08', topL: '#5a4a44', pants: '#3a3a40', detail: 'aviator', hat: 'flatcap', boots: 'leather', cuff: '#1a1412', furC: '#3a302c' },
   // ---- добавлено tools/add_costume.py
   hoodieO: { top: '#1e6e86', topD: '#0c3646', topL: '#5aa6be', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'ОДЕССА', capTxt: 'О' },
-  hoodieM: { top: '#2e6a3a', topD: '#14341c', topL: '#64a070', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'МИНСК', capTxt: 'М' },
-  voen: { top: '#7a7646', topD: '#3e3c20', topL: '#aaa676', pants: '#5e5c3c', detail: 'metro', hat: 'pilotka', boots: 'leather', canvas: 1 }
+  hoodieMn: { top: '#2e6a3a', topD: '#14341c', topL: '#64a070', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'МИНСК', capTxt: 'М' },
+  voen: { top: '#7a7646', topD: '#3e3c20', topL: '#aaa676', pants: '#5e5c3c', detail: 'metro', hat: 'pilotka', boots: 'leather', canvas: 1 },
+  // ---- добавлено tools/add_costume.py
+  hoodieR: { top: '#c8902a', topD: '#6a4410', topL: '#f0c060', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'РОСТОВ', capTxt: 'Р' },
+  armen: { top: '#6a2420', topD: '#2e0c0a', topL: '#a85a4a', pants: '#2a2420', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#c89a4a', long: 1 }
 };
 
 function tom(o = {}) {
@@ -1055,6 +1058,12 @@ const HAT6 = {
     const p = blob([[-104, -78 + fx * 0.1], [-88, -116], [-10, -130], [80, -120], [108, -86], [0, -96]], { wash: '#7a7646', washA: 1, w: 3, col: TM.line, key: 391, shade: { gap: 5, a: 0.3, col: '#3e3c20' } });
     pencil([[-96, -90], [-6, -102], [100, -92]], { w: 2.4, col: '#3e3c20', a: 0.8, pass2: false });
     pencil([[-80, -112], [-8, -124], [72, -116]], { w: 1.6, col: '#aaa676', a: 0.7, pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  papakha(t, o, fx, L) {                                                 // папаха из чёрного каракуля: высокая, чуть расширяется кверху, завитки
+    blob([[-96, -70 + fx * 0.1], [-104, -150], [-90, -196], [0, -206], [92, -198], [104, -150], [96, -70], [0, -86]], { wash: '#1e1a1a', washA: 1, w: 3, col: TM.line, key: 392, shade: { gap: 5, a: 0.3, col: '#000' } });
+    const r = rng(393); for (let i = 0; i < 26; i++) { const x = -84 + r() * 168, y = -186 + r() * 104; ell(x, y, 7, 5, { wash: '#3a3434', washA: 0.9, w: 1.2, col: '#0a0808', key: 394 + i }); }
+    pencil([[-98, -82], [0, -96], [98, -82]], { w: 2.4, col: '#0a0808', a: 0.8, pass2: false });
   }
 };
 /* ---- рукава: кольчуга, прорези, закатанные рукава, манжеты, «венгерские узлы», известь */
