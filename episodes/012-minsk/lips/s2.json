@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/012-minsk/vf/s2.wav",
+    "duration": 4.44
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.03, "value": "B" },
+    { "start": 0.03, "end": 0.13, "value": "A" },
+    { "start": 0.13, "end": 0.19, "value": "D" },
+    { "start": 0.19, "end": 0.39, "value": "B" },
+    { "start": 0.39, "end": 0.48, "value": "A" },
+    { "start": 0.48, "end": 0.74, "value": "B" },
+    { "start": 0.74, "end": 0.88, "value": "C" },
+    { "start": 0.88, "end": 0.95, "value": "B" },
+    { "start": 0.95, "end": 1.16, "value": "E" },
+    { "start": 1.16, "end": 1.23, "value": "C" },
+    { "start": 1.23, "end": 1.30, "value": "E" },
+    { "start": 1.30, "end": 1.51, "value": "B" },
+    { "start": 1.51, "end": 1.68, "value": "X" },
+    { "start": 1.68, "end": 1.90, "value": "B" },
+    { "start": 1.90, "end": 1.98, "value": "A" },
+    { "start": 1.98, "end": 2.32, "value": "B" },
+    { "start": 2.32, "end": 2.46, "value": "D" },
+    { "start": 2.46, "end": 2.53, "value": "F" },
+    { "start": 2.53, "end": 2.60, "value": "B" },
+    { "start": 2.60, "end": 2.67, "value": "C" },
+    { "start": 2.67, "end": 2.88, "value": "B" },
+    { "start": 2.88, "end": 2.96, "value": "A" },
+    { "start": 2.96, "end": 3.10, "value": "H" },
+    { "start": 3.10, "end": 3.17, "value": "C" },
+    { "start": 3.17, "end": 3.73, "value": "B" },
+    { "start": 3.73, "end": 3.80, "value": "C" },
+    { "start": 3.80, "end": 3.94, "value": "B" },
+    { "start": 3.94, "end": 4.08, "value": "E" },
+    { "start": 4.08, "end": 4.15, "value": "B" },
+    { "start": 4.15, "end": 4.29, "value": "C" },
+    { "start": 4.29, "end": 4.36, "value": "G" },
+    { "start": 4.36, "end": 4.43, "value": "B" },
+    { "start": 4.43, "end": 4.44, "value": "X" }
+  ]
+}

@@ -6,14 +6,14 @@
      EV.*, SHAKES.push(...), KEYW.push(...)                                          — события, тряски, ключевые слова субтитров */
 const SUBTITLE = 'Одесса сквозь время';
 const SAT = 1.1;                                          // насыщенность итогового кадра (владелец 18.10.2026: на ~10 % цветастее)
-const HOOK_LINES = ['TODO СТРОКА 1', 'TODO СТРОКА 2?!'];   // текст-хук первых ~2.4 с
-const YR = { hook: ['2026', 'TODO'], tunnel: ['', ''], /* сцена: ['год', 'ПОДПИСЬ'] */ today: ['2026', 'ОДЕССА'], button: ['', ''] };
+const HOOK_LINES = ['ОДЕССА', 'НА ПУСТОТЕ?!'];   // текст-хук первых ~2.4 с
+const YR = { hook: ['2026', 'ПОД ОДЕССОЙ'], tunnel: ['', ''], khadzhibey: ['1789', 'КРЕПОСТЬ ХАДЖИБЕЙ'], richelieu: ['1803', 'ДЮК ДЕ РИШЕЛЬЁ'], portofranco: ['1819–1859', 'ПОРТО-ФРАНКО'], stairs: ['1841', 'ЛЕСТНИЦА'], potemkin: ['1905 / 1925', '«ПОТЁМКИН» И КИНО'], war: ['1941–1944', 'ОБОРОНА И ОККУПАЦИЯ'], quarry: ['XIX ВЕК', 'КАМЕНОЛОМНИ'], today: ['2026', 'ОДЕССА'], button: ['', ''] };
 const SC = SCN.map(([n, a, b]) => [n, a, b, YR[n][0], YR[n][1]]);
 const S0 = {}, S1 = {}; SC.forEach(s => { S0[s[0]] = s[1]; S1[s[0]] = Math.min(s[2], DUR); });
 const LS = k => VO[k], LE = k => VO[k] + VD[k], LF = (k, f) => VO[k] + VD[k] * f;
 const EV = { h2: LS('h2'), hookEnd: Math.min(2.4, LE('h1') - 0.15), portal: LS('x1') + 0.4 };
 const SHAKES = [];
-const YEARS = { hook: 2026, today: 2026 };
+const YEARS = { hook: 2026, khadzhibey: 1789, richelieu: 1803, portofranco: 1840, stairs: 1841, potemkin: 1905, war: 1942, quarry: 1850, today: 2026 };
 const KEYW = ['время!', 'город', 'отмотаем!'];
 const DIR = {}, WORLD = {}, TRANS_IN = {};
 /* WT('c2', 'московский') — время начала субтитра-фрагмента со словом (без ударений, без учёта регистра и знаков); для синхронизации действий со словами */

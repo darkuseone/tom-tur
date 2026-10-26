@@ -6,14 +6,14 @@
      EV.*, SHAKES.push(...), KEYW.push(...)                                          — события, тряски, ключевые слова субтитров */
 const SUBTITLE = 'Минск сквозь время';
 const SAT = 1.1;                                          // насыщенность итогового кадра (владелец 18.10.2026: на ~10 % цветастее)
-const HOOK_LINES = ['TODO СТРОКА 1', 'TODO СТРОКА 2?!'];   // текст-хук первых ~2.4 с
-const YR = { hook: ['2026', 'TODO'], tunnel: ['', ''], /* сцена: ['год', 'ПОДПИСЬ'] */ today: ['2026', 'МИНСК'], button: ['', ''] };
+const HOOK_LINES = ['СТАРШЕ МОСКВЫ —', 'А МОЛОЖЕ?!'];   // текст-хук первых ~2.4 с
+const YR = { hook: ['2026', 'ПЛОЩАДЬ СВОБОДЫ'], tunnel: ['', ''], nemiga: ['1067', 'БИТВА НА НЕМИГЕ'], magdeburg: ['1499', 'МАГДЕБУРГСКОЕ ПРАВО'], ratusha: ['1857', 'СНОС РАТУШИ'], congress: ['1898', 'СЪЕЗД В ДОМИКЕ'], occupation: ['1941–1944', 'ОККУПАЦИЯ'], ruins: ['1944–1955', 'ГОРОД ЗАНОВО'], oswald: ['1961', 'ОСВАЛЬД В МИНСКЕ'], today: ['2026', 'МИНСК'], button: ['', ''] };
 const SC = SCN.map(([n, a, b]) => [n, a, b, YR[n][0], YR[n][1]]);
 const S0 = {}, S1 = {}; SC.forEach(s => { S0[s[0]] = s[1]; S1[s[0]] = Math.min(s[2], DUR); });
 const LS = k => VO[k], LE = k => VO[k] + VD[k], LF = (k, f) => VO[k] + VD[k] * f;
 const EV = { h2: LS('h2'), hookEnd: Math.min(2.4, LE('h1') - 0.15), portal: LS('x1') + 0.4 };
 const SHAKES = [];
-const YEARS = { hook: 2026, today: 2026 };
+const YEARS = { hook: 2026, nemiga: 1067, magdeburg: 1499, ratusha: 1857, congress: 1898, occupation: 1942, ruins: 1950, oswald: 1961, today: 2026 };
 const KEYW = ['время!', 'город', 'отмотаем!'];
 const DIR = {}, WORLD = {}, TRANS_IN = {};
 /* WT('c2', 'московский') — время начала субтитра-фрагмента со словом (без ударений, без учёта регистра и знаков); для синхронизации действий со словами */
