@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/018-ufa/vf/s4.wav",
+    "duration": 5.57
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.04, "value": "X" },
+    { "start": 0.04, "end": 0.12, "value": "B" },
+    { "start": 0.12, "end": 0.21, "value": "A" },
+    { "start": 0.21, "end": 0.53, "value": "F" },
+    { "start": 0.53, "end": 0.62, "value": "A" },
+    { "start": 0.62, "end": 0.72, "value": "D" },
+    { "start": 0.72, "end": 0.79, "value": "B" },
+    { "start": 0.79, "end": 1.00, "value": "C" },
+    { "start": 1.00, "end": 1.54, "value": "B" },
+    { "start": 1.54, "end": 1.68, "value": "C" },
+    { "start": 1.68, "end": 1.75, "value": "G" },
+    { "start": 1.75, "end": 1.96, "value": "B" },
+    { "start": 1.96, "end": 2.03, "value": "C" },
+    { "start": 2.03, "end": 2.45, "value": "B" },
+    { "start": 2.45, "end": 2.52, "value": "C" },
+    { "start": 2.52, "end": 2.60, "value": "A" },
+    { "start": 2.60, "end": 2.73, "value": "B" },
+    { "start": 2.73, "end": 2.94, "value": "A" },
+    { "start": 2.94, "end": 3.00, "value": "C" },
+    { "start": 3.00, "end": 3.12, "value": "E" },
+    { "start": 3.12, "end": 3.19, "value": "G" },
+    { "start": 3.19, "end": 3.26, "value": "B" },
+    { "start": 3.26, "end": 3.34, "value": "A" },
+    { "start": 3.34, "end": 3.47, "value": "C" },
+    { "start": 3.47, "end": 3.61, "value": "B" },
+    { "start": 3.61, "end": 3.68, "value": "F" },
+    { "start": 3.68, "end": 3.76, "value": "A" },
+    { "start": 3.76, "end": 3.95, "value": "E" },
+    { "start": 3.95, "end": 4.46, "value": "B" },
+    { "start": 4.46, "end": 4.53, "value": "G" },
+    { "start": 4.53, "end": 5.24, "value": "B" },
+    { "start": 5.24, "end": 5.31, "value": "C" },
+    { "start": 5.31, "end": 5.39, "value": "A" },
+    { "start": 5.39, "end": 5.56, "value": "B" },
+    { "start": 5.56, "end": 5.57, "value": "X" }
+  ]
+}
