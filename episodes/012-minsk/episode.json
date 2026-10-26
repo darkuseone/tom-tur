@@ -1,15 +1,23 @@
 {
  "num": "012",
  "city": "Минск",
- "title": "TODO",
- "hook": "TODO",
+ "title": "Минск старше Москвы?! История Минска за минуту",
+ "hook": "СТАРШЕ МОСКВЫ?!",
  "timeline": {
   "scene_gap": 0.05,
   "tail": 0.6
  },
  "worlds": [
   "props.js",
+  "minsk.js",
   "w_hook.js",
+  "w_nemiga.js",
+  "w_magdeburg.js",
+  "w_ratusha.js",
+  "w_congress.js",
+  "w_occupation.js",
+  "w_ruins.js",
+  "w_oswald.js",
   "w_today.js",
   "w_cover.js"
  ],
