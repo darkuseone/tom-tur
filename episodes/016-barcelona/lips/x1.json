@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/016-barcelona/vf/x1.wav",
+    "duration": 3.02
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.06, "value": "B" },
+    { "start": 0.06, "end": 0.12, "value": "F" },
+    { "start": 0.12, "end": 0.26, "value": "B" },
+    { "start": 0.26, "end": 0.40, "value": "C" },
+    { "start": 0.40, "end": 0.47, "value": "D" },
+    { "start": 0.47, "end": 0.68, "value": "B" },
+    { "start": 0.68, "end": 0.76, "value": "A" },
+    { "start": 0.76, "end": 1.12, "value": "B" },
+    { "start": 1.12, "end": 1.26, "value": "E" },
+    { "start": 1.26, "end": 1.42, "value": "C" },
+    { "start": 1.42, "end": 1.48, "value": "B" },
+    { "start": 1.48, "end": 1.53, "value": "F" },
+    { "start": 1.53, "end": 1.95, "value": "B" },
+    { "start": 1.95, "end": 2.02, "value": "E" },
+    { "start": 2.02, "end": 2.50, "value": "B" },
+    { "start": 2.50, "end": 2.58, "value": "A" },
+    { "start": 2.58, "end": 2.66, "value": "C" },
+    { "start": 2.66, "end": 2.73, "value": "B" },
+    { "start": 2.73, "end": 2.94, "value": "C" },
+    { "start": 2.94, "end": 3.01, "value": "B" },
+    { "start": 3.01, "end": 3.02, "value": "X" }
+  ]
+}

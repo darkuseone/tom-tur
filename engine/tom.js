@@ -115,7 +115,14 @@ const OUTFIT = {
   voen: { top: '#7a7646', topD: '#3e3c20', topL: '#aaa676', pants: '#5e5c3c', detail: 'metro', hat: 'pilotka', boots: 'leather', canvas: 1 },
   // ---- добавлено tools/add_costume.py
   hoodieR: { top: '#c8902a', topD: '#6a4410', topL: '#f0c060', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'РОСТОВ', capTxt: 'Р' },
-  armen: { top: '#6a2420', topD: '#2e0c0a', topL: '#a85a4a', pants: '#2a2420', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#c89a4a', long: 1 }
+  armen: { top: '#6a2420', topD: '#2e0c0a', topL: '#a85a4a', pants: '#2a2420', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#c89a4a', long: 1 },
+  // ---- добавлено tools/add_costume.py
+  hoodieLA: { top: '#e2683a', topD: '#7a2a10', topL: '#ffa070', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'L.A.', capTxt: 'LA' },
+  colono: { top: '#e2d2a8', topD: '#9a8a62', topL: '#fff4d8', pants: '#5a4a32', detail: 'rubakha', hat: 'sombrero', boots: 'leather', stitch: '#c8302a', long: 1 },
+  director: { top: '#8a6a48', topD: '#4a3420', topL: '#b89a74', pants: '#6a5236', detail: 'waistcoat', shirt: '#f0ece2', tie: 'bow', hat: 'flatcap' },
+  // ---- добавлено tools/add_costume.py
+  hoodieBCN: { top: '#2a8a8a', topD: '#0e3e3e', topL: '#6ac0c0', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'BCN', capTxt: 'B' },
+  roman: { top: '#a8302a', topD: '#4a0e0a', topL: '#d86a5a', pants: '#a8302a', detail: 'rubakha', hat: 'galea', boots: 'leather', stitch: '#e8b84a', long: 1 }
 };
 
 function tom(o = {}) {
@@ -1064,6 +1071,18 @@ const HAT6 = {
     blob([[-96, -70 + fx * 0.1], [-104, -150], [-90, -196], [0, -206], [92, -198], [104, -150], [96, -70], [0, -86]], { wash: '#1e1a1a', washA: 1, w: 3, col: TM.line, key: 392, shade: { gap: 5, a: 0.3, col: '#000' } });
     const r = rng(393); for (let i = 0; i < 26; i++) { const x = -84 + r() * 168, y = -186 + r() * 104; ell(x, y, 7, 5, { wash: '#3a3434', washA: 0.9, w: 1.2, col: '#0a0808', key: 394 + i }); }
     pencil([[-98, -82], [0, -96], [98, -82]], { w: 2.4, col: '#0a0808', a: 0.8, pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  sombrero(t, o, fx, L) {                                                // сомбреро: широкие поля, высокая тулья, цветная лента
+    blob([[-190, -70 + fx * 0.1], [-120, -98], [0, -104], [120, -98], [190, -70], [120, -54], [0, -50], [-120, -54]], { wash: '#d8b870', washA: 1, w: 3, col: TM.line, key: 395, shade: { gap: 6, a: 0.25, col: '#8a6a2a' } });
+    blob([[-62, -90], [-56, -170], [0, -196], [56, -170], [62, -90]], { wash: '#e2c47c', washA: 1, w: 3, col: TM.line, key: 396 });
+    pencil([[-62, -104], [0, -110], [62, -104]], { w: 10, col: '#c8302a', a: 0.95, pass2: false }); pencil([[-60, -116], [60, -116]], { w: 3, col: '#2a7a4a', pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  galea(t, o, fx, L) {                                                   // римский шлем: бронзовый колпак, нащёчники, красный гребень
+    blob([[-100, -70 + fx * 0.1], [-104, -130], [-60, -176], [0, -186], [60, -176], [104, -130], [100, -70], [0, -84]], { wash: '#c8963a', washA: 1, w: 3, col: TM.line, key: 397, shade: { gap: 5, a: 0.25, col: '#6a4a10' } });
+    pencil([[-104, -84], [0, -98], [104, -84]], { w: 6, col: '#8a6418', pass2: false });
+    blob([[-60, -186], [-50, -236], [0, -256], [50, -236], [60, -186], [0, -196]], { wash: '#c8201e', washA: 1, w: 2.4, col: '#5a0a08', key: 398 }); for (let q = -4; q <= 4; q++) pencil([[q * 12, -196], [q * 13, -246]], { w: 2, col: '#8a1010', a: 0.7, pass2: false });
   }
 };
 /* ---- рукава: кольчуга, прорези, закатанные рукава, манжеты, «венгерские узлы», известь */
