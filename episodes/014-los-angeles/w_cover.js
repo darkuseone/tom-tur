@@ -1,3 +1,3 @@
 /* Обложка: Голливудские холмы на закате, надпись HOLLYWOOD, Том в шоке + «НЕ ДЛЯ КИНО?!». */
-const COVER = { scene: 'hook', t: 1.0, cam: { x: 600, y: 1000, z: 0.1 }, pose: { expr: 'shock', expr2: 'shock', ek: 1 },
+const COVER = { scene: 'hook', t: 1.0, cam: { x: 600, y: 640, z: -0.04 }, pose: { expr: 'shock', expr2: 'shock', ek: 1 },
   title: [['НЕ ДЛЯ', '#f6ecd6'], ['КИНО?!', '#e8a33c']], size: 190, ty: 400, badge: 'ЛОС-АНДЖЕЛЕС', sub: 'история за 60 секунд' };

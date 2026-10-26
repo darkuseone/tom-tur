@@ -122,7 +122,9 @@ const OUTFIT = {
   director: { top: '#8a6a48', topD: '#4a3420', topL: '#b89a74', pants: '#6a5236', detail: 'waistcoat', shirt: '#f0ece2', tie: 'bow', hat: 'flatcap' },
   // ---- добавлено tools/add_costume.py
   hoodieBCN: { top: '#2a8a8a', topD: '#0e3e3e', topL: '#6ac0c0', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'BCN', capTxt: 'B' },
-  roman: { top: '#a8302a', topD: '#4a0e0a', topL: '#d86a5a', pants: '#a8302a', detail: 'rubakha', hat: 'galea', boots: 'leather', stitch: '#e8b84a', long: 1 }
+  roman: { top: '#a8302a', topD: '#4a0e0a', topL: '#d86a5a', pants: '#a8302a', detail: 'rubakha', hat: 'galea', boots: 'leather', stitch: '#e8b84a', long: 1 },
+  // ---- добавлено tools/add_costume.py
+  hoodiePA: { top: '#3a5aa8', topD: '#14244a', topL: '#7a9ae0', pants: '#2a3442', detail: 'hoodie', hat: 'cap', print: 'PARIS', capTxt: 'P' }
 };
 
 function tom(o = {}) {
