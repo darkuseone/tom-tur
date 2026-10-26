@@ -61,7 +61,7 @@ def main(ep, vfdir='vf', outname='audio.m4a'):
     out, tgt, extra = b / outname, M.get('master_lufs'), 0.0
     for it in range(3 if tgt else 1):                              # мастер: громкость под ленту (с 011 — −14 LUFS), подгонка общим усилением перед лимитером
         last = fl + ['[vo][bedd]' + ''.join(sl) + f'amix=inputs={2 + len(sl)}:normalize=0,apad=whole_dur={DUR},atrim=0:{DUR},'
-                     f'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume={2 + extra:.2f}dB,alimiter=limit={0.78 if tgt else 0.84}:attack=2:release=40:level=0[out]']
+                     f'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume={2 + extra:.2f}dB,alimiter=limit={0.70 if tgt else 0.84}:attack=2:release=40:level=0[out]']
         (b / f'mix_{vfdir}.txt').write_text(';\n'.join(last))
         subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex_script', str(b / f'mix_{vfdir}.txt'), '-map', '[out]', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(out)], check=True)
         I, TP = loudness(out)
