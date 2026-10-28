@@ -4,6 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 command -v ffmpeg >/dev/null || { echo "нужен ffmpeg"; exit 1; }
 python3 -c "import numpy" || pip install numpy
+python3 -c "import ruaccent" 2>/dev/null || pip install -q ruaccent   # ударения: tools/stress.py
 [ -d node_modules/hyperframes ] || npm install --no-fund --no-audit
 if [ ! -x tools/bin/rhubarb/rhubarb ]; then
   mkdir -p tools/bin && tmp=$(mktemp -d)

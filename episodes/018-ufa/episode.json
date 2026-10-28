@@ -1,0 +1,86 @@
+{
+ "num": "018",
+ "city": "Уфа",
+ "title": "Кто такой Салават Юлаев?! История Уфы за минуту",
+ "hook": "КТО ТАКОЙ САЛАВАТ?",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "ufa.js",
+  "w_hook.js",
+  "w_fort.js",
+  "w_siege.js",
+  "w_aksakov.js",
+  "w_chaliapin.js",
+  "w_war.js",
+  "w_nureyev.js",
+  "w_salavat.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "fort",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "siege",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "aksakov",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "chaliapin",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "war",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "nureyev",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "salavat",
+   [
+    "s7",
+    "a1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

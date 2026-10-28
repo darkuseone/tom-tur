@@ -1,0 +1,92 @@
+{
+ "num": "011",
+ "city": "Одесса",
+ "title": "Одесса стоит на пустоте?! История Одессы за минуту",
+ "hook": "2500 КМ ПУСТОТЫ?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "piter.js",
+  "odessa.js",
+  "w_hook.js",
+  "w_khadzhibey.js",
+  "w_richelieu.js",
+  "w_portofranco.js",
+  "w_stairs.js",
+  "w_potemkin.js",
+  "w_war.js",
+  "w_quarry.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "khadzhibey",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "richelieu",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "portofranco",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "stairs",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "potemkin",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "war",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "quarry",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

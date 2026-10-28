@@ -1,0 +1,98 @@
+{
+ "num": "010",
+ "city": "Санкт-Петербург",
+ "title": "Петербург основал не Пётр?! История Петербурга за минуту",
+ "hook": "НЕ ПЁТР?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "piter.js",
+  "w_hook.js",
+  "w_landskrona.js",
+  "w_nyen.js",
+  "w_stone.js",
+  "w_kunst.js",
+  "w_flood.js",
+  "w_column.js",
+  "w_aurora.js",
+  "w_blockade.js",
+  "w_today.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "landskrona",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "nyen",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "stone",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "kunst",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "flood",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "column",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "aurora",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "blockade",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

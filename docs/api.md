@@ -13,7 +13,7 @@
 - Формы (контур + заливки): `shape(pts,o)`, `ell(cx,cy,rx,ry,o)`, `blob(cp,o)` (сплайн), `rect(x,y,w,h,o)`, `poly(pts,o)` (core). Опции `o`: `wash` (цвет акварели) `washA`, `fill` (цветной карандаш, дорого), `shade:{gap,a,ang,col}` (штриховка), `line:false`, `w`, `col`, `rot` (для ell). Возвращают `{path, bb}`.
 - `hatch(path,bb,{ang,gap,w,col,a,seg})`, `crayon(path,bb,col,o)` — дорого на больших площадях. `wash(path,col,a)`.
 - `spline(cp,closed,n)`, `pathOf(pts)`, `bbOf(pts)`, `ellPts(cx,cy,rx,ry,rot,over,n)`.
-- `txt(s,x,y,size,{font:'Osw'|'Hand',col,a,align,rot,reveal,bold})` — Osw = Oswald (заголовки), Hand = Caveat (рукопись).
+- `txt(s,x,y,size,{font:'Osw'|'Hand'|'KHand'|'KSign',col,a,align,rot,reveal,bold})` — Osw = Oswald (заголовки), Hand = Caveat (рукопись), KHand = Nanum Pen (хангыль от руки), KSign = Black Han Sans (корейские вывески; `bold:false`).
 
 ## Сцена, свет, частицы (core.js)
 - `lay(z, fn)` — слой на глубине z (1 = план героя; фон 20–40; средние 3–8; передний план 0.5–0.7). Камера `CAM {x,y,z}` задаётся `DIR.cam`.
