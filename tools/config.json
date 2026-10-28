@@ -30,7 +30,7 @@
   "master_lufs": -14
  },
  "render": {
-  "fps": 60,
+  "fps": 30,
   "chat_limit_mib": 29
  }
 }
