@@ -9,8 +9,18 @@
  },
  "worlds": [
   "props.js",
+  "zhel.js",
   "w_hook.js",
+  "w_kremlin.js",
+  "w_rails.js",
+  "w_drill.js",
+  "w_amnesty.js",
+  "w_secret.js",
+  "w_reactor.js",
+  "w_heat.js",
+  "w_last.js",
   "w_today.js",
+  "w_button.js",
   "w_cover.js"
  ],
  "scenes": [

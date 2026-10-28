@@ -19,7 +19,7 @@ function wTunnel(t, u, cat) {                                      // внутр
     if (k % 2 === 0) for (let n = 0; n < 12; n++) { const aa = n / 12 * 6.283; push(Math.cos(aa) * r * 0.86, Math.sin(aa) * r * 0.86, 1, aa + Math.PI / 2); txt(['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'][n], 0, 0, 10 + z * 70, { col: '#f6e2b0', font: 'Osw', a: 0.8 * a }); pop(); }
     pop(); }
   glow(cx, cy, 500, 'rgba(255,200,110,0.9)', 0.5);
-  const yrs = ['1909', '1901', 'XII в.', '1063', '988', '882', '482', '−17 000', '−41 млн', '2026'];
+  const yrs = ['2026', '2010', '1964', '1958', '1954', '1953', '1952', '1950'];
   yrs.forEach((y, k) => { const ph = (u * 1.3 + k / yrs.length) % 1, z = Math.pow(ph, 2), a = k * 0.7 + u; txt(y, cx + Math.cos(a) * z * 620, cy + Math.sin(a) * z * 820, 20 + z * 120, { col: '#ffe9b8', font: 'Osw', a: (1 - ph) * 0.9 }); });
   ctx.save(); ctx.globalCompositeOperation = 'lighter'; const r = rng(hsh(FRAME, 8)); for (let i = 0; i < 60; i++) { const a = r() * 6.283, d0 = 60 + r() * 300, d1 = d0 + 200 + r() * 600; ctx.strokeStyle = 'rgba(255,214,140,0.5)'; ctx.lineWidth = 1 + r() * 3; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * d0, cy + Math.sin(a) * d0); ctx.lineTo(cx + Math.cos(a) * d1, cy + Math.sin(a) * d1); ctx.stroke(); } ctx.restore();
   pencil([[-100, 1500], [cx, cy], [W + 100, 300]], { w: 6, col: '#ffd890', a: 0.9, pass2: false, gap: false }); glow(cx, cy, 120, 'rgba(255,240,200,1)', 0.8);
@@ -27,7 +27,7 @@ function wTunnel(t, u, cat) {                                      // внутр
 }
 
 WORLD.tunnel = wTunnel;
-DIR.tunnel = { outfit: 'hoodieK', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
+DIR.tunnel = { outfit: 'hoodieZ', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
   pose: (t, u, b) => Object.assign(b, { x: 540, y: 1260, s: 1.0, rot: u * 3.2, look: [0, -0.2], watchInHand: true, glow: 1, spin: 1.5 }),
   cam: () => [[S0.tunnel, 540, 960, 0], [S1.tunnel, 540, 960, 0.1]] };
 
@@ -147,5 +147,68 @@ function human(x, y, s, t, o = {}) {
   if (o.hat === 'scarf') blob([[-48, hy + 20], [-46, hy - 36], [0, hy - 58], [46, hy - 36], [48, hy + 20], [34, hy - 20], [-34, hy - 20]], { wash: hc, washA: 1, w: 2.2, col: L });
   if (o.hat === 'crown') { rect(-40, hy - 50, 80, 18, { wash: '#d6a842', washA: 1, w: 1.8, col: '#6a4a08' }); for (let q = 0; q < 5; q++) poly([[-40 + q * 20, hy - 50], [-30 + q * 20, hy - 74], [-20 + q * 20, hy - 50]], { wash: '#d6a842', washA: 1, w: 1.4, col: '#6a4a08' }); }
   if (o.hat === 'hood' || o.hat === 'hood2') blob([[-50, hy + 30], [-52, hy - 30], [0, hy - (o.hat === 'hood2' ? 100 : 70)], [52, hy - 30], [50, hy + 30], [38, hy - 10], [-38, hy - 10]], { wash: hc, washA: 1, w: 2.2, col: L, shade: { gap: 5, a: 0.3, col: L, ang: 1.2 } });
+  // ---- 004 Сеул: корейские головные уборы
+  if (o.hat === 'topknot' || o.hat === 'gat' || o.hat === 'samo' || o.hat === 'ikseon' || o.hat === 'jeonrip') { blob([[-42, hy - 4], [-38, hy - 42], [0, hy - 50], [38, hy - 42], [42, hy - 4], [32, hy - 30], [-32, hy - 30]], { wash: '#1a1614', washA: 1, w: 1.8, col: L }); pencil([[-40, hy - 26], [40, hy - 26]], { w: 4, col: '#2a2420', pass2: false }); }
+  if (o.hat === 'topknot') ell(0, hy - 58, 11, 14, { wash: '#1a1614', washA: 1, w: 1.6, col: L });
+  if (o.hat === 'gat') { const bpp = shape(ellPts(0, hy - 40, 80, 13, 0, 0, 30), { wash: '#16161a', washA: 0.55, w: 1.6, col: L }); hatch(bpp.path, bpp.bb, { gap: 4, a: 0.3, col: '#000', ang: 0.2, w: 0.8 }); shape([[-26, hy - 40], [-23, hy - 90], [23, hy - 90], [26, hy - 40]], { wash: '#16161a', washA: 0.7, w: 1.8, col: L }); ell(0, hy - 90, 23, 5, { wash: '#000', washA: 0.85, w: 1.2, col: L }); for (const k of [-1, 1]) pencil([[k * 30, hy - 38], [k * 46, hy + 10], [k * 20, hy + 52]], { w: 1.6, col: '#3a2a1a', a: 0.8, pass2: false }); }
+  if (o.hat === 'samo') { for (const k of [-1, 1]) ell(k * 52, hy - 52, 22, 9, { wash: '#16161a', washA: 0.95, w: 1.4, col: L }); blob([[-34, hy - 32], [-30, hy - 78], [0, hy - 92], [30, hy - 78], [34, hy - 32]], { wash: '#16161a', washA: 1, w: 2, col: L }); }
+  if (o.hat === 'ikseon') { for (const k of [-1, 1]) ell(k * 22, hy - 96, 10, 20, { wash: '#16161a', washA: 0.95, w: 1.4, col: L, rot: k * 0.3 }); blob([[-36, hy - 32], [-32, hy - 76], [0, hy - 84], [32, hy - 76], [36, hy - 32]], { wash: '#16161a', washA: 1, w: 2, col: L }); pencil([[-34, hy - 40], [34, hy - 40]], { w: 3, col: '#d6a842', pass2: false }); }
+  if (o.hat === 'jeonrip') { ell(0, hy - 40, 76, 12, { wash: '#1a1a1e', washA: 1, w: 1.8, col: L }); blob([[-30, hy - 42], [-26, hy - 80], [0, hy - 90], [26, hy - 80], [30, hy - 42]], { wash: '#1a1a1e', washA: 1, w: 1.8, col: L }); for (let q = -3; q <= 3; q++) pencil([[0, hy - 90], [q * 7, hy - 72]], { w: 2.4, col: '#c8302a', pass2: false }); }
+  if (o.hat === 'straw') { blob([[-80, hy - 30], [-40, hy - 52], [0, hy - 58], [40, hy - 52], [80, hy - 30], [0, hy - 36]], { wash: '#d8b866', washA: 1, w: 1.8, col: L }); blob([[-30, hy - 46], [-24, hy - 76], [0, hy - 84], [24, hy - 76], [30, hy - 46]], { wash: '#d0ae5a', washA: 1, w: 1.8, col: L }); pencil([[-30, hy - 50], [30, hy - 50]], { w: 4, col: '#2a4a3a', pass2: false }); }
+  if (o.hat === 'police') { blob([[-44, hy - 26], [-42, hy - 62], [0, hy - 74], [42, hy - 62], [44, hy - 26]], { wash: hc, washA: 1, w: 2, col: L }); ell(14, hy - 26, 40, 8, { wash: '#101010', washA: 1, w: 1.6, col: L }); ell(0, hy - 52, 9, 9, { wash: '#d6a842', washA: 1, w: 1.2, col: '#5a3a08' }); pencil([[-42, hy - 32], [42, hy - 32]], { w: 4, col: '#d6a842', a: 0.7, pass2: false }); }
+  if (o.hat === 'sailor') { ell(0, hy - 46, 46, 14, { wash: '#f2efe6', washA: 1, w: 1.8, col: L }); rect(-40, hy - 46, 80, 14, { wash: '#14141a', washA: 1, w: 1.4, col: L }); for (const k of [0, 1]) pencil([[30, hy - 34], [40 + k * 10, hy + 10 + Math.sin(t * 3 + k) * 6]], { w: 4, col: '#14141a', pass2: false }); }
+  if (o.hat === 'bun') { ell(0, hy - 30, 44, 26, { wash: '#1a1614', washA: 1, w: 1.8, col: L }); ell(-34, hy - 6, 18, 16, { wash: '#1a1614', washA: 1, w: 1.6, col: L }); pencil([[-58, hy - 8], [-10, hy - 4]], { w: 3, col: '#d6a842', pass2: false }); }
+  if (o.hat === 'jangot') blob([[-54, hy + 70], [-56, hy - 30], [0, hy - 66], [56, hy - 30], [54, hy + 70], [36, hy - 6], [-36, hy - 6]], { wash: hc, washA: 1, w: 2, col: L, shade: { gap: 6, a: 0.25, col: L, ang: 1.2 } });
   pop();
+}
+
+/* ---- 004: общие хелперы любого выпуска (время слова, «пуф», неон, дом, толпа) ---- */
+function neon(x, y, w, h, s1, col, t, on = 1, o = {}) {                 // неоновая вывеска: тёмная плашка, трубки текста, ореол; on 0 → мёртвая
+  const f = on * (o.flick ? (Math.sin(t * 40 + x) > -0.6 ? 1 : 0.2) : 1);
+  rect(x - w / 2, y - h / 2, w, h, { wash: o.bg || '#16121c', washA: 0.95, w: 1.8, col: '#000', a: 0.8 });
+  if (f > 0.05) { glow(x, y, w * 0.8, col, 0.35 * f); }
+  txt(s1, x, y + h * 0.04, h * (o.size || 0.62), { font: o.font || 'KSign', col: f > 0.05 ? col : '#4a4450', bold: false, a: f > 0.05 ? 1 : 0.8 });
+  if (f > 0.05) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; txt(s1, x, y + h * 0.04, h * (o.size || 0.62), { font: o.font || 'KSign', col: '#ffffff', bold: false, a: 0.35 * f }); ctx.restore(); }
+}
+
+function cityBlock(x, base, w, h, col, t, o = {}) {                   // современный дом: фасад, окна, вывески на торце
+  const fp = rect(x, base - h, w, h, { wash: col, washA: 1, w: 2, col: '#0e0c12', a: 0.7, key: o.key });
+  hatch(fp.path, fp.bb, { gap: 8, a: 0.1, col: '#000', ang: 1.4, w: 1 });
+  windows(x + 6, base - h + 10, w - 12, h - 20, Math.max(2, Math.round(w / 34)), Math.max(3, Math.round(h / 40)), o.seed || 1, (o.on ?? 0.6), o.cA || '#ffd98a', o.cB || '#9fd8ff', (o.wa ?? 0.85));
+  pencil([[x, base - h], [x + w, base - h]], { w: 3, col: '#000', a: 0.5, pass2: false });
+}
+
+function crowd(x0, x1, base, n, t, seed, o = {}) {                     // толпа силуэтов (дальний план): головы, плечи, телефоны
+  const r = rng(seed);
+  for (let i = 0; i < n; i++) { const x = x0 + r() * (x1 - x0), s = (o.s || 1) * (0.8 + r() * 0.3), y = base + r() * (o.dy || 20), c = (o.cols || ['#2a2a36', '#3a2e3a', '#28343a', '#4a3a30', '#3a3a2a'])[i % 5], bob = Math.sin(t * 3 + i) * 2;
+    blob([[x - 22 * s, y], [x - 24 * s, y - 70 * s], [x - 14 * s, y - 92 * s], [x + 14 * s, y - 92 * s], [x + 24 * s, y - 70 * s], [x + 22 * s, y]], { wash: c, washA: 1, w: 1.4, col: '#0a0810', a: 0.6 });
+    ell(x, y - 108 * s + bob, 13 * s, 15 * s, { wash: o.skin || '#c89a78', washA: 1, w: 1.2, col: '#0a0810', a: 0.6 });
+    blob([[x - 14 * s, y - 110 * s + bob], [x - 10 * s, y - 126 * s + bob], [x + 10 * s, y - 126 * s + bob], [x + 14 * s, y - 110 * s + bob], [x, y - 116 * s + bob]], { wash: '#141010', washA: 1, line: false });
+    if (o.phones && r() < o.phones) { const px = x + 16 * s, py = y - 128 * s; rect(px - 5 * s, py - 9 * s, 10 * s, 16 * s, { wash: '#0a0a10', washA: 1, w: 1, col: '#000' }); glow(px, py, 26 * s, 'rgba(170,220,255,1)', 0.6); pencil([[x + 10 * s, y - 80 * s], [px, py + 6 * s]], { w: 5 * s, col: c, pass2: false }); }
+    if (o.flags && r() < o.flags) { const fx = x - 10 * s, fy = y - 150 * s; pencil([[fx, y - 70 * s], [fx, fy]], { w: 2, col: '#5a4a3a', pass2: false }); const wv = Math.sin(t * 6 + i) * 4; const F = o.flag || (typeof taeguk === 'function' ? taeguk : null); if (F) F(fx + 22 * s, fy + 14 * s, s * (1 + wv * 0.01)); }
+  }
+}
+
+function wtk(k, w) {                                                   // время слова внутри субтитра-фрагмента (пропорция по буквам)
+  const nrm = s => s.toLowerCase().replace(/[^а-яёa-z0-9-]/g, '');
+  const c = CAPS.find(c => c.key === k && c.words.some(x => nrm(x) === nrm(w))); if (!c) return WT(k, w);
+  const i = c.words.findIndex(x => nrm(x) === nrm(w)); const L = c.words.map(x => x.length + 1), tot = L.reduce((a, b) => a + b, 0), pre = L.slice(0, i).reduce((a, b) => a + b, 0);
+  return c.t0 + (c.t1 - c.t0) * pre / tot;
+}
+
+function puffK(x, y, s, t, t0, d = 0.5, seed = 1, col = '#f6efe0') {   // облачко «пуф» (переодевание)
+  if (t < t0 || t > t0 + d) return; const k = (t - t0) / d, r = rng(seed);
+  for (let i = 0; i < 12; i++) { const a = r() * 6.283, dd = (40 + r() * 90) * sm(k) * s; ell(x + Math.cos(a) * dd, y + Math.sin(a) * dd * 0.8, (40 + r() * 30) * s * (1 - k * 0.5), (34 + r() * 24) * s * (1 - k * 0.5), { wash: col, washA: 0.9 * (1 - k), w: 2, col: '#6a5a4a', a: 0.4 * (1 - k) }); }
+}
+function pine(x, y, h, t, seed = 1, o = {}) {                          // сосна (красная/корейская): изогнутый ствол: изогнутый ствол, плоские «облака» хвои
+  const r = rng(9160 + seed), sw = Math.sin(t * 0.8 + seed) * h * 0.006;
+  const T = spline([[x, y], [x + h * 0.08 * (r() - 0.3), y - h * 0.35], [x - h * 0.06, y - h * 0.62], [x + h * 0.1 + sw, y - h * 0.95]], false, 8);
+  shape(tubeP(T, h * 0.07, h * 0.03), { wash: o.trunk || '#a8563a', washA: 1, w: 1.8, col: '#2a120a', a: 0.8 });
+  pencil(T.map(([a, b]) => [a + h * 0.012, b]), { w: Math.max(1, h * 0.006), col: '#e89a6a', a: 0.5, pass2: false });
+  for (let k = 0; k < 5; k++) { const i = Math.min(T.length - 1, Math.round((0.4 + k * 0.15) * (T.length - 1))), [bx, by] = T[i], dir = k % 2 ? 1 : -1, len = h * (0.22 + r() * 0.18);
+    pencil([[bx, by], [bx + dir * len * 0.7 + sw, by - h * 0.05]], { w: Math.max(1.5, h * 0.012), col: '#6a3a24', pass2: false });
+    const cx = bx + dir * len * 0.8 + sw, cy = by - h * 0.07, P = []; for (let q = 0; q <= 14; q++) { const a = Math.PI + q / 14 * Math.PI; P.push([cx + Math.cos(a) * len * 0.75, cy + Math.sin(a) * len * 0.28 + (q % 2 ? h * 0.012 : 0)]); }
+    P.push([cx + len * 0.7, cy + h * 0.03], [cx - len * 0.7, cy + h * 0.03]);
+    const fp = shape(P, { wash: o.leaf || '#2f5a34', washA: 1, w: 1.6, col: '#0e2410', a: 0.7 }); hatch(fp.path, fp.bb, { gap: 4, a: 0.25, col: '#0e2410', ang: 1.2, w: 1 });
+    pencil(P.slice(2, 12).map(([a, b]) => [a, b + 3]), { w: 2, col: o.leafL || '#6a9a58', a: 0.5, pass2: false }); }
 }

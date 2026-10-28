@@ -15,13 +15,15 @@ s = (src / 'scenes.js').read_text()
 old_city = json.load(open(src / 'episode.json'))['city']
 head = s.split('const SUBTITLE')[0].replace(src.name[:3], ep[:3]).replace(old_city, city)
 (d / 'scenes.js').write_text(head + f"""const SUBTITLE = '{city} сквозь время';
-const SAT = 1.1;                                          // насыщенность итогового кадра (владелец 18.10.2026: на ~10 % цветастее)
+const SAT = 1.1;
+const PROGRESS = true;                                    // точки «эпоха n/N» вместо шкалы 450 млн лет (для короткой истории; для геологии — убрать)
+// const QUESTION = {{ q: 'ВОПРОС ХУКА?', a: 'ОТВЕТ', at: () => EV.answer }};   // плашка открытой петли до ответа (core.js qchip)                                          // насыщенность итогового кадра (владелец 18.10.2026: на ~10 % цветастее)
 const HOOK_LINES = ['TODO СТРОКА 1', 'TODO СТРОКА 2?!'];   // текст-хук первых ~2.4 с
 const YR = {{ hook: ['2026', 'TODO'], tunnel: ['', ''], /* сцена: ['год', 'ПОДПИСЬ'] */ today: ['2026', '{city.upper()}'], button: ['', ''] }};
 const SC = SCN.map(([n, a, b]) => [n, a, b, YR[n][0], YR[n][1]]);
 const S0 = {{}}, S1 = {{}}; SC.forEach(s => {{ S0[s[0]] = s[1]; S1[s[0]] = Math.min(s[2], DUR); }});
 const LS = k => VO[k], LE = k => VO[k] + VD[k], LF = (k, f) => VO[k] + VD[k] * f;
-const EV = {{ h2: LS('h2'), hookEnd: Math.min(2.4, LE('h1') - 0.15), portal: LS('x1') + 0.4 }};
+const EV = {{ h2: LS('h2'), hookEnd: Math.min(4.5, LE('h1') - 0.1), portal: LS('x1') + 0.4 }};
 const SHAKES = [];
 const YEARS = {{ hook: 2026, today: 2026 }};
 const KEYW = ['время!', 'город', 'отмотаем!'];
