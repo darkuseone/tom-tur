@@ -35,7 +35,7 @@
     for (const [x, y] of [[440, 1300], [1120, 1300]]) { push(x, y, 0.7); rect(-70, -120, 140, 120, { wash: '#c8ccd4', washA: 1, w: 2, col: L }); rect(-60, -180, 120, 60, { wash: '#2a2e36', washA: 1, w: 2, col: L }); rect(-52, -172, 104, 44, { wash: '#2a6ae8', washA: 1, w: 1, col: L }); glow(0, -150, 70, 'rgba(90,150,255,1)', 0.4); for (const sd of [-1, 1]) ell(sd * 50, 4, 12, 12, { wash: '#2a2a2a', washA: 1, w: 1.4 }); pop(); }   // тележки с ноутбуками
   }
   function hud(t) {                                                 // телефон с картой и меткой
-    if (t < EV.td_city - 0.05) return; const k = popK(t, EV.td_city - 0.05, 0.4); push(740, 900, 0.75 + 0.25 * k, 0.05);
+    if (t < EV.td_city - 0.05) return; const k = popK(t, EV.td_city - 0.05, 0.4); push(570, 800, (0.75 + 0.25 * k) * 0.85, -0.04);
     rect(-170, -300, 340, 600, { wash: '#14161c', washA: 1, w: 4, col: '#4a4e58' }); rect(-150, -270, 300, 540, { wash: '#e8eef2', washA: 1, w: 0, line: false });
     ctx.save(); ctx.beginPath(); ctx.rect(-150, -270, 300, 540); ctx.clip();
     for (let q = -6; q <= 6; q++) { pencil([[-160, q * 50], [160, q * 50 + 20]], { w: q % 3 ? 4 : 10, col: '#ffffff', pass2: false }); pencil([[q * 40, -280], [q * 40 + 30, 280]], { w: q % 3 ? 4 : 10, col: '#ffffff', pass2: false }); }
@@ -50,7 +50,7 @@
     lay(14, () => room(t));
     lay(8, () => sat(1000, 1060, 0.5, t, 1, {}));
     lay(4, () => { const f = rect(-800, 1330, 2700, 1100, { wash: '#c8d0da', washA: 1, w: 0, line: false }); for (let x = -800; x < 1900; x += 100) pencil([[x, 1330], [x - 300, 2400]], { w: 2, col: '#9aa6b4', a: 0.5, pass2: false }); for (let y = 1360; y < 2400; y += 90) pencil([[-800, y], [1900, y]], { w: 2, col: '#9aa6b4', a: 0.5, pass2: false }); pencil([[-800, 1700], [1900, 1700]], { w: 16, col: '#f2c83a', a: 0.7, pass2: false }); techs(t); });
-    lay(2.6, () => sat(780, 1450, 1.0, t, sm((t - EV.td_glo + 0.4) / 0.9), { label: 1 }));
+    lay(2.6, () => sat(930, 1330, 0.7, t, sm((t - EV.td_glo + 0.4) / 0.9), { label: 1 }));
     lay(1, () => cat());
     lay(0.6, () => { for (const sd of [-1, 1]) { const x = sd < 0 ? -140 : 1220; rect(x - 60, -300, 120, 2700, { wash: '#eef2f6', washA: 1, w: 2.4, col: '#6a7684' }); rect(x - 60, 700, 120, 30, { wash: '#4ab0ff', washA: 1, w: 0, line: false }); } pencil(spline([[-200, 1900], [200, 1760], [500, 1900]], false, 10), { w: 14, col: '#2a2e36', pass2: false }); });   // колонны, кабель
     if (t > EV.td_glo - 0.05 && t < EV.td_glo + 0.6) glow(780, 1000, 700, 'rgba(255,220,120,1)', 0.35 * Math.sin(clamp((t - EV.td_glo) / 0.6) * Math.PI));

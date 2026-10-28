@@ -45,10 +45,10 @@
     push(760, 1420, 1); const tb = shape([[-260, -200], [260, -200], [300, -120], [-300, -120]], { wash: '#f2ead2', washA: 1, w: 2, col: L }); for (let q = -5; q <= 5; q++) pencil([[q * 50, -200], [q * 56, -120]], { w: 2, col: '#c84a3a', a: 0.4, pass2: false }); rect(-300, -120, 600, 40, { wash: '#e8dcc0', washA: 1, w: 1.6, col: L });
     for (let q = 0; q < 2; q++) { rect(-140 + q * 90, -250, 36, 50, { wash: 'rgba(200,120,40,0.6)', washA: 1, w: 1.6, col: L }); rect(-144 + q * 90, -244, 44, 44, { wash: 'rgba(0,0,0,0)', washA: 0, w: 2.4, col: '#a8a8a8' }); for (let k = 0; k < 3; k++) { const ph = (t * 0.5 + k / 3 + q * 0.3) % 1; ell(-122 + q * 90 + Math.sin(t * 3 + k) * 6, -262 - ph * 80, 6 + ph * 10, 5 + ph * 8, { wash: '#f2f2f2', washA: 0.4 * (1 - ph), line: false }); } }
     ell(120, -230, 60, 22, { wash: '#e8a040', washA: 1, w: 1.6, col: L }); pop();   // пирог
-    human(980, 1420, 0.62, t, { body: '#5a4a6a', legs: '#3a3a3a', hat: 'scarf', hatCol: '#e8d8c0', armR: 'hold', armL: 'hold', face: 'smile', seed: 210, flip: -1 });
-    pencil([[930, 1240], [960, 1270]], { w: 3, col: '#c8a040', pass2: false }); ell(948, 1268, 22, 14, { wash: '#c84a3a', washA: 1, w: 1.4, col: L });   // вязание
-    human(560, 1440, 0.48, t, { body: '#2a5a8a', legs: '#2a2a3a', hair: '#6a4a2a', armR: 'up', face: 'smile', seed: 211 });
-    push(600, 1150 + Math.sin(t * 3) * 10, 0.7, -0.5); blob([[0, -60], [14, -30], [14, 40], [-14, 40], [-14, -30]], { wash: '#e8e8e8', washA: 1, w: 2, col: L }); poly([[-14, 20], [-30, 50], [-14, 40]], { wash: '#c8302a', washA: 1, w: 1.4 }); poly([[14, 20], [30, 50], [14, 40]], { wash: '#c8302a', washA: 1, w: 1.4 }); txt('СССР', 0, 6, 12, { col: '#c8302a', font: 'Osw', rot: 1.57 }); pop();   // ракета (Гагарин, 1961)
+    human(860, 1420, 0.62, t, { body: '#5a4a6a', legs: '#3a3a3a', hat: 'scarf', hatCol: '#e8d8c0', armR: 'hold', armL: 'hold', face: 'smile', seed: 210, flip: -1 });
+    pencil([[810, 1240], [840, 1270]], { w: 3, col: '#c8a040', pass2: false }); ell(828, 1268, 22, 14, { wash: '#c84a3a', washA: 1, w: 1.4, col: L });   // вязание
+    human(690, 1440, 0.48, t, { body: '#2a5a8a', legs: '#2a2a3a', hair: '#6a4a2a', armR: 'up', face: 'smile', seed: 211 });
+    push(730, 1150 + Math.sin(t * 3) * 10, 0.7, -0.5); blob([[0, -60], [14, -30], [14, 40], [-14, 40], [-14, -30]], { wash: '#e8e8e8', washA: 1, w: 2, col: L }); poly([[-14, 20], [-30, 50], [-14, 40]], { wash: '#c8302a', washA: 1, w: 1.4 }); poly([[14, 20], [30, 50], [14, 40]], { wash: '#c8302a', washA: 1, w: 1.4 }); txt('СССР', 0, 6, 12, { col: '#c8302a', font: 'Osw', rot: 1.57 }); pop();   // ракета (Гагарин, 1961)
   }
   function battery(t) {                                             // чугунная батарея у ног Тома
     const h = hot(t), col = lerpC('#8a8a8a', '#ff7a3a', h * 0.8);

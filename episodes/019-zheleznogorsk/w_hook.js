@@ -41,9 +41,12 @@
   };
   function ghosts(t) {                                            // призрачная колонна заключённых уходит в портал (память места)
     if (t < EV.hk_80 - 0.1) return; const k = sm((t - EV.hk_80 + 0.1) / 0.6) * (1 - sm((t - LS('h2') - 0.2) / 0.5)); if (k <= 0) return;
-    for (let i = 0; i < 16; i++) { const ph = ((t - EV.hk_80) * 0.12 + i / 16) % 1, x = lerp(1180, 770, ph), y = lerp(1600, 1335, ph), s = lerp(0.85, 0.24, ph), bob = Math.abs(Math.sin(t * 5 + i)) * 6 * s;
-      const P = [[-26, 0], [-30, -110], [-46, -200], [-30, -240], [-16, -250], [-20, -280], [0, -300], [20, -280], [16, -250], [30, -240], [46, -200], [30, -110], [26, 0]].map(([a, b]) => [x + a * s, y + (b - bob) * s]);
-      ell(x, y, 40 * s, 8 * s, { wash: '#4a5a80', washA: 0.4 * k, line: false }); sil(P, '#1c2440', 0.62 * k * (1 - ph * 0.35)); sil([[x - 34 * s, y - 286 * s], [x, y - 318 * s], [x + 34 * s, y - 286 * s]], '#1c2440', 0.62 * k); pencil([[x - 30 * s, y - 200 * s], [x + 30 * s, y - 200 * s]], { w: 6 * s, col: '#8aa0d0', a: 0.4 * k, pass2: false }); }
+    for (let i = 0; i < 18; i++) { const ph = ((t - EV.hk_80) * 0.11 + i / 18) % 1, x = lerp(1260, 770, ph) + (i % 2 ? 26 : -26) * (1 - ph), y = lerp(1720, 1335, ph), s = lerp(1.25, 0.24, ph), bob = Math.abs(Math.sin(t * 5 + i)) * 6 * s, a = k * (1 - ph * 0.3) * clamp(ph * 8);
+      const P = [[-30, 0], [-34, -110], [-52, -200], [-34, -240], [-18, -250], [-22, -280], [0, -300], [22, -280], [18, -250], [34, -240], [52, -200], [34, -110], [30, 0]].map(([a2, b]) => [x + a2 * s, y + (b - bob) * s]);
+      ell(x, y, 46 * s, 10 * s, { wash: '#2a3658', washA: 0.5 * a, line: false });
+      sil(P, '#141a30', 0.82 * a); sil([[x - 40 * s, y - 284 * s], [x, y - 322 * s], [x + 40 * s, y - 284 * s]], '#141a30', 0.82 * a);   // ушанка
+      pencil(P.slice(0, 7).map(([px, py]) => [px - 3 * s, py]), { w: Math.max(1.5, 5 * s), col: '#9fc4ff', a: 0.7 * a, pass2: false, gap: false });   // холодный контровой свет прожектора
+      blob([[x + 30 * s, y - 210 * s], [x + 70 * s, y - 220 * s], [x + 76 * s, y - 160 * s], [x + 36 * s, y - 150 * s]], { wash: '#141a30', washA: 0.8 * a, w: 0, line: false }); }   // котомка
     txt('80 000', 700, 930, 70, { col: '#e4eeff', font: 'Osw', a: 0.85 * k, rot: -0.05 });
   }
   function front(t) {
