@@ -78,3 +78,16 @@ python3 tools/mix.py 002-rim                     # только пересвес
 ## Экономичный цикл (с 15.10.2026)
 
 `python3 tools/new_episode.py <эп> "<Город>"` → факты/сценарий → `tts.py` / `prep_voice.py` / `build_data.py` → миры по одному файлу (API — `docs/api.md`, готовые детали — `docs/library.md`) → `tools/check.sh <эп>` → `w_cover.js` + `node tools/cover.cjs <эп>` → `node tools/evdump.cjs <эп>` + `sound.py` → `tools/render.sh <эп>` (фоном; final 2-pass 5 Мбит/с; обложка = первый кадр ролика + отдельный cover.png) → `publish.md` → `python3 tools/libindex.py`.
+
+## Скилы и инструменты (с 22.10.2026)
+
+| скил | шаг | инструменты |
+|---|---|---|
+| `/episode` | весь выпуск по шагам | `new_episode.py` |
+| `/facts` | факты → сценарий → lines.json | `est.py` |
+| `/scene` | мир одной сцены | `new_scene.py`, `check.sh` |
+| `/costume` | костюм Тома | `add_costume.py`, `tomsheet.cjs` |
+| `/sound` | SFX, атмосферы, музыка, микс | `evdump.cjs`, `tts.py sfx/music`, `sfxcheck.py`, `mix.py` |
+| `/deliver` | обложка, рендер, проверка, сдача | `cover.cjs`, `render.sh`, `finalcheck.sh`, `libindex.py` |
+
+Общие хелперы миров (любой город) — в `props.js` выпуска: `human`, `wtk`, `puffK`, `neon`, `cityBlock`, `crowd`, `poster`, `candle`; детали конкретного города — отдельным файлом (`seoul.js`), в worlds сразу после props.js.

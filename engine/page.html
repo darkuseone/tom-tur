@@ -1,9 +1,9 @@
 <!doctype html><html><head><meta charset="utf-8">
 <script src="gsap.min.js"></script>
-<style>@font-face{font-family:'Hand';src:url('Caveat.ttf');font-weight:100 900}@font-face{font-family:'Osw';src:url('Oswald600.ttf');font-weight:100 900}
+<style>@font-face{font-family:'Hand';src:url('Caveat.ttf');font-weight:100 900}@font-face{font-family:'Osw';src:url('Oswald600.ttf');font-weight:100 900}@font-face{font-family:'KHand';src:url('NanumPen.ttf');font-weight:100 900}@font-face{font-family:'KSign';src:url('BlackHan.ttf');font-weight:100 900}
 html,body{margin:0;background:#000}#root{position:relative;width:1080px;height:1920px;overflow:hidden}canvas{position:absolute;left:0;top:0}
-.ff{position:absolute;left:-999px;font:20px Hand}.f2{position:absolute;left:-999px;font:600 20px Osw}</style></head><body>
-<div class="ff">Том</div><div class="f2">ТОМ</div>
+.ff{position:absolute;left:-999px;font:20px Hand}.f2{position:absolute;left:-999px;font:600 20px Osw}.f3{position:absolute;left:-999px;font:20px KHand}.f4{position:absolute;left:-999px;font:20px KSign}</style></head><body>
+<div class="ff">Том</div><div class="f2">ТОМ</div><div class="f3">서울</div><div class="f4">서울</div>
 <div id="root" data-composition-id="root" data-width="1080" data-height="1920" data-start="0" data-duration="__DUR__"><canvas id="c" width="1080" height="1920"></canvas></div>
 <script src="data.js"></script><script src="engine.js"></script><script src="core.js"></script><script src="scenes.js"></script><script src="tom.js"></script>
 __WORLDS__<script src="transitions.js"></script><script src="direct.js"></script>
@@ -31,5 +31,5 @@ function draw(tRaw) {
 const P = { t: 0 }; const tl = gsap.timeline({ paused: true });
 tl.to(P, { t: DUR, duration: DUR, ease: 'none', onUpdate: () => draw(P.t) }, 0);
 window.__timelines = { root: tl };
-Promise.all([document.fonts.load('700 100px Hand'), document.fonts.load('600 100px Osw')]).then(() => { lastFr = -1; draw(P.t); }); draw(0);
+Promise.all([document.fonts.load('700 100px Hand'), document.fonts.load('600 100px Osw'), document.fonts.load('700 100px KHand', '서울'), document.fonts.load('700 100px KSign', '서울')]).then(() => { lastFr = -1; draw(P.t); }); draw(0);
 </script></body></html>

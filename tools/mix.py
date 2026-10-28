@@ -2,7 +2,7 @@
   python3 tools/mix.py <эпизод> [папка_голоса=vf] [выход=audio.m4a]     # для дубляжа: tools/dub.py вызывает с vf_en audio_en.m4a
 Громкость каждого клипа выравнивается по активному RMS (голос −17, SFX −25+поправка, атмосферы −33, музыка −29 дБ),
 SFX: highpass 35 / lowpass 8.5k / −4 дБ на 4.5k / лимитер — ничего не бьёт по ушам; атмосферы и музыка проседают под голосом (sidechain).
-Цель: mean ≈ −20 дБ, пик ≤ −1 дБ."""
+Цель: мастер `master_lufs` из tools/config.json (тест с 011: −14 LUFS, пик ≤ −1 дБ); без ключа — как раньше (≈ −20 LUFS)."""
 import importlib.util, json, subprocess, sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -53,17 +53,29 @@ def main(ep, vfdir='vf', outname='audio.m4a'):
         f = SF / f'{n}.mp3'; g = gain(f, M['bed_db']); i = add(f); du = e - a; ms = int(a * 1000)
         fl.append(f'[{i}]aloop=loop=-1:size=2e9,atrim=0:{du:.3f},lowpass=f=9000,volume={g:.2f}dB,afade=t=in:d=0.35,afade=t=out:st={du - 0.45:.3f}:d=0.45,adelay={ms}|{ms}[b{i}]'); bl.append(f'[b{i}]')
     f = SF / f"{S['music']}.mp3"; g = gain(f, M['music_db']); i = add(f)
-    fl.append(f'[{i}]aloop=loop=-1:size=2e9,atrim=0:{DUR},volume={g:.2f}dB,afade=t=in:d=0.6,afade=t=out:st={DUR - 1.4}:d=1.4[mus]'); bl.append('[mus]')
+    duck = ''.join(f",volume={10 ** (db / 20):.3f}:enable='between(t,{a0:.2f},{a1:.2f})'" for a0, a1, db in S.get('music_duck', []))   # приглушить музыку на отрезках (траурные сцены)
+    fl.append(f'[{i}]aloop=loop=-1:size=2e9,atrim=0:{DUR},volume={g:.2f}dB{duck},afade=t=in:d=0.6,afade=t=out:st={DUR - 1.4}:d=1.4[mus]'); bl.append('[mus]')
     fl.append(''.join(vl) + f'amix=inputs={len(vl)}:normalize=0,asplit=2[vo][vsc]')
     fl.append(''.join(bl) + f'amix=inputs={len(bl)}:normalize=0[bed]')
     fl.append('[bed][vsc]sidechaincompress=threshold=0.04:ratio=5:attack=25:release=350[bedd]')
-    fl.append('[vo][bedd]' + ''.join(sl) + f'amix=inputs={2 + len(sl)}:normalize=0,apad=whole_dur={DUR},atrim=0:{DUR},'
-              'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume=2dB,alimiter=limit=0.84:attack=2:release=40:level=0[out]')
-    (b / f'mix_{vfdir}.txt').write_text(';\n'.join(fl))
-    out = b / outname
-    subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex_script', str(b / f'mix_{vfdir}.txt'), '-map', '[out]', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(out)], check=True)
+    out, tgt, extra = b / outname, M.get('master_lufs'), 0.0
+    for it in range(3 if tgt else 1):                              # мастер: громкость под ленту (с 011 — −14 LUFS), подгонка общим усилением перед лимитером
+        last = fl + ['[vo][bedd]' + ''.join(sl) + f'amix=inputs={2 + len(sl)}:normalize=0,apad=whole_dur={DUR},atrim=0:{DUR},'
+                     f'acompressor=threshold=-14dB:ratio=2:attack=10:release=150,volume={2 + extra:.2f}dB,alimiter=limit={0.70 if tgt else 0.84}:attack=2:release=40:level=0[out]']
+        (b / f'mix_{vfdir}.txt').write_text(';\n'.join(last))
+        subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex_script', str(b / f'mix_{vfdir}.txt'), '-map', '[out]', '-ar', '48000', '-c:a', 'aac', '-b:a', '192k', str(out)], check=True)
+        I, TP = loudness(out)
+        if not tgt or abs(I - tgt) < 0.5: break
+        extra += tgt - I
     r = subprocess.run(['ffmpeg', '-i', str(out), '-af', 'volumedetect', '-f', 'null', '-'], capture_output=True, text=True).stderr
-    print(out.relative_to(ROOT), *[l.split('] ')[-1] for l in r.splitlines() if 'mean_volume' in l or 'max_volume' in l])
+    print(out.relative_to(ROOT), *[l.split('] ')[-1] for l in r.splitlines() if 'mean_volume' in l or 'max_volume' in l], f'| {I:.1f} LUFS, true peak {TP:.1f} dBTP')
+
+
+def loudness(path):                                                # интегральная громкость (LUFS) и true peak (dBTP) по EBU R128
+    r = subprocess.run(['ffmpeg', '-nostats', '-i', str(path), '-af', 'ebur128=peak=true', '-f', 'null', '-'], capture_output=True, text=True).stderr
+    import re
+    I = float(re.findall(r'I:\s+(-?[\d.]+) LUFS', r)[-1]); TP = float(re.findall(r'Peak:\s+(-?[\d.]+) dBFS', r)[-1])
+    return I, TP
 
 
 if __name__ == '__main__':

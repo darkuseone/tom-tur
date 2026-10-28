@@ -1,0 +1,86 @@
+{
+ "num": "014",
+ "city": "Лос-Анджелес",
+ "title": "Надпись Hollywood — не для кино?! История Лос-Анджелеса за минуту",
+ "hook": "НЕ ДЛЯ КИНО?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "la.js",
+  "w_hook.js",
+  "w_tarpits.js",
+  "w_pueblo.js",
+  "w_oil.js",
+  "w_studio.js",
+  "w_aqueduct.js",
+  "w_sign.js",
+  "w_battle.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "tarpits",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "pueblo",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "oil",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "studio",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "aqueduct",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "sign",
+   [
+    "s6",
+    "a1"
+   ]
+  ],
+  [
+   "battle",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

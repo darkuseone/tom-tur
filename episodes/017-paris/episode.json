@@ -1,0 +1,86 @@
+{
+ "num": "017",
+ "city": "Париж",
+ "title": "Эйфелеву башню хотели разобрать?! История Парижа за минуту",
+ "hook": "РАЗОБРАТЬ?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "paris.js",
+  "w_hook.js",
+  "w_lutetia.js",
+  "w_catacombs.js",
+  "w_bastille.js",
+  "w_haussmann.js",
+  "w_expo.js",
+  "w_radio.js",
+  "w_occupation.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "lutetia",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "catacombs",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "bastille",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "haussmann",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "expo",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "radio",
+   [
+    "s6",
+    "a1"
+   ]
+  ],
+  [
+   "occupation",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

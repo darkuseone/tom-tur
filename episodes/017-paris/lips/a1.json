@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/017-paris/vf/a1.wav",
+    "duration": 3.89
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.05, "value": "B" },
+    { "start": 0.05, "end": 0.09, "value": "E" },
+    { "start": 0.09, "end": 0.16, "value": "G" },
+    { "start": 0.16, "end": 0.23, "value": "B" },
+    { "start": 0.23, "end": 0.31, "value": "A" },
+    { "start": 0.31, "end": 0.47, "value": "B" },
+    { "start": 0.47, "end": 0.61, "value": "F" },
+    { "start": 0.61, "end": 0.75, "value": "B" },
+    { "start": 0.75, "end": 0.83, "value": "A" },
+    { "start": 0.83, "end": 0.95, "value": "C" },
+    { "start": 0.95, "end": 1.19, "value": "A" },
+    { "start": 1.19, "end": 1.49, "value": "F" },
+    { "start": 1.49, "end": 1.56, "value": "C" },
+    { "start": 1.56, "end": 1.64, "value": "A" },
+    { "start": 1.64, "end": 1.69, "value": "B" },
+    { "start": 1.69, "end": 1.88, "value": "C" },
+    { "start": 1.88, "end": 2.00, "value": "A" },
+    { "start": 2.00, "end": 2.07, "value": "C" },
+    { "start": 2.07, "end": 2.20, "value": "B" },
+    { "start": 2.20, "end": 2.41, "value": "E" },
+    { "start": 2.41, "end": 2.62, "value": "B" },
+    { "start": 2.62, "end": 2.69, "value": "F" },
+    { "start": 2.69, "end": 2.76, "value": "B" },
+    { "start": 2.76, "end": 2.90, "value": "C" },
+    { "start": 2.90, "end": 3.04, "value": "F" },
+    { "start": 3.04, "end": 3.25, "value": "B" },
+    { "start": 3.25, "end": 3.32, "value": "C" },
+    { "start": 3.32, "end": 3.88, "value": "B" },
+    { "start": 3.88, "end": 3.89, "value": "X" }
+  ]
+}

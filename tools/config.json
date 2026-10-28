@@ -8,6 +8,6 @@
     "silence": {"threshold_db": -42, "inner_pause": 0.16, "keep": 0.1}
   },
   "timeline": {"scene_gap": 0.08, "line_gap": 0.1, "tunnel": 0.55, "tail": 0.74},
-  "mix": {"voice_db": -17, "sfx_db": -25, "bed_db": -33, "music_db": -29},
+  "mix": {"voice_db": -17, "sfx_db": -25, "bed_db": -33, "music_db": -29, "master_lufs": -14},
   "render": {"fps": 24, "chat_limit_mib": 29}
 }

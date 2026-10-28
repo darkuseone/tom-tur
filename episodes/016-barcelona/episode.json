@@ -1,0 +1,86 @@
+{
+ "num": "016",
+ "city": "Барселона",
+ "title": "Саграду Фамилию строят 144 года?! История Барселоны за минуту",
+ "hook": "144 ГОДА?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "bcn.js",
+  "w_hook.js",
+  "w_barcino.js",
+  "w_seu.js",
+  "w_siege.js",
+  "w_sagrada.js",
+  "w_tram.js",
+  "w_civilwar.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "barcino",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "seu",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "siege",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "sagrada",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "tram",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "civilwar",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1",
+    "t2"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
