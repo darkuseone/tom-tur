@@ -67,6 +67,7 @@ function titleCard(t) {
   txt(year, 0, -18, 104, { col: roll ? '#9fd8ff' : '#f6e7c8', font: 'Osw', a: 0.97 });
   txt(s[4], 0, 54, 34, { col: K.amber, font: 'Osw', a: 0.95 });
   pop();
+  if (typeof PROGRESS !== 'undefined' && PROGRESS) return progressDots(i, u);   // короткая история (≤ 200 лет): точки «эпоха n/N» вместо шкалы 450 млн лет
   // таймлайн: логарифмическая шкала 450 млн лет → сегодня, маркер едет к эпохе
   const y = 488, x0 = 140, x1 = 940; const prev = i > 0 ? SC.slice(0, i).reverse().find(q => YEARS[q[0]] !== undefined) : null;
   const p1 = logPos(YEARS[s[0]] ?? 2026), p0 = prev ? logPos(YEARS[prev[0]]) : p1, p = lerp(p0, p1, sm(u / 0.6));
@@ -95,3 +96,28 @@ function endcard(t) { if (t < DUR - 1.0) return; const k = popK(t, DUR - 1.0, 0.
   ctx.save(); ctx.fillStyle = 'rgba(16,10,8,0.82)'; ctx.fillRect(-330, -80, 660, 160); ctx.restore(); pencil([[-330, -80], [330, -80], [330, 80], [-330, 80], [-330, -80]], { w: 3, col: K.amber, pass2: false });
   txt('ПОДПИШИСЬ', -50, 4, 104, { col: '#f6e7c8', font: 'Osw' });
   push(282, -6, 1, Math.sin(t * 30) * 0.25); blob([[-26, 22], [-22, -16], [0, -30], [22, -16], [26, 22]], { wash: K.amber, washA: 1, w: 3, col: '#2a1a0c' }); ell(0, 28, 8, 6, { wash: K.amber, washA: 1, w: 2.4 }); pop(); pop(); }
+
+/* ------------------------------------------------------------------ удержание (28.10.2026, разбор Gemini/YouTube Studio: «продолжили смотреть» 59–69 %, у Минска 76 %)
+   progressDots — видимый прогресс «эпоха n/N» (мотив досмотреть). Включается в scenes.js: const PROGRESS = 'ДОСЬЕ' (подпись) или true.
+   qchip — открытая петля: вопрос хука висит плашкой под «ТОМ-ТУР» от конца хука до ответа, на ответе плашка меняется на ответ и гаснет.
+   scenes.js: const QUESTION = { q: 'ЧТО В ГОРЕ?', a: 'ПЛУТОНИЙ ДЛЯ БОМБ', at: () => EV.answer }. y ≈ 612 → HUD сцены — ниже 680. */
+function progressDots(i, u) {
+  const eps = SC.filter((s, j) => j > 0 && s[3] && YEARS[s[0]] !== undefined), N = eps.length, n = eps.findIndex(s => s[0] === SC[i][0]) + 1; if (!N || n < 1) return;
+  const y = 488, gap = Math.min(64, 560 / N), x0 = 540 - gap * (N - 1) / 2 - 50;
+  ctx.save(); ctx.globalAlpha = 0.8; ctx.fillStyle = 'rgba(18,12,10,0.5)'; ctx.fillRect(x0 - 34, y - 22, gap * (N - 1) + 180, 44); ctx.restore();
+  pencil([[x0, y], [x0 + gap * (N - 1), y]], { w: 2, col: '#f6e7c8', a: 0.5, pass2: false, gap: false });
+  for (let j = 1; j <= N; j++) { const x = x0 + gap * (j - 1), cur = j === n, k = cur ? popK(u, 0, 0.35) : 1, r = cur ? 9 + 5 * k : 7;
+    ell(x, y, r, r, { wash: j < n ? '#f6e7c8' : cur ? K.amber : 'rgba(0,0,0,0)', washA: 1, w: 2, col: j > n ? '#f6e7c8' : '#2a1a0c' }); if (cur) glow(x, y, 42, 'rgba(255,190,90,0.8)', 0.5 * k); }
+  txt(`${n}/${N}`, x0 + gap * (N - 1) + 70, y + 2, 32, { col: K.amber, font: 'Osw', a: 0.95 });
+}
+function qchip(t) {
+  if (typeof QUESTION === 'undefined' || t < EV.hookEnd || t > DUR - 1.1) return;
+  const at = QUESTION.at(), ans = t >= at; if (ans && t > at + 3.2) return;
+  const i = sceneAt(t), k = ans ? popK(t, at, 0.4) : popK(t, Math.max(SC[i][1], EV.hookEnd), 0.35), fade = ans ? clamp((at + 3.2 - t) / 0.4) : 1;
+  const s = ans ? '✓ ' + QUESTION.a : '? ' + QUESTION.q, size = ans ? 52 : 42;
+  ctx.save(); ctx.font = `600 ${size}px Osw`; const w = ctx.measureText(s).width + 56; ctx.restore();
+  push(540, 612, (0.9 + 0.1 * k) * (ans ? 1 + 0.12 * (1 - k) : 1), -0.015); ctx.save(); ctx.globalAlpha = fade;
+  ctx.fillStyle = ans ? 'rgba(120,30,20,0.92)' : 'rgba(16,10,8,0.82)'; ctx.fillRect(-w / 2, -size * 0.75, w, size * 1.5); ctx.restore();
+  pencil([[-w / 2, -size * 0.75], [w / 2, -size * 0.75], [w / 2, size * 0.75], [-w / 2, size * 0.75], [-w / 2, -size * 0.75]], { w: 3, col: K.amber, a: fade, pass2: false });
+  txt(s, 0, 2, size, { col: ans ? '#fff2d6' : K.amber, font: 'Osw', a: fade }); pop();
+}

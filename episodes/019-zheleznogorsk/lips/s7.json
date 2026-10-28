@@ -1,0 +1,35 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/019-zheleznogorsk/vf/s7.wav",
+    "duration": 3.97
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.20, "value": "B" },
+    { "start": 0.20, "end": 0.34, "value": "C" },
+    { "start": 0.34, "end": 0.41, "value": "B" },
+    { "start": 0.41, "end": 0.62, "value": "C" },
+    { "start": 0.62, "end": 0.69, "value": "B" },
+    { "start": 0.69, "end": 0.76, "value": "C" },
+    { "start": 0.76, "end": 0.88, "value": "A" },
+    { "start": 0.88, "end": 0.94, "value": "C" },
+    { "start": 0.94, "end": 0.99, "value": "E" },
+    { "start": 0.99, "end": 1.27, "value": "B" },
+    { "start": 1.27, "end": 1.35, "value": "A" },
+    { "start": 1.35, "end": 1.46, "value": "F" },
+    { "start": 1.46, "end": 2.02, "value": "B" },
+    { "start": 2.02, "end": 2.09, "value": "F" },
+    { "start": 2.09, "end": 2.37, "value": "E" },
+    { "start": 2.37, "end": 2.51, "value": "B" },
+    { "start": 2.51, "end": 2.79, "value": "E" },
+    { "start": 2.79, "end": 2.94, "value": "C" },
+    { "start": 2.94, "end": 3.08, "value": "B" },
+    { "start": 3.08, "end": 3.29, "value": "C" },
+    { "start": 3.29, "end": 3.36, "value": "H" },
+    { "start": 3.36, "end": 3.43, "value": "C" },
+    { "start": 3.43, "end": 3.64, "value": "A" },
+    { "start": 3.64, "end": 3.75, "value": "B" },
+    { "start": 3.75, "end": 3.89, "value": "C" },
+    { "start": 3.89, "end": 3.96, "value": "B" },
+    { "start": 3.96, "end": 3.97, "value": "X" }
+  ]
+}

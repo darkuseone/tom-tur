@@ -1,0 +1,40 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/019-zheleznogorsk/vf/s3.wav",
+    "duration": 4.87
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.19, "value": "B" },
+    { "start": 0.19, "end": 0.26, "value": "C" },
+    { "start": 0.26, "end": 0.75, "value": "B" },
+    { "start": 0.75, "end": 0.89, "value": "E" },
+    { "start": 0.89, "end": 0.97, "value": "A" },
+    { "start": 0.97, "end": 1.10, "value": "C" },
+    { "start": 1.10, "end": 1.17, "value": "B" },
+    { "start": 1.17, "end": 1.38, "value": "E" },
+    { "start": 1.38, "end": 1.59, "value": "F" },
+    { "start": 1.59, "end": 1.94, "value": "E" },
+    { "start": 1.94, "end": 2.01, "value": "G" },
+    { "start": 2.01, "end": 2.08, "value": "B" },
+    { "start": 2.08, "end": 2.16, "value": "A" },
+    { "start": 2.16, "end": 2.30, "value": "E" },
+    { "start": 2.30, "end": 2.44, "value": "C" },
+    { "start": 2.44, "end": 2.75, "value": "B" },
+    { "start": 2.75, "end": 2.82, "value": "C" },
+    { "start": 2.82, "end": 2.91, "value": "A" },
+    { "start": 2.91, "end": 2.97, "value": "B" },
+    { "start": 2.97, "end": 3.03, "value": "C" },
+    { "start": 3.03, "end": 3.31, "value": "F" },
+    { "start": 3.31, "end": 3.41, "value": "A" },
+    { "start": 3.41, "end": 3.74, "value": "B" },
+    { "start": 3.74, "end": 3.81, "value": "G" },
+    { "start": 3.81, "end": 4.16, "value": "B" },
+    { "start": 4.16, "end": 4.24, "value": "A" },
+    { "start": 4.24, "end": 4.32, "value": "C" },
+    { "start": 4.32, "end": 4.43, "value": "A" },
+    { "start": 4.43, "end": 4.47, "value": "B" },
+    { "start": 4.47, "end": 4.51, "value": "G" },
+    { "start": 4.51, "end": 4.86, "value": "B" },
+    { "start": 4.86, "end": 4.87, "value": "X" }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+ "num": "019",
+ "city": "Железногорск",
+ "title": "Железногорск: зачем зэки рыли гору",
+ "hook": "Восемьдесят тысяч заключённых рыли эту гору. Зачем?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "zhel.js",
+  "w_hook.js",
+  "w_kremlin.js",
+  "w_rails.js",
+  "w_drill.js",
+  "w_amnesty.js",
+  "w_secret.js",
+  "w_reactor.js",
+  "w_heat.js",
+  "w_last.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "kremlin",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "rails",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "drill",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "amnesty",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "secret",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "reactor",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "heat",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "last",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
