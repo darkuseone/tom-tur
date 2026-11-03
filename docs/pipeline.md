@@ -95,5 +95,5 @@ python3 tools/mix.py 002-rim                     # только пересвес
 ## Неделя и ворота качества (с 03.11.2026)
 
 - `/week` — координатор: план разнообразия (`docs/week/<дата>.md`), каждый выпуск — новая облачная сессия `/episode` от свежего main, по очереди; приёмка → слияние в main → `tools/chatcopy.sh` → ролик в чат.
-- Ворота выпуска: `tools/detail.py` (≥ 5 планов, атмосфера, передний план, ≥ 9 КБ) → `tools/vs_etalon.py` (лист под эталоном) → `tools/soundcheck.py` → `tools/finalcheck.sh`.
+- Ворота выпуска (в коде, до рендера): `tools/detail.py` (≥ 5 планов, атмосфера, передний план, ≥ 9 КБ) → `tools/soundcheck.py`; после рендера — `tools/finalcheck.sh`. `tools/vs_etalon.py` — только по просьбе владельца.
 - `tools/render.sh <эп> remix` — новый микс без перерендера картинки.
