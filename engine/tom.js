@@ -145,7 +145,9 @@ const OUTFIT = {
   pufferA: { top: '#c8902a', topD: '#6a4410', topL: '#f0c060', pants: null, pin: null, collar: 'hood', detail: 'quilt' },
   beachA: { top: '#f29a3a', topD: '#a85a14', topL: '#ffd08a', pants: '#e8dcc0', detail: 'rubakha', hat: 'shades', boots: 'shoe', stitch: '#1e8a92' },
   kazakS: { top: '#2e4a3a', topD: '#122218', topL: '#5a7a62', pants: '#22222a', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#b8302a', long: 1 },
-  shapan: { top: '#7a2a3a', topD: '#3a0e18', topL: '#b85a6a', pants: '#3a2a1a', detail: 'knyaz', hat: 'borik', boots: 'leather', cuff: '#d8a83a', long: 1 }
+  shapan: { top: '#7a2a3a', topD: '#3a0e18', topL: '#b85a6a', pants: '#3a2a1a', detail: 'knyaz', hat: 'borik', boots: 'leather', cuff: '#d8a83a', long: 1 },
+  // ---- добавлено tools/add_costume.py
+  hoodieV: { top: '#a8283a', topD: '#4a0e18', topL: '#e05a5e', pants: '#2e3440', detail: 'hoodie', hat: 'cap', print: 'ВОЛГОГРАД', capTxt: 'В' }
 };
 
 function tom(o = {}) {
