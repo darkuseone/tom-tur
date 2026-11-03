@@ -147,7 +147,9 @@ const OUTFIT = {
   kazakS: { top: '#2e4a3a', topD: '#122218', topL: '#5a7a62', pants: '#22222a', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#b8302a', long: 1 },
   shapan: { top: '#7a2a3a', topD: '#3a0e18', topL: '#b85a6a', pants: '#3a2a1a', detail: 'knyaz', hat: 'borik', boots: 'leather', cuff: '#d8a83a', long: 1 },
   // ---- добавлено tools/add_costume.py
-  hoodieV: { top: '#a8283a', topD: '#4a0e18', topL: '#e05a5e', pants: '#2e3440', detail: 'hoodie', hat: 'cap', print: 'ВОЛГОГРАД', capTxt: 'В' }
+  hoodieV: { top: '#a8283a', topD: '#4a0e18', topL: '#e05a5e', pants: '#2e3440', detail: 'hoodie', hat: 'cap', print: 'ВОЛГОГРАД', capTxt: 'В' },
+  // ---- добавлено tools/add_costume.py
+  hoodieT: { top: '#3e7a52', topD: '#16361f', topL: '#7ab88a', pants: '#3a3e36', detail: 'hoodie', hat: 'cap', print: 'ТВЕРЬ', capTxt: 'Т' }
 };
 
 function tom(o = {}) {

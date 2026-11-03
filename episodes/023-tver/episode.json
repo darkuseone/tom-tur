@@ -1,0 +1,95 @@
+{
+ "num": "023",
+ "city": "Тверь",
+ "title": "Тверь: почему столицей стала Москва, а не Тверь",
+ "hook": "СТОЛИЦА — ТВЕРЬ?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "tver.js",
+  "w_hook.js",
+  "w_sobor.js",
+  "w_yarlyk.js",
+  "w_bortenevo.js",
+  "w_uprising.js",
+  "w_nikitin.js",
+  "w_answer.js",
+  "w_kalinin.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "sobor",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "yarlyk",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "bortenevo",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "uprising",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "nikitin",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "answer",
+   [
+    "a1"
+   ]
+  ],
+  [
+   "kalinin",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.25
+ }
+}
