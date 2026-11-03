@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/022-volgograd/vf/s1.wav",
+    "duration": 5.05
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.06, "value": "B" },
+    { "start": 0.06, "end": 0.11, "value": "E" },
+    { "start": 0.11, "end": 0.53, "value": "C" },
+    { "start": 0.53, "end": 0.66, "value": "A" },
+    { "start": 0.66, "end": 0.96, "value": "B" },
+    { "start": 0.96, "end": 1.08, "value": "A" },
+    { "start": 1.08, "end": 1.19, "value": "D" },
+    { "start": 1.19, "end": 1.24, "value": "C" },
+    { "start": 1.24, "end": 1.32, "value": "A" },
+    { "start": 1.32, "end": 1.37, "value": "E" },
+    { "start": 1.37, "end": 1.55, "value": "B" },
+    { "start": 1.55, "end": 1.69, "value": "G" },
+    { "start": 1.69, "end": 1.76, "value": "B" },
+    { "start": 1.76, "end": 1.93, "value": "A" },
+    { "start": 1.93, "end": 2.22, "value": "B" },
+    { "start": 2.22, "end": 2.42, "value": "D" },
+    { "start": 2.42, "end": 2.50, "value": "C" },
+    { "start": 2.50, "end": 2.58, "value": "A" },
+    { "start": 2.58, "end": 2.73, "value": "C" },
+    { "start": 2.73, "end": 2.80, "value": "E" },
+    { "start": 2.80, "end": 3.38, "value": "B" },
+    { "start": 3.38, "end": 3.66, "value": "H" },
+    { "start": 3.66, "end": 3.81, "value": "A" },
+    { "start": 3.81, "end": 3.89, "value": "D" },
+    { "start": 3.89, "end": 3.99, "value": "A" },
+    { "start": 3.99, "end": 4.06, "value": "C" },
+    { "start": 4.06, "end": 4.27, "value": "F" },
+    { "start": 4.27, "end": 4.62, "value": "B" },
+    { "start": 4.62, "end": 4.69, "value": "C" },
+    { "start": 4.69, "end": 5.04, "value": "B" },
+    { "start": 5.04, "end": 5.05, "value": "X" }
+  ]
+}

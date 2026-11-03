@@ -1,0 +1,103 @@
+{
+ "num": "022",
+ "city": "Волгоград",
+ "title": "Волгоград: почему Родина-мать стоит именно здесь",
+ "hook": "СВОБОДА — ПО ПЛЕЧО?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "volgograd.js",
+  "w_hook.js",
+  "w_horde.js",
+  "w_fort.js",
+  "w_razin.js",
+  "w_sarepta.js",
+  "w_tractor.js",
+  "w_battle.js",
+  "w_black.js",
+  "w_answer.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "horde",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "fort",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "razin",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "sarepta",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "tractor",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "battle",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "black",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "answer",
+   [
+    "a1"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.3,
+  "s6": 1.05
+ }
+}
