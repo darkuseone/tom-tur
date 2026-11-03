@@ -91,3 +91,9 @@ python3 tools/mix.py 002-rim                     # только пересвес
 | `/deliver` | обложка, рендер, проверка, сдача | `cover.cjs`, `render.sh`, `finalcheck.sh`, `libindex.py` |
 
 Общие хелперы миров (любой город) — в `props.js` выпуска: `human`, `wtk`, `puffK`, `neon`, `cityBlock`, `crowd`, `poster`, `candle`; детали конкретного города — отдельным файлом (`seoul.js`), в worlds сразу после props.js.
+
+## Неделя и ворота качества (с 03.11.2026)
+
+- `/week` — координатор: план разнообразия (`docs/week/<дата>.md`), каждый выпуск — новая облачная сессия `/episode` от свежего main, по очереди; приёмка → слияние в main → `tools/chatcopy.sh` → ролик в чат.
+- Ворота выпуска: `tools/detail.py` (≥ 5 планов, атмосфера, передний план, ≥ 9 КБ) → `tools/vs_etalon.py` (лист под эталоном) → `tools/soundcheck.py` → `tools/finalcheck.sh`.
+- `tools/render.sh <эп> remix` — новый микс без перерендера картинки.

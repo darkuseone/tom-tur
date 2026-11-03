@@ -19,11 +19,15 @@ def _post(url, body, out):
     if 'ELEVENLABS_API_KEY' not in os.environ:
         sys.exit('нет ELEVENLABS_API_KEY в окружении')
     req = urllib.request.Request(url, json.dumps(body).encode(), {'xi-api-key': os.environ['ELEVENLABS_API_KEY'], 'Content-Type': 'application/json'})
-    try:
-        with urllib.request.urlopen(req, timeout=180) as r:
-            data = r.read(); cost = r.headers.get('character-cost') or r.headers.get('x-character-count')
-    except urllib.error.HTTPError as e:
-        sys.exit(f'HTTP {e.code}: {e.read()[:400]!r}')
+    for attempt in range(5):                                      # 429 (лимит параллельных запросов) и 5xx — повтор с паузой; деньги списываются только за успешный ответ
+        try:
+            with urllib.request.urlopen(req, timeout=180) as r:
+                data = r.read(); cost = r.headers.get('character-cost') or r.headers.get('x-character-count')
+            break
+        except urllib.error.HTTPError as e:
+            if e.code in (429, 500, 502, 503, 504) and attempt < 4:
+                import time; time.sleep(8 * (attempt + 1)); continue
+            sys.exit(f'HTTP {e.code}: {e.read()[:400]!r}')
     out.write_bytes(data)
     print(out.relative_to(ROOT) if out.is_relative_to(ROOT) else out, len(data), 'bytes, cost', cost)
 

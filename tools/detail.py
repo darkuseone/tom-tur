@@ -8,17 +8,22 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 if len(sys.argv) < 2: sys.exit(__doc__)
 d = ROOT / 'episodes' / sys.argv[1]
-MIN = dict(lay=5)
+MIN = dict(lay=5, kb=9.0)                                       # 9 КБ — нижняя граница 019 (эталон 002: 30–38 КБ); кнопка, переиспользующая планы хука, — исключение
 bad = 0
 for f in sorted(d.glob('w_*.js')):
     if f.name == 'w_cover.js': continue
     s = '\n'.join(l for l in f.read_text().split('\n') if not l.strip().startswith('//') and not l.strip().startswith('/*'))
     kb = len(s.encode()) / 1024
     lay = len(re.findall(r'\blay\(', s))
-    figs = len(re.findall(r'\b(human|crowd|rider|smilodon|mammoth|horse)\(', s)) + 3 * len(re.findall(r'for \(let i = 0; i < \d+; i\+\+\)[^\n]*human\(', s))
+    FIG = r'\b(human|worker|soldier|crowd|rider|person|smilodon|mammoth|horse|dog)\('
+    figs = 0
+    for line in s.split('\n'):
+        n = len(re.findall(FIG, line)); loop = re.search(r'for \(let \w+ = 0; \w+ < (\d+);', line)
+        figs += n * (int(loop.group(1)) if loop and n else 1)
     atm = bool(re.search(r'\b(motes|haze|rays|glow)\(', s))
     fg = bool(re.search(r'lay\(0\.\d', s))
-    miss = [n for n, ok in [(f'планов {lay} < {MIN["lay"]}', lay >= MIN['lay']), ('нет атмосферы', atm), ('нет переднего плана lay(<1)', fg)] if not ok]
+    miss = [n for n, ok in [(f'планов {lay} < {MIN["lay"]}', lay >= MIN['lay']), ('нет атмосферы', atm), ('нет переднего плана lay(<1)', fg), (f'{kb:.1f} КБ < {MIN["kb"]} КБ (бедно)', kb >= MIN['kb'] or f.name == 'w_button.js')] if not ok]
+    warn = '  (фигур мало по коду — проверь глазом в vs_etalon: ≥ 8 живых в кадре)' if figs < 6 and f.name != 'w_button.js' else ''
     bad += bool(miss)
-    print(f'{f.name:22s} {kb:5.1f} КБ  lay {lay:2d}  фигур ≈{figs:2d}  ' + ('ok' if not miss else 'МАЛО: ' + '; '.join(miss)))
-print('итог:', 'все сцены выше минимума — теперь сравнить контакт-лист с assets/ref/etalon_001_002.jpg' if not bad else f'{bad} сцен ниже минимума — дорисовать')
+    print(f'{f.name:22s} {kb:5.1f} КБ  lay {lay:2d}  фигур ≈{figs:2d}  ' + ('ok' if not miss else 'МАЛО: ' + '; '.join(miss)) + warn)
+print('итог:', 'все сцены выше минимума — теперь python3 tools/vs_etalon.py <эп> и сравнить глазом с эталоном' if not bad else f'{bad} сцен ниже минимума — дорисовать')
