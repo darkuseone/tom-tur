@@ -139,7 +139,13 @@ const OUTFIT = {
   cherkeska: { top: '#2e3446', topD: '#12141e', topL: '#5a627a', pants: '#22222a', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#c8a050', long: 1 },
   // ---- добавлено tools/add_costume.py
   pufferG: { top: '#2e3034', topD: '#141518', topL: '#5a5e66', pants: null, collar: 'hood', detail: 'quilt' },
-  pufferG2: { top: '#4a4236', topD: '#201c16', topL: '#7a705e', pants: null, collar: 'hood', detail: 'quilt' }
+  pufferG2: { top: '#4a4236', topD: '#201c16', topL: '#7a705e', pants: null, collar: 'hood', detail: 'quilt' },
+  // ---- добавлено tools/add_costume.py
+  hoodieA: { top: '#1e8a92', topD: '#0a3e44', topL: '#5ac4c8', pants: '#2a3040', detail: 'hoodie', hat: 'cap', print: 'АСТАНА', capTxt: 'А' },
+  pufferA: { top: '#c8902a', topD: '#6a4410', topL: '#f0c060', pants: null, pin: null, collar: 'hood', detail: 'quilt' },
+  beachA: { top: '#f29a3a', topD: '#a85a14', topL: '#ffd08a', pants: '#e8dcc0', detail: 'rubakha', hat: 'shades', boots: 'shoe', stitch: '#1e8a92' },
+  kazakS: { top: '#2e4a3a', topD: '#122218', topL: '#5a7a62', pants: '#22222a', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#b8302a', long: 1 },
+  shapan: { top: '#7a2a3a', topD: '#3a0e18', topL: '#b85a6a', pants: '#3a2a1a', detail: 'knyaz', hat: 'borik', boots: 'leather', cuff: '#d8a83a', long: 1 }
 };
 
 function tom(o = {}) {
@@ -1130,6 +1136,15 @@ const HAT6 = {
     const P = [[-104, -78], [-100, -150], [-40, -176], [40, -176], [100, -150], [104, -78]];
     const c = shape(P.concat([[104, -78]]), { wash: '#f4f6f2', washA: 1, w: 2.8, col: TM.line, key: 9331 }); shadeG(c.path, -L.side * 100, 0, L.side * 60, 0, '#9aa4a8', 0.45);
     pencil([[-104, -92], [104, -92]], { w: 2, col: '#9aa4a8', a: 0.8, pass2: false }); for (let k = -2; k <= 2; k++) pencil([[k * 34, -94], [k * 30, -168]], { w: 1.4, col: '#b8c0c4', a: 0.5, pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  borik(t, o, fx, L) {                                                   // казахский борик: бархатный купол с золотым узором + меховой околыш, перо филина
+    blob([[-86, -96], [-80, -168], [-40, -214], [0, -224], [40, -214], [80, -168], [86, -96]], { wash: '#7a1a2a', washA: 1, w: 3, col: TM.line, key: 395, shade: { gap: 6, a: 0.25, col: '#000' } });
+    pencil([[-60, -120], [-40, -180], [0, -212], [40, -180], [60, -120]], { w: 3, col: '#e8b84a', a: 0.9, pass2: false });
+    pencil([[0, -212], [0, -120]], { w: 3, col: '#e8b84a', a: 0.9, pass2: false });
+    blob([[-104, -64], [-108, -110], [-60, -124], [0, -128], [60, -124], [108, -110], [104, -64], [0, -80]], { wash: '#6a4a2a', washA: 1, w: 3, col: TM.line, key: 396 });
+    const r = rng(397); for (let i = 0; i < 30; i++) { const x = -96 + r() * 192, y = -116 + r() * 44; pencil([[x, y], [x + 4, y + 9]], { w: 2, col: '#3a2410', a: 0.7, pass2: false }); }
+    pencil(spline([[10, -222], [24, -270], [44, -300]], false, 8), { w: 5, col: '#f2ead8', a: 1, pass2: false }); pencil([[22, -258], [40, -262]], { w: 2, col: '#3a3028', a: 0.8, pass2: false });
   }
 };
 /* ---- рукава: кольчуга, прорези, закатанные рукава, манжеты, «венгерские узлы», известь */

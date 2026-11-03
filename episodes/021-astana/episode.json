@@ -1,0 +1,92 @@
+{
+ "num": "021",
+ "city": "Астана",
+ "title": "Астана: пять имён одной столицы",
+ "hook": "Пять имён у одной столицы! А что значит «Астана»?",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "astana.js",
+  "w_hook.js",
+  "w_rename.js",
+  "w_shatyr.js",
+  "w_akmola.js",
+  "w_tselina.js",
+  "w_alzhir.js",
+  "w_fort.js",
+  "w_bozok.js",
+  "w_answer.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "rename",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "shatyr",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "akmola",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "tselina",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "alzhir",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "fort",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "bozok",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "answer",
+   [
+    "a1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
