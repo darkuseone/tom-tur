@@ -132,7 +132,14 @@ const OUTFIT = {
   hoodieZ: { top: '#2f5f7a', topD: '#12293a', topL: '#6fa0bc', pants: '#262c36', detail: 'hoodie', hat: 'cap', print: 'К-26', capTxt: 'К' },
   vatnik: { top: '#3c4148', topD: '#191c21', topL: '#6c737c', pants: '#33373d', detail: 'vatnik', hat: 'ushanka', boots: 'valenki' },
   atom: { top: '#eef0ec', topD: '#9aa4a8', topL: '#ffffff', pants: '#d8dcd8', detail: 'atom', hat: 'whitecap', boots: 'oxford', shirt: '#cfd8dc', long: 1 },
-  sviter: { top: '#8a2a2a', topD: '#4a1010', topL: '#c45a4a', pants: '#3a3a44', detail: 'sviter', hat: null, boots: 'valenki' }
+  sviter: { top: '#8a2a2a', topD: '#4a1010', topL: '#c45a4a', pants: '#3a3a44', detail: 'sviter', hat: null, boots: 'valenki' },
+  // ---- добавлено tools/add_costume.py
+  hoodieG: { top: '#2a2622', topD: '#100d0b', topL: '#6a5a46', pants: '#22252c', detail: 'hoodie', hat: 'cap', print: 'ГРОЗНЫЙ', capTxt: 'Г' },
+  neftyanik: { top: '#5a4a36', topD: '#241a10', topL: '#8a7656', pants: '#3a3026', detail: 'overalls', shirt: '#b8865a', hat: 'flatcap', gloves: 1, soot: 1 },
+  cherkeska: { top: '#2e3446', topD: '#12141e', topL: '#5a627a', pants: '#22222a', detail: 'knyaz', hat: 'papakha', boots: 'leather', cuff: '#c8a050', long: 1 },
+  // ---- добавлено tools/add_costume.py
+  pufferG: { top: '#2e3034', topD: '#141518', topL: '#5a5e66', pants: null, collar: 'hood', detail: 'quilt' },
+  pufferG2: { top: '#4a4236', topD: '#201c16', topL: '#7a705e', pants: null, collar: 'hood', detail: 'quilt' }
 };
 
 function tom(o = {}) {

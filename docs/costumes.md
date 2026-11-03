@@ -62,6 +62,11 @@
 | sviter | красный вязаный свитер с оленями и снежинками, валенки | 019 | зима дома, СССР 1960–80-х, Новый год |
 | voen | гимнастёрка хаки + пилотка (hat: pilotka), без кокарды | 011 | 1940-е, война, оборона |
 
+| hoodieG | худи «ГРОЗНЫЙ» + кепка «Г», нефтяной чёрный | 020 | сегодня (Грозный) |
+| neftyanik | комбинезон нефтяника 1890-х в мазуте (overalls + soot), кепка | 020 | нефть, промыслы, рабочие XIX–XX в. |
+| cherkeska | тёмно-синяя черкеска (detail knyaz, золотые обшлага) + папаха | 020 | Кавказ XIX в., офицеры, горцы |
+| pufferG / pufferG2 | пуховик без нашивки, графит / хаки | 020 | 1990–2000-е, зима, нейтральный современный |
+
 Головные уборы людей (`human()` в props.js 004): topknot gat samo ikseon jeonrip straw police sailor bun jangot.
 
 Реквизит `PROPS`: coin binoc trowel brush spyglass goblet scroll chisel key medal lantern mallet blueprint quill stick folder spear.
