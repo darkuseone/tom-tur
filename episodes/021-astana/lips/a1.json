@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/021-astana/vf/a1.wav",
+    "duration": 5.46
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.14, "value": "X" },
+    { "start": 0.14, "end": 0.22, "value": "B" },
+    { "start": 0.22, "end": 0.39, "value": "A" },
+    { "start": 0.39, "end": 0.56, "value": "B" },
+    { "start": 0.56, "end": 0.77, "value": "C" },
+    { "start": 0.77, "end": 0.98, "value": "B" },
+    { "start": 0.98, "end": 1.05, "value": "C" },
+    { "start": 1.05, "end": 1.12, "value": "A" },
+    { "start": 1.12, "end": 1.18, "value": "C" },
+    { "start": 1.18, "end": 1.24, "value": "A" },
+    { "start": 1.24, "end": 1.32, "value": "F" },
+    { "start": 1.32, "end": 1.53, "value": "C" },
+    { "start": 1.53, "end": 1.74, "value": "B" },
+    { "start": 1.74, "end": 2.02, "value": "F" },
+    { "start": 2.02, "end": 2.52, "value": "B" },
+    { "start": 2.52, "end": 2.60, "value": "A" },
+    { "start": 2.60, "end": 3.41, "value": "B" },
+    { "start": 3.41, "end": 3.48, "value": "C" },
+    { "start": 3.48, "end": 3.55, "value": "B" },
+    { "start": 3.55, "end": 3.65, "value": "A" },
+    { "start": 3.65, "end": 3.91, "value": "B" },
+    { "start": 3.91, "end": 4.05, "value": "D" },
+    { "start": 4.05, "end": 4.12, "value": "F" },
+    { "start": 4.12, "end": 4.19, "value": "B" },
+    { "start": 4.19, "end": 4.26, "value": "C" },
+    { "start": 4.26, "end": 4.40, "value": "B" },
+    { "start": 4.40, "end": 4.47, "value": "C" },
+    { "start": 4.47, "end": 4.75, "value": "F" },
+    { "start": 4.75, "end": 4.82, "value": "B" },
+    { "start": 4.82, "end": 4.96, "value": "C" },
+    { "start": 4.96, "end": 5.31, "value": "B" },
+    { "start": 5.31, "end": 5.45, "value": "E" },
+    { "start": 5.45, "end": 5.46, "value": "X" }
+  ]
+}
