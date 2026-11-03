@@ -1,0 +1,99 @@
+{
+ "num": "020",
+ "city": "Грозный",
+ "title": "Грозный: в честь кого назван город",
+ "hook": "Грозный — не в честь Ивана Грозного! А в честь кого?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "grozny.js",
+  "w_hook.js",
+  "w_fort.js",
+  "w_valerik.js",
+  "w_oil.js",
+  "w_war42.js",
+  "w_deport.js",
+  "w_storm.js",
+  "w_ruins.js",
+  "w_today.js",
+  "w_answer.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "fort",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "valerik",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "oil",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "war42",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "deport",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "storm",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "ruins",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "answer",
+   [
+    "a1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

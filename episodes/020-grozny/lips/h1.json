@@ -1,0 +1,36 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/020-grozny/vf/h1.wav",
+    "duration": 3.58
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.17, "value": "B" },
+    { "start": 0.17, "end": 0.32, "value": "A" },
+    { "start": 0.32, "end": 0.52, "value": "B" },
+    { "start": 0.52, "end": 0.60, "value": "A" },
+    { "start": 0.60, "end": 0.76, "value": "C" },
+    { "start": 0.76, "end": 0.90, "value": "B" },
+    { "start": 0.90, "end": 1.01, "value": "A" },
+    { "start": 1.01, "end": 1.33, "value": "B" },
+    { "start": 1.33, "end": 1.40, "value": "C" },
+    { "start": 1.40, "end": 1.68, "value": "F" },
+    { "start": 1.68, "end": 1.75, "value": "D" },
+    { "start": 1.75, "end": 1.83, "value": "A" },
+    { "start": 1.83, "end": 1.87, "value": "C" },
+    { "start": 1.87, "end": 2.12, "value": "E" },
+    { "start": 2.12, "end": 2.19, "value": "C" },
+    { "start": 2.19, "end": 2.26, "value": "B" },
+    { "start": 2.26, "end": 2.40, "value": "C" },
+    { "start": 2.40, "end": 2.47, "value": "E" },
+    { "start": 2.47, "end": 2.54, "value": "C" },
+    { "start": 2.54, "end": 2.68, "value": "X" },
+    { "start": 2.68, "end": 2.80, "value": "B" },
+    { "start": 2.80, "end": 2.87, "value": "G" },
+    { "start": 2.87, "end": 3.08, "value": "B" },
+    { "start": 3.08, "end": 3.29, "value": "E" },
+    { "start": 3.29, "end": 3.43, "value": "F" },
+    { "start": 3.43, "end": 3.50, "value": "E" },
+    { "start": 3.50, "end": 3.57, "value": "F" },
+    { "start": 3.57, "end": 3.58, "value": "X" }
+  ]
+}
