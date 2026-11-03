@@ -1,0 +1,17 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/021-astana/vf/h2.wav",
+    "duration": 1.56
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.21, "value": "B" },
+    { "start": 0.21, "end": 0.34, "value": "A" },
+    { "start": 0.34, "end": 0.40, "value": "H" },
+    { "start": 0.40, "end": 0.66, "value": "C" },
+    { "start": 0.66, "end": 0.80, "value": "B" },
+    { "start": 0.80, "end": 0.91, "value": "A" },
+    { "start": 0.91, "end": 0.99, "value": "G" },
+    { "start": 0.99, "end": 1.55, "value": "B" },
+    { "start": 1.55, "end": 1.56, "value": "X" }
+  ]
+}
