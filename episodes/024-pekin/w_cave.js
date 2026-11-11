@@ -49,10 +49,10 @@
     shape([[-1200, 1560], [2200, 1540], [2200, 2600], [-1200, 2600]], { wash: '#6a4e3c', washA: 1, line: false });
     for (let i = 0; i < 7; i++) pencil([[-400, 1600 + i * i * 14 + i * 26], [1600, 1590 + i * i * 14 + i * 26]], { w: 1.6, col: '#2a1a12', a: 0.4, pass2: false });
     ctx.save(); const rr = rng(2559); for (let i = 0; i < 140; i++) { ctx.fillStyle = rr() < 0.5 ? 'rgba(30,18,12,0.5)' : 'rgba(200,170,130,0.4)'; const z = 3 + rr() * 8; ctx.fillRect(-200 + rr() * 1500, 1580 + rr() * 400, z, z * 0.6); } ctx.restore();
-    blob([[560, 1580], [520, 1300], [580, 1040], [760, 940], [960, 980], [1060, 1200], [1080, 1580]], { wash: '#8a6e56', washA: 1, w: 3.2, col: L, shade: { gap: 10, a: 0.28, col: '#2a1a12', ang: 0.35 } });
-    for (const [y, c] of [[1060, '#a88868'], [1150, '#74583e'], [1330, '#9a7a5a'], [1440, '#6a4e38']]) pencil(spline([[560, y + 20], [760, y - 10], [1060, y + 14]], false, 10), { w: 16, col: c, a: 0.6, pass2: false });
+    blob([[600, 1580], [580, 1320], [630, 1100], [770, 1030], [930, 1050], [1000, 1230], [1020, 1580]], { wash: '#8a6e56', washA: 1, w: 3.2, col: L, shade: { gap: 10, a: 0.28, col: '#2a1a12', ang: 0.35 } });
+    for (const [y, c] of [[1110, '#b89470'], [1390, '#a8845e'], [1470, '#64482f'], [1530, '#9a7a5a']]) pencil(spline([[610, y + 20], [780, y - 6], [1000, y + 14]], false, 10), { w: 14, col: c, a: 0.75, pass2: false });
     if (g) glow(SX, SY - 20, 330, 'rgba(255,214,120,1)', 0.55 * g);
-    ell(SX, SY - 10, 108, 118, { wash: '#3a2a20', washA: 0.85, line: false });
+    ell(SX, SY - 10, 104, 112, { wash: '#4a3426', washA: 0.6 * clamp(rev(t) * 2), line: false });
     skullPM(SX - 14, SY, 0.82, { a: clamp(r * 1.4) });
     if (r < 1) { const c = 1 - r; for (const [dx, dy, s] of [[-60, -70, 1.2], [40, -80, 1.0], [-30, 10, 1.3], [60, 30, 1.1], [0, 70, 1.2], [-80, 50, 0.9]]) ell(SX + dx, SY + dy - 10, 62 * s * c + 6, 50 * s * c + 6, { wash: '#8a6e56', washA: c, w: 1.4, col: '#5a4030', a: c * 0.7 }); }
     if (t > EV.cv_dust && t < EV.cv_skull + 0.5) for (let k = 0; k < 3; k++) puffK(SX - 60 + k * 40, SY - 30, 0.8, t, EV.cv_dust + k * 0.18, 0.5, 2560 + k, '#d8c0a0');
@@ -78,7 +78,7 @@
     lay(40, () => sky(t));
     lay(18, () => hillsF(t));
     lay(8, () => mouth(t));
-    lay(3.4, () => terraces(t));
+    lay(3.4, () => { push(0, -230, 1); terraces(t); pop(); });
     lay(1, () => { rockFace(t); cat(); });
     lay(0.62, () => front(t));
     lay(4, () => motes(30, [100, 300, 1200, 1500], '#fff0d0', t, 2561, { sp: 8, sz: 2.2, a: 0.55, wob: 16, add: 1 }));
