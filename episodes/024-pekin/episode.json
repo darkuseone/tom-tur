@@ -11,6 +11,10 @@
   "props.js",
   "pekin.js",
   "w_hook.js",
+  "w_palace.js",
+  "w_dig.js",
+  "w_bunker.js",
+  "w_cave.js",
   "w_cover.js"
  ],
  "scenes": [
