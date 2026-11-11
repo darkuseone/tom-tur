@@ -23,6 +23,8 @@ for f in sorted(d.glob('w_*.js')):
     atm = bool(re.search(r'\b(motes|haze|rays|glow)\(', s))
     fg = bool(re.search(r'lay\(0\.\d', s))
     miss = [n for n, ok in [(f'планов {lay} < {MIN["lay"]}', lay >= MIN['lay']), ('нет атмосферы', atm), ('нет переднего плана lay(<1)', fg), (f'{kb:.1f} КБ < {MIN["kb"]} КБ (бедно)', kb >= MIN['kb'] or f.name == 'w_button.js')] if not ok]
+    if not re.search(r'\b(lightPool|shaft|castShadow|moodDark)\(', s) and f.name != 'w_button.js': miss.append('нет света (lightPool/shaft/castShadow/moodDark)')
+    if not re.search(r'\b(prop:|afterCat|handF?:)', s): miss.append('Том ни с чем не взаимодействует (prop/hand/afterCat)')
     warn = '  (фигур мало по коду — проверь глазом в vs_etalon: ≥ 8 живых в кадре)' if figs < 6 and f.name != 'w_button.js' else ''
     bad += bool(miss)
     print(f'{f.name:22s} {kb:5.1f} КБ  lay {lay:2d}  фигур ≈{figs:2d}  ' + ('ok' if not miss else 'МАЛО: ' + '; '.join(miss)) + warn)

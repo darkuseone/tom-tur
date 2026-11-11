@@ -16,6 +16,7 @@ old_city = json.load(open(src / 'episode.json'))['city']
 head = s.split('const SUBTITLE')[0].replace(src.name[:3], ep[:3]).replace(old_city, city)
 (d / 'scenes.js').write_text(head + f"""const SUBTITLE = '{city} сквозь время';
 const SAT = 1.1;
+const BLOOM = 0.3;                                         // свечение ярких мест на итоговом кадре (свет «богаче»; 0 — выключить)
 const PROGRESS = true;                                    // точки «эпоха n/N» вместо шкалы 450 млн лет (для короткой истории; для геологии — убрать)
 // const QUESTION = {{ q: 'ВОПРОС ХУКА?', a: 'ОТВЕТ', at: () => EV.answer }};   // плашка открытой петли до ответа (core.js qchip)                                          // насыщенность итогового кадра (владелец 18.10.2026: на ~10 % цветастее)
 const HOOK_LINES = ['TODO СТРОКА 1', 'TODO СТРОКА 2?!'];   // текст-хук первых ~2.4 с
