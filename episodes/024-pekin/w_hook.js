@@ -44,6 +44,11 @@
       rect(x - 76, 1420, 152, 70, { wash: BJ.stone, washA: 1, w: 2.4, col: L }); rect(x - 70, 300, 140, 46, { wash: BJ.gold, washA: 1, w: 2, col: L }); meander(x - 62, x + 60, 310, 24, BJ.redD, 0.9); }
     const on = o.lan ?? 1; lantern(250, 520, 1.05, t, on, 1, { ch: '福', cord: 250 }); lantern(880, 470, 0.9, t, on, 2.4, { ch: '京', cord: 230 });
     stanchion(470, 1470, 1, 590); stanchion(965, 1470, 1, 850);
+    if (d < 0.3) {                                                      // ночная смена: сторож дремлет на стуле, уборщица со шваброй, кот-мышелов на витрине
+      rect(1010, 1400, 80, 12, { wash: BJ.woodD, washA: 1, w: 2, col: L }); for (const k of [1016, 1084]) pencil([[k, 1412], [k, 1476]], { w: 5, col: BJ.woodD, pass2: false }); pencil([[1086, 1400], [1090, 1300]], { w: 5, col: BJ.woodD, pass2: false });
+      human(1050, 1470, 0.62, t, { body: '#2a3a5a', legs: '#1e2a40', hat: 'police', hatCol: '#1e2a40', seed: 2448, flip: -1, look: [0, 0.9] }); for (let k = 0; k < 2; k++) txt('z', 1010 - k * 26, 1290 - k * 34 - ((t * 20) % 30), 34 - k * 8, { col: '#dfe8ff', font: 'Hand', a: 0.7 });
+      human(70, 1476, 0.6, t, { body: '#5a6a8a', legs: '#2a2a36', hat: 'scarf', hatCol: '#a84a3a', long: 1, seed: 2449, prop: 'stick', armR: 'hold', look: [0.7, 0.3] });
+      push(215, 1058, 1); blob([[-40, 0], [-36, -34], [0, -44], [36, -30], [40, 0]], { wash: '#2a2420', washA: 1, w: 2, col: L }); ell(34, -44, 18, 16, { wash: '#2a2420', washA: 1, w: 2, col: L }); pencil(spline([[-40, -6], [-70, -20], [-66, -50 + Math.sin(t * 2) * 8]], false, 6), { w: 7, col: '#2a2420', pass2: false }); for (const k of [-6, 8]) ell(34 + k, -46, 3, 4, { wash: '#b8ff9a', washA: 1, line: false }); pop(); }
   }
   function showcase(t, o = {}) {                                    // витрина: постамент, стекло, табличка, прожектор сверху, содержимое — o.inside(t)
     const sp = o.spot ?? 1, sc = o.spotC || 'rgba(255,236,190,1)', ang = o.ang || 0;
@@ -53,6 +58,7 @@
     rect(CX - 92, 1330, 184, 96, { wash: BJ.gold, washA: 1, w: 2, col: L }); txt(o.l1 || 'ПЕКИНСКИЙ ЧЕЛОВЕК', CX, 1362, 21, { col: '#2a1408', font: 'Osw' }); txt(o.l2 || '≈ 500 000 лет', CX, 1396, 26, { col: '#5a2a10', font: 'Hand' });
     rect(CX - 60, 1234, 120, 30, { wash: BJ.lac, washA: 1, w: 1.8, col: L });                // бархатная подушка
     if (o.inside) o.inside(t);
+    if (o.noGlass) return;
     ctx.save(); ctx.globalAlpha = 0.14 + 0.06 * sp; ctx.fillStyle = '#cfeaf0'; ctx.fillRect(CX - 122, 990, 244, 272); ctx.restore();
     rect(CX - 122, 990, 244, 272, { line: true, w: 3, col: '#dff4f8', a: 0.85 }); pencil([[CX - 96, 1010], [CX - 60, 1210]], { w: 9, col: '#ffffff', a: 0.22 + 0.2 * (o.ring || 0), pass2: false }); pencil([[CX - 70, 1004], [CX - 48, 1120]], { w: 4, col: '#ffffff', a: 0.25, pass2: false });
     if (o.ring) for (let k = 0; k < 3; k++) pencil(ellPts(CX - 122, 1150, 30 + k * 34 * o.ring + 40 * o.ring, 44 + k * 40 * o.ring, 0, 0, 20), { w: 3, col: '#ffffff', a: 0.5 * (1 - o.ring), pass2: false });

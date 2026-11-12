@@ -17,6 +17,9 @@
   "w_cave.js",
   "w_occup.js",
   "w_crates.js",
+  "w_parking.js",
+  "w_today.js",
+  "w_button.js",
   "w_cover.js"
  ],
  "scenes": [
