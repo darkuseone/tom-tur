@@ -103,9 +103,11 @@
     act: () => [[0, 'awe'], [EV.hk_gone, 'shock'], [EV.hk_knock, 'scared'], [EV.hk_stamp, 'shock'], [EV.hk_q, 'suspicious'], [LS('h2'), 'smug']],
     pose: (t, u, b) => { const kn = t > EV.hk_knock - 0.15 && t < EV.hk_stamp, kk = kn ? Math.abs(Math.sin((t - EV.hk_knock) * 16)) * 26 : 0;
       return Object.assign(b, { x: 350, y: 1572, s: 1.04, look: t < EV.hk_q ? [0.85, -0.25] : t < LS('h2') ? [0.5 + Math.sin(t * 5) * 0.4, -0.5] : [0.1, 0],
-        prop: t < LS('h2') - 0.1 ? 'lantern' : undefined, propAng: -0.2 + Math.sin(t * 3) * 0.06, hand: t < LS('h2') - 0.1 ? [150, -330] : [92, -270], handF: kn ? [232 - kk, -300] : undefined,
+        prop: t < LS('h2') - 0.1 ? 'lantern' : undefined, propAng: -0.2 + Math.sin(t * 3) * 0.06, hand: t < LS('h2') - 0.1 ? [150, -330] : [92, -270], handF: kn ? [232 - kk, -300] : t > LS('h2') ? [-150, -330] : undefined,
         squash: t > EV.hk_gone && t < EV.hk_gone + 0.2 ? 0.12 : b.squash, tailUp: t > EV.hk_gone, watchInHand: t > LS('h2') - 0.1, glow: sm((t - LS('h2')) / 0.5), spin: 1 }); },
     cam: () => [[0, 640, 1080, 0.3], [EV.hk_gone, 650, 1090, 0.34], [EV.hk_gone + 0.25, 600, 1040, 0.16, 'x'], [EV.hk_stamp, 590, 1000, 0.12], [EV.hk_stamp + 0.15, 620, 960, 0.2, 'x'], [EV.hk_q, 560, 980, 0.1], [LS('h2'), 470, 1080, 0.14], [S1.hook, 400, 1150, 0.24]],
+    afterCat: (t, u, P) => { if (t < LS('h2')) return; const q = popK(t, LS('h2'), 0.35), x = P.x + P.handF[0] * P.s, y = P.y + P.handF[1] * P.s;   // бумажный дракон на палочке — выскакивает на «Отматываем»
+      pencil([[x, y + 10], [x, y - 120 * q]], { w: 5, col: BJ.woodD, pass2: false }); const pts = []; for (let i = 0; i < 9; i++) pts.push([x - 150 * q + i * 22 * q, y - 120 * q + Math.sin(t * 8 + i * 0.8) * 22 * q - i * 4]); dragonCN(pts, 22 * q, t, { jaw: 0.3 + 0.3 * Math.sin(t * 6) }); },
     hud
   };
   TRANS_IN.tunnel = { a: 0.3, b: 0.3, runA: 1, fx(k, t, A, B) { inkT(k, t, A, B, 2447); } };   // тушь: кляксы заливают кадр, из них проступают часы

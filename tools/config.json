@@ -12,7 +12,7 @@
   "tempo": 1.1016,
   "silence": {
    "threshold_db": -42,
-   "inner_pause": 0.16,
+   "inner_pause": 0.22,
    "keep": 0.1
   }
  },

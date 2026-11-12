@@ -131,3 +131,17 @@ function shaft(x, y, w, len, ang, col, a = 0.3) { ctx.save(); ctx.translate(x, y
 function castShadow(x, y, w, len, ang = 0.6, a = 0.32, col = '#0a0818') { ctx.save(); ctx.translate(x, y); ctx.transform(1, 0, Math.tan(ang), 0.3, 0, 0); const g = ctx.createLinearGradient(0, 0, 0, -len); g.addColorStop(0, col); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = a; ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, -len / 2, w / 2, len / 2, 0, 0, 6.3); ctx.fill(); ctx.restore(); }   // длинная тень от ног (x,y) в сторону от света; ang > 0 — вправо
 function moodDark(x, y, r0, r1, col = '#0a0818', a = 0.55) { ctx.save(); const g = ctx.createRadialGradient(x, y, r0, x, y, r1); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, col); ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = a; ctx.fillStyle = g; ctx.fillRect(x - 5000, y - 5000, 10000, 10000); ctx.restore(); }   // затемнение вдали от источника (свет «вырезает» центр)
 function depthFog(col, a) { screenFill(col, a); }                    // между планами: дальние — светлее и холоднее (воздушная перспектива)
+
+/* ------------------------------------------------------------------ ГЛАВЫ (владелец, 12.11.2026: «тему первую не произносить — показывать текстом»)
+   В scenes.js: const CHAPTERS = { palace: ['ТАЙНА 1', 'ЗАПРЕТНЫЙ ГОРОД'], ... }; карточка на 1,6 с в начале сцены, голос номер главы не читает.
+   Вызов — в direct.js hud: if (typeof chapterCard === 'function') chapterCard(t); звук — EV['ch_' + сцена] (штамп/гонг). */
+function chapterCard(t) {
+  if (typeof CHAPTERS === 'undefined') return; const i = sceneAt(t), n = SC[i][0], c = CHAPTERS[n]; if (!c) return;
+  const t0 = SC[i][1] + 0.25, d = t - t0; if (d < 0 || d > 1.7) return;
+  const k = popK(t, t0, 0.3), fade = clamp((1.7 - d) / 0.3), s1 = 92, s2 = 40;
+  ctx.save(); ctx.font = `600 ${s1}px Osw`; const w = Math.max(ctx.measureText(c[0]).width, (ctx.font = `600 ${s2}px Osw`, ctx.measureText(c[1]).width)) + 90; ctx.restore();
+  push(540, 760 - 20 * (1 - fade), 0.85 + 0.15 * k, -0.02); ctx.save(); ctx.globalAlpha = fade;
+  ctx.fillStyle = 'rgba(110,18,14,0.94)'; ctx.fillRect(-w / 2, -96, w, 176); ctx.restore();
+  pencil([[-w / 2, -96], [w / 2, -96], [w / 2, 80], [-w / 2, 80], [-w / 2, -96]], { w: 4, col: K.amber, a: fade, pass2: false });
+  txt(c[0], 0, -34, s1, { col: K.amber, font: 'Osw', a: fade }); txt(c[1], 0, 44, s2, { col: '#fff2d6', font: 'Osw', a: fade }); pop();
+}

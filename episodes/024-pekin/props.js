@@ -10,26 +10,66 @@ function poster(x, y, s, rot, title, c1, c2, kind, t) {              // винт
   if (kind === 'tower') { rect(-22, -40, 44, 150, { wash: '#a83a2a', washA: 1, w: 2 }); poly([[-28, -40], [0, -120], [28, -40]], { wash: '#2a6a3a', washA: 1, w: 2 }); ctx.fillStyle = '#ffd34a'; ctx.beginPath(); ctx.arc(0, -126, 6, 0, 6.3); ctx.fill(); }
   ctx.restore(); ctx.fillStyle = 'rgba(16,10,8,0.85)'; ctx.fillRect(-120, 110, 240, 60); txt(title, 0, 141, 40, { col: '#f6e7c8', font: 'Osw' }); pop();
 }
-function wTunnel(t, u, cat) {                                      // внутри часов: шестерни, римские цифры, светящаяся линия времени
+/* Бумажный дракон (024, владелец 12.11.2026: «отмотка — по-китайски: дракон изрыгает пламя на весь экран»).
+   pts — хребет от хвоста к голове (экранные координаты), s — толщина, jaw 0..1 — пасть. */
+function dragonCN(pts, s, t, o = {}) {
+  const n = pts.length, jaw = o.jaw || 0, R = '#c8201a', RD = '#6a0c0a', G = '#f2c13a', GD = '#9a6a10';
+  for (let i = 0; i < n - 1; i++) { const [x, y] = pts[i], [x2, y2] = pts[i + 1], a = Math.atan2(y2 - y, x2 - x), r = s * (0.45 + 0.55 * i / n);
+    push(x, y, 1, a); poly([[-r * 0.2, -r * 1.25], [r * 0.25, -r * 1.7], [r * 0.5, -r * 1.05]], { wash: G, washA: 1, w: 1.6, col: GD });   // гребень
+    ell(0, 0, r * 1.05, r, { wash: i % 2 ? R : '#e0352a', washA: 1, w: 2.2, col: RD }); pencil([[-r * 0.6, -r * 0.2], [0, r * 0.35], [r * 0.6, -r * 0.2]], { w: 2.4, col: G, pass2: false });
+    rect(-r * 0.9, r * 0.75, r * 1.8, r * 0.28, { wash: G, washA: 1, line: false }); pop(); }
+  const [hx, hy] = pts[n - 1], [px, py] = pts[n - 2], ha = Math.atan2(hy - py, hx - px), h = s * 1.5;
+  push(hx, hy, 1, ha);
+  for (const k of [-1, 1]) pencil(spline([[h * 0.3, k * h * 0.5], [h * 0.1, k * h * 1.3], [-h * 0.5, k * h * 1.6 + Math.sin(t * 9 + k) * h * 0.2]], false, 8), { w: s * 0.14, col: G, pass2: false });   // усы
+  for (const k of [-1, 1]) poly([[-h * 0.3, k * h * 0.4], [-h * 1.3, k * h * 1.0], [-h * 0.1, k * h * 0.7]], { wash: '#f6e2b0', washA: 1, w: 2, col: GD });   // рога
+  push(h * 0.4, h * 0.25, 1, jaw * 0.55); blob([[-h * 0.7, 0], [h * 1.1, -h * 0.05], [h * 1.2, h * 0.3], [-h * 0.5, h * 0.4]], { wash: R, washA: 1, w: 2.6, col: RD });
+  for (let q = 0; q < 6; q++) poly([[h * (q * 0.18 - 0.1), 0], [h * (q * 0.18 - 0.02), -h * 0.16], [h * (q * 0.18 + 0.06), 0]], { wash: '#fff8e8', washA: 1, w: 1, col: RD }); pop();   // нижняя челюсть
+  blob([[-h * 0.8, -h * 0.6], [h * 0.4, -h * 0.75], [h * 1.3, -h * 0.25], [h * 1.25, h * 0.2], [-h * 0.6, h * 0.35]], { wash: '#e0352a', washA: 1, w: 3, col: RD });
+  for (let q = 0; q < 6; q++) poly([[h * (q * 0.18 + 0.15), h * 0.15], [h * (q * 0.18 + 0.23), h * 0.32], [h * (q * 0.18 + 0.31), h * 0.15]], { wash: '#fff8e8', washA: 1, w: 1, col: RD });
+  pencil([[-h * 0.7, -h * 0.3], [h * 1.1, -h * 0.25]], { w: s * 0.12, col: G, pass2: false }); ell(h * 1.15, -h * 0.05, h * 0.12, h * 0.1, { wash: '#2a0806', washA: 1, line: false });
+  ell(h * 0.25, -h * 0.42, h * 0.26, h * 0.22, { wash: '#fff2a0', washA: 1, w: 2.4, col: RD }); ell(h * 0.3, -h * 0.42, h * 0.09, h * 0.16, { wash: '#1a0806', washA: 1, line: false });
+  for (let q = 0; q < 5; q++) pencil([[-h * 0.8, -h * (0.5 - q * 0.2)], [-h * 1.4, -h * (0.7 - q * 0.3) + Math.sin(t * 7 + q) * h * 0.1]], { w: s * 0.1, col: q % 2 ? G : '#f6e2b0', pass2: false });   // грива
+  pop(); return [hx + Math.cos(ha) * h * 1.3, hy + Math.sin(ha) * h * 1.3, ha];
+}
+function flameCN(x, y, ang, len, w, t, a = 1) {                       // жёлтое пламя из пасти: языки + горячее ядро (без ореола)
+  push(x, y, 1, ang); ctx.save(); ctx.globalAlpha = a;
+  for (const [c, kw] of [['#ff7a10', 1], ['#ffb21a', 0.72], ['#ffe14a', 0.48], ['#fff8c8', 0.22]]) { const pts = [[0, -w * 0.08 * kw]];
+    for (let i = 1; i <= 14; i++) { const q = i / 14; pts.push([len * q, -w * kw * q * (0.7 + 0.3 * Math.sin(t * 23 + i * 1.7))]); }
+    for (let i = 14; i >= 1; i--) { const q = i / 14; pts.push([len * q, w * kw * q * (0.7 + 0.3 * Math.sin(t * 19 + i * 2.3))]); }
+    ctx.fillStyle = c; ctx.beginPath(); pts.forEach(([px, py], i) => i ? ctx.lineTo(px, py) : ctx.moveTo(px, py)); ctx.closePath(); ctx.fill(); }
+  ctx.restore(); pop();
+}
+function wTunnel(t, u, cat) {                                      // отмотка 024: полный оборот Тома с часами в часовом туннеле; бумажный дракон обвивает и изрыгает пламя
   screenFill('#120c08', 1);
   const cx = 540, cy = 900;
-  for (let k = 0; k < 14; k++) { const ph = (u * 1.6 + k / 14) % 1, z = Math.pow(ph, 2.2), r = 30 + z * 1500, a = Math.min(1, ph * 2) * (1 - ph * 0.3), rot = t * (k % 2 ? 1.5 : -1.1) + k;
+  for (let k = 0; k < 14; k++) { const ph = (u * 1.1 + k / 14) % 1, z = Math.pow(ph, 2.2), r = 30 + z * 1500, a = Math.min(1, ph * 2) * (1 - ph * 0.3), rot = t * (k % 2 ? 1.5 : -1.1) + k;
     push(cx, cy, 1, rot); const teeth = 24 + k % 3 * 8; const pts = []; for (let i = 0; i <= teeth * 2; i++) { const aa = i / (teeth * 2) * 6.283, rr = r * (i % 2 ? 1 : 1.06); pts.push([Math.cos(aa) * rr, Math.sin(aa) * rr]); }
     pencil(pts, { w: 2 + z * 8, col: k % 3 ? '#c99636' : '#f1d27a', a: 0.85 * a, pass2: false, gap: false });
     if (k % 2 === 0) for (let n = 0; n < 12; n++) { const aa = n / 12 * 6.283; push(Math.cos(aa) * r * 0.86, Math.sin(aa) * r * 0.86, 1, aa + Math.PI / 2); txt(['XII', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI'][n], 0, 0, 10 + z * 70, { col: '#f6e2b0', font: 'Osw', a: 0.8 * a }); pop(); }
     pop(); }
-  glow(cx, cy, 500, 'rgba(255,200,110,0.9)', 0.5);
+  glow(cx, cy, 260, 'rgba(255,200,110,0.9)', 0.3);
   const yrs = ['2026', '1979', '1969', '1947', '1941', '1937', '1929', '1420'];
-  yrs.forEach((y, k) => { const ph = (u * 1.3 + k / yrs.length) % 1, z = Math.pow(ph, 2), a = k * 0.7 + u; txt(y, cx + Math.cos(a) * z * 620, cy + Math.sin(a) * z * 820, 20 + z * 120, { col: '#ffe9b8', font: 'Osw', a: (1 - ph) * 0.9 }); });
-  ctx.save(); ctx.globalCompositeOperation = 'lighter'; const r = rng(hsh(FRAME, 8)); for (let i = 0; i < 60; i++) { const a = r() * 6.283, d0 = 60 + r() * 300, d1 = d0 + 200 + r() * 600; ctx.strokeStyle = 'rgba(255,214,140,0.5)'; ctx.lineWidth = 1 + r() * 3; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * d0, cy + Math.sin(a) * d0); ctx.lineTo(cx + Math.cos(a) * d1, cy + Math.sin(a) * d1); ctx.stroke(); } ctx.restore();
-  pencil([[-100, 1500], [cx, cy], [W + 100, 300]], { w: 6, col: '#ffd890', a: 0.9, pass2: false, gap: false }); glow(cx, cy, 120, 'rgba(255,240,200,1)', 0.8);
+  yrs.forEach((y, k) => { const ph = (u * 1.0 + k / yrs.length) % 1, z = Math.pow(ph, 2), a = k * 0.7 + u; txt(y, cx + Math.cos(a) * z * 620, cy + Math.sin(a) * z * 820, 20 + z * 120, { col: '#ffe9b8', font: 'Osw', a: (1 - ph) * 0.9 }); });
+  const p = u / (S1.tunnel - S0.tunnel), sp = sm(clamp(p / 0.72)), ph0 = sp * 6.283;                    // дракон летит вокруг Тома в такт его обороту
+  const rush = sm(clamp((p - 0.6) / 0.2)), fire = clamp((p - 0.74) / 0.12);
+  const back = [], front = [];
+  for (let i = 0; i < 16; i++) { const a = ph0 - 1.0 + i * 0.16, rx = 400 - rush * 120, ry = 170, x = cx + Math.cos(a) * rx, y = 1060 + Math.sin(a) * ry - i * 6;
+    (Math.sin(a) < 0 ? back : front).push([x, y]); }
+  const spine = []; for (let i = 0; i < 16; i++) { const a = ph0 - 1.0 + i * 0.16; spine.push([cx + Math.cos(a) * (400 - rush * 120), 1060 + Math.sin(a) * 170 - i * 6]); }
+  // голова в рывке уходит к камере: хребет тянется к центру кадра, толщина растёт
+  const hs = spine.map(([x, y], i) => { const w8 = rush * Math.pow(i / 15, 2); return [lerp(x, cx + 40, w8), lerp(y, 760, w8)]; });
+  const thick = 46 + rush * 150;
+  if (rush < 0.05) dragonCN(hs, thick, t, { jaw: 0.1 });            // пока дракон «за» Томом — рисуем до кота
   cat();
+  let mouth = null; if (rush >= 0.05) mouth = dragonCN(hs, thick, t, { jaw: 0.15 + 0.85 * clamp((p - 0.68) / 0.08) });
+  if (mouth && fire > 0) { flameCN(mouth[0], mouth[1], Math.PI / 2 + 0.25, 600 + fire * 2200, 160 + fire * 1300, t, 1); }
+  if (fire > 0.7) screenFill('#ffd23a', clamp((fire - 0.7) / 0.3), 'source-over');   // долю секунды — жёлтое пламя на весь экран
 }
 
 WORLD.tunnel = wTunnel;
-DIR.tunnel = { outfit: 'hoodieBJ', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.2], act: () => [[S0.tunnel, 'awe']],
-  pose: (t, u, b) => Object.assign(b, { x: 540, y: 1260, s: 1.0, rot: u * 3.2, look: [0, -0.2], watchInHand: true, glow: 1, spin: 1.5 }),
-  cam: () => [[S0.tunnel, 540, 960, 0], [S1.tunnel, 540, 960, 0.1]] };
+DIR.tunnel = { outfit: 'hoodieBJ', light: { side: 1, rim: '#ffd890' }, grade: ['#6a4010', 0.12], act: () => [[S0.tunnel, 'awe'], [S0.tunnel + (S1.tunnel - S0.tunnel) * 0.66, 'shock']],
+  pose: (t, u, b) => { const p = u / (S1.tunnel - S0.tunnel), r = 6.283 * sm(clamp(p / 0.72)), sc = 1.0 + 0.08 * sm(clamp(p / 0.72)); return Object.assign(b, { x: 540 - Math.sin(r) * 260 * sc, y: 1000 + Math.cos(r) * 260 * sc, s: sc, rot: r, look: [0, -0.2], watchInHand: true, glow: 1, spin: 1.5, tailUp: true }); },   // полный оборот вокруг центра тела за ≈ 1 с, плавно
+  cam: () => [[S0.tunnel, 540, 960, 0], [S0.tunnel + 1.0, 540, 900, 0.12], [S1.tunnel, 540, 880, 0.2]] };
 
 /* ---- 003 Киев: общие детали ---- */
 /* Otodus (родня мегалодона), профиль мордой вправо. jaw 0..1 — открыта пасть, ghost — призрак (полупрозрачный, без штриховки), glowEye 0..1 */

@@ -31,7 +31,7 @@ const YEARS = {{ hook: 2026, today: 2026 }};
 const KEYW = ['время!', 'город', 'отмотаем!'];
 const DIR = {{}}, WORLD = {{}}, TRANS_IN = {{}};
 """ + s[s.index('/* WT('):])
-(d / 'episode.json').write_text(json.dumps({'num': ep[:3], 'city': city, 'title': 'TODO', 'hook': 'TODO', 'timeline': {'scene_gap': 0.05, 'tail': 0.6},
+(d / 'episode.json').write_text(json.dumps({'num': ep[:3], 'city': city, 'title': 'TODO', 'hook': 'TODO', 'timeline': {'scene_gap': 0.15, 'tail': 1.6, 'tunnel': 1.4},
     'worlds': ['props.js', 'w_hook.js', 'w_today.js', 'w_cover.js'], 'scenes': [['hook', ['h1', 'h2']], ['tunnel', []], ['today', ['t1']], ['button', ['x1']]]}, ensure_ascii=False, indent=1))
 (d / 'lines.json').write_text(json.dumps({'h1': '[shocked, loud] TODO', 'h2': '[smug, conspiratorial] TODO', 't1': '[warm, proud] TODO', 'x1': '[playful, to the camera] TODO'}, ensure_ascii=False, indent=1))
 (d / 'w_cover.js').write_text("/* Обложка: Том в ключевой локации + крупный текст-хук. */\nconst COVER = { scene: 'hook', t: 2.0, cam: { x: 540, y: 900, z: 0.1 }, pose: { expr: 'shock', expr2: 'shock', ek: 1 },\n  title: [['TODO', '#f6ecd6'], ['TODO?!', '#e8a33c']], size: 190, ty: 360, badge: '" + city.upper() + "', sub: 'история за 60 секунд' };\n")

@@ -5,9 +5,9 @@
    в сводчатом тоннеле: на «вырыли город» по цепочке зажигаются лампы; на «войны» — красный проблесковый фонарь и сирена; на «СССР» — карточка.
    Главный свет: наверху — свет из шурфа (холодная луна вторым), внизу — гирлянда ламп. Переход В сцену — пролетающий бумажный фонарь. */
 (() => {
-  EV.dg_point = wtk('s2', 'только');
-  EV.dg_dig = wtk('s2', 'Тайна');
-  EV.dg_fall = wtk('s2', 'под');
+  EV.dg_point = wtk('s2', 'дворец');
+  EV.dg_dig = wtk('s2', 'верхушка');
+  EV.dg_fall = wtk('s2', 'Пекином');
   EV.dg_land = EV.dg_fall + 0.5;
   EV.dg_lights = wtk('s2', 'вырыли');
   EV.dg_siren = wtk('s2', 'войны');
@@ -21,7 +21,7 @@
   function far(t) {                                                 // дворец вдали: стена, угловая башня, пагода на холме
     hills(900, 120, '#141c40', 1.3, 1); for (let i = 0; i < 4; i++) roofCN(900, 690 - i * 40, 130 - i * 22, 28, { sil: '#0e1434', ev: 18 }); sil([[876, 820], [876, 560], [924, 560], [924, 820]], '#0e1434', 1);
     rect(-300, 880, 1700, 120, { wash: '#2a1430', washA: 1, w: 1.6, col: '#0a0818' }); hallCN(420, 890, 230, 90, { bays: 3, rh: 80, tiers: 1, wall: '#3a1a34', roof: { col: '#4a4460', colD: '#1a1830', ev: 30, shade: false }, glowIn: 0.25 });
-    if (t > EV.dg_point && t < EV.dg_dig + 0.4) { const q = popK(t, EV.dg_point, 0.3); pencil(ellPts(420, 800, 190 * q, 150 * q, 0, 0, 30), { w: 5, col: '#ffd24a', a: 0.9, pass2: false }); txt('не только он', 660, 660, 46, { col: '#ffe8a8', font: 'Hand', rot: -0.06, a: q }); }
+    if (t > EV.dg_point && t < EV.dg_dig + 0.4) { const q = popK(t, EV.dg_point, 0.3); pencil(ellPts(420, 800, 190 * q, 150 * q, 0, 0, 30), { w: 5, col: '#ffd24a', a: 0.9, pass2: false }); txt('лишь верхушка', 660, 660, 46, { col: '#ffe8a8', font: 'Hand', rot: -0.06, a: q }); }
     depthFog('#1a2458', 0.25); }
   function house(x, y, w, h, t, o = {}) {                           // дом хутуна: серый кирпич, серая черепица, окна-решётки, красная дверь
     rect(x - w / 2, y - h, w, h, { wash: '#5a5c66', washA: 1, w: 2.4, col: L, shade: { gap: 18, a: 0.2, col: '#1a1c24', ang: 0.05 } });
@@ -99,7 +99,7 @@
   function front(t) {                                               // рама: наверху — карниз и голая ветка; внизу — корни и комья (по краям)
     roofCN(-200, 560, 760, 220, { sil: '#05060e', ev: 90 }); sil([[-560, 540], [-120, 540], [-160, 640], [-560, 640]], '#05060e', 1);
     for (let k = 0; k < 5; k++) pencil(spline([[1500, 300 + k * 30], [1250, 420 + k * 60], [1080 - k * 30, 380 + k * 90]], false, 10), { w: 9 - k, col: '#05060e', pass2: false });
-    for (const k of [-1, 1]) { const x = 540 + k * 400; sil([[x - 200, 2600], [x - 120 * k, 2800], [x - 60 * k, 3300], [x - 160 * k, 3900], [x + 300 * k, 3900], [x + 300 * k, 2600]], '#070304', 1); for (let i = 0; i < 4; i++) pencil(spline([[x, 2700 + i * 250], [x - k * 120, 2800 + i * 250], [x - k * 150, 2980 + i * 240]], false, 8), { w: 12 - i * 2, col: '#070304', pass2: false }); }
+    for (const k of [-1, 1]) { const x = 540 + k * (k > 0 ? 600 : 400); sil([[x - 200, 2600], [x - 120 * k, 2800], [x - 60 * k, 3300], [x - 160 * k, 3900], [x + 300 * k, 3900], [x + 300 * k, 2600]], '#070304', 1); for (let i = 0; i < 4; i++) pencil(spline([[x, 2700 + i * 250], [x - k * 120, 2800 + i * 250], [x - k * 150, 2980 + i * 240]], false, 8), { w: 12 - i * 2, col: '#070304', pass2: false }); }
   }
   function hud(t) {
     if (t > EV.dg_lights + 0.3 && t < EV.dg_ussr) { const q = popK(t, EV.dg_lights + 0.3, 0.3); push(600, 760, q, -0.03); rect(-250, -66, 500, 132, { wash: '#120a08', washA: 0.9, w: 3, col: BJ.gold }); txt('ПОДЗЕМНЫЙ ГОРОД', 0, -22, 50, { col: BJ.goldL, font: 'Osw' }); txt('≈ 85 км² тоннелей под Пекином', 0, 32, 34, { col: '#fff0c8', font: 'Hand' }); pop(); }

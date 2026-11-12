@@ -7,7 +7,7 @@
 (() => {
   EV.pl_peek = wtk('s1', 'прятать.');
   EV.pl_point = wtk('s1', 'дворец,');
-  EV.pl_slam = wtk('s1', 'закрытый');
+  EV.pl_slam = wtk('s1', 'закрыли');
   EV.pl_500 = wtk('s1', 'пятьсот');
   EV.pl_knock = wtk('s1', 'лет.');
   KEYW.push('прятать.', 'дворец,', 'пятьсот', 'лет.');
@@ -111,11 +111,9 @@
     cam: () => [[S0.palace, 600, 860, 0.0], [EV.pl_point, 640, 1040, 0.14], [EV.pl_slam, 700, 1080, 0.24], [EV.pl_slam + 0.2, 620, 1040, 0.08, 'x'], [EV.pl_500, 640, 1000, 0.12], [S1.palace, 680, 1040, 0.2]],
     hud
   };
-  TRANS_IN.palace = { a: 0.12, b: 0.42, fx(k, t, A, B) {            // свиток раскатывается сверху вниз: под валиком — новая эпоха
-    const y = lerp(-120, H + 160, sm(k)); drawBuf(A);
-    scr(() => { ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, y); ctx.clip(); ctx.drawImage(B, 0, 0); ctx.restore();
-      ctx.save(); ctx.globalAlpha = 0.5 * (1 - k); ctx.fillStyle = BJ.paper; ctx.fillRect(0, 0, W, y); ctx.restore();
-      rect(-20, y - 34, W + 40, 68, { wash: BJ.paper, washA: 1, w: 3, col: L, shade: { gap: 7, a: 0.3, col: '#8a7a50', ang: 0.05 } }); for (const x of [-10, W - 50]) rect(x, y - 44, 60, 88, { wash: BJ.woodD, washA: 1, w: 2.4, col: L });
-      rect(60, y - 8, W - 120, 8, { wash: BJ.red, washA: 0.8, line: false }); ctx.save(); ctx.globalAlpha = 0.4; ctx.fillStyle = '#000'; ctx.fillRect(0, y + 34, W, 26); ctx.restore(); });
+  TRANS_IN.palace = { a: 0, b: 0.32, fx(k, t, A, B) {             // пламя дракона прожигает экран: из дыры с огненным краем — 1420 год
+    drawBuf(B); const r = lerp(160, 1700, Math.sqrt(k));
+    scr(() => { ctx.save(); ctx.beginPath(); for (let i = 0; i <= 40; i++) { const a = i / 40 * 6.283, rr = r * (1 + 0.12 * Math.sin(a * 5 + 1.3) + 0.07 * Math.sin(a * 11)); i ? ctx.lineTo(540 + Math.cos(a) * rr, 900 + Math.sin(a) * rr) : ctx.moveTo(540 + Math.cos(a) * rr, 900 + Math.sin(a) * rr); }
+      ctx.rect(W, 0, -W, H); ctx.fillStyle = '#ffd23a'; ctx.fill('evenodd'); ctx.lineWidth = 26; ctx.strokeStyle = '#ff7a10'; ctx.stroke(); ctx.lineWidth = 8; ctx.strokeStyle = '#3a0c06'; ctx.stroke(); ctx.restore(); });
   } };
 })();

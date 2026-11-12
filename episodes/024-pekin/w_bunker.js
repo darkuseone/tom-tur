@@ -9,7 +9,7 @@
   EV.bk_ten = wtk('s3', 'десять');
   EV.bk_nowar = wtk('s3', 'Война');
   EV.bk_shrug = wtk('s3', 'пришла');
-  EV.bk_hotel = wtk('s3', 'открыли');
+  EV.bk_hotel = wtk('s3', 'бункерах');
   EV.bk_neon = wtk('s3', 'гостиницы.');
   KEYW.push('лет.', 'пришла', 'гостиницы.');
   SHAKES.push([EV.bk_switch, 0.15, 6]);

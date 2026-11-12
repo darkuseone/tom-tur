@@ -58,7 +58,7 @@ function hudFrame(t) {
   const name = SC[sceneAt(t)][0];
   if (name === SC[0][0] && t < EV.hookEnd) hook(t); else titleCard(t);
   if (D_(name).hud) D_(name).hud(t);
-  if (!(name === SC[0][0] && t < EV.hookEnd)) plate(); if (typeof qchip === 'function') qchip(t); captions(t); endcard(t);
+  if (!(name === SC[0][0] && t < EV.hookEnd)) plate(); if (typeof qchip === 'function') qchip(t); if (typeof chapterCard === 'function') chapterCard(t); captions(t); endcard(t);
 }
 function hook(t) {
   const k = popK(t, 0.0, 0.35); push(540, 470, 0.85 + 0.15 * k, -0.02);
