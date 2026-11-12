@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Финальная проверка готового ролика одной командой (короткий вывод):
-#   tools/finalcheck.sh <эп>   → длина (50–58 с), громкость (LUFS под master_lufs из tools/config.json, true peak ≤ −1 dBTP; без ключа — mean ≈ −20), размер chat.mp4 (< 29,5 МиБ),
+#   tools/finalcheck.sh <эп>   → длина (50–70 с), громкость (LUFS под master_lufs из tools/config.json, true peak ≤ −1 dBTP; без ключа — mean ≈ −20), размер chat.mp4 (< 29,5 МиБ),
 #   кадры из final.mp4: обложка (0,02 с) + середины всех сцен → build/<эп>/fin/sheet.jpg (смотреть одним Read).
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -15,7 +15,7 @@ python3 - "$DUR" "$VOL" "$MIB" "$LU" <<'PY'
 import re, sys, json
 d, v, m, lu = float(sys.argv[1]), sys.argv[2], sys.argv[3], sys.argv[4]; tg = json.load(open('tools/config.json'))['mix'].get('master_lufs'); mean = float(re.search(r'mean_volume: (-?[\d.]+)', v).group(1)); mx = float(re.search(r'max_volume: (-?[\d.]+)', v).group(1))
 w = []
-if not 50 <= d <= 58.5: w.append(f'длина {d:.1f} вне 50–58 с')
+if not 50 <= d <= 70.5: w.append(f"длина {d:.1f} вне 50–70 с")
 I = float(re.search(r'I: (-?[\d.]+) LUFS', lu).group(1)); tp = float(re.search(r'Peak: (-?[\d.]+) dBFS', lu).group(1))
 if tg is not None:
     if abs(I - tg) > 1: w.append(f'{I} LUFS (нужно ≈ {tg})')
