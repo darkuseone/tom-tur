@@ -1,0 +1,96 @@
+{
+ "num": "025",
+ "city": "Варшава",
+ "title": "Варшава: Старый город построили по картинам",
+ "hook": "ПО КАРТИНАМ?!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "varshava.js",
+  "w_hook.js",
+  "w_castle.js",
+  "w_unesco.js",
+  "w_build.js",
+  "w_ruins.js",
+  "w_rising.js",
+  "w_loot.js",
+  "w_painter.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "castle",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "unesco",
+   [
+    "u1"
+   ]
+  ],
+  [
+   "build",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "ruins",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "rising",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "loot",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "painter",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.25
+ }
+}
