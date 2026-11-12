@@ -32,6 +32,14 @@ def _post(url, body, out):
     print(out.relative_to(ROOT) if out.is_relative_to(ROOT) else out, len(data), 'bytes, cost', cost)
 
 
+SAY = {'США': 'Сэ-Шэ-А'}   # как произносить (владелец, 12.11.2026: «США» всегда «СэШэА»); субтитры берут текст из lines.json и не меняются
+
+
+def say(text):
+    for a, b in SAY.items(): text = text.replace(a, b)
+    return text
+
+
 def lines(ep, keys):
     d = ROOT / 'episodes' / ep; v = CFG['voice']
     L = json.load(open(d / 'lines.json')); (d / 'voice').mkdir(exist_ok=True)
@@ -40,7 +48,7 @@ def lines(ep, keys):
         if (keys and k not in keys) or (not keys and out.exists()):
             continue
         _post(f"{API}/text-to-speech/{v['voice_id']}?output_format=mp3_44100_128",
-              {'text': text, 'model_id': v['model_id'], 'voice_settings': v['voice_settings']}, out)
+              {'text': say(text), 'model_id': v['model_id'], 'voice_settings': v['voice_settings']}, out)
 
 
 if __name__ == '__main__':
