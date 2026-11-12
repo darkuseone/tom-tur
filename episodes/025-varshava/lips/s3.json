@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/025-varshava/vf/s3.wav",
+    "duration": 4.73
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.20, "value": "B" },
+    { "start": 0.20, "end": 0.31, "value": "A" },
+    { "start": 0.31, "end": 0.99, "value": "B" },
+    { "start": 0.99, "end": 1.06, "value": "C" },
+    { "start": 1.06, "end": 1.14, "value": "A" },
+    { "start": 1.14, "end": 1.27, "value": "C" },
+    { "start": 1.27, "end": 1.48, "value": "B" },
+    { "start": 1.48, "end": 1.55, "value": "C" },
+    { "start": 1.55, "end": 1.62, "value": "E" },
+    { "start": 1.62, "end": 1.90, "value": "B" },
+    { "start": 1.90, "end": 2.10, "value": "X" },
+    { "start": 2.10, "end": 2.35, "value": "B" },
+    { "start": 2.35, "end": 2.42, "value": "C" },
+    { "start": 2.42, "end": 2.49, "value": "E" },
+    { "start": 2.49, "end": 2.70, "value": "B" },
+    { "start": 2.70, "end": 2.77, "value": "C" },
+    { "start": 2.77, "end": 2.84, "value": "G" },
+    { "start": 2.84, "end": 2.91, "value": "E" },
+    { "start": 2.91, "end": 2.98, "value": "F" },
+    { "start": 2.98, "end": 3.12, "value": "B" },
+    { "start": 3.12, "end": 3.26, "value": "E" },
+    { "start": 3.26, "end": 3.33, "value": "F" },
+    { "start": 3.33, "end": 3.47, "value": "B" },
+    { "start": 3.47, "end": 3.54, "value": "C" },
+    { "start": 3.54, "end": 3.68, "value": "F" },
+    { "start": 3.68, "end": 3.96, "value": "B" },
+    { "start": 3.96, "end": 4.03, "value": "C" },
+    { "start": 4.03, "end": 4.24, "value": "B" },
+    { "start": 4.24, "end": 4.34, "value": "A" },
+    { "start": 4.34, "end": 4.51, "value": "B" },
+    { "start": 4.51, "end": 4.65, "value": "C" },
+    { "start": 4.65, "end": 4.72, "value": "B" },
+    { "start": 4.72, "end": 4.73, "value": "X" }
+  ]
+}

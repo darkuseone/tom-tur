@@ -152,6 +152,7 @@ const OUTFIT = {
   hoodieT: { top: '#3e7a52', topD: '#16361f', topL: '#7ab88a', pants: '#3a3e36', detail: 'hoodie', hat: 'cap', print: 'ТВЕРЬ', capTxt: 'Т' },
   // ---- добавлено tools/add_costume.py
   hoodieBJ: { top: '#1f8a6e', topD: '#0c3f33', topL: '#6fd0b0', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ПЕКИН', capTxt: 'П' },
+  hoodieWA: { top: '#a8362a', topD: '#4e140e', topL: '#e88a6a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ВАРШАВА', capTxt: 'W' },
   mingbok: { top: '#a8231c', topD: '#560d0b', topL: '#e8704a', pants: '#2a2a2e', detail: 'gwanbok', hat: 'samo', boots: 'leather', long: 1 },
   vatnikBJ: { top: '#3a5f9a', topD: '#16294a', topL: '#7a9fd8', pants: '#2f4a78', detail: 'vatnik', hat: 'flatcap', boots: 'shoe' }
 };
