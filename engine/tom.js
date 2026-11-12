@@ -149,7 +149,11 @@ const OUTFIT = {
   // ---- добавлено tools/add_costume.py
   hoodieV: { top: '#a8283a', topD: '#4a0e18', topL: '#e05a5e', pants: '#2e3440', detail: 'hoodie', hat: 'cap', print: 'ВОЛГОГРАД', capTxt: 'В' },
   // ---- добавлено tools/add_costume.py
-  hoodieT: { top: '#3e7a52', topD: '#16361f', topL: '#7ab88a', pants: '#3a3e36', detail: 'hoodie', hat: 'cap', print: 'ТВЕРЬ', capTxt: 'Т' }
+  hoodieT: { top: '#3e7a52', topD: '#16361f', topL: '#7ab88a', pants: '#3a3e36', detail: 'hoodie', hat: 'cap', print: 'ТВЕРЬ', capTxt: 'Т' },
+  // ---- добавлено tools/add_costume.py
+  hoodieBJ: { top: '#1f8a6e', topD: '#0c3f33', topL: '#6fd0b0', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ПЕКИН', capTxt: 'П' },
+  mingbok: { top: '#a8231c', topD: '#560d0b', topL: '#e8704a', pants: '#2a2a2e', detail: 'gwanbok', hat: 'samo', boots: 'leather', long: 1 },
+  vatnikBJ: { top: '#3a5f9a', topD: '#16294a', topL: '#7a9fd8', pants: '#2f4a78', detail: 'vatnik', hat: 'flatcap', boots: 'shoe' }
 };
 
 function tom(o = {}) {

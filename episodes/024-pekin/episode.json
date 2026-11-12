@@ -1,0 +1,98 @@
+{
+ "num": "024",
+ "city": "Пекин",
+ "title": "Пекин: куда пропали кости пекинского человека",
+ "hook": "КОСТИ ПРОПАЛИ?!",
+ "timeline": {
+  "scene_gap": 0.05,
+  "tail": 0.6
+ },
+ "worlds": [
+  "props.js",
+  "pekin.js",
+  "w_hook.js",
+  "w_palace.js",
+  "w_dig.js",
+  "w_bunker.js",
+  "w_cave.js",
+  "w_occup.js",
+  "w_crates.js",
+  "w_parking.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "palace",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "dig",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "bunker",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "cave",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "occup",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "crates",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "parking",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.25,
+  "s2": 1.07,
+  "s6": 1.06,
+  "s7": 1.06
+ }
+}
