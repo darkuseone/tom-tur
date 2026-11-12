@@ -5,7 +5,7 @@
  "hook": "ПО КАРТИНАМ?!",
  "timeline": {
   "scene_gap": 0.15,
-  "tail": 1.5,
+  "tail": 0.8,
   "tunnel": 1.4
  },
  "worlds": [

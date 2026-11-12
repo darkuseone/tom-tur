@@ -92,7 +92,8 @@ function captions(t) {
   pop();
 }
 function plate() { push(540, 540, 1); txt('ТОМ-ТУР · ' + (typeof SUBTITLE !== 'undefined' ? SUBTITLE : ''), 0, 0, 30, { col: '#f6e7c8', a: 0.75 }); pop(); }   // под таймлайном, не в зоне статус-бара
-function endcard(t) { const e0 = EV.endcard ?? (typeof VO !== 'undefined' && VO.x1 !== undefined ? VO.x1 + VD.x1 - 0.9 : DUR - 1.0); if (t < e0) return; const k = popK(t, e0, 0.3);   // ПОДПИШИСЬ — во время «Пиши город — отмотаем!» и до конца (владелец 12.11.2026), не после push(540, 1180, k, -0.03);
+function endcard(t) { const e0 = EV.endcard ?? (typeof VO !== 'undefined' && VO.x1 !== undefined ? VO.x1 + VD.x1 - 0.9 : DUR - 1.0); if (t < e0) return; const k = popK(t, e0, 0.3);   // ПОДПИШИСЬ — во время «Пиши город — отмотаем!» и до конца (владелец 12.11.2026), не после
+  push(540, 1180, k, -0.03);
   ctx.save(); ctx.fillStyle = 'rgba(16,10,8,0.82)'; ctx.fillRect(-330, -80, 660, 160); ctx.restore(); pencil([[-330, -80], [330, -80], [330, 80], [-330, 80], [-330, -80]], { w: 3, col: K.amber, pass2: false });
   txt('ПОДПИШИСЬ', -50, 4, 104, { col: '#f6e7c8', font: 'Osw' });
   push(282, -6, 1, Math.sin(t * 30) * 0.25); blob([[-26, 22], [-22, -16], [0, -30], [22, -16], [26, 22]], { wash: K.amber, washA: 1, w: 3, col: '#2a1a0c' }); ell(0, 28, 8, 6, { wash: K.amber, washA: 1, w: 2.4 }); pop(); pop(); }

@@ -42,9 +42,8 @@ def sound(T):
         # сегодня: холст наплывает, круг на картине, пунктир, кирпичи взлетают и встают, штамп
         ('whip_whoosh', S0['today'] - 0.15, -6), ('shimmer', S0['today'] + 0.2, -10), ('shimmer', e('to_fancy'), -6), ('pencil_scribble', e('to_fac'), -6),
         ('chisel_strike', e('to_built'), -6), ('rock_knock', e('to_built', 0.3), -8), ('rock_knock', e('to_built', 0.6), -8), ('stamp_thud', e('to_fict', 0.05), -2), ('tiny_tuk', e('to_fict', 0.3), -8),
-        # кнопка: вспышка, бирки, жест, мазок обратно — дома снова эскиз; последний звук — тот же аккорд, что на 0,0 с (петля)
-        ('shimmer', S0['button'] - 0.1, -8), ('tiny_tuk', e('bt_q'), -6), ('tiny_tuk', e('bt_q', 0.25), -6), ('whip_whoosh', e('bt_write'), -10), ('brush_stroke', e('bt_go'), 0), ('brush_stroke', e('bt_go', 0.8), -2),
-        ('piano_sting', e('bt_loop'), -3),
+        # кнопка: вспышка, бирки, жест, мазок обратно — дома снова эскиз; без финального удара — музыка затухает
+        ('shimmer', S0['button'] - 0.1, -8), ('tiny_tuk', e('bt_q'), -6), ('tiny_tuk', e('bt_q', 0.25), -6), ('whip_whoosh', e('bt_write'), -10), ('brush_stroke', e('bt_go'), -2),
     ]
     beds = [('old_square_loop', 0, S0['tunnel']), ('old_square_loop', S0['castle'], S1['castle']), ('night_city_loop', S0['unesco'], S1['unesco']), ('construction_loop', S0['build'], S1['build']),
             ('blizzard_loop', S0['ruins'], S1['ruins']), ('campfire_loop', S0['ruins'], S1['ruins']), ('city_fire_loop', S0['rising'], S1['rising']), ('city_fire_loop', S0['loot'], S1['loot']),
