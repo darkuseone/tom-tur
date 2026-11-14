@@ -1,0 +1,89 @@
+{
+ "num": "026",
+ "city": "Стамбул",
+ "title": "Стамбул: когда Константинополь стал Стамбулом",
+ "hook": "СУЛТАН НЕ ПЕРЕИМЕНОВАЛ?!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "stambul.js",
+  "w_hook.js",
+  "w_byzant.js",
+  "w_konst.js",
+  "w_sofia.js",
+  "w_fall.js",
+  "w_sultan.js",
+  "w_post.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "byzant",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "konst",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "sofia",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "fall",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "sultan",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "post",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.25
+ }
+}

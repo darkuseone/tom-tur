@@ -154,7 +154,16 @@ const OUTFIT = {
   hoodieBJ: { top: '#1f8a6e', topD: '#0c3f33', topL: '#6fd0b0', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ПЕКИН', capTxt: 'П' },
   hoodieWA: { top: '#a8362a', topD: '#4e140e', topL: '#e88a6a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ВАРШАВА', capTxt: 'W' },
   mingbok: { top: '#a8231c', topD: '#560d0b', topL: '#e8704a', pants: '#2a2a2e', detail: 'gwanbok', hat: 'samo', boots: 'leather', long: 1 },
-  vatnikBJ: { top: '#3a5f9a', topD: '#16294a', topL: '#7a9fd8', pants: '#2f4a78', detail: 'vatnik', hat: 'flatcap', boots: 'shoe' }
+  vatnikBJ: { top: '#3a5f9a', topD: '#16294a', topL: '#7a9fd8', pants: '#2f4a78', detail: 'vatnik', hat: 'flatcap', boots: 'shoe' },
+  // ---- добавлено tools/add_costume.py
+  hoodieIST: { top: '#1f5fa8', topD: '#0c2a52', topL: '#6aa8e8', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'IST 34', capTxt: 'İ' },
+  greekC: { top: '#ece4d0', topD: '#8a7a5a', topL: '#fffaf0', pants: '#ece4d0', detail: 'rubakha', hat: 'laurel', boots: 'leather', stitch: '#2a6aa8', long: 1 },
+  konst: { top: '#5a1a6a', topD: '#2a0a32', topL: '#9a5aaa', pants: '#3a1040', detail: 'knyaz', hat: 'circlet', boots: 'leather', long: 1 },
+  yanychar: { top: '#1e3f8a', topD: '#0c1a42', topL: '#5a7ac8', pants: '#a8231c', detail: 'knyaz', hat: 'bork', boots: 'leather', long: 1 },
+  dervish: { top: '#f4efe4', topD: '#9a9080', topL: '#ffffff', pants: '#f4efe4', detail: 'dervish', hat: 'sikke', boots: 'leather', long: 1 },
+  // ---- добавлено tools/add_costume.py
+  fezcoat: { top: '#1e2a4a', topD: '#0a1022', topL: '#4a5a8a', pants: '#2a2a32', detail: 'waistcoat', shirt: '#f0ece2', tie: 'bow', hat: 'fez' },
+  postal30: { top: '#4a5a6a', topD: '#1e2830', topL: '#8a9aaa', pants: '#3a3a42', detail: 'waistcoat', shirt: '#f0ece2', tie: 'bow', hat: 'flatcap' }
 };
 
 function tom(o = {}) {
@@ -372,7 +381,7 @@ function costume5(OF, bob, t, bp, L, o) {                            // дета
   if (OF.collar === 'sailor') { poly([[-80, -246 + b], [80, -246 + b], [60, -196 + b], [0, -170 + b], [-60, -196 + b]], { wash: '#1e2a4a', washA: 1, w: 2.4, col: TM.line }); for (const s of [-1, 1]) pencil([[s * 70, -238 + b], [s * 52, -200 + b], [0, -180 + b]], { w: 2, col: '#f4f0e6', pass2: false }); poly([[-8, -184 + b], [8, -184 + b], [16, -150 + b], [-16, -150 + b]], { wash: '#c8302a', washA: 1, w: 1.6 }); }
   if (OF.tie === 'bow') { poly([[0, -238 + b], [-26, -250 + b], [-26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); poly([[0, -238 + b], [26, -250 + b], [26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); ell(0, -238 + b, 6, 6, { wash: '#1a1a1a', washA: 1, w: 1 }); }
   if (OF.strap) pencil([[50, -236 + b], [-40, -110 + b]], { w: 6, col: '#3a2a1a' });
-  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['sviter', 'atom', 'vatnik', 'preobr', 'hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'gwanbok', 'gunsa', 'seonbi', 'nongbu', 'tux'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
+  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['dervish', 'sviter', 'atom', 'vatnik', 'preobr', 'hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'gwanbok', 'gunsa', 'seonbi', 'nongbu', 'tux'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
 }
 function hat5(h, t, o, fx = 0, L = { side: 1, rim: '#ffe3a8' }, OF = {}) {   // головные уборы (на макушке, y≈−90 при голове r≈100)
   if (OF.splash || OF.soot) face6(OF, t, fx);
@@ -847,6 +856,13 @@ const COST6 = {
       for (let k = -4; k <= 4; k++) { const x = k * 22; if (yb === -196) { pencil([[x - 7, yb + 24 + b], [x - 4, yb + 12 + b], [x + 6, yb + 12 + b], [x + 8, yb + 24 + b]], { w: 2.4, col: OF.top, pass2: false }); pencil([[x + 6, yb + 12 + b], [x + 10, yb + 4 + b], [x + 8, yb + 0 + b]], { w: 2, col: OF.top, pass2: false }); }
         else { pencil([[x - 6, yb + 15 + b], [x + 6, yb + 15 + b]], { w: 2.2, col: OF.top, pass2: false }); pencil([[x, yb + 8 + b], [x, yb + 22 + b]], { w: 2.2, col: OF.top, pass2: false }); } } }
     rect(-40, -262 + b, 80, 22, { wash: OF.topD, washA: 1, w: 2, col: TM.line }); for (let k = -3; k <= 3; k++) pencil([[k * 10, -260 + b], [k * 10, -242 + b]], { w: 1.4, col: '#000000', a: 0.4, pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  dervish(OF, b, t, bp, L) {                                           // 026: белая тенноре дервиша, широкий подол-колокол, тонкий чёрный пояс
+    const sk = skirt6(OF, b, L, -118, -26, 92, 150, 9601);
+    for (const P of [bp, sk]) hatch(P.path, P.bb, { gap: 5, a: 0.08, col: OF.topD, ang: 1.57, key: 9602, w: 1.1 });
+    for (let q = -3; q <= 3; q++) pencil([[q * 20, -112 + b], [q * 40, -30 + b]], { w: 1.6, col: OF.topD, a: 0.45, pass2: false });
+    pencil([[-92, -122 + b], [0, -116 + b], [92, -122 + b]], { w: 5, col: '#1a1614', pass2: false });
   }
 };
 /* ---- голова: брызги извести / сажа на шерсти */
@@ -1154,6 +1170,28 @@ const HAT6 = {
     blob([[-104, -64], [-108, -110], [-60, -124], [0, -128], [60, -124], [108, -110], [104, -64], [0, -80]], { wash: '#6a4a2a', washA: 1, w: 3, col: TM.line, key: 396 });
     const r = rng(397); for (let i = 0; i < 30; i++) { const x = -96 + r() * 192, y = -116 + r() * 44; pencil([[x, y], [x + 4, y + 9]], { w: 2, col: '#3a2410', a: 0.7, pass2: false }); }
     pencil(spline([[10, -222], [24, -270], [44, -300]], false, 8), { w: 5, col: '#f2ead8', a: 1, pass2: false }); pencil([[22, -258], [40, -262]], { w: 2, col: '#3a3028', a: 0.8, pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  laurel(t, o, fx, L) {                                                  // 026: лавровый венок греческого колониста
+    for (const sd of [-1, 1]) for (let i = 0; i < 7; i++) { const a = -0.25 + i * 0.36, x = sd * Math.cos(a) * 100, y = -50 - Math.sin(a) * 52 - i * 2;
+      push(x, y, 1, sd * (0.9 - i * 0.25)); blob([[0, 0], [10, -8], [22, 0], [10, 7]], { wash: i % 2 ? '#5a8a3a' : '#7aa84a', washA: 1, w: 1.4, col: '#2a4a1a' }); pop(); }
+  },
+  sikke(t, o, fx, L) {                                                   // 026: высокая войлочная шапка дервиша (сикке), медово-коричневая
+    blob([[-70, -84], [-74, -170], [-66, -262], [0, -276], [66, -262], [74, -170], [70, -84], [0, -96]], { wash: '#a8743a', washA: 1, w: 3, col: TM.line, key: 9603, shade: { gap: 6, a: 0.28, col: '#5a3a14' } });
+    pencil([[-66, -262], [0, -252], [66, -262]], { w: 2, col: '#6a4418', a: 0.7, pass2: false }); pencil([[-72, -98], [0, -110], [72, -98]], { w: 2.4, col: '#6a4418', a: 0.7, pass2: false });
+  },
+  bork(t, o, fx, L) {                                                    // 026: бёрк янычара: высокий белый войлок, складка-хвост назад, золотой налобник
+    blob([[-84, -84], [-90, -150], [-60, -230], [10, -250], [70, -214], [90, -150], [84, -84], [0, -98]], { wash: '#f2ece0', washA: 1, w: 3, col: TM.line, key: 9604, shade: { gap: 6, a: 0.22, col: '#8a8070' } });
+    blob([[-L.side * 40, -236], [-L.side * 120, -170], [-L.side * 150, -60], [-L.side * 110, -40], [-L.side * 70, -160]], { wash: '#e6dece', washA: 1, w: 2.6, col: TM.line, key: 9605 });
+    blob([[-26, -96], [-30, -170], [0, -196], [30, -170], [26, -96]], { wash: '#e8b84a', washA: 1, w: 2.2, col: '#8a6418', key: 9606 }); ell(0, -150, 9, 9, { wash: '#c8201e', washA: 1, w: 1.4, col: '#5a0a08' });
+    pencil([[-86, -92], [0, -104], [86, -92]], { w: 6, col: '#c8a050', pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  fez(t, o, fx, L) {                                                     // 026: османская феска (до 1925), красная с чёрной кистью
+    blob([[-66, -82], [-60, -170], [0, -184], [60, -170], [66, -82], [0, -92]], { wash: '#b8231c', washA: 1, w: 3, col: TM.line, key: 9607, shade: { gap: 6, a: 0.25, col: '#5a0a08' } });
+    ell(0, -176, 58, 12, { wash: '#8a1812', washA: 1, w: 2, col: TM.line });
+    const sw = Math.sin(t * 3) * 10; pencil(spline([[0, -180], [L.side * 30 + sw * 0.3, -170], [L.side * 56 + sw, -120]], false, 8), { w: 6, col: '#141010', pass2: false });
+    for (let q = 0; q < 5; q++) pencil([[L.side * 56 + sw, -120], [L.side * (50 + q * 4) + sw, -86]], { w: 2, col: '#141010', pass2: false });
   }
 };
 /* ---- рукава: кольчуга, прорези, закатанные рукава, манжеты, «венгерские узлы», известь */
