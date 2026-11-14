@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/026-stambul/vf/h2.wav",
+    "duration": 1.17
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.17, "value": "B" },
+    { "start": 0.17, "end": 0.25, "value": "A" },
+    { "start": 0.25, "end": 0.60, "value": "B" },
+    { "start": 0.60, "end": 0.68, "value": "A" },
+    { "start": 0.68, "end": 1.16, "value": "B" },
+    { "start": 1.16, "end": 1.17, "value": "X" }
+  ]
+}
