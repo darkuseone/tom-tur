@@ -1,0 +1,96 @@
+{
+ "num": "027",
+ "city": "Сидней",
+ "title": "Сидней: кто заплатил за оперу",
+ "hook": "В 14 РАЗ ДОРОЖЕ!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "sydney.js",
+  "w_hook.js",
+  "w_convicts.js",
+  "w_gold.js",
+  "w_bridge.js",
+  "w_contest.js",
+  "w_quit.js",
+  "w_open.js",
+  "w_lottery.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "convicts",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "gold",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "bridge",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "contest",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "quit",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "open",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "lottery",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.25
+ }
+}
