@@ -1,3 +1,3 @@
 /* Обложка 028: Том на набережной Казанки с тортом «1000», за ним кремль на закате, табло «КАЗАНЬ 1005 : 1147 МОСКВА». */
-const COVER = { scene: 'hook', t: 1.6, cam: { x: 600, y: 1000, z: 0.08 }, pose: { expr: 'proud', expr2: 'proud', ek: 1 },
+const COVER = { scene: 'hook', t: 0.3, cam: { x: 600, y: 1000, z: 0.08 }, pose: { expr: 'proud', expr2: 'proud', ek: 1 },
   title: [['СТАРШЕ', '#f6ecd6'], ['МОСКВЫ?!', '#e8a33c']], size: 190, ty: 380, badge: 'КАЗАНЬ', sub: 'история за 60 секунд' };
