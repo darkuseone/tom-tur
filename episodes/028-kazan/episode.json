@@ -1,0 +1,96 @@
+{
+ "num": "028",
+ "city": "Казань",
+ "title": "Казань: старше Москвы на полтора века?",
+ "hook": "СТАРШЕ МОСКВЫ?!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "kazan.js",
+  "w_hook.js",
+  "w_bulgar.js",
+  "w_khan.js",
+  "w_siege.js",
+  "w_basil.js",
+  "w_kremlin.js",
+  "w_univ.js",
+  "w_mill.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "bulgar",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "khan",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "siege",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "basil",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "kremlin",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "univ",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "mill",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.25
+ }
+}

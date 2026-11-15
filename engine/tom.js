@@ -163,7 +163,11 @@ const OUTFIT = {
   dervish: { top: '#f4efe4', topD: '#9a9080', topL: '#ffffff', pants: '#f4efe4', detail: 'dervish', hat: 'sikke', boots: 'leather', long: 1 },
   // ---- добавлено tools/add_costume.py
   fezcoat: { top: '#1e2a4a', topD: '#0a1022', topL: '#4a5a8a', pants: '#2a2a32', detail: 'waistcoat', shirt: '#f0ece2', tie: 'bow', hat: 'fez' },
-  postal30: { top: '#4a5a6a', topD: '#1e2830', topL: '#8a9aaa', pants: '#3a3a42', detail: 'waistcoat', shirt: '#f0ece2', tie: 'bow', hat: 'flatcap' }
+  postal30: { top: '#4a5a6a', topD: '#1e2830', topL: '#8a9aaa', pants: '#3a3a42', detail: 'waistcoat', shirt: '#f0ece2', tie: 'bow', hat: 'flatcap' },
+  // ---- добавлено tools/add_costume.py
+  hoodieSYD: { top: '#e8622a', topD: '#6a2408', topL: '#ffa868', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'SYDNEY', capTxt: 'S' },
+  // ---- добавлено tools/add_costume.py
+  hoodieKZN: { top: '#2a8a4a', topD: '#0e3a1e', topL: '#7ad08a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'КАЗАНЬ', capTxt: 'K' }
 };
 
 function tom(o = {}) {
