@@ -43,6 +43,7 @@ const GLOBE = (() => {
     if (R < 3000) { const r = rng(4900); for (let i = 0; i < 10; i++) { const lo = lon0 - 70 + r() * 140, la = -50 + r() * 110, [x, y] = orth(lo, la, lon0, lat0); ell(cx + x * R, cy + y * R, R * (0.12 + r() * 0.1), R * 0.035, { wash: '#ffffff', washA: 0.5, line: false, rot: r() - 0.5 }); } }
     if (o.region) fill(pr(o.region), R > 3000 ? '#d8b070' : '#f0b84a');
     if (o.detail && R > 2500) o.detail(pr, R, t);
+    if (o.extra) o.extra(pr, R, t);
     const sh = ctx.createRadialGradient(cx - R * 0.4, cy - R * 0.45, R * 0.2, cx, cy, R * 1.02); sh.addColorStop(0, 'rgba(255,255,255,0.12)'); sh.addColorStop(0.75, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,20,0.5)');
     ctx.fillStyle = sh; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R); ctx.restore();
     if (R < 3000) pencil(ellPts(cx, cy, R, R, 0, 0.02, 90), { w: 3, col: '#bfe4ff', a: 0.6, pass2: false, gap: false });
@@ -63,5 +64,34 @@ const GLOBE = (() => {
   function burst(t, t1, d = 0.3) {                                   // облака расходятся поверх первой сцены
     if (t < t1 || t > t1 + d) return; scr(() => { const k = 1 - (t - t1) / d, rr = rng(4962); for (let i = 0; i < 22; i++) ell(rr() * W, rr() * H, (160 + rr() * 220) * (1.4 + (1 - k) * 2), (110 + rr() * 140) * (1.4 + (1 - k) * 2), { wash: '#ffffff', washA: 0.95 * k, line: false }); });
   }
-  return { orth, fill, draw, intro, burst, LAND };
+  // ---------- плоские карты-инфографика (экранные координаты, вызывать в scr): границы, стрелки походов, маршруты, переселения
+  function map(cx, cy, k, lon0, lat0, o = {}) {                     // → P([lon,lat]) → [x,y]
+    const c = Math.cos(lat0 * D), P = ([lo, la]) => [cx + (lo - lon0) * k * c, cy - (la - lat0) * k];
+    ctx.save(); const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, o.sea || '#3a6a9a'); g.addColorStop(1, o.seaD || '#1e3e66'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
+    const dLo = (W / 2 + 200) / (k * c), dLa = (H / 2 + 200) / k, st = [0.05, 0.1, 0.25, 0.5, 1, 2, 5, 10].find(v => dLo * 2 / v <= 12) || 10;   // сетка только в кадре
+    for (let lo = Math.ceil((lon0 - dLo) / st) * st; lo <= lon0 + dLo; lo += st) pencil([P([lo, lat0 - dLa]), P([lo, lat0 + dLa])], { w: 1.2, col: '#bcd8f0', a: 0.25, pass2: false, gap: false });
+    for (let la = Math.ceil((lat0 - dLa) / st) * st; la <= lat0 + dLa; la += st) pencil([P([lon0 - dLo, la]), P([lon0 + dLo, la])], { w: 1.2, col: '#bcd8f0', a: 0.25, pass2: false, gap: false });
+    Object.keys(LAND).forEach(n => { const pts = LAND[n].map(P); fill(pts, (o.landCol && o.landCol[n]) || o.land || '#e2c890'); if (k < 80) pencil(pts.concat([pts[0]]), { w: 3, col: '#3a2410', a: 0.85, pass2: false, gap: false }); });
+    Object.values(SEA).forEach(sp => fill(sp.map(P), o.sea || '#3a6a9a'));
+    if (o.grain !== false) { const r = rng(4970); for (let i = 0; i < 260; i++) { ctx.fillStyle = 'rgba(60,40,20,0.08)'; ctx.fillRect(r() * W, r() * H, 3, 3); } }
+    return P;
+  }
+  function zone(P, poly, col, a = 0.45, o = {}) { const pts = poly.map(P); fill(pts, col, a); pencil(pts.concat([pts[0]]), { w: o.w || 4, col: o.edge || col, a: 0.95, pass2: false, gap: o.dash ?? true }); }
+  function city(P, lon, lat, name, o = {}) { const [x, y] = P([lon, lat]), k = o.k ?? 1; if (k <= 0) return; ell(x, y, 11 * k, 11 * k, { wash: o.col || '#c8281e', washA: 1, w: 2.4, col: '#160f0a' });
+    if (name) { ctx.save(); ctx.font = `600 ${o.size || 34}px Osw`; const w = ctx.measureText(name).width + 22, dx = o.left ? -w - 18 : 18; ctx.fillStyle = 'rgba(16,10,8,0.82)'; ctx.fillRect(x + dx, y - 26, w, 48); ctx.restore(); txt(name, x + dx + w / 2, y - 2, o.size || 34, { col: o.tcol || '#fff6e0', font: 'Osw' }); } }
+  function route(P, pts, k, o = {}) {                                // растущая стрелка по дуге: поход, флот, переселение, депортация
+    if (k <= 0) return; const S = pts.map(P); let L = [];
+    if (S.length === 2) { const [a, b] = S, mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = b[0] - a[0], dy = b[1] - a[1], bend = o.bend ?? 0.25, qx = mx - dy * bend, qy = my + dx * bend;
+      for (let i = 0; i <= 48; i++) { const u = i / 48; L.push([(1 - u) * (1 - u) * a[0] + 2 * u * (1 - u) * qx + u * u * b[0], (1 - u) * (1 - u) * a[1] + 2 * u * (1 - u) * qy + u * u * b[1]]); } }
+    else L = spline(S, false, 12);
+    const d = [0]; for (let i = 1; i < L.length; i++) d.push(d[i - 1] + Math.hypot(L[i][0] - L[i - 1][0], L[i][1] - L[i - 1][1])); const tot = d[d.length - 1], cut = tot * clamp(k);
+    const Q = [L[0]]; let tip = L[0], ang = 0; for (let i = 1; i < L.length; i++) { if (d[i] <= cut) { Q.push(L[i]); tip = L[i]; ang = Math.atan2(L[i][1] - L[i - 1][1], L[i][0] - L[i - 1][0]); } else { const f = (cut - d[i - 1]) / (d[i] - d[i - 1]); tip = [lerp(L[i - 1][0], L[i][0], f), lerp(L[i - 1][1], L[i][1], f)]; ang = Math.atan2(L[i][1] - L[i - 1][1], L[i][0] - L[i - 1][0]); Q.push(tip); break; } }
+    const col = o.col || '#ff4a2a', w = o.w || 12;
+    pencil(Q, { w: w + 8, col: '#160f0a', a: 0.6, pass2: false, gap: false }); pencil(Q, { w, col, pass2: false, gap: false });
+    if (o.dash) for (let i = 2; i < Q.length; i += 3) pencil([Q[i - 1], Q[i]], { w: w * 0.4, col: '#fff6e0', a: 0.8, pass2: false, gap: false });
+    if (o.icon) o.icon(tip[0], tip[1], ang); else { push(tip[0], tip[1], 1, ang); poly([[w * 2.6, 0], [-w * 1.2, -w * 1.8], [-w * 0.4, 0], [-w * 1.2, w * 1.8]], { wash: col, washA: 1, w: 3, col: '#160f0a' }); pop(); }
+    if (o.label && k > 0.45) { const m = L[Math.floor(L.length / 2)], kk = popK(o.t ?? 0, o.t0 ?? 0, 0.3); push(m[0] + (o.lx || 0), m[1] + (o.ly || -50), o.t0 !== undefined ? kk : 1, o.rot || -0.04); ctx.save(); ctx.font = `600 ${o.size || 36}px Osw`; const tw = ctx.measureText(o.label).width + 28; ctx.fillStyle = 'rgba(16,10,8,0.86)'; ctx.fillRect(-tw / 2, -30, tw, 58); ctx.restore(); txt(o.label, 0, -1, o.size || 36, { col: o.tcol || '#ffe08a', font: 'Osw' }); pop(); }
+    return tip;
+  }
+  return { orth, fill, draw, intro, burst, map, zone, city, route, LAND };
 })();

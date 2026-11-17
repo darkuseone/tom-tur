@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/030-rio/vf/h2.wav",
+    "duration": 1.45
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.20, "value": "B" },
+    { "start": 0.20, "end": 0.31, "value": "A" },
+    { "start": 0.31, "end": 0.38, "value": "E" },
+    { "start": 0.38, "end": 0.45, "value": "C" },
+    { "start": 0.45, "end": 0.52, "value": "B" },
+    { "start": 0.52, "end": 0.66, "value": "H" },
+    { "start": 0.66, "end": 0.73, "value": "B" },
+    { "start": 0.73, "end": 0.82, "value": "A" },
+    { "start": 0.82, "end": 0.89, "value": "G" },
+    { "start": 0.89, "end": 1.17, "value": "B" },
+    { "start": 1.17, "end": 1.31, "value": "A" },
+    { "start": 1.31, "end": 1.44, "value": "C" },
+    { "start": 1.44, "end": 1.45, "value": "X" }
+  ]
+}
