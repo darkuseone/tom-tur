@@ -167,7 +167,10 @@ const OUTFIT = {
   // ---- добавлено tools/add_costume.py
   hoodieSYD: { top: '#e8622a', topD: '#6a2408', topL: '#ffa868', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'SYDNEY', capTxt: 'S' },
   // ---- добавлено tools/add_costume.py
-  hoodieKZN: { top: '#2a8a4a', topD: '#0e3a1e', topL: '#7ad08a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'КАЗАНЬ', capTxt: 'K' }
+  hoodieKZN: { top: '#2a8a4a', topD: '#0e3a1e', topL: '#7ad08a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'КАЗАНЬ', capTxt: 'K' },
+  // ---- добавлено tools/add_costume.py
+  hoodieKR: { top: '#1f5f9a', topD: '#0c2a4a', topL: '#7ab8e8', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'КРЫМ', capTxt: 'К' },
+  cardigan: { top: '#cdb68a', topD: '#7a6440', topL: '#f0e0b8', pants: '#3a3a44', detail: 'cardigan', hat: 'balaclava', boots: 'leather' }
 };
 
 function tom(o = {}) {
@@ -385,7 +388,7 @@ function costume5(OF, bob, t, bp, L, o) {                            // дета
   if (OF.collar === 'sailor') { poly([[-80, -246 + b], [80, -246 + b], [60, -196 + b], [0, -170 + b], [-60, -196 + b]], { wash: '#1e2a4a', washA: 1, w: 2.4, col: TM.line }); for (const s of [-1, 1]) pencil([[s * 70, -238 + b], [s * 52, -200 + b], [0, -180 + b]], { w: 2, col: '#f4f0e6', pass2: false }); poly([[-8, -184 + b], [8, -184 + b], [16, -150 + b], [-16, -150 + b]], { wash: '#c8302a', washA: 1, w: 1.6 }); }
   if (OF.tie === 'bow') { poly([[0, -238 + b], [-26, -250 + b], [-26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); poly([[0, -238 + b], [26, -250 + b], [26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); ell(0, -238 + b, 6, 6, { wash: '#1a1a1a', washA: 1, w: 1 }); }
   if (OF.strap) pencil([[50, -236 + b], [-40, -110 + b]], { w: 6, col: '#3a2a1a' });
-  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['dervish', 'sviter', 'atom', 'vatnik', 'preobr', 'hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'gwanbok', 'gunsa', 'seonbi', 'nongbu', 'tux'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
+  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['cardigan', 'dervish', 'sviter', 'atom', 'vatnik', 'preobr', 'hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'gwanbok', 'gunsa', 'seonbi', 'nongbu', 'tux'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
 }
 function hat5(h, t, o, fx = 0, L = { side: 1, rim: '#ffe3a8' }, OF = {}) {   // головные уборы (на макушке, y≈−90 при голове r≈100)
   if (OF.splash || OF.soot) face6(OF, t, fx);
@@ -867,6 +870,15 @@ const COST6 = {
     for (const P of [bp, sk]) hatch(P.path, P.bb, { gap: 5, a: 0.08, col: OF.topD, ang: 1.57, key: 9602, w: 1.1 });
     for (let q = -3; q <= 3; q++) pencil([[q * 20, -112 + b], [q * 40, -30 + b]], { w: 1.6, col: OF.topD, a: 0.45, pass2: false });
     pencil([[-92, -122 + b], [0, -116 + b], [92, -122 + b]], { w: 5, col: '#1a1614', pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  cardigan(OF, b, t, bp, L) {                                         // 029: вязаный кардиган (Крымская война → граф Кардиган): V-вырез, пуговицы, «косы», резинка
+    for (const sd of [-1, 1]) pencil([[sd * 6, -250 + b], [sd * 30, -200 + b], [sd * 6, -118 + b]], { w: 3, col: OF.topD, a: 0.8, pass2: false });
+    poly([[-6, -250 + b], [6, -250 + b], [0, -196 + b]], { wash: '#f4ece0', washA: 1, w: 2, col: TM.line });
+    for (const cx of [-36, 36]) for (let k = 0; k < 6; k++) { const y = -232 + k * 20 + b; pencil([[cx - 9, y], [cx + 9, y + 12]], { w: 2.4, col: OF.topD, a: 0.65, pass2: false }); pencil([[cx + 9, y], [cx - 9, y + 12]], { w: 2.4, col: OF.topL, a: 0.7, pass2: false }); }
+    hatch(bp.path, bp.bb, { gap: 4, a: 0.12, col: OF.topD, ang: 1.57, key: 9411, w: 1.1 });
+    for (let k = 0; k < 4; k++) ell(-12, -186 + k * 20 + b, 5, 5, { wash: '#6a4424', washA: 1, w: 1.2 });
+    rect(-90, -132 + b, 180, 16, { wash: OF.topD, washA: 1, w: 2, col: TM.line }); for (let k = -8; k <= 8; k++) pencil([[k * 10, -131 + b], [k * 10, -117 + b]], { w: 1.4, col: OF.topL, a: 0.6, pass2: false });
   }
 };
 /* ---- голова: брызги извести / сажа на шерсти */
@@ -1196,6 +1208,15 @@ const HAT6 = {
     ell(0, -176, 58, 12, { wash: '#8a1812', washA: 1, w: 2, col: TM.line });
     const sw = Math.sin(t * 3) * 10; pencil(spline([[0, -180], [L.side * 30 + sw * 0.3, -170], [L.side * 56 + sw, -120]], false, 8), { w: 6, col: '#141010', pass2: false });
     for (let q = 0; q < 5; q++) pencil([[L.side * 56 + sw, -120], [L.side * (50 + q * 4) + sw, -86]], { w: 2, col: '#141010', pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  balaclava(t, o, fx, L) {                                               // 029: вязаная балаклава (город Балаклава, 1854): капюшон до плеч, вырез под глаза и нос, уши торчат сквозь вязку
+    const P = []; for (let q = 0; q <= 28; q++) { const a = Math.PI / 2 + q / 28 * Math.PI * 2; P.push([Math.cos(a) * 118, 20 + Math.sin(a) * 128]); }
+    for (let q = 0; q <= 28; q++) { const a = Math.PI / 2 - q / 28 * Math.PI * 2; P.push([fx + Math.cos(a) * 82, 18 + Math.sin(a) * 62]); }
+    const sh = shape(P, { wash: '#4a4f3a', washA: 1, w: 3, col: TM.line, key: 9420 });
+    hatch(sh.path, sh.bb, { gap: 6, a: 0.3, col: '#23261a', ang: 1.57, key: 9421, w: 1.4 });
+    for (let k = -3; k <= 3; k++) pencil([[k * 30, -100 + Math.abs(k) * 4], [k * 34, 140]], { w: 1.6, col: '#7a8060', a: 0.55, pass2: false });
+    pencil(ellPts(fx, 18, 82, 62, 0, 0.05, 40), { w: 4, col: '#2a2d1e', a: 0.9, pass2: false });
   }
 };
 /* ---- рукава: кольчуга, прорези, закатанные рукава, манжеты, «венгерские узлы», известь */

@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/029-krym/vf/s1.wav",
+    "duration": 3.16
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.05, "value": "B" },
+    { "start": 0.05, "end": 0.23, "value": "C" },
+    { "start": 0.23, "end": 0.30, "value": "E" },
+    { "start": 0.30, "end": 0.38, "value": "A" },
+    { "start": 0.38, "end": 0.49, "value": "F" },
+    { "start": 0.49, "end": 0.57, "value": "A" },
+    { "start": 0.57, "end": 0.93, "value": "B" },
+    { "start": 0.93, "end": 1.07, "value": "C" },
+    { "start": 1.07, "end": 1.14, "value": "B" },
+    { "start": 1.14, "end": 1.28, "value": "C" },
+    { "start": 1.28, "end": 1.35, "value": "B" },
+    { "start": 1.35, "end": 1.42, "value": "E" },
+    { "start": 1.42, "end": 1.63, "value": "B" },
+    { "start": 1.63, "end": 1.70, "value": "E" },
+    { "start": 1.70, "end": 1.84, "value": "B" },
+    { "start": 1.84, "end": 2.02, "value": "X" },
+    { "start": 2.02, "end": 2.56, "value": "B" },
+    { "start": 2.56, "end": 2.70, "value": "C" },
+    { "start": 2.70, "end": 2.77, "value": "G" },
+    { "start": 2.77, "end": 2.84, "value": "B" },
+    { "start": 2.84, "end": 2.92, "value": "A" },
+    { "start": 2.92, "end": 3.15, "value": "B" },
+    { "start": 3.15, "end": 3.16, "value": "X" }
+  ]
+}

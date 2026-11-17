@@ -10,8 +10,18 @@
  },
  "worlds": [
   "props.js",
+  "krym.js",
   "w_hook.js",
+  "w_cave.js",
+  "w_herson.js",
+  "w_khan.js",
+  "w_ekat.js",
+  "w_war.js",
+  "w_deport.js",
+  "w_ussr.js",
+  "w_annex.js",
   "w_today.js",
+  "w_button.js",
   "w_cover.js"
  ],
  "scenes": [
@@ -25,6 +35,54 @@
   [
    "tunnel",
    []
+  ],
+  [
+   "cave",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "herson",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "khan",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "ekat",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "war",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "deport",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "ussr",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "annex",
+   [
+    "s8"
+   ]
   ],
   [
    "today",

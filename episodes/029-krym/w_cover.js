@@ -1,3 +1,3 @@
-/* Обложка: Том в ключевой локации + крупный текст-хук. */
-const COVER = { scene: 'hook', t: 2.0, cam: { x: 540, y: 900, z: 0.1 }, pose: { expr: 'shock', expr2: 'shock', ek: 1 },
-  title: [['TODO', '#f6ecd6'], ['TODO?!', '#e8a33c']], size: 190, ty: 360, badge: 'КРЫМ', sub: 'история за 60 секунд' };
+/* Обложка 029: Ласточкино гнездо, карта Крыма с печатями всех хозяев, Том тычет в карту. Текст — «ЧЕЙ КРЫМ?». */
+const COVER = { scene: 'hook', t: 3.9, cam: { x: 620, y: 1060, z: 0.08 }, pose: { expr: 'suspicious', expr2: 'suspicious', ek: 1, x: 330, flip: 1, walk: 0 },
+  title: [['ЧЕЙ', '#f6ecd6'], ['КРЫМ?', '#e8a33c']], size: 200, ty: 400, badge: 'КРЫМ', sub: '45 000 лет за минуту' };
