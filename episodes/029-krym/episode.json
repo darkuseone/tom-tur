@@ -1,0 +1,100 @@
+{
+ "num": "029",
+ "city": "Крым",
+ "title": "Крым: чей он? 45 000 лет за минуту",
+ "hook": "Чей Крым? «Исконно русский»? Проверим за сорок пять тысяч лет!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "krym.js",
+  "w_hook.js",
+  "w_cave.js",
+  "w_herson.js",
+  "w_khan.js",
+  "w_ekat.js",
+  "w_war.js",
+  "w_deport.js",
+  "w_ussr.js",
+  "w_annex.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "cave",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "herson",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "khan",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "ekat",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "war",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "deport",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "ussr",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "annex",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
