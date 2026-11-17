@@ -1,0 +1,100 @@
+{
+ "num": "030",
+ "city": "Рио-де-Жанейро",
+ "title": "Рио: почему все думают, что это столица",
+ "hook": "Ошибка! Столица Бразилии — не Рио!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "rio.js",
+  "w_hook.js",
+  "w_rock.js",
+  "w_river.js",
+  "w_french.js",
+  "w_gold.js",
+  "w_king.js",
+  "w_valongo.js",
+  "w_christ.js",
+  "w_maracana.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "rock",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "river",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "french",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "gold",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "king",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "valongo",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "christ",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "maracana",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

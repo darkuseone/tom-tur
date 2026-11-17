@@ -170,7 +170,10 @@ const OUTFIT = {
   hoodieKZN: { top: '#2a8a4a', topD: '#0e3a1e', topL: '#7ad08a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'КАЗАНЬ', capTxt: 'K' },
   // ---- добавлено tools/add_costume.py
   hoodieKR: { top: '#1f5f9a', topD: '#0c2a4a', topL: '#7ab8e8', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'КРЫМ', capTxt: 'К' },
-  cardigan: { top: '#cdb68a', topD: '#7a6440', topL: '#f0e0b8', pants: '#3a3a44', detail: 'cardigan', hat: 'balaclava', boots: 'leather' }
+  cardigan: { top: '#cdb68a', topD: '#7a6440', topL: '#f0e0b8', pants: '#3a3a44', detail: 'cardigan', hat: 'balaclava', boots: 'leather' },
+  // ---- добавлено tools/add_costume.py
+  hoodieRIO: { top: '#1e8a4a', topD: '#0a3a1e', topL: '#7ad08a', pants: '#1e3a8a', detail: 'hoodie', hat: 'cap', print: 'РИО', capTxt: 'R' },
+  jersey50: { top: '#f4f2ec', topD: '#a8a49a', topL: '#ffffff', pants: '#f4f2ec', detail: 'jersey50', boots: 'shoe' }
 };
 
 function tom(o = {}) {
@@ -388,7 +391,7 @@ function costume5(OF, bob, t, bp, L, o) {                            // дета
   if (OF.collar === 'sailor') { poly([[-80, -246 + b], [80, -246 + b], [60, -196 + b], [0, -170 + b], [-60, -196 + b]], { wash: '#1e2a4a', washA: 1, w: 2.4, col: TM.line }); for (const s of [-1, 1]) pencil([[s * 70, -238 + b], [s * 52, -200 + b], [0, -180 + b]], { w: 2, col: '#f4f0e6', pass2: false }); poly([[-8, -184 + b], [8, -184 + b], [16, -150 + b], [-16, -150 + b]], { wash: '#c8302a', washA: 1, w: 1.6 }); }
   if (OF.tie === 'bow') { poly([[0, -238 + b], [-26, -250 + b], [-26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); poly([[0, -238 + b], [26, -250 + b], [26, -226 + b]], { wash: '#1a1a1a', washA: 1, w: 1.6 }); ell(0, -238 + b, 6, 6, { wash: '#1a1a1a', washA: 1, w: 1 }); }
   if (OF.strap) pencil([[50, -236 + b], [-40, -110 + b]], { w: 6, col: '#3a2a1a' });
-  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['cardigan', 'dervish', 'sviter', 'atom', 'vatnik', 'preobr', 'hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'gwanbok', 'gunsa', 'seonbi', 'nongbu', 'tux'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
+  if (!['ruff', 'band', 'sailor'].includes(OF.collar) && !['jersey50', 'cardigan', 'dervish', 'sviter', 'atom', 'vatnik', 'preobr', 'hoodie', 'quilt', 'furcoat', 'diver', 'tulup', 'knyaz', 'mail', 'master', 'painter', 'hussar', 'metro', 'aviator', 'architect', 'bogatyr', 'french', 'rubakha', 'varyag', 'soviet', 'caveman', 'scuba', 'gwanbok', 'gunsa', 'seonbi', 'nongbu', 'tux'].includes(D)) { const bib = fluff(ellPts(0, -236 + b, 52, 20, 0, 0, 20), 5, 9); shape(bib.concat([bib[0]]), { wash: TM.bib, washA: 0.97, w: 2, col: TM.line, a: 0.5 }); }
 }
 function hat5(h, t, o, fx = 0, L = { side: 1, rim: '#ffe3a8' }, OF = {}) {   // головные уборы (на макушке, y≈−90 при голове r≈100)
   if (OF.splash || OF.soot) face6(OF, t, fx);
@@ -879,6 +882,14 @@ const COST6 = {
     hatch(bp.path, bp.bb, { gap: 4, a: 0.12, col: OF.topD, ang: 1.57, key: 9411, w: 1.1 });
     for (let k = 0; k < 4; k++) ell(-12, -186 + k * 20 + b, 5, 5, { wash: '#6a4424', washA: 1, w: 1.2 });
     rect(-90, -132 + b, 180, 16, { wash: OF.topD, washA: 1, w: 2, col: TM.line }); for (let k = -8; k <= 8; k++) pencil([[k * 10, -131 + b], [k * 10, -117 + b]], { w: 1.4, col: OF.topL, a: 0.6, pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  jersey50(OF, b, t, bp, L) {                                         // 030: футболка сборной Бразилии 1950 — белая, синий воротник (после 1950 сменили на жёлтую)
+    hatch(bp.path, bp.bb, { gap: 6, a: 0.08, col: OF.topD, ang: 1.2, key: 9501, w: 1.1 });
+    for (const sd of [-1, 1]) pencil([[sd * 4, -250 + b], [sd * 36, -238 + b], [sd * 46, -222 + b]], { w: 9, col: '#1e3a8a', pass2: false });
+    pencil([[-6, -248 + b], [0, -214 + b], [6, -248 + b]], { w: 6, col: '#1e3a8a', pass2: false });
+    rect(-90, -126 + b, 180, 10, { wash: '#1e3a8a', washA: 1, w: 1.6, col: TM.line });
+    txt('10', 28, -180 + b, 34, { col: '#1e3a8a', font: 'Osw' });
   }
 };
 /* ---- голова: брызги извести / сажа на шерсти */
