@@ -1,0 +1,93 @@
+{
+ "num": "031",
+ "city": "Мадрид",
+ "title": "Мадрид: почему столица — здесь",
+ "hook": "Абсурд! Столица империи — без моря и без собора!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "madrid.js",
+  "w_hook.js",
+  "w_saber.js",
+  "w_mayrit.js",
+  "w_court.js",
+  "w_palace.js",
+  "w_goya.js",
+  "w_siege.js",
+  "w_cathedral.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "saber",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "mayrit",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "court",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "palace",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "goya",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "siege",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "cathedral",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}

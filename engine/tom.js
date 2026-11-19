@@ -173,7 +173,10 @@ const OUTFIT = {
   cardigan: { top: '#cdb68a', topD: '#7a6440', topL: '#f0e0b8', pants: '#3a3a44', detail: 'cardigan', hat: 'balaclava', boots: 'leather' },
   // ---- добавлено tools/add_costume.py
   hoodieRIO: { top: '#1e8a4a', topD: '#0a3a1e', topL: '#7ad08a', pants: '#1e3a8a', detail: 'hoodie', hat: 'cap', print: 'РИО', capTxt: 'R' },
-  jersey50: { top: '#f4f2ec', topD: '#a8a49a', topL: '#ffffff', pants: '#f4f2ec', detail: 'jersey50', boots: 'shoe' }
+  jersey50: { top: '#f4f2ec', topD: '#a8a49a', topL: '#ffffff', pants: '#f4f2ec', detail: 'jersey50', boots: 'shoe' },
+  // ---- добавлено tools/add_costume.py
+  hoodieMAD: { top: '#c8281e', topD: '#5a0a08', topL: '#f8806a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'МАДРИД', capTxt: 'MD' },
+  moro: { top: '#2a7a5a', topD: '#0e3a28', topL: '#7ac8a0', pants: '#f0e8d8', detail: 'knyaz', hat: 'turbanW', boots: 'leather', cuff: '#e8b84a', long: 1 }
 };
 
 function tom(o = {}) {
@@ -1228,6 +1231,14 @@ const HAT6 = {
     hatch(sh.path, sh.bb, { gap: 6, a: 0.3, col: '#23261a', ang: 1.57, key: 9421, w: 1.4 });
     for (let k = -3; k <= 3; k++) pencil([[k * 30, -100 + Math.abs(k) * 4], [k * 34, 140]], { w: 1.6, col: '#7a8060', a: 0.55, pass2: false });
     pencil(ellPts(fx, 18, 82, 62, 0, 0.05, 40), { w: 4, col: '#2a2d1e', a: 0.9, pass2: false });
+  },
+  // ---- добавлено tools/add_costume.py
+  turbanW(t, o, fx, L) {                                                 // 031: белая чалма Аль-Андалуса — витки ткани, хвост сбоку
+    const P = [[-104, -40], [-110, -96], [-60, -140], [20, -150], [90, -126], [112, -70], [100, -36], [0, -52]];
+    const sh = blob(P, { wash: '#f4f0e6', washA: 1, w: 3, col: TM.line, key: 9610, shade: { gap: 6, a: 0.18, col: '#b8b0a0', ang: 0.6 } });
+    for (let k = 0; k < 4; k++) pencil([[-100, -56 - k * 22], [-20, -70 - k * 24], [96, -54 - k * 18]], { w: 2.4, col: '#b8b0a0', a: 0.85, pass2: false });
+    blob([[96, -60], [128, -20], [118, 30], [100, -10]], { wash: '#e8e2d4', washA: 1, w: 2.4, col: TM.line });
+    ell(0, -96, 14, 14, { wash: '#2a8a5a', washA: 1, w: 2, col: TM.line });
   }
 };
 /* ---- рукава: кольчуга, прорези, закатанные рукава, манжеты, «венгерские узлы», известь */
