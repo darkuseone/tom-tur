@@ -39,7 +39,8 @@ const GLOBE = (() => {
     if (R < 3000) glow(cx, cy, R * 1.12, 'rgba(120,190,255,1)', 0.22);
     ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.clip();
     const g = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.4, R * 0.1, cx, cy, R); g.addColorStop(0, '#3a8ad8'); g.addColorStop(0.7, '#1a4a8a'); g.addColorStop(1, '#0a1e40'); ctx.fillStyle = g; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R);
-    Object.keys(LAND).forEach(k => fill(pr(LAND[k]), COL[k])); Object.values(SEA).forEach(s => fill(pr(s), '#2266aa'));
+    const vis = ll => ll.some(([lo, la]) => Math.sin(lat0 * D) * Math.sin(la * D) + Math.cos(lat0 * D) * Math.cos(la * D) * Math.cos((lo - lon0) * D) > 0.05);   // полигон хоть частью на видимой стороне
+    Object.keys(LAND).forEach(k => { if (vis(LAND[k])) fill(pr(LAND[k]), COL[k]); }); Object.values(SEA).forEach(s => { if (vis(s)) fill(pr(s), '#2266aa'); });
     if (R < 3000) { const r = rng(4900); for (let i = 0; i < 10; i++) { const lo = lon0 - 70 + r() * 140, la = -50 + r() * 110, [x, y] = orth(lo, la, lon0, lat0); ell(cx + x * R, cy + y * R, R * (0.12 + r() * 0.1), R * 0.035, { wash: '#ffffff', washA: 0.5, line: false, rot: r() - 0.5 }); } }
     if (o.region) fill(pr(o.region), R > 3000 ? '#d8b070' : '#f0b84a');
     if (o.detail && R > 2500) o.detail(pr, R, t);
