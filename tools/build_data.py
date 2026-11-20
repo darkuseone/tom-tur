@@ -40,7 +40,7 @@ def main(ep):
     VIS = []
     for k, t0 in VO.items():
         lp = d / 'lips' / f'{k}.json'
-        if lp.exists():
+        if lp.exists() and not k.startswith('guest'):                # реплика собеседника (guest*) не двигает рот Тома
             for m in json.load(open(lp))['mouthCues']: VIS.append([round(t0 + m['start'], 3), m['value']])
     VIS.sort()
     (d / 'data.js').write_text(f'const DUR={DUR};\nconst VO={json.dumps(VO)};\nconst VD={json.dumps({k: round(v, 3) for k, v in D.items()})};\n'

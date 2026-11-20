@@ -47,8 +47,14 @@ def lines(ep, keys):
         out = d / 'voice' / f'{k}.mp3'
         if (keys and k not in keys) or (not keys and out.exists()):
             continue
-        _post(f"{API}/text-to-speech/{v['voice_id']}?output_format=mp3_44100_128",
-              {'text': say(text), 'model_id': v['model_id'], 'voice_settings': v['voice_settings']}, out)
+        vv = v
+        if k.startswith('guest'):                                     # 20.11.2026: второй голос (собеседник Тома, тест в 1 из 3 роликов) — ключи guest*
+            vv = CFG.get('voice_guest')
+            if not vv or not vv.get('voice_id'):
+                sys.exit("нет voice_guest.voice_id в tools/config.json: выбрать стоковый голос из библиотеки ElevenLabs (не голоса владельца NIKITA/NIKITA2/Cartman) и вписать")
+            vv = {**v, **vv}
+        _post(f"{API}/text-to-speech/{vv['voice_id']}?output_format=mp3_44100_128",
+              {'text': say(text), 'model_id': vv['model_id'], 'voice_settings': vv['voice_settings']}, out)
 
 
 if __name__ == '__main__':
