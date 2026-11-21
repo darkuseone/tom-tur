@@ -1,0 +1,100 @@
+{
+ "num": "032",
+ "city": "Донбасс",
+ "title": "Чей Донбасс?",
+ "hook": "ЧЕЙ ДОНБАСС?",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "donbas.js",
+  "w_hook.js",
+  "w_fern.js",
+  "w_steppe.js",
+  "w_yuzovka.js",
+  "w_border.js",
+  "w_mine.js",
+  "w_vote.js",
+  "w_war14.js",
+  "w_war22.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "fern",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "steppe",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "yuzovka",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "border",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "mine",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "vote",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "war14",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "war22",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ]
+}
