@@ -176,7 +176,9 @@ const OUTFIT = {
   jersey50: { top: '#f4f2ec', topD: '#a8a49a', topL: '#ffffff', pants: '#f4f2ec', detail: 'jersey50', boots: 'shoe' },
   // ---- добавлено tools/add_costume.py
   hoodieMAD: { top: '#c8281e', topD: '#5a0a08', topL: '#f8806a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'МАДРИД', capTxt: 'MD' },
-  moro: { top: '#2a7a5a', topD: '#0e3a28', topL: '#7ac8a0', pants: '#f0e8d8', detail: 'knyaz', hat: 'turbanW', boots: 'leather', cuff: '#e8b84a', long: 1 }
+  moro: { top: '#2a7a5a', topD: '#0e3a28', topL: '#7ac8a0', pants: '#f0e8d8', detail: 'knyaz', hat: 'turbanW', boots: 'leather', cuff: '#e8b84a', long: 1 },
+  // ---- добавлено tools/add_costume.py
+  hoodieDON: { top: '#3a3a44', topD: '#141418', topL: '#74747e', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ДОНБАСС', capTxt: 'Д' }
 };
 
 function tom(o = {}) {
