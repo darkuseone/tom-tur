@@ -7,7 +7,7 @@
   EV.w14_rus = wtk('s7', 'России') - 0.1;
   EV.w14_war = wtk('s7', 'война:');
   EV.w14_14k = wtk('s7', 'четырнадцать') - 0.1;
-  const MAPOFF = EV.w14_war + 0.35;
+  const MAPOFF = EV.w14_14k - 0.05;
   KEYW.push('России', 'война:', 'погибших.');
   const L = DB.ink, LMP = [980, 820];
   function sky(t) { vgrad(-900, 1100, ['#0a0e1c', '#141c34', '#2a2a44', '#4a3040'], 1); const r = rng(9100); for (let i = 0; i < 60; i++) ell(r() * 1600 - 200, r() * 700 - 300, 1.6, 1.6, { wash: '#ffffff', washA: 0.4 + r() * 0.5, line: false });
