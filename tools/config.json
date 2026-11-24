@@ -32,5 +32,9 @@
  "render": {
   "fps": 30,
   "chat_limit_mib": 29
+ },
+ "voice_guest": {
+  "voice_id": "cgSgspJ2msm6clMCkdW9",
+  "name": "Jessica (стоковый, молодая туристка; выбран 24.11.2026 для 033)"
  }
 }

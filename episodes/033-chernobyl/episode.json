@@ -10,8 +10,17 @@
  },
  "worlds": [
   "props.js",
+  "chernobyl.js",
   "w_hook.js",
+  "w_chron.js",
+  "w_shtetl.js",
+  "w_build.js",
+  "w_blast.js",
+  "w_evac.js",
+  "w_arch.js",
+  "w_drone.js",
   "w_today.js",
+  "w_button.js",
   "w_cover.js"
  ],
  "scenes": [
@@ -82,5 +91,8 @@
     "x1"
    ]
   ]
- ]
+ ],
+ "voice_tempo": {
+  "h2": 1.15
+ }
 }

@@ -1,0 +1,18 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/033-chernobyl/vf/h2.wav",
+    "duration": 1.37
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.19, "value": "B" },
+    { "start": 0.19, "end": 0.27, "value": "A" },
+    { "start": 0.27, "end": 0.40, "value": "C" },
+    { "start": 0.40, "end": 0.68, "value": "B" },
+    { "start": 0.68, "end": 0.76, "value": "A" },
+    { "start": 0.76, "end": 0.87, "value": "G" },
+    { "start": 0.87, "end": 1.01, "value": "B" },
+    { "start": 1.01, "end": 1.08, "value": "C" },
+    { "start": 1.08, "end": 1.36, "value": "B" },
+    { "start": 1.36, "end": 1.37, "value": "X" }
+  ]
+}

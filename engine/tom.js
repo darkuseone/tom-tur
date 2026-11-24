@@ -131,6 +131,7 @@ const OUTFIT = {
   // ---- добавлено tools/add_costume.py
   hoodieZ: { top: '#2f5f7a', topD: '#12293a', topL: '#6fa0bc', pants: '#262c36', detail: 'hoodie', hat: 'cap', print: 'К-26', capTxt: 'К' },
   vatnik: { top: '#3c4148', topD: '#191c21', topL: '#6c737c', pants: '#33373d', detail: 'vatnik', hat: 'ushanka', boots: 'valenki' },
+  atomCH: { top: '#eef0ec', topD: '#9aa4a8', topL: '#ffffff', pants: '#d8dcd8', detail: 'atom', hat: 'whitecap', boots: 'oxford', shirt: '#cfd8dc', long: 1, badge: 'ЧАЭС' },
   atom: { top: '#eef0ec', topD: '#9aa4a8', topL: '#ffffff', pants: '#d8dcd8', detail: 'atom', hat: 'whitecap', boots: 'oxford', shirt: '#cfd8dc', long: 1 },
   sviter: { top: '#8a2a2a', topD: '#4a1010', topL: '#c45a4a', pants: '#3a3a44', detail: 'sviter', hat: null, boots: 'valenki' },
   // ---- добавлено tools/add_costume.py
@@ -178,7 +179,10 @@ const OUTFIT = {
   hoodieMAD: { top: '#c8281e', topD: '#5a0a08', topL: '#f8806a', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'МАДРИД', capTxt: 'MD' },
   moro: { top: '#2a7a5a', topD: '#0e3a28', topL: '#7ac8a0', pants: '#f0e8d8', detail: 'knyaz', hat: 'turbanW', boots: 'leather', cuff: '#e8b84a', long: 1 },
   // ---- добавлено tools/add_costume.py
-  hoodieDON: { top: '#3a3a44', topD: '#141418', topL: '#74747e', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ДОНБАСС', capTxt: 'Д' }
+  hoodieDON: { top: '#3a3a44', topD: '#141418', topL: '#74747e', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ДОНБАСС', capTxt: 'Д' },
+  // ---- добавлено tools/add_costume.py
+  hoodieCH: { top: '#5a6a3a', topD: '#232a14', topL: '#98a868', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: '1193', capTxt: 'Ч' },
+  stroyCH: { top: '#e8741e', topD: '#7a3008', topL: '#ffb070', pants: '#3a4a6a', detail: 'overalls', shirt: '#d8d0c0', hat: 'miner' }
 };
 
 function tom(o = {}) {
@@ -863,7 +867,7 @@ const COST6 = {
     for (const sd of [-1, 1]) { const P = [[sd * 6, -254 + b], [sd * 56, -258 + b], [sd * 44, -200 + b], [sd * 6, -150 + b]]; poly(P, { wash: OF.topL, washA: 1, w: 2.4, col: TM.line }); shadeG(pathOf(P), sd * 56, 0, 0, 0, OF.topD, 0.35); }
     pencil([[0, -150 + b], [0, -32 + b]], { w: 2.4, col: OF.topD, a: 0.9, pass2: false }); for (let k = 0; k < 4; k++) ell(-8, -138 + k * 28 + b, 5, 5, { wash: '#d8dcd8', washA: 1, w: 1.2, col: '#5a6266' });
     rect(-70, -196 + b, 40, 36, { wash: OF.top, washA: 1, w: 1.8, col: TM.line }); rect(-58, -214 + b, 8, 30, { wash: '#30343a', washA: 1, w: 1.2 }); ell(-54, -214 + b, 4, 4, { wash: '#c8a040', washA: 1, w: 1 });
-    rect(30, -196 + b, 46, 20, { wash: '#3a6a8a', washA: 1, w: 1.4, col: TM.line }); txt('ГХК', 53, -186 + b, 14, { col: '#f6ecd6', font: 'Osw' });
+    rect(30, -196 + b, 46, 20, { wash: '#3a6a8a', washA: 1, w: 1.4, col: TM.line }); txt(OF.badge || 'ГХК', 53, -186 + b, 14, { col: '#f6ecd6', font: 'Osw' });
   },
   sviter(OF, b, t, bp, L) {                                           // вязаный свитер: «косы», полоса с оленями и снежинками, горло
     hatch(bp.path, bp.bb, { gap: 5, a: 0.18, col: OF.topD, ang: 1.57, key: 9321, w: 1.3 });
