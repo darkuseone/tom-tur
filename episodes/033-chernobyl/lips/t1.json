@@ -1,0 +1,43 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/033-chernobyl/vf/t1.wav",
+    "duration": 5.23
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.41, "value": "F" },
+    { "start": 0.41, "end": 0.49, "value": "A" },
+    { "start": 0.49, "end": 0.62, "value": "B" },
+    { "start": 0.62, "end": 0.83, "value": "F" },
+    { "start": 0.83, "end": 0.91, "value": "A" },
+    { "start": 0.91, "end": 1.05, "value": "B" },
+    { "start": 1.05, "end": 1.12, "value": "F" },
+    { "start": 1.12, "end": 1.33, "value": "B" },
+    { "start": 1.33, "end": 1.45, "value": "X" },
+    { "start": 1.45, "end": 1.56, "value": "B" },
+    { "start": 1.56, "end": 1.70, "value": "C" },
+    { "start": 1.70, "end": 1.98, "value": "F" },
+    { "start": 1.98, "end": 2.05, "value": "C" },
+    { "start": 2.05, "end": 2.26, "value": "B" },
+    { "start": 2.26, "end": 2.34, "value": "A" },
+    { "start": 2.34, "end": 2.48, "value": "F" },
+    { "start": 2.48, "end": 2.55, "value": "C" },
+    { "start": 2.55, "end": 2.69, "value": "B" },
+    { "start": 2.69, "end": 2.76, "value": "C" },
+    { "start": 2.76, "end": 2.83, "value": "A" },
+    { "start": 2.83, "end": 2.87, "value": "B" },
+    { "start": 2.87, "end": 3.05, "value": "H" },
+    { "start": 3.05, "end": 3.12, "value": "C" },
+    { "start": 3.12, "end": 3.25, "value": "X" },
+    { "start": 3.25, "end": 3.73, "value": "B" },
+    { "start": 3.73, "end": 3.87, "value": "E" },
+    { "start": 3.87, "end": 3.94, "value": "B" },
+    { "start": 3.94, "end": 4.08, "value": "E" },
+    { "start": 4.08, "end": 4.29, "value": "B" },
+    { "start": 4.29, "end": 4.37, "value": "A" },
+    { "start": 4.37, "end": 4.72, "value": "F" },
+    { "start": 4.72, "end": 4.79, "value": "B" },
+    { "start": 4.79, "end": 4.87, "value": "A" },
+    { "start": 4.87, "end": 5.22, "value": "B" },
+    { "start": 5.22, "end": 5.23, "value": "X" }
+  ]
+}

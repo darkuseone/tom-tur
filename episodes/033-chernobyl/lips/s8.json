@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/033-chernobyl/vf/s8.wav",
+    "duration": 2.40
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.36, "value": "B" },
+    { "start": 0.36, "end": 0.43, "value": "G" },
+    { "start": 0.43, "end": 0.50, "value": "F" },
+    { "start": 0.50, "end": 0.64, "value": "B" },
+    { "start": 0.64, "end": 0.72, "value": "A" },
+    { "start": 0.72, "end": 0.91, "value": "C" },
+    { "start": 0.91, "end": 1.05, "value": "B" },
+    { "start": 1.05, "end": 1.41, "value": "A" },
+    { "start": 1.41, "end": 1.44, "value": "G" },
+    { "start": 1.44, "end": 1.52, "value": "A" },
+    { "start": 1.52, "end": 1.66, "value": "B" },
+    { "start": 1.66, "end": 1.72, "value": "A" },
+    { "start": 1.72, "end": 1.78, "value": "F" },
+    { "start": 1.78, "end": 1.86, "value": "A" },
+    { "start": 1.86, "end": 2.03, "value": "E" },
+    { "start": 2.03, "end": 2.17, "value": "B" },
+    { "start": 2.17, "end": 2.31, "value": "E" },
+    { "start": 2.31, "end": 2.39, "value": "A" },
+    { "start": 2.39, "end": 2.40, "value": "X" }
+  ]
+}

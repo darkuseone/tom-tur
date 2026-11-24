@@ -1,0 +1,98 @@
+{
+ "num": "033",
+ "city": "Чернобыль",
+ "title": "Чернобыль: город старше взрыва на 800 лет",
+ "hook": "Чернобыль — это же где реактор взорвался? — Мимо! Реактор в 15 км, а городу 800 лет.",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "chernobyl.js",
+  "w_hook.js",
+  "w_chron.js",
+  "w_shtetl.js",
+  "w_build.js",
+  "w_blast.js",
+  "w_evac.js",
+  "w_arch.js",
+  "w_drone.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "guest1",
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "chron",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "shtetl",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "build",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "blast",
+   [
+    "s4",
+    "s5"
+   ]
+  ],
+  [
+   "evac",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "arch",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "drone",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.15
+ }
+}
