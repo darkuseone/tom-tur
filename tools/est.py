@@ -13,4 +13,6 @@ for k, v in L.items():
     t = re.sub(r'\[[^\]]*\]', '', v).replace('́', '').strip(); n = len(re.sub(r'[^\w]', '', t)); s = n / RATE; tot += s
     words = len(t.split()); print(f'{k:5s} {s:4.1f} с  {words:2d} сл.  {t[:70]}' + ('  ← >14 слов' if words > 14 else ''))
 gaps = T['tunnel'] + T['scene_gap'] * (len(E['scenes']) - 1) + T['tail']
+n_ussr = sum(re.sub(r'\[[^\]]*\]', '', v).replace('\u0301', '').count('СССР') for v in L.values())
+if n_ussr > 1: print(f'ВНИМАНИЕ: «СССР» {n_ussr} раз — полностью только первое упоминание, дальше «Союз»/«советский» (владелец 25.11.2026)')
 print(f'речь ≈{tot:.1f} с + паузы {gaps:.1f} с = ≈{tot + gaps:.1f} с (цель 50–70, лучше 50–58)')
