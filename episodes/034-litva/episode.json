@@ -1,0 +1,103 @@
+{
+ "num": "034",
+ "city": "Литва",
+ "title": "Литва: от Балтики до Чёрного моря",
+ "hook": "Я думал, Литва крошечная. А 600 лет назад она дотянулась до Чёрного моря!",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "litva.js",
+  "w_hook.js",
+  "w_pagan.js",
+  "w_grunwald.js",
+  "w_empire.js",
+  "w_lublin.js",
+  "w_partition.js",
+  "w_books.js",
+  "w_soviet.js",
+  "w_chain.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "pagan",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "grunwald",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "empire",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "lublin",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "partition",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "books",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "soviet",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "chain",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.15
+ }
+}
