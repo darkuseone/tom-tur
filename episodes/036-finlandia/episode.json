@@ -1,0 +1,104 @@
+{
+ "num": "036",
+ "city": "Финляндия",
+ "title": "Финляндия: почему в Хельсинки стоит русский царь",
+ "hook": "Это что, русский царь в центре Хельсинки? — Именно! Финны не сносят его больше 130 лет.",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "finland.js",
+  "w_hook.js",
+  "w_sweden.js",
+  "w_porvoo.js",
+  "w_capital.js",
+  "w_reforms.js",
+  "w_statue.js",
+  "w_flowers.js",
+  "w_indep.js",
+  "w_winter.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "guest1",
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "sweden",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "porvoo",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "capital",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "reforms",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "statue",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "flowers",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "indep",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "winter",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.15
+ }
+}

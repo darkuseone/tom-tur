@@ -1,0 +1,103 @@
+{
+ "num": "035",
+ "city": "Черногория",
+ "title": "Черногория: сто лет войны с Японией?",
+ "hook": "Сто лет войны с Японией! Я проверил эту черногорскую байку.",
+ "timeline": {
+  "scene_gap": 0.15,
+  "tail": 0.8,
+  "tunnel": 1.4
+ },
+ "worlds": [
+  "props.js",
+  "montenegro.js",
+  "w_hook.js",
+  "w_name.js",
+  "w_kotor.js",
+  "w_berlin.js",
+  "w_volunteers.js",
+  "w_peace.js",
+  "w_yugo.js",
+  "w_vote.js",
+  "w_japan.js",
+  "w_today.js",
+  "w_button.js",
+  "w_cover.js"
+ ],
+ "scenes": [
+  [
+   "hook",
+   [
+    "h1",
+    "h2"
+   ]
+  ],
+  [
+   "tunnel",
+   []
+  ],
+  [
+   "name",
+   [
+    "s1"
+   ]
+  ],
+  [
+   "kotor",
+   [
+    "s2"
+   ]
+  ],
+  [
+   "berlin",
+   [
+    "s3"
+   ]
+  ],
+  [
+   "volunteers",
+   [
+    "s4"
+   ]
+  ],
+  [
+   "peace",
+   [
+    "s5"
+   ]
+  ],
+  [
+   "yugo",
+   [
+    "s6"
+   ]
+  ],
+  [
+   "vote",
+   [
+    "s7"
+   ]
+  ],
+  [
+   "japan",
+   [
+    "s8"
+   ]
+  ],
+  [
+   "today",
+   [
+    "t1"
+   ]
+  ],
+  [
+   "button",
+   [
+    "x1"
+   ]
+  ]
+ ],
+ "voice_tempo": {
+  "h2": 1.15
+ }
+}

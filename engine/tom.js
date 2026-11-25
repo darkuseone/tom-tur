@@ -186,7 +186,9 @@ const OUTFIT = {
   // ---- добавлено tools/add_costume.py
   hoodieLT: { top: '#2a7a4a', topD: '#0e3a20', topL: '#6ab888', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'LIETUVA', capTxt: 'LT' },
   // ---- добавлено tools/add_costume.py
-  hoodieME: { top: '#b8201e', topD: '#5a0806', topL: '#f07060', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'CRNA GORA', capTxt: 'ME' }
+  hoodieME: { top: '#b8201e', topD: '#5a0806', topL: '#f07060', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'CRNA GORA', capTxt: 'ME' },
+  // ---- добавлено tools/add_costume.py
+  hoodieFI: { top: '#f2f4f6', topD: '#8a96a8', topL: '#ffffff', pants: '#1c3a7a', detail: 'hoodie', hat: 'cap', print: 'SUOMI', capTxt: 'FI' }
 };
 
 function tom(o = {}) {
