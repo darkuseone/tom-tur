@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "soundFile": "/home/user/tom-tur/build/035-chernogoria/vf/x1.wav",
+    "duration": 3.88
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.08, "value": "B" },
+    { "start": 0.08, "end": 0.24, "value": "A" },
+    { "start": 0.24, "end": 0.37, "value": "B" },
+    { "start": 0.37, "end": 0.45, "value": "A" },
+    { "start": 0.45, "end": 0.62, "value": "C" },
+    { "start": 0.62, "end": 0.73, "value": "A" },
+    { "start": 0.73, "end": 0.83, "value": "F" },
+    { "start": 0.83, "end": 1.11, "value": "C" },
+    { "start": 1.11, "end": 1.18, "value": "B" },
+    { "start": 1.18, "end": 1.39, "value": "C" },
+    { "start": 1.39, "end": 1.46, "value": "B" },
+    { "start": 1.46, "end": 1.53, "value": "F" },
+    { "start": 1.53, "end": 1.67, "value": "B" },
+    { "start": 1.67, "end": 1.74, "value": "C" },
+    { "start": 1.74, "end": 1.82, "value": "A" },
+    { "start": 1.82, "end": 1.94, "value": "E" },
+    { "start": 1.94, "end": 2.29, "value": "C" },
+    { "start": 2.29, "end": 2.36, "value": "E" },
+    { "start": 2.36, "end": 2.49, "value": "C" },
+    { "start": 2.49, "end": 2.60, "value": "B" },
+    { "start": 2.60, "end": 2.74, "value": "F" },
+    { "start": 2.74, "end": 3.02, "value": "E" },
+    { "start": 3.02, "end": 3.09, "value": "B" },
+    { "start": 3.09, "end": 3.30, "value": "C" },
+    { "start": 3.30, "end": 3.44, "value": "B" },
+    { "start": 3.44, "end": 3.52, "value": "A" },
+    { "start": 3.52, "end": 3.59, "value": "D" },
+    { "start": 3.59, "end": 3.65, "value": "B" },
+    { "start": 3.65, "end": 3.79, "value": "C" },
+    { "start": 3.79, "end": 3.87, "value": "A" },
+    { "start": 3.87, "end": 3.88, "value": "X" }
+  ]
+}
