@@ -182,7 +182,11 @@ const OUTFIT = {
   hoodieDON: { top: '#3a3a44', topD: '#141418', topL: '#74747e', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'ДОНБАСС', capTxt: 'Д' },
   // ---- добавлено tools/add_costume.py
   hoodieCH: { top: '#5a6a3a', topD: '#232a14', topL: '#98a868', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: '1193', capTxt: 'Ч' },
-  stroyCH: { top: '#e8741e', topD: '#7a3008', topL: '#ffb070', pants: '#3a4a6a', detail: 'overalls', shirt: '#d8d0c0', hat: 'miner' }
+  stroyCH: { top: '#e8741e', topD: '#7a3008', topL: '#ffb070', pants: '#3a4a6a', detail: 'overalls', shirt: '#d8d0c0', hat: 'miner' },
+  // ---- добавлено tools/add_costume.py
+  hoodieLT: { top: '#2a7a4a', topD: '#0e3a20', topL: '#6ab888', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'LIETUVA', capTxt: 'LT' },
+  // ---- добавлено tools/add_costume.py
+  hoodieME: { top: '#b8201e', topD: '#5a0806', topL: '#f07060', pants: '#2c2a30', detail: 'hoodie', hat: 'cap', print: 'CRNA GORA', capTxt: 'ME' }
 };
 
 function tom(o = {}) {
